@@ -1,5 +1,6 @@
 # Postman (postman)
-Postman is your single platform for collaborative API development. Join 35+ million devs building great APIs together, across the entire API lifecycle.
+Postman is an API platform for building and using APIs. Postman simplifies each step  of the API lifecycle and streamlines collaboration so you can create better APIs—faster.
+
 
 **URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/postman/refs/heads/main/apis.yml)
 
@@ -11,12 +12,12 @@ Postman is your single platform for collaborative API development. Join 35+ mill
 
 ## Tags:
 
- - Client, Testing, Mocking, Network, Discovery, Platform, Automation, Collections, Workflows
+ - API Development, API Documentation, API Testing, APIs, Automation, Client, Clients, Collaboration, Collections, Discovery, Mocking, Network, Platform, Testing, Workflows
 
 ## Timestamps
 
-- **Created:** 2025-01-08 
-- **Modified:** 2025-06-10 
+- **Created:** 2025-01-08T00:00:00.000Z 
+- **Modified:** 2026-01-03 
 
 ## APIs
 
@@ -55,10 +56,18 @@ Postman is your single platform for collaborative API development. Join 35+ mill
 - [PrivacyPolicy](https://www.postman.com/legal/privacy-policy/)
 - [Trademark](https://www.postman.com/legal/trademark-policy/)
 - [Trust](https://www.postman.com/trust/)
+- [UseCases](https://www.postman.com/use-cases/)
+- [Integrations](https://www.postman.com/product/integrations/)
+- [Newsletter](https://www.postman.com/newsletter/)
+- [GitHub](https://github.com/postmanlabs)
+- [LinkedIn](https://www.linkedin.com/company/postman-platform)
+- [Twitter](https://twitter.com/getpostman)
 
 ## Maintainers
 
 **FN:** Kin Lane
 
 **Email:** info@apievangelist.com
+**FN:** Postman
 
+**Email:** help@postman.com
