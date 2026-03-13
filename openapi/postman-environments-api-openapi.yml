@@ -1,0 +1,397 @@
+openapi: 3.1.0
+info:
+  title: Postman Environments API
+  description: |
+    The Postman Environments API enables you to manage your Postman environments
+    programmatically. Environments store variable key-value pairs that can be used
+    across requests and collections, enabling you to scope your work to different
+    contexts such as development, staging, and production.
+
+    ## Authentication
+    All requests require an API key passed in the `x-api-key` header.
+
+    ## Rate Limits
+    The Postman API has rate limits that vary by plan.
+  version: '1.0.0'
+  contact:
+    name: Postman Developer Support
+    url: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    email: help@postman.com
+  license:
+    name: Postman Terms of Service
+    url: https://www.postman.com/legal/terms/
+servers:
+  - url: https://api.getpostman.com
+    description: Postman Production API Server
+tags:
+  - name: Environments
+    description: Operations for managing Postman environments and their variables.
+security:
+  - apiKeyAuth: []
+paths:
+  /environments:
+    get:
+      tags:
+        - Environments
+      summary: Get all environments
+      operationId: getAllEnvironments
+      description: >-
+        Gets all environments for the authenticated user. The response includes
+        basic metadata for each environment. To get the full environment with
+        variables, use the single environment endpoint.
+      parameters:
+        - name: workspace
+          in: query
+          description: Filter environments by workspace ID.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of environments
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  environments:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EnvironmentListItem'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+        - Environments
+      summary: Create an environment
+      operationId: createEnvironment
+      description: >-
+        Creates a new environment with the specified name and variables. You
+        can optionally specify a workspace to create the environment in.
+      parameters:
+        - name: workspace
+          in: query
+          description: The workspace ID to create the environment in.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - environment
+              properties:
+                environment:
+                  $ref: '#/components/schemas/EnvironmentInput'
+      responses:
+        '200':
+          description: Successfully created environment
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  environment:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      uid:
+                        type: string
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /environments/{environmentId}:
+    get:
+      tags:
+        - Environments
+      summary: Get an environment
+      operationId: getEnvironment
+      description: >-
+        Gets information about a single environment, including its variables.
+        Variable values that are marked as secret will be masked in the response.
+      parameters:
+        - $ref: '#/components/parameters/EnvironmentIdParam'
+      responses:
+        '200':
+          description: Successful response with environment details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  environment:
+                    $ref: '#/components/schemas/Environment'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      tags:
+        - Environments
+      summary: Update an environment
+      operationId: updateEnvironment
+      description: >-
+        Updates an existing environment. You can update the name and variables.
+        This replaces the entire set of variables with the values provided.
+      parameters:
+        - $ref: '#/components/parameters/EnvironmentIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - environment
+              properties:
+                environment:
+                  $ref: '#/components/schemas/EnvironmentInput'
+      responses:
+        '200':
+          description: Successfully updated environment
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  environment:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      uid:
+                        type: string
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags:
+        - Environments
+      summary: Delete an environment
+      operationId: deleteEnvironment
+      description: >-
+        Deletes an existing environment. This action is irreversible.
+      parameters:
+        - $ref: '#/components/parameters/EnvironmentIdParam'
+      responses:
+        '200':
+          description: Successfully deleted environment
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  environment:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      uid:
+                        type: string
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.
+  parameters:
+    EnvironmentIdParam:
+      name: environmentId
+      in: path
+      required: true
+      description: The environment's unique ID or UID.
+      schema:
+        type: string
+  schemas:
+    EnvironmentListItem:
+      type: object
+      description: Abbreviated environment information returned in list responses.
+      properties:
+        id:
+          type: string
+          description: The environment's unique ID
+        name:
+          type: string
+          description: The environment name
+        owner:
+          type: string
+          description: The owner ID of the environment
+        uid:
+          type: string
+          description: The environment's UID in the format {ownerId}-{environmentId}
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        isPublic:
+          type: boolean
+          description: Whether the environment is publicly accessible
+    Environment:
+      type: object
+      description: Full environment details including variables.
+      properties:
+        id:
+          type: string
+          description: The environment's unique ID
+        name:
+          type: string
+          description: The environment name
+        owner:
+          type: string
+          description: The owner ID
+        uid:
+          type: string
+          description: The environment's UID
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        values:
+          type: array
+          description: The environment variables
+          items:
+            $ref: '#/components/schemas/EnvironmentVariable'
+        isPublic:
+          type: boolean
+    EnvironmentInput:
+      type: object
+      description: Input format for creating or updating an environment.
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: The environment name
+        values:
+          type: array
+          description: The environment variables to set
+          items:
+            $ref: '#/components/schemas/EnvironmentVariable'
+    EnvironmentVariable:
+      type: object
+      description: A key-value variable within an environment.
+      properties:
+        key:
+          type: string
+          description: The variable name
+        value:
+          type: string
+          description: The variable value
+        type:
+          type: string
+          enum: [default, secret]
+          description: The variable type. Secret variables are masked in responses.
+        enabled:
+          type: boolean
+          description: Whether the variable is enabled
+          default: true
+  responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: authenticationError
+                  message:
+                    type: string
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+    InternalServerError:
+      description: An unexpected error occurred on the server
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string

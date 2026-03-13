@@ -1,0 +1,495 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://postman.com/schemas/postman/collection.json",
+  "title": "Postman Collection",
+  "description": "A Postman collection containing saved API requests organized into folders, with support for variables, authentication, pre-request scripts, and test scripts. Collections follow the Postman Collection Format v2.1.0.",
+  "type": "object",
+  "required": ["info", "item"],
+  "properties": {
+    "info": {
+      "type": "object",
+      "description": "Collection metadata including name, description, and schema reference.",
+      "required": ["name", "schema"],
+      "properties": {
+        "_postman_id": {
+          "type": "string",
+          "description": "The collection's unique Postman identifier."
+        },
+        "name": {
+          "type": "string",
+          "description": "The collection name as displayed in the Postman interface."
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of the collection. Supports Markdown formatting."
+        },
+        "schema": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URL of the Postman collection schema version.",
+          "const": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+        },
+        "version": {
+          "oneOf": [
+            { "type": "string" },
+            {
+              "type": "object",
+              "properties": {
+                "major": { "type": "integer", "minimum": 0 },
+                "minor": { "type": "integer", "minimum": 0 },
+                "patch": { "type": "integer", "minimum": 0 },
+                "identifier": { "type": "string" }
+              }
+            }
+          ],
+          "description": "The collection version."
+        }
+      }
+    },
+    "item": {
+      "type": "array",
+      "description": "The collection's items, which can be individual requests or folders containing requests.",
+      "items": {
+        "$ref": "#/$defs/Item"
+      }
+    },
+    "variable": {
+      "type": "array",
+      "description": "Collection-level variables available to all requests.",
+      "items": {
+        "$ref": "#/$defs/Variable"
+      }
+    },
+    "auth": {
+      "$ref": "#/$defs/Auth",
+      "description": "Collection-level authentication applied to all requests unless overridden."
+    },
+    "event": {
+      "type": "array",
+      "description": "Collection-level scripts (pre-request and test) that run for every request.",
+      "items": {
+        "$ref": "#/$defs/Event"
+      }
+    },
+    "protocolProfileBehavior": {
+      "type": "object",
+      "description": "Protocol-specific behaviors and settings."
+    }
+  },
+  "$defs": {
+    "Item": {
+      "type": "object",
+      "description": "A request or folder within a collection.",
+      "required": ["name"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The item's unique identifier."
+        },
+        "name": {
+          "type": "string",
+          "description": "The item name."
+        },
+        "description": {
+          "type": "string",
+          "description": "The item description."
+        },
+        "request": {
+          "$ref": "#/$defs/Request",
+          "description": "The request definition. Present for request items, absent for folders."
+        },
+        "response": {
+          "type": "array",
+          "description": "Saved example responses for the request.",
+          "items": {
+            "$ref": "#/$defs/Response"
+          }
+        },
+        "item": {
+          "type": "array",
+          "description": "Sub-items. Present for folder items, absent for requests.",
+          "items": {
+            "$ref": "#/$defs/Item"
+          }
+        },
+        "event": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Event"
+          }
+        },
+        "variable": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Variable"
+          }
+        },
+        "protocolProfileBehavior": {
+          "type": "object"
+        }
+      }
+    },
+    "Request": {
+      "type": "object",
+      "description": "An HTTP request definition with method, URL, headers, and body.",
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS", "TRACE", "COPY", "LOCK", "UNLOCK", "PURGE", "LINK", "UNLINK"],
+          "description": "The HTTP request method."
+        },
+        "url": {
+          "oneOf": [
+            { "type": "string" },
+            { "$ref": "#/$defs/Url" }
+          ],
+          "description": "The request URL."
+        },
+        "header": {
+          "type": "array",
+          "description": "Request headers.",
+          "items": {
+            "$ref": "#/$defs/Header"
+          }
+        },
+        "body": {
+          "$ref": "#/$defs/Body",
+          "description": "The request body."
+        },
+        "auth": {
+          "$ref": "#/$defs/Auth"
+        },
+        "description": {
+          "type": "string",
+          "description": "The request description."
+        },
+        "proxy": {
+          "type": "object",
+          "description": "Proxy configuration for the request."
+        },
+        "certificate": {
+          "type": "object",
+          "description": "Client certificate configuration."
+        }
+      }
+    },
+    "Url": {
+      "type": "object",
+      "description": "A structured URL with parsed components.",
+      "properties": {
+        "raw": {
+          "type": "string",
+          "description": "The raw URL string."
+        },
+        "protocol": {
+          "type": "string",
+          "description": "The URL protocol (http, https)."
+        },
+        "host": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "The host components split by dots."
+        },
+        "port": {
+          "type": "string",
+          "description": "The port number."
+        },
+        "path": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              { "type": "string" },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "type": "string" },
+                  "value": { "type": "string" }
+                }
+              }
+            ]
+          },
+          "description": "The URL path components."
+        },
+        "query": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/QueryParam"
+          },
+          "description": "Query parameters."
+        },
+        "hash": {
+          "type": "string",
+          "description": "The URL fragment."
+        },
+        "variable": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Variable"
+          },
+          "description": "Path variables."
+        }
+      }
+    },
+    "QueryParam": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "The query parameter key."
+        },
+        "value": {
+          "type": "string",
+          "description": "The query parameter value."
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": "Whether the parameter is disabled."
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "Header": {
+      "type": "object",
+      "description": "An HTTP header key-value pair.",
+      "required": ["key", "value"],
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "The header name."
+        },
+        "value": {
+          "type": "string",
+          "description": "The header value."
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": "Whether the header is disabled."
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "Body": {
+      "type": "object",
+      "description": "The request body with support for multiple content types.",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["raw", "urlencoded", "formdata", "file", "graphql"],
+          "description": "The body content type."
+        },
+        "raw": {
+          "type": "string",
+          "description": "Raw body content (used with mode=raw)."
+        },
+        "urlencoded": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": { "type": "string" },
+              "value": { "type": "string" },
+              "disabled": { "type": "boolean" },
+              "description": { "type": "string" }
+            }
+          }
+        },
+        "formdata": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": { "type": "string" },
+              "value": { "type": "string" },
+              "type": { "type": "string", "enum": ["text", "file"] },
+              "src": { "type": "string" },
+              "disabled": { "type": "boolean" },
+              "description": { "type": "string" }
+            }
+          }
+        },
+        "file": {
+          "type": "object",
+          "properties": {
+            "src": { "type": "string" },
+            "content": { "type": "string" }
+          }
+        },
+        "graphql": {
+          "type": "object",
+          "properties": {
+            "query": { "type": "string" },
+            "variables": { "type": "string" }
+          }
+        },
+        "options": {
+          "type": "object",
+          "description": "Body options (e.g., raw language).",
+          "properties": {
+            "raw": {
+              "type": "object",
+              "properties": {
+                "language": {
+                  "type": "string",
+                  "enum": ["text", "json", "xml", "html", "javascript"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Response": {
+      "type": "object",
+      "description": "A saved example response for a request.",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "description": "The example response name."
+        },
+        "originalRequest": {
+          "$ref": "#/$defs/Request",
+          "description": "The request that generated this response."
+        },
+        "status": {
+          "type": "string",
+          "description": "The HTTP status text (e.g., 'OK', 'Not Found')."
+        },
+        "code": {
+          "type": "integer",
+          "description": "The HTTP status code."
+        },
+        "header": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Header"
+          }
+        },
+        "body": {
+          "type": "string",
+          "description": "The response body content."
+        },
+        "_postman_previewlanguage": {
+          "type": "string",
+          "description": "The language for syntax highlighting."
+        }
+      }
+    },
+    "Auth": {
+      "type": "object",
+      "description": "Authentication configuration supporting multiple auth types.",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["apikey", "awsv4", "basic", "bearer", "digest", "edgegrid", "hawk", "noauth", "ntlm", "oauth1", "oauth2"],
+          "description": "The authentication type."
+        },
+        "apikey": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/AuthParam" }
+        },
+        "basic": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/AuthParam" }
+        },
+        "bearer": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/AuthParam" }
+        },
+        "oauth2": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/AuthParam" }
+        }
+      }
+    },
+    "AuthParam": {
+      "type": "object",
+      "properties": {
+        "key": { "type": "string" },
+        "value": {},
+        "type": { "type": "string" }
+      }
+    },
+    "Event": {
+      "type": "object",
+      "description": "A script event that runs at specific points in the request lifecycle.",
+      "properties": {
+        "listen": {
+          "type": "string",
+          "enum": ["prerequest", "test"],
+          "description": "When the script runs: before the request or after the response."
+        },
+        "script": {
+          "$ref": "#/$defs/Script"
+        },
+        "disabled": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Script": {
+      "type": "object",
+      "description": "A JavaScript script that runs in the Postman sandbox.",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "description": "The script MIME type.",
+          "default": "text/javascript"
+        },
+        "exec": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "The script source code as an array of lines."
+        },
+        "src": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to an external script."
+        }
+      }
+    },
+    "Variable": {
+      "type": "object",
+      "description": "A key-value variable with optional type and description.",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string",
+          "description": "The variable name."
+        },
+        "value": {
+          "description": "The variable value."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["string", "boolean", "number", "any"],
+          "description": "The variable data type."
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "system": {
+          "type": "boolean"
+        },
+        "disabled": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

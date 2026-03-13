@@ -1,0 +1,307 @@
+openapi: 3.1.0
+info:
+  title: Postman Collection Runs API
+  description: |
+    The Postman Collection Runs API enables you to programmatically run
+    collections and retrieve run results. This is useful for continuous
+    integration and delivery pipelines, enabling you to execute API tests
+    and retrieve results programmatically.
+
+    ## Authentication
+    All requests require an API key passed in the `x-api-key` header.
+
+    ## Rate Limits
+    Collection run limits vary by plan. Free plans include 25 collection
+    runs per month.
+  version: '1.0.0'
+  contact:
+    name: Postman Developer Support
+    url: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    email: help@postman.com
+  license:
+    name: Postman Terms of Service
+    url: https://www.postman.com/legal/terms/
+servers:
+  - url: https://api.getpostman.com
+    description: Postman Production API Server
+tags:
+  - name: Collection Runs
+    description: Operations for running collections and retrieving results.
+security:
+  - apiKeyAuth: []
+paths:
+  /collections/{collectionId}/runs:
+    get:
+      tags:
+        - Collection Runs
+      summary: Get collection runs
+      operationId: getCollectionRuns
+      description: >-
+        Gets the run history for a collection. Returns a list of past runs
+        with their status, timing, and summary statistics.
+      parameters:
+        - $ref: '#/components/parameters/CollectionIdParam'
+        - name: cursor
+          in: query
+          description: Pagination cursor for the next page of results.
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Maximum number of results to return.
+          schema:
+            type: integer
+            default: 10
+            maximum: 100
+        - name: status
+          in: query
+          description: Filter by run status.
+          schema:
+            type: string
+            enum: [queued, running, finished, failed]
+        - name: source
+          in: query
+          description: Filter by run source.
+          schema:
+            type: string
+            enum: [collection_runner, monitor, webhook, schedule, api, newman]
+      responses:
+        '200':
+          description: Successful response with collection runs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  runs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CollectionRunSummary'
+                  meta:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      nextCursor:
+                        type: string
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /collections/{collectionId}/runs/{runId}:
+    get:
+      tags:
+        - Collection Runs
+      summary: Get a collection run
+      operationId: getCollectionRun
+      description: >-
+        Gets detailed information about a specific collection run, including
+        individual request results, test assertions, and response data.
+      parameters:
+        - $ref: '#/components/parameters/CollectionIdParam'
+        - name: runId
+          in: path
+          required: true
+          description: The run's unique ID.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with run details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  run:
+                    $ref: '#/components/schemas/CollectionRun'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.
+  parameters:
+    CollectionIdParam:
+      name: collectionId
+      in: path
+      required: true
+      description: The collection's unique ID or UID.
+      schema:
+        type: string
+  schemas:
+    CollectionRunSummary:
+      type: object
+      description: Summary information about a collection run.
+      properties:
+        id:
+          type: string
+          description: The run's unique ID
+        status:
+          type: string
+          enum: [queued, running, finished, failed]
+          description: The run status
+        source:
+          type: string
+          enum: [collection_runner, monitor, webhook, schedule, api, newman]
+          description: How the run was triggered
+        startedAt:
+          type: string
+          format: date-time
+        finishedAt:
+          type: string
+          format: date-time
+        stats:
+          type: object
+          properties:
+            requests:
+              type: object
+              properties:
+                total:
+                  type: integer
+                failed:
+                  type: integer
+            assertions:
+              type: object
+              properties:
+                total:
+                  type: integer
+                failed:
+                  type: integer
+        collectionId:
+          type: string
+        environmentId:
+          type: string
+        createdBy:
+          type: string
+    CollectionRun:
+      type: object
+      description: Detailed collection run including individual request results.
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum: [queued, running, finished, failed]
+        source:
+          type: string
+        startedAt:
+          type: string
+          format: date-time
+        finishedAt:
+          type: string
+          format: date-time
+        duration:
+          type: integer
+          description: Total run duration in milliseconds
+        stats:
+          type: object
+          properties:
+            requests:
+              type: object
+              properties:
+                total:
+                  type: integer
+                failed:
+                  type: integer
+            assertions:
+              type: object
+              properties:
+                total:
+                  type: integer
+                failed:
+                  type: integer
+        executions:
+          type: array
+          description: Individual request execution results
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              itemName:
+                type: string
+              request:
+                type: object
+                properties:
+                  method:
+                    type: string
+                  url:
+                    type: string
+              response:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                  responseTime:
+                    type: integer
+                    description: Response time in milliseconds
+                  responseSize:
+                    type: integer
+                    description: Response size in bytes
+              assertions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    passed:
+                      type: boolean
+                    error:
+                      type: string
+        collectionId:
+          type: string
+        environmentId:
+          type: string
+        createdBy:
+          type: string
+  responses:
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string

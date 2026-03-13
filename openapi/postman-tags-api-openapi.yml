@@ -1,0 +1,222 @@
+openapi: 3.1.0
+info:
+  title: Postman Tags API
+  description: |
+    The Postman Tags API enables you to manage tags on APIs, collections, and
+    workspaces. Tags help you categorize, organize, and discover API assets
+    across your team. Tags are useful for governance, enabling API managers to
+    label APIs by domain, lifecycle stage, or compliance status.
+
+    ## Authentication
+    All requests require an API key passed in the `x-api-key` header.
+
+    ## Rate Limits
+    Standard Postman API rate limits apply.
+  version: '1.0.0'
+  contact:
+    name: Postman Developer Support
+    url: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    email: help@postman.com
+  license:
+    name: Postman Terms of Service
+    url: https://www.postman.com/legal/terms/
+servers:
+  - url: https://api.getpostman.com
+    description: Postman Production API Server
+tags:
+  - name: Tags
+    description: Operations for managing tags on Postman entities.
+security:
+  - apiKeyAuth: []
+paths:
+  /tags/{entityType}/{entityId}:
+    get:
+      tags:
+        - Tags
+      summary: Get tags for an entity
+      operationId: getEntityTags
+      description: >-
+        Gets all tags associated with a specific entity (API, collection, or
+        workspace).
+      parameters:
+        - $ref: '#/components/parameters/EntityTypeParam'
+        - $ref: '#/components/parameters/EntityIdParam'
+      responses:
+        '200':
+          description: Successful response with tags
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tags:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tag'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+    put:
+      tags:
+        - Tags
+      summary: Update tags for an entity
+      operationId: updateEntityTags
+      description: >-
+        Updates (replaces) the tags associated with a specific entity. This
+        replaces all existing tags with the provided list. To add tags without
+        removing existing ones, first GET the current tags and include them
+        in the update.
+      parameters:
+        - $ref: '#/components/parameters/EntityTypeParam'
+        - $ref: '#/components/parameters/EntityIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - tags
+              properties:
+                tags:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - slug
+                    properties:
+                      slug:
+                        type: string
+                        description: The tag identifier (lowercase, hyphenated)
+                        example: production-ready
+                        pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
+      responses:
+        '200':
+          description: Successfully updated tags
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tags:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tag'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.
+  parameters:
+    EntityTypeParam:
+      name: entityType
+      in: path
+      required: true
+      description: The type of entity to manage tags for.
+      schema:
+        type: string
+        enum: [apis, collections, workspaces]
+    EntityIdParam:
+      name: entityId
+      in: path
+      required: true
+      description: The entity's unique ID.
+      schema:
+        type: string
+  schemas:
+    Tag:
+      type: object
+      description: A tag attached to a Postman entity for categorization and governance.
+      properties:
+        slug:
+          type: string
+          description: The tag identifier (lowercase, hyphenated)
+          example: production-ready
+        name:
+          type: string
+          description: The display name of the tag
+  responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    ForbiddenError:
+      description: Insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string

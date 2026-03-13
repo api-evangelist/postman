@@ -1,0 +1,656 @@
+openapi: 3.1.0
+info:
+  title: Postman Private API Network API
+  description: |
+    The Postman Private API Network API enables you to programmatically manage
+    your organization's private API network. The private API network is a
+    curated catalog of internal APIs that helps teams discover and consume
+    APIs within your organization.
+
+    ## Authentication
+    All requests require an API key passed in the `x-api-key` header.
+
+    ## Rate Limits
+    Standard Postman API rate limits apply.
+  version: '1.0.0'
+  contact:
+    name: Postman Developer Support
+    url: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    email: help@postman.com
+  license:
+    name: Postman Terms of Service
+    url: https://www.postman.com/legal/terms/
+servers:
+  - url: https://api.getpostman.com
+    description: Postman Production API Server
+tags:
+  - name: Private API Network
+    description: Operations for managing the private API network catalog.
+  - name: Network Elements
+    description: Operations for managing elements (APIs, collections, workspaces) in the network.
+  - name: Network Folders
+    description: Operations for managing folders in the private API network.
+  - name: Network Requests
+    description: Operations for managing requests to add elements to the network.
+security:
+  - apiKeyAuth: []
+paths:
+  /network/private:
+    get:
+      tags:
+        - Private API Network
+      summary: Get all elements in the private API network
+      operationId: getPrivateNetworkElements
+      description: >-
+        Gets all elements published to the team's private API network. Returns
+        APIs, collections, and workspaces that have been added to the network.
+      parameters:
+        - name: since
+          in: query
+          description: Return elements added after this date (ISO 8601).
+          schema:
+            type: string
+            format: date-time
+        - name: until
+          in: query
+          description: Return elements added before this date (ISO 8601).
+          schema:
+            type: string
+            format: date-time
+        - name: addedBy
+          in: query
+          description: Filter by the user who added the element.
+          schema:
+            type: integer
+        - name: name
+          in: query
+          description: Filter by element name (partial match).
+          schema:
+            type: string
+        - name: summary
+          in: query
+          description: Filter by element summary (partial match).
+          schema:
+            type: string
+        - name: description
+          in: query
+          description: Filter by element description (partial match).
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: Filter by element type.
+          schema:
+            type: string
+            enum: [api, collection, workspace]
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+            maximum: 100
+        - name: parentFolderId
+          in: query
+          description: Filter by parent folder ID.
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          description: Sort field.
+          schema:
+            type: string
+            enum: [createdAt, updatedAt]
+        - name: direction
+          in: query
+          description: Sort direction.
+          schema:
+            type: string
+            enum: [asc, desc]
+      responses:
+        '200':
+          description: Successful response with network elements
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  elements:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NetworkElement'
+                  meta:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      limit:
+                        type: integer
+                      offset:
+                        type: integer
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+    post:
+      tags:
+        - Network Elements
+      summary: Add an element to the private API network
+      operationId: addNetworkElement
+      description: >-
+        Publishes an element (API, collection, or workspace) to the private API
+        network. The element becomes discoverable by all team members.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - id
+              properties:
+                type:
+                  type: string
+                  enum: [api, collection, workspace]
+                  description: The type of element to add
+                id:
+                  type: string
+                  description: The element's unique ID
+                parentFolderId:
+                  type: integer
+                  description: The parent folder ID in the network
+                summary:
+                  type: string
+                  description: A custom summary for the element in the network
+      responses:
+        '200':
+          description: Successfully added element to network
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkElement'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /network/private/{elementType}/{elementId}:
+    put:
+      tags:
+        - Network Elements
+      summary: Update a network element
+      operationId: updateNetworkElement
+      description: >-
+        Updates an element's metadata in the private API network.
+      parameters:
+        - name: elementType
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [api, collection, workspace]
+        - name: elementId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                summary:
+                  type: string
+                parentFolderId:
+                  type: integer
+      responses:
+        '200':
+          description: Successfully updated network element
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+    delete:
+      tags:
+        - Network Elements
+      summary: Remove an element from the private API network
+      operationId: removeNetworkElement
+      description: >-
+        Removes an element from the private API network. This only removes
+        it from the network catalog; it does not delete the underlying resource.
+      parameters:
+        - name: elementType
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [api, collection, workspace]
+        - name: elementId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully removed element from network
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /network/private/network-folder:
+    get:
+      tags:
+        - Network Folders
+      summary: Get all network folders
+      operationId: getNetworkFolders
+      description: >-
+        Gets all folders in the private API network. Folders help organize
+        APIs and collections in the network catalog.
+      parameters:
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - name: parentFolderId
+          in: query
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum: [createdAt, updatedAt]
+        - name: direction
+          in: query
+          schema:
+            type: string
+            enum: [asc, desc]
+      responses:
+        '200':
+          description: Successful response with network folders
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  folders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NetworkFolder'
+                  meta:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+    post:
+      tags:
+        - Network Folders
+      summary: Create a network folder
+      operationId: createNetworkFolder
+      description: >-
+        Creates a new folder in the private API network.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                parentFolderId:
+                  type: integer
+      responses:
+        '200':
+          description: Successfully created network folder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkFolder'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /network/private/network-folder/{folderId}:
+    put:
+      tags:
+        - Network Folders
+      summary: Update a network folder
+      operationId: updateNetworkFolder
+      parameters:
+        - name: folderId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                parentFolderId:
+                  type: integer
+      responses:
+        '200':
+          description: Successfully updated network folder
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+    delete:
+      tags:
+        - Network Folders
+      summary: Delete a network folder
+      operationId: deleteNetworkFolder
+      parameters:
+        - name: folderId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully deleted network folder
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /network/private/network-request:
+    get:
+      tags:
+        - Network Requests
+      summary: Get all network requests
+      operationId: getNetworkRequests
+      description: >-
+        Gets all pending requests to add elements to the private API network.
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [pending, approved, denied]
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Successful response with network requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requests:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NetworkRequest'
+                  meta:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /network/private/network-request/{requestId}/approve:
+    put:
+      tags:
+        - Network Requests
+      summary: Approve a network request
+      operationId: approveNetworkRequest
+      parameters:
+        - name: requestId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully approved network request
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /network/private/network-request/{requestId}/deny:
+    put:
+      tags:
+        - Network Requests
+      summary: Deny a network request
+      operationId: denyNetworkRequest
+      parameters:
+        - name: requestId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully denied network request
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.
+  schemas:
+    NetworkElement:
+      type: object
+      description: An element published to the private API network.
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: [api, collection, workspace]
+        name:
+          type: string
+        summary:
+          type: string
+        description:
+          type: string
+        addedBy:
+          type: integer
+        addedAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        parentFolderId:
+          type: integer
+        href:
+          type: string
+          format: uri
+    NetworkFolder:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        parentFolderId:
+          type: integer
+        createdBy:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    NetworkRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          enum: [api, collection, workspace]
+        elementId:
+          type: string
+        name:
+          type: string
+        summary:
+          type: string
+        status:
+          type: string
+          enum: [pending, approved, denied]
+        requestedBy:
+          type: integer
+        requestedAt:
+          type: string
+          format: date-time
+        respondedBy:
+          type: integer
+        respondedAt:
+          type: string
+          format: date-time
+        message:
+          type: string
+  responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    ForbiddenError:
+      description: Insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string

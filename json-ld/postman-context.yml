@@ -1,0 +1,215 @@
+"@context":
+  "@vocab": https://schema.org/
+  postman: https://api.getpostman.com/
+  pm: https://www.postman.com/
+  dcterms: http://purl.org/dc/terms/
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+  # Core Postman Resource Types
+  Collection:
+    "@id": postman:collections
+    "@type": "@id"
+  Workspace:
+    "@id": postman:workspaces
+    "@type": "@id"
+  Environment:
+    "@id": postman:environments
+    "@type": "@id"
+  MockServer:
+    "@id": postman:mocks
+    "@type": WebAPI
+  Monitor:
+    "@id": postman:monitors
+    "@type": SoftwareApplication
+  Api:
+    "@id": postman:apis
+    "@type": WebAPI
+  Webhook:
+    "@id": postman:webhooks
+    "@type": WebAPI
+  Tag:
+    "@id": postman:tags
+    "@type": DefinedTerm
+
+  # Collection-Related Types
+  CollectionItem:
+    "@id": pm:collection-item
+    "@type": Action
+  Request:
+    "@id": pm:request
+    "@type": Action
+  Response:
+    "@id": pm:response
+    "@type": CreativeWork
+  Folder:
+    "@id": pm:folder
+    "@type": ItemList
+  Script:
+    "@id": pm:script
+    "@type": SoftwareSourceCode
+
+  # Network and Governance Types
+  PrivateApiNetwork:
+    "@id": postman:network/private
+    "@type": DataCatalog
+  NetworkElement:
+    "@id": pm:network-element
+    "@type": CreativeWork
+  AuditEvent:
+    "@id": postman:audit/logs
+    "@type": Action
+  DetectedSecret:
+    "@id": postman:secret-scanner/detected-secrets
+    "@type": Thing
+
+  # Common Resource Properties
+  id:
+    "@id": dcterms:identifier
+    "@type": xsd:string
+  uid:
+    "@id": pm:uid
+    "@type": xsd:string
+  name:
+    "@id": name
+    "@type": xsd:string
+  description:
+    "@id": description
+    "@type": xsd:string
+  owner:
+    "@id": creator
+    "@type": xsd:string
+  createdAt:
+    "@id": dateCreated
+    "@type": xsd:dateTime
+  updatedAt:
+    "@id": dateModified
+    "@type": xsd:dateTime
+  createdBy:
+    "@id": creator
+    "@type": xsd:integer
+
+  # Collection Properties
+  item:
+    "@id": pm:item
+    "@container": "@list"
+  variable:
+    "@id": pm:variable
+    "@container": "@set"
+  auth:
+    "@id": pm:auth
+  event:
+    "@id": pm:event
+    "@container": "@list"
+  method:
+    "@id": httpMethod
+    "@type": xsd:string
+  url:
+    "@id": url
+    "@type": xsd:anyURI
+  header:
+    "@id": pm:header
+    "@container": "@set"
+  body:
+    "@id": pm:body
+
+  # Workspace Properties
+  type:
+    "@id": additionalType
+    "@type": xsd:string
+  visibility:
+    "@id": pm:visibility
+    "@type": xsd:string
+  collections:
+    "@id": pm:collections
+    "@container": "@set"
+  environments:
+    "@id": pm:environments
+    "@container": "@set"
+  mocks:
+    "@id": pm:mocks
+    "@container": "@set"
+  monitors:
+    "@id": pm:monitors
+    "@container": "@set"
+  apis:
+    "@id": pm:apis
+    "@container": "@set"
+
+  # Environment Properties
+  values:
+    "@id": pm:values
+    "@container": "@set"
+  key:
+    "@id": pm:key
+    "@type": xsd:string
+  value:
+    "@id": pm:value
+    "@type": xsd:string
+  enabled:
+    "@id": pm:enabled
+    "@type": xsd:boolean
+
+  # Mock Server Properties
+  mockUrl:
+    "@id": url
+    "@type": xsd:anyURI
+  collection:
+    "@id": pm:collection
+    "@type": "@id"
+  environment:
+    "@id": pm:environment
+    "@type": "@id"
+  isPublic:
+    "@id": pm:isPublic
+    "@type": xsd:boolean
+
+  # Monitor Properties
+  schedule:
+    "@id": pm:schedule
+  cron:
+    "@id": pm:cron
+    "@type": xsd:string
+  timezone:
+    "@id": pm:timezone
+    "@type": xsd:string
+  lastRun:
+    "@id": pm:lastRun
+  status:
+    "@id": pm:status
+    "@type": xsd:string
+
+  # API Builder Properties
+  versions:
+    "@id": pm:versions
+    "@container": "@set"
+  schemas:
+    "@id": pm:schemas
+    "@container": "@set"
+  language:
+    "@id": programmingLanguage
+    "@type": xsd:string
+
+  # Audit and Security Properties
+  action:
+    "@id": pm:action
+    "@type": xsd:string
+  timestamp:
+    "@id": dateCreated
+    "@type": xsd:dateTime
+  ip:
+    "@id": pm:ipAddress
+    "@type": xsd:string
+  secretType:
+    "@id": pm:secretType
+    "@type": xsd:string
+  resolution:
+    "@id": pm:resolution
+    "@type": xsd:string
+
+  # Tags Properties
+  slug:
+    "@id": identifier
+    "@type": xsd:string
+  tags:
+    "@id": keywords
+    "@container": "@set"

@@ -1,0 +1,238 @@
+openapi: 3.1.0
+info:
+  title: Postman Audit Logs API
+  description: |
+    The Postman Audit Logs API provides access to team audit logs for compliance
+    and governance. Audit logs track user actions, configuration changes, and
+    security events across your Postman organization. This API is available
+    on Enterprise plans.
+
+    ## Authentication
+    All requests require an API key passed in the `x-api-key` header.
+
+    ## Rate Limits
+    Standard Postman API rate limits apply.
+
+    ## Availability
+    This API is only available on Postman Enterprise plans.
+  version: '1.0.0'
+  contact:
+    name: Postman Developer Support
+    url: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    email: help@postman.com
+  license:
+    name: Postman Terms of Service
+    url: https://www.postman.com/legal/terms/
+servers:
+  - url: https://api.getpostman.com
+    description: Postman Production API Server
+tags:
+  - name: Audit Logs
+    description: Operations for accessing team audit logs.
+security:
+  - apiKeyAuth: []
+paths:
+  /audit/logs:
+    get:
+      tags:
+        - Audit Logs
+      summary: Get audit logs
+      operationId: getAuditLogs
+      description: >-
+        Gets team audit log events. You can filter by date range, event name,
+        and user. Audit logs include user sign-ins, collection changes,
+        workspace modifications, team membership changes, and other security
+        and governance events.
+      parameters:
+        - name: since
+          in: query
+          description: Return audit events since this date (ISO 8601).
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: until
+          in: query
+          description: Return audit events until this date (ISO 8601).
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: limit
+          in: query
+          description: Maximum number of results to return.
+          required: false
+          schema:
+            type: integer
+            default: 50
+            maximum: 300
+        - name: cursor
+          in: query
+          description: Pagination cursor for the next page of results.
+          required: false
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          description: Sort order for results.
+          required: false
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: desc
+      responses:
+        '200':
+          description: Successful response with audit log events
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  trails:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AuditEvent'
+                  meta:
+                    type: object
+                    properties:
+                      nextCursor:
+                        type: string
+                        description: Cursor for the next page of results
+                      total:
+                        type: integer
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.
+  schemas:
+    AuditEvent:
+      type: object
+      description: An audit log event tracking a user action or system event.
+      properties:
+        id:
+          type: string
+          description: The unique ID of the audit event
+        ip:
+          type: string
+          description: The IP address of the user who performed the action
+        userAgent:
+          type: string
+          description: The user agent string from the request
+        action:
+          type: string
+          description: >-
+            The action that was performed. Common actions include
+            user.sign_in, team.member_added, collection.created,
+            workspace.created, api_key.created, etc.
+          example: user.sign_in
+        timestamp:
+          type: string
+          format: date-time
+          description: When the event occurred
+        message:
+          type: string
+          description: A human-readable description of the event
+        user:
+          type: object
+          description: The user who performed the action
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            email:
+              type: string
+              format: email
+            username:
+              type: string
+        data:
+          type: object
+          description: >-
+            Additional context data about the event. The structure varies
+            by event type.
+          additionalProperties: true
+          properties:
+            team:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+            actor:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                email:
+                  type: string
+            variables:
+              type: object
+              additionalProperties: true
+  responses:
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    ForbiddenError:
+      description: Insufficient permissions - Enterprise plan required
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+    InternalServerError:
+      description: An unexpected error occurred on the server
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string

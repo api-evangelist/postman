@@ -1,0 +1,559 @@
+openapi: 3.1.0
+info:
+  title: Postman Monitors API
+  description: |
+    The Postman Monitors API enables you to create and manage monitors that run
+    collections on a schedule. Monitors run collection requests at specified
+    intervals and provide notifications when tests fail, enabling continuous
+    API testing and monitoring.
+
+    ## Authentication
+    All requests require an API key passed in the `x-api-key` header.
+
+    ## Rate Limits
+    Monitor usage limits vary by plan. Free plans include 1,000 monitoring
+    API calls per month.
+  version: '1.0.0'
+  contact:
+    name: Postman Developer Support
+    url: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    email: help@postman.com
+  license:
+    name: Postman Terms of Service
+    url: https://www.postman.com/legal/terms/
+servers:
+  - url: https://api.getpostman.com
+    description: Postman Production API Server
+tags:
+  - name: Monitors
+    description: Operations for creating and managing Postman monitors.
+security:
+  - apiKeyAuth: []
+paths:
+  /monitors:
+    get:
+      tags:
+        - Monitors
+      summary: Get all monitors
+      operationId: getAllMonitors
+      description: >-
+        Gets all monitors accessible to the authenticated user. Returns metadata
+        about each monitor including schedule, last run status, and associated
+        collection.
+      parameters:
+        - name: workspace
+          in: query
+          description: Filter monitors by workspace ID.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of monitors
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  monitors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MonitorListItem'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+        - Monitors
+      summary: Create a monitor
+      operationId: createMonitor
+      description: >-
+        Creates a new monitor that runs a collection on a specified schedule.
+        You must specify the collection to run, the environment to use, and
+        the schedule (cron expression or interval).
+      parameters:
+        - name: workspace
+          in: query
+          description: The workspace ID to create the monitor in.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - monitor
+              properties:
+                monitor:
+                  $ref: '#/components/schemas/MonitorInput'
+      responses:
+        '200':
+          description: Successfully created monitor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  monitor:
+                    $ref: '#/components/schemas/Monitor'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /monitors/{monitorId}:
+    get:
+      tags:
+        - Monitors
+      summary: Get a monitor
+      operationId: getMonitor
+      description: >-
+        Gets information about a single monitor, including its configuration,
+        schedule, last run details, and notification settings.
+      parameters:
+        - $ref: '#/components/parameters/MonitorIdParam'
+      responses:
+        '200':
+          description: Successful response with monitor details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  monitor:
+                    $ref: '#/components/schemas/Monitor'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      tags:
+        - Monitors
+      summary: Update a monitor
+      operationId: updateMonitor
+      description: >-
+        Updates an existing monitor's name, schedule, collection, or
+        environment configuration.
+      parameters:
+        - $ref: '#/components/parameters/MonitorIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - monitor
+              properties:
+                monitor:
+                  $ref: '#/components/schemas/MonitorInput'
+      responses:
+        '200':
+          description: Successfully updated monitor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  monitor:
+                    $ref: '#/components/schemas/Monitor'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags:
+        - Monitors
+      summary: Delete a monitor
+      operationId: deleteMonitor
+      description: >-
+        Deletes a monitor. This stops all scheduled runs and is irreversible.
+      parameters:
+        - $ref: '#/components/parameters/MonitorIdParam'
+      responses:
+        '200':
+          description: Successfully deleted monitor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  monitor:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      uid:
+                        type: string
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /monitors/{monitorId}/run:
+    post:
+      tags:
+        - Monitors
+      summary: Run a monitor
+      operationId: runMonitor
+      description: >-
+        Manually triggers a monitor run. The response includes the run results
+        with test pass/fail status, response times, and any errors.
+      parameters:
+        - $ref: '#/components/parameters/MonitorIdParam'
+      responses:
+        '200':
+          description: Successful monitor run with results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  run:
+                    $ref: '#/components/schemas/MonitorRun'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.
+  parameters:
+    MonitorIdParam:
+      name: monitorId
+      in: path
+      required: true
+      description: The monitor's unique ID or UID.
+      schema:
+        type: string
+  schemas:
+    MonitorListItem:
+      type: object
+      description: Abbreviated monitor information returned in list responses.
+      properties:
+        id:
+          type: string
+          description: The monitor's unique ID
+        name:
+          type: string
+          description: The monitor name
+        uid:
+          type: string
+          description: The monitor's UID
+        owner:
+          type: string
+          description: The owner ID
+    Monitor:
+      type: object
+      description: Full monitor details including schedule and run history.
+      properties:
+        id:
+          type: string
+          description: The monitor's unique ID
+        name:
+          type: string
+          description: The monitor name
+        uid:
+          type: string
+          description: The monitor's UID
+        owner:
+          type: string
+          description: The owner ID
+        collectionUid:
+          type: string
+          description: The UID of the collection being monitored
+        environmentUid:
+          type: string
+          description: The UID of the environment used during runs
+        distribution:
+          type: array
+          description: The regions from which the monitor runs
+          items:
+            type: string
+        schedule:
+          type: object
+          description: The monitor's run schedule
+          properties:
+            cron:
+              type: string
+              description: The cron expression defining the schedule
+              example: "0 0 * * *"
+            timezone:
+              type: string
+              description: The timezone for the schedule
+              example: America/New_York
+            nextRun:
+              type: string
+              format: date-time
+              description: The next scheduled run time
+        lastRun:
+          type: object
+          description: Details about the last monitor run
+          properties:
+            startedAt:
+              type: string
+              format: date-time
+            finishedAt:
+              type: string
+              format: date-time
+            status:
+              type: string
+              enum: [success, failure, error, abort]
+            stats:
+              type: object
+              properties:
+                assertions:
+                  type: object
+                  properties:
+                    total:
+                      type: integer
+                    failed:
+                      type: integer
+                requests:
+                  type: object
+                  properties:
+                    total:
+                      type: integer
+        notifications:
+          type: object
+          properties:
+            onError:
+              type: array
+              items:
+                type: object
+                properties:
+                  email:
+                    type: string
+            onFailure:
+              type: array
+              items:
+                type: object
+                properties:
+                  email:
+                    type: string
+        options:
+          type: object
+          properties:
+            strictSSL:
+              type: boolean
+            followRedirects:
+              type: boolean
+            requestTimeout:
+              type: integer
+              description: Timeout in milliseconds
+            requestDelay:
+              type: integer
+              description: Delay between requests in milliseconds
+    MonitorInput:
+      type: object
+      description: Input format for creating or updating a monitor.
+      required:
+        - name
+        - collection
+        - schedule
+      properties:
+        name:
+          type: string
+          description: The monitor name
+        collection:
+          type: string
+          description: The collection UID to monitor
+        environment:
+          type: string
+          description: The environment UID to use
+        schedule:
+          type: object
+          required:
+            - cron
+          properties:
+            cron:
+              type: string
+              description: Cron expression for the schedule
+            timezone:
+              type: string
+              description: Timezone for the schedule
+    MonitorRun:
+      type: object
+      description: Results of a monitor run.
+      properties:
+        info:
+          type: object
+          properties:
+            jobId:
+              type: string
+            monitorId:
+              type: string
+            name:
+              type: string
+            collectionUid:
+              type: string
+            environmentUid:
+              type: string
+            status:
+              type: string
+              enum: [success, failure, error, abort]
+            startedAt:
+              type: string
+              format: date-time
+            finishedAt:
+              type: string
+              format: date-time
+        stats:
+          type: object
+          properties:
+            assertions:
+              type: object
+              properties:
+                total:
+                  type: integer
+                failed:
+                  type: integer
+            requests:
+              type: object
+              properties:
+                total:
+                  type: integer
+        executions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              item:
+                type: object
+                properties:
+                  name:
+                    type: string
+              request:
+                type: object
+                properties:
+                  url:
+                    type: string
+                  method:
+                    type: string
+                  timestamp:
+                    type: string
+                    format: date-time
+              response:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                  responseTime:
+                    type: integer
+                    description: Response time in milliseconds
+                  responseSize:
+                    type: integer
+                    description: Response size in bytes
+              assertions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    error:
+                      type: string
+        failures:
+          type: array
+          items:
+            type: object
+  responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+    InternalServerError:
+      description: An unexpected error occurred on the server
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string

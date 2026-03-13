@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://postman.com/schemas/postman/workspace.json",
+  "title": "Postman Workspace",
+  "description": "A Postman workspace that provides an isolated environment for organizing API development work. Workspaces contain collections, environments, mock servers, monitors, and APIs, and support collaboration through shared team access.",
+  "type": "object",
+  "required": ["id", "name", "type"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The workspace's unique identifier."
+    },
+    "name": {
+      "type": "string",
+      "description": "The workspace name."
+    },
+    "type": {
+      "type": "string",
+      "enum": ["personal", "team", "private", "public", "partner"],
+      "description": "The workspace type. Personal workspaces are visible only to the owner. Team workspaces are shared with all team members. Private workspaces have restricted access. Public workspaces are visible to everyone. Partner workspaces enable collaboration with external partners."
+    },
+    "description": {
+      "type": "string",
+      "description": "The workspace description."
+    },
+    "visibility": {
+      "type": "string",
+      "enum": ["personal", "team", "private", "public", "partner"],
+      "description": "The workspace visibility setting."
+    },
+    "createdBy": {
+      "type": "string",
+      "description": "The user ID of the workspace creator."
+    },
+    "updatedBy": {
+      "type": "string",
+      "description": "The user ID of the last person to update the workspace."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the workspace was created."
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the workspace was last updated."
+    },
+    "collections": {
+      "type": "array",
+      "description": "Collections in this workspace.",
+      "items": {
+        "$ref": "#/$defs/WorkspaceResource"
+      }
+    },
+    "environments": {
+      "type": "array",
+      "description": "Environments in this workspace.",
+      "items": {
+        "$ref": "#/$defs/WorkspaceResource"
+      }
+    },
+    "mocks": {
+      "type": "array",
+      "description": "Mock servers in this workspace.",
+      "items": {
+        "$ref": "#/$defs/WorkspaceResource"
+      }
+    },
+    "monitors": {
+      "type": "array",
+      "description": "Monitors in this workspace.",
+      "items": {
+        "$ref": "#/$defs/WorkspaceResource"
+      }
+    },
+    "apis": {
+      "type": "array",
+      "description": "APIs in this workspace.",
+      "items": {
+        "$ref": "#/$defs/WorkspaceResource"
+      }
+    }
+  },
+  "$defs": {
+    "WorkspaceResource": {
+      "type": "object",
+      "description": "A resource linked to the workspace.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The resource's unique ID."
+        },
+        "name": {
+          "type": "string",
+          "description": "The resource name."
+        },
+        "uid": {
+          "type": "string",
+          "description": "The resource's UID."
+        }
+      }
+    }
+  }
+}

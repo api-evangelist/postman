@@ -1,0 +1,518 @@
+openapi: 3.1.0
+info:
+  title: Postman Workspaces API
+  description: |
+    The Postman Workspaces API enables you to manage your Postman workspaces
+    programmatically. Workspaces let you organize your API work and collaborate
+    with your team. You can create personal, team, partner, and public workspaces.
+
+    ## Authentication
+    All requests require an API key passed in the `x-api-key` header.
+
+    ## Rate Limits
+    The Postman API has rate limits that vary by plan. See Postman documentation
+    for current limits.
+  version: '1.0.0'
+  contact:
+    name: Postman Developer Support
+    url: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    email: help@postman.com
+  license:
+    name: Postman Terms of Service
+    url: https://www.postman.com/legal/terms/
+servers:
+  - url: https://api.getpostman.com
+    description: Postman Production API Server
+tags:
+  - name: Workspaces
+    description: Operations for managing Postman workspaces including creating, updating, and deleting workspaces.
+security:
+  - apiKeyAuth: []
+paths:
+  /workspaces:
+    get:
+      tags:
+        - Workspaces
+      summary: Get all workspaces
+      operationId: getAllWorkspaces
+      description: >-
+        Gets all workspaces accessible to the authenticated user. This includes
+        personal, team, partner, and public workspaces. The response contains
+        metadata about each workspace.
+      parameters:
+        - name: type
+          in: query
+          description: Filter workspaces by type.
+          required: false
+          schema:
+            type: string
+            enum:
+              - personal
+              - team
+              - private
+              - public
+              - partner
+        - name: include
+          in: query
+          description: Additional information to include in the response.
+          required: false
+          schema:
+            type: string
+            enum:
+              - mocks
+              - monitors
+              - environments
+              - collections
+      responses:
+        '200':
+          description: Successful response with list of workspaces
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  workspaces:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkspaceListItem'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+        - Workspaces
+      summary: Create a workspace
+      operationId: createWorkspace
+      description: >-
+        Creates a new workspace. You can specify the workspace name, type,
+        description, and visibility settings.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - workspace
+              properties:
+                workspace:
+                  $ref: '#/components/schemas/WorkspaceInput'
+      responses:
+        '200':
+          description: Successfully created workspace
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  workspace:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: The workspace's unique ID
+                      name:
+                        type: string
+                        description: The workspace name
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /workspaces/{workspaceId}:
+    get:
+      tags:
+        - Workspaces
+      summary: Get a workspace
+      operationId: getWorkspace
+      description: >-
+        Gets information about a single workspace, including its name, type,
+        description, and associated collections, environments, mocks, and
+        monitors.
+      parameters:
+        - $ref: '#/components/parameters/WorkspaceIdParam'
+      responses:
+        '200':
+          description: Successful response with workspace details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  workspace:
+                    $ref: '#/components/schemas/Workspace'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      tags:
+        - Workspaces
+      summary: Update a workspace
+      operationId: updateWorkspace
+      description: >-
+        Updates an existing workspace's name, description, or type. Only
+        the fields provided in the request body will be updated.
+      parameters:
+        - $ref: '#/components/parameters/WorkspaceIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - workspace
+              properties:
+                workspace:
+                  $ref: '#/components/schemas/WorkspaceInput'
+      responses:
+        '200':
+          description: Successfully updated workspace
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  workspace:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags:
+        - Workspaces
+      summary: Delete a workspace
+      operationId: deleteWorkspace
+      description: >-
+        Deletes an existing workspace and all of its associated data. This
+        action is irreversible.
+      parameters:
+        - $ref: '#/components/parameters/WorkspaceIdParam'
+      responses:
+        '200':
+          description: Successfully deleted workspace
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  workspace:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /workspaces/{workspaceId}/global-variables:
+    get:
+      tags:
+        - Workspaces
+      summary: Get workspace global variables
+      operationId: getWorkspaceGlobalVariables
+      description: >-
+        Gets all global variables for the specified workspace. Global variables
+        are available across all collections in the workspace.
+      parameters:
+        - $ref: '#/components/parameters/WorkspaceIdParam'
+      responses:
+        '200':
+          description: Successful response with global variables
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  values:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Variable'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+    put:
+      tags:
+        - Workspaces
+      summary: Update workspace global variables
+      operationId: updateWorkspaceGlobalVariables
+      description: >-
+        Updates the global variables for the specified workspace. This replaces
+        the entire set of global variables.
+      parameters:
+        - $ref: '#/components/parameters/WorkspaceIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                values:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Variable'
+      responses:
+        '200':
+          description: Successfully updated global variables
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.
+  parameters:
+    WorkspaceIdParam:
+      name: workspaceId
+      in: path
+      required: true
+      description: The workspace's unique ID.
+      schema:
+        type: string
+  schemas:
+    WorkspaceListItem:
+      type: object
+      description: Abbreviated workspace information returned in list responses.
+      properties:
+        id:
+          type: string
+          description: The workspace's unique ID
+        name:
+          type: string
+          description: The workspace name
+        type:
+          type: string
+          enum: [personal, team, private, public, partner]
+          description: The workspace type
+        visibility:
+          type: string
+          enum: [personal, team, private, public, partner]
+          description: The workspace visibility setting
+        createdBy:
+          type: string
+          description: The user ID of the workspace creator
+    Workspace:
+      type: object
+      description: Full workspace details including associated resources.
+      properties:
+        id:
+          type: string
+          description: The workspace's unique ID
+        name:
+          type: string
+          description: The workspace name
+        type:
+          type: string
+          enum: [personal, team, private, public, partner]
+        description:
+          type: string
+          description: The workspace description
+        visibility:
+          type: string
+          enum: [personal, team, private, public, partner]
+        createdBy:
+          type: string
+          description: The user ID of the workspace creator
+        updatedBy:
+          type: string
+          description: The user ID who last updated the workspace
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        collections:
+          type: array
+          description: Collections in this workspace
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              uid:
+                type: string
+        environments:
+          type: array
+          description: Environments in this workspace
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              uid:
+                type: string
+        mocks:
+          type: array
+          description: Mock servers in this workspace
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              uid:
+                type: string
+        monitors:
+          type: array
+          description: Monitors in this workspace
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              uid:
+                type: string
+        apis:
+          type: array
+          description: APIs in this workspace
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+    WorkspaceInput:
+      type: object
+      description: Input format for creating or updating a workspace.
+      required:
+        - name
+        - type
+      properties:
+        name:
+          type: string
+          description: The workspace name
+        type:
+          type: string
+          enum: [personal, team, private, public, partner]
+          description: The workspace type
+        description:
+          type: string
+          description: The workspace description
+    Variable:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        type:
+          type: string
+          enum: [default, secret]
+        enabled:
+          type: boolean
+  responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: authenticationError
+                  message:
+                    type: string
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: instanceNotFoundError
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+    InternalServerError:
+      description: An unexpected error occurred on the server
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string

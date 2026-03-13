@@ -1,0 +1,904 @@
+openapi: 3.1.0
+info:
+  title: Postman APIs API
+  description: |
+    The Postman APIs API enables you to manage your API definitions in Postman's
+    API Builder. You can create APIs, manage versions, add schemas (OpenAPI,
+    GraphQL, etc.), and link collections, environments, mock servers, monitors,
+    and documentation to your API definitions.
+
+    ## Authentication
+    All requests require an API key passed in the `x-api-key` header.
+
+    ## Rate Limits
+    Standard Postman API rate limits apply.
+  version: '1.0.0'
+  contact:
+    name: Postman Developer Support
+    url: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    email: help@postman.com
+  license:
+    name: Postman Terms of Service
+    url: https://www.postman.com/legal/terms/
+servers:
+  - url: https://api.getpostman.com
+    description: Postman Production API Server
+tags:
+  - name: APIs
+    description: Operations for managing API definitions in the Postman API Builder.
+  - name: API Versions
+    description: Operations for managing API versions.
+  - name: API Schemas
+    description: Operations for managing API schemas and specifications.
+  - name: API Comments
+    description: Operations for managing comments on APIs.
+security:
+  - apiKeyAuth: []
+paths:
+  /apis:
+    get:
+      tags:
+        - APIs
+      summary: Get all APIs
+      operationId: getAllApis
+      description: >-
+        Gets all APIs in a workspace. Returns metadata about each API including
+        name, description, and creation date.
+      parameters:
+        - name: workspace
+          in: query
+          description: The workspace ID to get APIs from. Required.
+          required: true
+          schema:
+            type: string
+        - name: cursor
+          in: query
+          description: Pagination cursor.
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Maximum number of results to return.
+          required: false
+          schema:
+            type: integer
+            default: 10
+            maximum: 100
+        - name: createdBy
+          in: query
+          description: Filter by creator user ID.
+          required: false
+          schema:
+            type: integer
+        - name: description
+          in: query
+          description: Filter by description text (partial match).
+          required: false
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: Filter by API name (partial match).
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of APIs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  apis:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ApiListItem'
+                  meta:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      nextCursor:
+                        type: string
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+        - APIs
+      summary: Create an API
+      operationId: createApi
+      description: >-
+        Creates a new API in the specified workspace. After creating the API,
+        you can add versions, schemas, and linked resources.
+      parameters:
+        - name: workspace
+          in: query
+          description: The workspace ID to create the API in. Required.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiInput'
+      responses:
+        '200':
+          description: Successfully created API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /apis/{apiId}:
+    get:
+      tags:
+        - APIs
+      summary: Get an API
+      operationId: getApi
+      description: >-
+        Gets information about a single API including its versions, schemas,
+        and linked resources.
+      parameters:
+        - $ref: '#/components/parameters/ApiIdParam'
+        - name: include
+          in: query
+          description: Additional data to include in the response.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum: [schemas, versions, collections, environments, mocks, monitors, documentation]
+      responses:
+        '200':
+          description: Successful response with API details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      tags:
+        - APIs
+      summary: Update an API
+      operationId: updateApi
+      description: >-
+        Updates an existing API's name or description.
+      parameters:
+        - $ref: '#/components/parameters/ApiIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiInput'
+      responses:
+        '200':
+          description: Successfully updated API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags:
+        - APIs
+      summary: Delete an API
+      operationId: deleteApi
+      description: >-
+        Deletes an API and all of its associated versions and schemas. This
+        action is irreversible.
+      parameters:
+        - $ref: '#/components/parameters/ApiIdParam'
+      responses:
+        '200':
+          description: Successfully deleted API
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /apis/{apiId}/versions:
+    get:
+      tags:
+        - API Versions
+      summary: Get all API versions
+      operationId: getApiVersions
+      description: >-
+        Gets all versions of an API. Each version can have its own schema and
+        linked resources.
+      parameters:
+        - $ref: '#/components/parameters/ApiIdParam'
+        - name: cursor
+          in: query
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Successful response with API versions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  versions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ApiVersion'
+                  meta:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      nextCursor:
+                        type: string
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+    post:
+      tags:
+        - API Versions
+      summary: Create an API version
+      operationId: createApiVersion
+      description: >-
+        Creates a new version of an API. You can optionally create the version
+        from an existing version to copy its schema and relations.
+      parameters:
+        - $ref: '#/components/parameters/ApiIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - version
+              properties:
+                version:
+                  type: object
+                  required:
+                    - name
+                  properties:
+                    name:
+                      type: string
+                      description: The version name (e.g., "1.0.0", "v2")
+                    source:
+                      type: object
+                      description: Copy from an existing version
+                      properties:
+                        id:
+                          type: string
+                          description: The source version ID to copy from
+      responses:
+        '200':
+          description: Successfully created API version
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiVersion'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /apis/{apiId}/versions/{versionId}:
+    get:
+      tags:
+        - API Versions
+      summary: Get an API version
+      operationId: getApiVersion
+      description: >-
+        Gets information about a specific version of an API.
+      parameters:
+        - $ref: '#/components/parameters/ApiIdParam'
+        - $ref: '#/components/parameters/VersionIdParam'
+      responses:
+        '200':
+          description: Successful response with API version details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiVersion'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+    put:
+      tags:
+        - API Versions
+      summary: Update an API version
+      operationId: updateApiVersion
+      description: >-
+        Updates the name of an API version.
+      parameters:
+        - $ref: '#/components/parameters/ApiIdParam'
+        - $ref: '#/components/parameters/VersionIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - version
+              properties:
+                version:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+      responses:
+        '200':
+          description: Successfully updated API version
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiVersion'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+    delete:
+      tags:
+        - API Versions
+      summary: Delete an API version
+      operationId: deleteApiVersion
+      description: >-
+        Deletes an API version and its schema.
+      parameters:
+        - $ref: '#/components/parameters/ApiIdParam'
+        - $ref: '#/components/parameters/VersionIdParam'
+      responses:
+        '200':
+          description: Successfully deleted API version
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /apis/{apiId}/schemas:
+    get:
+      tags:
+        - API Schemas
+      summary: Get all API schemas
+      operationId: getApiSchemas
+      description: >-
+        Gets all schemas associated with an API. Schemas define the structure
+        of the API using formats like OpenAPI, RAML, or GraphQL.
+      parameters:
+        - $ref: '#/components/parameters/ApiIdParam'
+        - name: cursor
+          in: query
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Successful response with API schemas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  schemas:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ApiSchema'
+                  meta:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      nextCursor:
+                        type: string
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+    post:
+      tags:
+        - API Schemas
+      summary: Create an API schema
+      operationId: createApiSchema
+      description: >-
+        Creates a new schema for an API. Specify the schema type and language,
+        then provide the schema content.
+      parameters:
+        - $ref: '#/components/parameters/ApiIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - language
+                - schema
+              properties:
+                type:
+                  type: string
+                  enum: [openapi3_1, openapi3, openapi2, openapi1, raml, graphql, proto2, proto3, wsdl1, wsdl2, asyncapi2]
+                  description: The schema type
+                language:
+                  type: string
+                  enum: [json, yaml]
+                  description: The schema format
+                schema:
+                  type: string
+                  description: The schema content as a string
+      responses:
+        '200':
+          description: Successfully created API schema
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiSchema'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /apis/{apiId}/schemas/{schemaId}:
+    get:
+      tags:
+        - API Schemas
+      summary: Get an API schema
+      operationId: getApiSchema
+      description: >-
+        Gets a specific schema for an API, including its content.
+      parameters:
+        - $ref: '#/components/parameters/ApiIdParam'
+        - name: schemaId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with schema details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiSchema'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /apis/{apiId}/schemas/{schemaId}/files:
+    get:
+      tags:
+        - API Schemas
+      summary: Get API schema files
+      operationId: getApiSchemaFiles
+      description: >-
+        Gets the files associated with an API schema. Multi-file schemas
+        may have multiple files.
+      parameters:
+        - $ref: '#/components/parameters/ApiIdParam'
+        - name: schemaId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with schema files
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  files:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        path:
+                          type: string
+                        content:
+                          type: string
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /apis/{apiId}/comments:
+    get:
+      tags:
+        - API Comments
+      summary: Get API comments
+      operationId: getApiComments
+      description: >-
+        Gets all comments on an API definition.
+      parameters:
+        - $ref: '#/components/parameters/ApiIdParam'
+      responses:
+        '200':
+          description: Successful response with comments
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  comments:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Comment'
+                  meta:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+    post:
+      tags:
+        - API Comments
+      summary: Create an API comment
+      operationId: createApiComment
+      description: >-
+        Creates a new comment on an API definition.
+      parameters:
+        - $ref: '#/components/parameters/ApiIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - body
+              properties:
+                body:
+                  type: string
+                  description: The comment body in Markdown format
+      responses:
+        '200':
+          description: Successfully created comment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.
+  parameters:
+    ApiIdParam:
+      name: apiId
+      in: path
+      required: true
+      description: The API's unique ID.
+      schema:
+        type: string
+    VersionIdParam:
+      name: versionId
+      in: path
+      required: true
+      description: The API version's unique ID.
+      schema:
+        type: string
+  schemas:
+    ApiListItem:
+      type: object
+      description: Abbreviated API information returned in list responses.
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        summary:
+          type: string
+        description:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: integer
+        updatedAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: integer
+    Api:
+      type: object
+      description: Full API definition from the Postman API Builder.
+      properties:
+        id:
+          type: string
+          description: The API's unique ID
+        name:
+          type: string
+          description: The API name
+        summary:
+          type: string
+          description: A brief summary of the API
+        description:
+          type: string
+          description: A detailed description in Markdown format
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: integer
+        updatedAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: integer
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiVersion'
+        schemas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiSchema'
+        collections:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              type:
+                type: string
+                enum: [documentation, test, contracttest, integration, mock, monitor]
+        gitInfo:
+          type: object
+          description: Git repository information if the API is synced
+          properties:
+            domain:
+              type: string
+            repository:
+              type: string
+            branch:
+              type: string
+            folder:
+              type: string
+    ApiInput:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: The API name
+        summary:
+          type: string
+          description: A brief summary
+        description:
+          type: string
+          description: A detailed description
+    ApiVersion:
+      type: object
+      description: A version of an API definition.
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        schemas:
+          type: array
+          items:
+            type: string
+        collections:
+          type: array
+          items:
+            type: string
+    ApiSchema:
+      type: object
+      description: An API schema definition.
+      properties:
+        id:
+          type: string
+        apiId:
+          type: string
+        type:
+          type: string
+          enum: [openapi3_1, openapi3, openapi2, openapi1, raml, graphql, proto2, proto3, wsdl1, wsdl2, asyncapi2]
+        language:
+          type: string
+          enum: [json, yaml]
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: integer
+        updatedAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: integer
+        files:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              path:
+                type: string
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+        body:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: integer
+        tags:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              userName:
+                type: string
+              fullName:
+                type: string
+  responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+    InternalServerError:
+      description: An unexpected error occurred on the server
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string

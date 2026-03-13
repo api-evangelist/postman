@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://postman.com/schemas/postman/environment.json",
+  "title": "Postman Environment",
+  "description": "A Postman environment containing a set of key-value variable pairs that can be used across requests and collections. Environments enable you to scope your work to different contexts such as development, staging, and production.",
+  "type": "object",
+  "required": ["id", "name", "values"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The environment's unique identifier."
+    },
+    "name": {
+      "type": "string",
+      "description": "The environment name as displayed in the Postman interface."
+    },
+    "values": {
+      "type": "array",
+      "description": "The environment variables.",
+      "items": {
+        "$ref": "#/$defs/EnvironmentVariable"
+      }
+    },
+    "owner": {
+      "type": "string",
+      "description": "The user ID of the environment owner."
+    },
+    "uid": {
+      "type": "string",
+      "description": "The environment's UID in the format {ownerId}-{environmentId}.",
+      "pattern": "^[0-9]+-[a-zA-Z0-9-]+$"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time when the environment was created."
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time when the environment was last updated."
+    },
+    "isPublic": {
+      "type": "boolean",
+      "description": "Whether the environment is publicly accessible."
+    },
+    "_postman_exported_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of when the environment was exported."
+    },
+    "_postman_exported_using": {
+      "type": "string",
+      "description": "The Postman version used to export the environment."
+    }
+  },
+  "$defs": {
+    "EnvironmentVariable": {
+      "type": "object",
+      "description": "A key-value variable within the environment.",
+      "required": ["key"],
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "The variable name used for substitution in requests."
+        },
+        "value": {
+          "type": "string",
+          "description": "The current value of the variable. For secret type variables, this may be masked."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["default", "secret"],
+          "description": "The variable type. Secret variables are masked in the UI and API responses.",
+          "default": "default"
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether the variable is active. Disabled variables are not substituted in requests.",
+          "default": true
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of what the variable is used for."
+        }
+      }
+    }
+  }
+}
