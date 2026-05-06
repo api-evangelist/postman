@@ -1,0 +1,651 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Postman APIs API
+  description: 'The Postman APIs API enables you to manage your API definitions in Postman''s API Builder. You can create
+    APIs, manage versions, add schemas (OpenAPI, GraphQL, etc.), and link collections, environments, mock servers, monitors,
+    and documentation to your API definitions. ## Authentication All requests require an API key passed in the `x-api-key`
+    header. ## Rate Limits Standard Postman API rate limits apply.'
+  tags:
+  - Postman
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: postman
+    baseUri: https://api.getpostman.com
+    description: Postman APIs API HTTP API.
+    authentication:
+      type: apikey
+      in: header
+      name: x-api-key
+      value: '{{POSTMAN_TOKEN}}'
+    resources:
+    - name: apis
+      path: /apis
+      operations:
+      - name: getallapis
+        method: GET
+        description: Postman Get all APIs
+        inputParameters:
+        - name: workspace
+          in: query
+          type: string
+          required: true
+          description: The workspace ID to get APIs from. Required.
+        - name: cursor
+          in: query
+          type: string
+          description: Pagination cursor.
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of results to return.
+        - name: createdBy
+          in: query
+          type: integer
+          description: Filter by creator user ID.
+        - name: description
+          in: query
+          type: string
+          description: Filter by description text (partial match).
+        - name: name
+          in: query
+          type: string
+          description: Filter by API name (partial match).
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createapi
+        method: POST
+        description: Postman Create an API
+        inputParameters:
+        - name: workspace
+          in: query
+          type: string
+          required: true
+          description: The workspace ID to create the API in. Required.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: apis-apiid
+      path: /apis/{apiId}
+      operations:
+      - name: getapi
+        method: GET
+        description: Postman Get an API
+        inputParameters:
+        - name: include
+          in: query
+          type: array
+          description: Additional data to include in the response.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateapi
+        method: PUT
+        description: Postman Update an API
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deleteapi
+        method: DELETE
+        description: Postman Delete an API
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: apis-apiid-versions
+      path: /apis/{apiId}/versions
+      operations:
+      - name: getapiversions
+        method: GET
+        description: Postman Get all API versions
+        inputParameters:
+        - name: cursor
+          in: query
+          type: string
+        - name: limit
+          in: query
+          type: integer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createapiversion
+        method: POST
+        description: Postman Create an API version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: apis-apiid-versions-versionid
+      path: /apis/{apiId}/versions/{versionId}
+      operations:
+      - name: getapiversion
+        method: GET
+        description: Postman Get an API version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateapiversion
+        method: PUT
+        description: Postman Update an API version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deleteapiversion
+        method: DELETE
+        description: Postman Delete an API version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: apis-apiid-schemas
+      path: /apis/{apiId}/schemas
+      operations:
+      - name: getapischemas
+        method: GET
+        description: Postman Get all API schemas
+        inputParameters:
+        - name: cursor
+          in: query
+          type: string
+        - name: limit
+          in: query
+          type: integer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createapischema
+        method: POST
+        description: Postman Create an API schema
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: apis-apiid-schemas-schemaid
+      path: /apis/{apiId}/schemas/{schemaId}
+      operations:
+      - name: getapischema
+        method: GET
+        description: Postman Get an API schema
+        inputParameters:
+        - name: schemaId
+          in: path
+          type: string
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: apis-apiid-schemas-schemaid-files
+      path: /apis/{apiId}/schemas/{schemaId}/files
+      operations:
+      - name: getapischemafiles
+        method: GET
+        description: Postman Get API schema files
+        inputParameters:
+        - name: schemaId
+          in: path
+          type: string
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: apis-apiid-comments
+      path: /apis/{apiId}/comments
+      operations:
+      - name: getapicomments
+        method: GET
+        description: Postman Get API comments
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createapicomment
+        method: POST
+        description: Postman Create an API comment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: postman-rest
+    description: REST adapter for Postman APIs API.
+    resources:
+    - path: /apis
+      name: getallapis
+      operations:
+      - method: GET
+        name: getallapis
+        description: Postman Get all APIs
+        call: postman.getallapis
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis
+      name: createapi
+      operations:
+      - method: POST
+        name: createapi
+        description: Postman Create an API
+        call: postman.createapi
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/{apiId}
+      name: getapi
+      operations:
+      - method: GET
+        name: getapi
+        description: Postman Get an API
+        call: postman.getapi
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/{apiId}
+      name: updateapi
+      operations:
+      - method: PUT
+        name: updateapi
+        description: Postman Update an API
+        call: postman.updateapi
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/{apiId}
+      name: deleteapi
+      operations:
+      - method: DELETE
+        name: deleteapi
+        description: Postman Delete an API
+        call: postman.deleteapi
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/{apiId}/versions
+      name: getapiversions
+      operations:
+      - method: GET
+        name: getapiversions
+        description: Postman Get all API versions
+        call: postman.getapiversions
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/{apiId}/versions
+      name: createapiversion
+      operations:
+      - method: POST
+        name: createapiversion
+        description: Postman Create an API version
+        call: postman.createapiversion
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/{apiId}/versions/{versionId}
+      name: getapiversion
+      operations:
+      - method: GET
+        name: getapiversion
+        description: Postman Get an API version
+        call: postman.getapiversion
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/{apiId}/versions/{versionId}
+      name: updateapiversion
+      operations:
+      - method: PUT
+        name: updateapiversion
+        description: Postman Update an API version
+        call: postman.updateapiversion
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/{apiId}/versions/{versionId}
+      name: deleteapiversion
+      operations:
+      - method: DELETE
+        name: deleteapiversion
+        description: Postman Delete an API version
+        call: postman.deleteapiversion
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/{apiId}/schemas
+      name: getapischemas
+      operations:
+      - method: GET
+        name: getapischemas
+        description: Postman Get all API schemas
+        call: postman.getapischemas
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/{apiId}/schemas
+      name: createapischema
+      operations:
+      - method: POST
+        name: createapischema
+        description: Postman Create an API schema
+        call: postman.createapischema
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/{apiId}/schemas/{schemaId}
+      name: getapischema
+      operations:
+      - method: GET
+        name: getapischema
+        description: Postman Get an API schema
+        call: postman.getapischema
+        with:
+          schemaId: rest.schemaId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/{apiId}/schemas/{schemaId}/files
+      name: getapischemafiles
+      operations:
+      - method: GET
+        name: getapischemafiles
+        description: Postman Get API schema files
+        call: postman.getapischemafiles
+        with:
+          schemaId: rest.schemaId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/{apiId}/comments
+      name: getapicomments
+      operations:
+      - method: GET
+        name: getapicomments
+        description: Postman Get API comments
+        call: postman.getapicomments
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/{apiId}/comments
+      name: createapicomment
+      operations:
+      - method: POST
+        name: createapicomment
+        description: Postman Create an API comment
+        call: postman.createapicomment
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: postman-mcp
+    transport: http
+    description: MCP adapter for Postman APIs API for AI agent use.
+    tools:
+    - name: getallapis
+      description: Postman Get all APIs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: postman.getallapis
+      with:
+        workspace: tools.workspace
+        cursor: tools.cursor
+        limit: tools.limit
+        createdBy: tools.createdBy
+        description: tools.description
+        name: tools.name
+      inputParameters:
+      - name: workspace
+        type: string
+        description: The workspace ID to get APIs from. Required.
+        required: true
+      - name: cursor
+        type: string
+        description: Pagination cursor.
+      - name: limit
+        type: integer
+        description: Maximum number of results to return.
+      - name: createdBy
+        type: integer
+        description: Filter by creator user ID.
+      - name: description
+        type: string
+        description: Filter by description text (partial match).
+      - name: name
+        type: string
+        description: Filter by API name (partial match).
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createapi
+      description: Postman Create an API
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: postman.createapi
+      with:
+        workspace: tools.workspace
+      inputParameters:
+      - name: workspace
+        type: string
+        description: The workspace ID to create the API in. Required.
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getapi
+      description: Postman Get an API
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: postman.getapi
+      with:
+        include: tools.include
+      inputParameters:
+      - name: include
+        type: array
+        description: Additional data to include in the response.
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updateapi
+      description: Postman Update an API
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: postman.updateapi
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deleteapi
+      description: Postman Delete an API
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: postman.deleteapi
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getapiversions
+      description: Postman Get all API versions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: postman.getapiversions
+      with:
+        cursor: tools.cursor
+        limit: tools.limit
+      inputParameters:
+      - name: cursor
+        type: string
+        description: cursor
+      - name: limit
+        type: integer
+        description: limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createapiversion
+      description: Postman Create an API version
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: postman.createapiversion
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getapiversion
+      description: Postman Get an API version
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: postman.getapiversion
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updateapiversion
+      description: Postman Update an API version
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: postman.updateapiversion
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deleteapiversion
+      description: Postman Delete an API version
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: postman.deleteapiversion
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getapischemas
+      description: Postman Get all API schemas
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: postman.getapischemas
+      with:
+        cursor: tools.cursor
+        limit: tools.limit
+      inputParameters:
+      - name: cursor
+        type: string
+        description: cursor
+      - name: limit
+        type: integer
+        description: limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createapischema
+      description: Postman Create an API schema
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: postman.createapischema
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getapischema
+      description: Postman Get an API schema
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: postman.getapischema
+      with:
+        schemaId: tools.schemaId
+      inputParameters:
+      - name: schemaId
+        type: string
+        description: schemaId
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getapischemafiles
+      description: Postman Get API schema files
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: postman.getapischemafiles
+      with:
+        schemaId: tools.schemaId
+      inputParameters:
+      - name: schemaId
+        type: string
+        description: schemaId
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getapicomments
+      description: Postman Get API comments
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: postman.getapicomments
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createapicomment
+      description: Postman Create an API comment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: postman.createapicomment
+      outputParameters:
+      - type: object
+        mapping: $.
+binds:
+- namespace: env
+  keys:
+    POSTMAN_TOKEN: POSTMAN_TOKEN
