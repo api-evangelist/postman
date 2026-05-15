@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-structure.org/draft-2025/structure",
+  "title": "PostmanWorkspace",
+  "description": "JSON Structure for a Postman Workspace returned by the Workspaces API.",
+  "type": "object",
+  "required": ["workspace"],
+  "properties": {
+    "workspace": {
+      "type": "object",
+      "required": ["id", "name", "type"],
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["personal", "team", "private", "public", "partner"] },
+        "description": { "type": "string" },
+        "visibility": { "type": "string", "enum": ["personal", "private-team", "team", "public"] },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "collections": { "type": "array", "items": { "$ref": "#/$defs/ElementRef" } },
+        "environments": { "type": "array", "items": { "$ref": "#/$defs/ElementRef" } },
+        "mocks": { "type": "array", "items": { "$ref": "#/$defs/ElementRef" } },
+        "monitors": { "type": "array", "items": { "$ref": "#/$defs/ElementRef" } },
+        "apis": { "type": "array", "items": { "$ref": "#/$defs/ElementRef" } }
+      }
+    }
+  },
+  "$defs": {
+    "ElementRef": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string" },
+        "uid": { "type": "string" },
+        "name": { "type": "string" }
+      }
+    }
+  }
+}

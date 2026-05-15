@@ -1,0 +1,184 @@
+vocabulary: API Commons Vocabulary
+specificationVersion: '0.1'
+provider: Postman
+providerId: postman
+created: '2026-05-15'
+modified: '2026-05-15'
+description: >-
+  Operational and capability vocabulary for the Postman API platform, covering
+  the elements of the Postman lifecycle (collections, workspaces, environments,
+  mocks, monitors, APIs, network), governance and compliance, AI agents and
+  MCP, and the commercial surface (plans, AI credits, automation flow credits).
+sources:
+  - https://www.postman.com/
+  - https://learning.postman.com/docs/developer/postman-api/intro-api/
+  - https://schema.postman.com/
+concepts:
+  # ---- Core elements ----
+  - term: Collection
+    definition: An executable, shareable group of API requests organized into folders, with scripts, tests, and documentation.
+    relatedTerms: [Request, Folder, Script, Environment]
+  - term: Workspace
+    definition: Container for collections, environments, mock servers, monitors, and APIs - personal, team, partner, private, or public.
+    relatedTerms: [Collection, Team, Partner, PrivateAPINetwork, PublicAPINetwork]
+  - term: Environment
+    definition: A named set of variables (including secret values stored in the Postman Vault) that scopes a collection run.
+    relatedTerms: [Variable, Vault, GlobalVariable]
+  - term: MockServer
+    definition: A simulated API endpoint backed by example responses on a collection - used during API-first development.
+    relatedTerms: [Collection, Sandbox]
+  - term: Monitor
+    definition: A scheduled, recurring collection run that validates API health, contract conformance, and performance.
+    relatedTerms: [Collection, Schedule, Webhook]
+  - term: APIDefinition
+    definition: A spec-first API entry in Postman's Spec Hub, with versions and linked OpenAPI, AsyncAPI, GraphQL, gRPC, RAML, or WSDL schemas.
+    relatedTerms: [SpecHub, OpenAPI, Version]
+  - term: SpecHub
+    definition: Postman's repository for API specifications and their lifecycle (versions, comments, generated collections, mocks, monitors, docs).
+    relatedTerms: [APIDefinition, Schema, Version]
+  # ---- Network and governance ----
+  - term: PrivateAPINetwork
+    definition: Internal catalog where teams publish, organize, and approve APIs for discovery inside an organization.
+    relatedTerms: [APICatalog, Tag, Folder]
+  - term: PublicAPINetwork
+    definition: Postman's public marketplace of millions of public workspaces, collections, and APIs.
+    relatedTerms: [Workspace, Discovery]
+  - term: APICatalog
+    definition: Enterprise-tier consolidated index of all APIs and services in an organization, with ownership and lifecycle metadata.
+    relatedTerms: [PrivateAPINetwork, Governance]
+  - term: APIGovernance
+    definition: Rule-based linting, secret scanning, and reporting on API definitions, collections, and operations to enforce internal standards.
+    relatedTerms: [GovernanceRule, SecretScanner, Compliance]
+  - term: GovernanceRule
+    definition: An individual rule (built-in or custom) applied to APIs and collections to enforce naming, security, or documentation standards.
+    relatedTerms: [APIGovernance, Spectral, SecurityWarning]
+  - term: SecretScanner
+    definition: Detects leaked secrets and credentials in collections, environments, and other elements and surfaces them for resolution.
+    relatedTerms: [DetectedSecret, Vault, Compliance]
+  - term: AuditLog
+    definition: Enterprise-tier event log of user, team, and configuration actions for compliance reporting.
+    relatedTerms: [Compliance, Enterprise, SIEM]
+  # ---- AI and MCP ----
+  - term: ModelContextProtocol
+    aliases: [MCP]
+    definition: Anthropic-defined protocol for exposing tools, resources, and prompts to AI agents - Postman's MCP Server and MCP Generator are first-class implementations.
+    relatedTerms: [MCPServer, MCPGenerator, AIAgentBuilder]
+  - term: MCPGenerator
+    definition: Postman feature that converts a Postman Collection or OpenAPI spec into an MCP server with tool definitions for AI agents.
+    relatedTerms: [MCPServer, Collection, AIAgentBuilder]
+  - term: MCPServer
+    definition: A runtime that exposes Postman Collections as MCP tools, callable by Claude, Cursor, and other MCP clients.
+    relatedTerms: [ModelContextProtocol, Collection]
+  - term: AIAgentBuilder
+    definition: Postman's product for designing AI agents, chaining LLM calls with API calls, and orchestrating multi-step workflows.
+    relatedTerms: [Flows, MCP, Postbot]
+  - term: Flows
+    definition: Visual workflow builder that chains API calls, transformations, and conditional logic - executable, debuggable, cloneable documentation.
+    relatedTerms: [AIAgentBuilder, Automation, Orchestration]
+  - term: Postbot
+    definition: Postman's AI assistant for generating tests, documentation, and code from collections and specs.
+    relatedTerms: [AICredit, AIAgentBuilder]
+  - term: AICredit
+    definition: Per-user metered unit consumed by Postbot and AI features - 50/month Free, 400/month Solo and Team, 800/month Enterprise (pooled).
+    relatedTerms: [Postbot, AIAgentBuilder, Plan]
+  # ---- Tooling ----
+  - term: Newman
+    definition: Open-source command-line collection runner that executes Postman Collections in CI/CD pipelines.
+    relatedTerms: [Collection, CLI, CI/CD]
+  - term: PostmanCLI
+    definition: Postman's official CLI used to run collections, sync, lint, and integrate with CI/CD.
+    relatedTerms: [Newman, Collection, CI/CD]
+  - term: Interceptor
+    definition: Browser extension that captures HTTP traffic and routes it into Postman.
+    relatedTerms: [Proxy, Collection]
+  - term: PostmanVault
+    definition: Encrypted local vault for storing API keys, secrets, and credentials referenced by environments and requests.
+    relatedTerms: [Environment, Variable, Secret]
+  # ---- Commercial ----
+  - term: Plan
+    definition: A commercial tier - Free, Solo, Team, or Enterprise - with seat-based pricing and metered overlays.
+    relatedTerms: [AICredit, MonitoringRequest, AutomationFlowCredit]
+  - term: MonitoringRequest
+    definition: A single outbound API call made by a Postman Monitor - 1k/month on Free, 10k/month on paid plans.
+    relatedTerms: [Monitor, Quota]
+  - term: AutomationFlowCredit
+    definition: Per-team metered unit consumed when a Postman Flow executes - 50 Solo, 100 Team, 500 Enterprise.
+    relatedTerms: [Flows, Plan, Quota]
+services:
+  - id: postman:collections-api
+    name: Collections API
+  - id: postman:workspaces-api
+    name: Workspaces API
+  - id: postman:environments-api
+    name: Environments API
+  - id: postman:mock-servers-api
+    name: Mock Servers API
+  - id: postman:monitors-api
+    name: Monitors API
+  - id: postman:apis-api
+    name: APIs / Spec Hub API
+  - id: postman:private-api-network-api
+    name: Private API Network API
+  - id: postman:webhooks-api
+    name: Webhooks API
+  - id: postman:collection-runs-api
+    name: Collection Runs API
+  - id: postman:tags-api
+    name: Tags API
+  - id: postman:audit-logs-api
+    name: Audit Logs API
+  - id: postman:secret-scanner-api
+    name: Secret Scanner API
+  - id: postman:billing-api
+    name: Billing API
+  - id: postman:scim-api
+    name: SCIM API
+  - id: postman:mcp-server
+    name: Postman MCP Server
+  - id: postman:flows-api
+    name: Postman Flows
+tools:
+  - name: Newman
+    type: CLI
+    repository: https://github.com/postmanlabs/newman
+  - name: Postman CLI
+    type: CLI
+    documentation: https://learning.postman.com/docs/postman-cli/postman-cli-installation/
+  - name: openapi-to-postman
+    type: Converter
+    repository: https://github.com/postmanlabs/openapi-to-postman
+  - name: postman-code-generators
+    type: CodeGenerator
+    repository: https://github.com/postmanlabs/postman-code-generators
+  - name: postman-collection
+    type: SDK
+    repository: https://github.com/postmanlabs/postman-collection
+  - name: postman-runtime
+    type: Runtime
+    repository: https://github.com/postmanlabs/postman-runtime
+  - name: postman-mcp-server
+    type: MCPServer
+    repository: https://github.com/postmanlabs/postman-mcp-server
+  - name: postman-insights-agent
+    type: Agent
+    repository: https://github.com/postmanlabs/postman-insights-agent
+standards:
+  - name: OpenAPI 3.x
+    role: native-import-export
+  - name: AsyncAPI 2.x
+    role: native-import-export
+  - name: GraphQL
+    role: native-import-export
+  - name: gRPC / Protobuf
+    role: native-import-export
+  - name: WSDL / SOAP
+    role: native-import
+  - name: RAML
+    role: native-import
+  - name: Model Context Protocol (MCP)
+    role: native-publish
+  - name: JSON Schema (draft-07)
+    role: collection-format-schema
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

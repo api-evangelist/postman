@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-structure.org/draft-2025/structure",
+  "title": "PostmanMonitor",
+  "description": "JSON Structure for a Postman Monitor managed by the Monitors API.",
+  "type": "object",
+  "required": ["monitor"],
+  "properties": {
+    "monitor": {
+      "type": "object",
+      "required": ["id", "name", "uid", "collection"],
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "owner": { "type": "string" },
+        "collection": { "type": "string", "description": "Collection UID being executed." },
+        "environment": { "type": "string", "description": "Environment UID applied to runs." },
+        "schedule": {
+          "type": "object",
+          "required": ["cron", "timezone"],
+          "properties": {
+            "cron": { "type": "string", "description": "Cron expression for the schedule." },
+            "timezone": { "type": "string" },
+            "nextRun": { "type": "string", "format": "date-time" }
+          }
+        },
+        "notifications": {
+          "type": "object",
+          "properties": {
+            "onError": { "type": "array", "items": { "type": "object" } },
+            "onFailure": { "type": "array", "items": { "type": "object" } }
+          }
+        },
+        "distribution": { "type": "array", "items": { "type": "string" } },
+        "lastRun": {
+          "type": "object",
+          "properties": {
+            "status": { "type": "string", "enum": ["success", "failed", "aborted"] },
+            "startedAt": { "type": "string", "format": "date-time" },
+            "finishedAt": { "type": "string", "format": "date-time" },
+            "stats": {
+              "type": "object",
+              "properties": {
+                "assertions": { "type": "object" },
+                "requests": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

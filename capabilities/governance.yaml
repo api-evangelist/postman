@@ -1,0 +1,85 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Postman API Governance
+  description: >-
+    Governance workflow that catalogs APIs in the Spec Hub, applies API
+    governance rules and custom linting, scans collections and environments
+    for leaked secrets, pulls audit logs, and emits compliance findings.
+    Exposes the workflow via REST and MCP so governance bots and AI agents
+    can run the same playbook.
+  tags:
+    - Postman
+    - API Governance
+    - Spec Hub
+    - Secret Scanning
+    - Audit Logs
+    - Compliance
+  created: '2026-05-15'
+  modified: '2026-05-15'
+imports:
+  - name: postman
+    path: ./shared/postman-apis.yaml
+capability:
+  consumes:
+    - type: workflow
+      namespace: api-governance
+      description: Run Postman governance, secret-scanning, and audit-log review.
+      steps:
+        - name: list-apis
+          call: postman.getallapis
+          description: Enumerate APIs in the Spec Hub for the workspace.
+        - name: review-tags
+          call: postman.getalltags
+          description: Review tagging coverage for governance reporting.
+        - name: scan-secrets
+          call: postman.getdetectedsecrets
+          description: Pull detected secrets from the Secret Scanner.
+        - name: pull-audit-logs
+          call: postman.getauditlogs
+          description: Pull team audit log entries for compliance review.
+        - name: emit-findings
+          description: Aggregate findings into a governance report.
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: governance-rest
+      description: REST adapter for the governance workflow.
+      resources:
+        - path: /governance/run
+          name: rungovernance
+          operations:
+            - method: POST
+              name: rungovernance
+              description: Run the governance workflow for a given workspace or team.
+              call: api-governance.run
+              outputParameters:
+                - type: object
+                  mapping: $.
+    - type: mcp
+      port: 9090
+      namespace: governance-mcp
+      transport: http
+      description: MCP adapter for the governance workflow for AI-agent use.
+      tools:
+        - name: runApiGovernance
+          description: Catalog APIs, scan secrets, pull audit logs, and emit a governance report.
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: api-governance.run
+          inputParameters:
+            - name: workspace
+              type: string
+              description: Workspace ID to govern.
+              required: true
+            - name: since
+              type: string
+              description: ISO 8601 timestamp to bound audit log retrieval.
+          outputParameters:
+            - type: object
+              mapping: $.
+binds:
+  - namespace: env
+    keys:
+      POSTMAN_TOKEN: POSTMAN_TOKEN

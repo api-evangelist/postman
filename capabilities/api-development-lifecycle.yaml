@@ -1,0 +1,93 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Postman API Development Lifecycle
+  description: >-
+    End-to-end workflow that walks an API spec through Postman: import an
+    OpenAPI / collection into the Spec Hub, create a workspace and
+    environments, generate a mock server, schedule a monitor, and publish
+    documentation to the Private API Network. Exposes the same workflow as
+    REST and MCP for AI-agent orchestration.
+  tags:
+    - Postman
+    - API Lifecycle
+    - Spec Hub
+    - Mocking
+    - Monitoring
+    - Documentation
+  created: '2026-05-15'
+  modified: '2026-05-15'
+imports:
+  - name: postman
+    path: ./shared/postman-apis.yaml
+capability:
+  consumes:
+    - type: workflow
+      namespace: api-development-lifecycle
+      description: Orchestrates the full API lifecycle in Postman.
+      steps:
+        - name: create-workspace
+          call: postman.createworkspace
+          description: Provision a Postman workspace to hold the lifecycle.
+        - name: import-spec
+          call: postman.createapi
+          description: Create a Postman API entry in the Spec Hub from an OpenAPI spec.
+        - name: create-environment
+          call: postman.createenvironment
+          description: Create dev/staging/prod environments scoped to the workspace.
+        - name: create-mock-server
+          call: postman.createmock
+          description: Generate a mock server from the imported collection.
+        - name: schedule-monitor
+          call: postman.createmonitor
+          description: Schedule a recurring monitor against the live or mocked endpoints.
+        - name: publish-to-network
+          call: postman.addelementtonetwork
+          description: Publish the API to the Private API Network for discoverability.
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: api-lifecycle-rest
+      description: REST adapter for the API development lifecycle workflow.
+      resources:
+        - path: /lifecycle/run
+          name: runlifecycle
+          operations:
+            - method: POST
+              name: runlifecycle
+              description: Run the full API development lifecycle for a given OpenAPI input.
+              call: api-development-lifecycle.run
+              outputParameters:
+                - type: object
+                  mapping: $.
+    - type: mcp
+      port: 9090
+      namespace: api-lifecycle-mcp
+      transport: http
+      description: MCP adapter for the API development lifecycle workflow for AI agent use.
+      tools:
+        - name: runApiLifecycle
+          description: Walk an OpenAPI spec through Postman - workspace, spec import, env, mock, monitor, network publish.
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: api-development-lifecycle.run
+          inputParameters:
+            - name: openApiUrl
+              type: string
+              description: URL to the OpenAPI specification to import.
+              required: true
+            - name: workspaceName
+              type: string
+              description: Name for the new Postman workspace.
+              required: true
+            - name: environments
+              type: array
+              description: Names of environments to create (e.g. dev, staging, prod).
+          outputParameters:
+            - type: object
+              mapping: $.
+binds:
+  - namespace: env
+    keys:
+      POSTMAN_TOKEN: POSTMAN_TOKEN

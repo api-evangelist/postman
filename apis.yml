@@ -1,19 +1,104 @@
 aid: postman
 url: https://raw.githubusercontent.com/api-evangelist/postman/refs/heads/main/apis.yml
+name: Postman
+type: Index
+image: https://www.postman.com/assets/logos/postman-logo-horizontal-orange.svg
+access: 3rd-Party
+description: >-
+  Postman is the world's leading API platform, used by 35+ million developers
+  to design, build, test, document, mock, monitor, and govern APIs across the
+  entire API lifecycle. The platform spans Collections, Workspaces, the API
+  Client, Spec Hub, Mock Servers, Monitors, the Postman CLI, Newman, Flows,
+  AI Agent Builder, the Postman MCP Server and MCP Generator, API Governance,
+  the Private API Network, Live Collections, Insights, and a public Postman
+  API Network with millions of public workspaces.
+tags:
+  - AI Agent Builder
+  - AI Agents
+  - API Catalog
+  - API Client
+  - API Design
+  - API Development
+  - API Documentation
+  - API Governance
+  - API Lifecycle
+  - API Monitoring
+  - API Network
+  - API Platform
+  - API Testing
+  - Audit Logs
+  - Automation
+  - CI/CD
+  - Collaboration
+  - Collections
+  - Compliance
+  - Discovery
+  - Environments
+  - Flows
+  - GraphQL
+  - gRPC
+  - HTTP
+  - Insights
+  - MCP
+  - MCP Generator
+  - Mock Servers
+  - Mocking
+  - Monitors
+  - Newman
+  - OpenAPI
+  - Platform
+  - Private API Network
+  - Public API Network
+  - Secret Scanning
+  - Spec Hub
+  - Specifications
+  - SSO
+  - Testing
+  - Vault
+  - WebSocket
+  - Workflows
+  - Workspaces
+created: '2025-01-08T00:00:00.000Z'
+modified: '2026-05-15'
+position: Consumer
+segments:
+  - Clients
+  - Workflows
+  - Documentation
+  - Testing
+  - Monitoring
+  - Governance
+  - AI Agents
+  - MCP
+specificationVersion: '0.19'
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
+  - name: Postman
+    email: help@postman.com
+    url: https://www.postman.com
 apis:
   - aid: postman:postman
     name: Postman
-    tags:
-      - Automation
-      - Client
-      - Collections
-      - Discovery
-      - Mocking
-      - Network
-      - Platform
-      - Testing
-      - Workflows
     humanURL: https://www.postman.com/
+    baseURL: https://api.getpostman.com
+    tags:
+      - API Platform
+      - Collaboration
+      - Collections
+      - Mocking
+      - Monitoring
+      - Documentation
+      - Governance
+      - Testing
+      - AI Agent Builder
+      - MCP
+    description: >-
+      Postman is the single platform for collaborative API development used by
+      35+ million developers. It covers the entire API lifecycle - design,
+      build, test, document, mock, monitor, and govern - and now includes
+      first-class AI Agent Builder, MCP Generator, and Flows for orchestrating
+      multi-step API workflows for AI agents.
     properties:
       - url: https://www.postman.com/
         type: Documentation
@@ -21,8 +106,12 @@ apis:
         type: GettingStarted
       - url: https://learning.postman.com/docs/developer/postman-api/authentication/
         type: Authentication
+      - url: https://learning.postman.com/docs/developer/postman-api/postman-api-rate-limits/
+        type: RateLimits
       - url: https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api
         type: PostmanCollection
+      - url: https://schema.postman.com/
+        type: SchemaCatalog
       - url: asyncapi/postman-webhooks-asyncapi.yml
         type: AsyncAPI
       - url: json-schema/postman-collection-schema.json
@@ -33,115 +122,184 @@ apis:
         type: JSONSchema
       - url: json-ld/postman-context.yml
         type: JSON-LD
-    description: Postman is your single platform for collaborative API development. Join 35+ million devs building great APIs together, across the entire API lifecycle.
+      - url: json-structure/postman-collection-structure.json
+        type: JSONStructure
+      - url: json-structure/postman-workspace-structure.json
+        type: JSONStructure
+      - url: json-structure/postman-monitor-structure.json
+        type: JSONStructure
+      - url: capabilities/shared/postman-apis.yaml
+        type: NaftikoCapability
+      - url: capabilities/api-development-lifecycle.yaml
+        type: NaftikoWorkflow
+      - url: capabilities/governance.yaml
+        type: NaftikoWorkflow
+      - url: capabilities/mcp-publishing.yaml
+        type: NaftikoWorkflow
+      - url: rules/postman-rules.yml
+        type: Spectral
+      - url: vocabulary/postman-vocabulary.yml
+        type: Vocabulary
+      - url: examples/postman-get-all-collections-example.json
+        type: Example
+      - url: examples/postman-create-mock-server-example.json
+        type: Example
+      - url: examples/postman-run-monitor-example.json
+        type: Example
+      - url: examples/postman-create-api-spec-example.json
+        type: Example
+      - url: examples/postman-audit-logs-example.json
+        type: Example
+      - url: plans/postman-plans-pricing.yml
+        type: Plans
+      - url: rate-limits/postman-rate-limits.yml
+        type: RateLimitsPolicy
+      - url: finops/postman-finops.yml
+        type: FinOps
   - aid: postman:collections-api
     name: Postman Collections API
+    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    baseURL: https://api.getpostman.com
     tags:
       - API Management
       - Automation
       - Collections
-    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
-    baseURL: https://api.getpostman.com
+      - CRUD
+    description: >-
+      The Collections API lets you programmatically create, read, update, and
+      delete Postman Collections including requests, folders, scripts, and
+      environments. Powers CI/CD integration, sync, and collection generation
+      pipelines.
     properties:
       - url: openapi/postman-collections-api-openapi.yml
         type: OpenAPI
       - url: https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api
         type: Documentation
-    description: Use the Collections APIs to manage your Postman collections and simplify collection-related workflows, with endpoints to add, delete, or update your collections.
   - aid: postman:workspaces-api
     name: Postman Workspaces API
+    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    baseURL: https://api.getpostman.com
     tags:
       - API Management
       - Collaboration
       - Workspaces
-    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
-    baseURL: https://api.getpostman.com
+    description: >-
+      Manage personal, team, partner, public, and private workspaces. Control
+      visibility, membership, roles, and the elements (collections,
+      environments, mocks, monitors, APIs) attached to each workspace.
     properties:
       - url: openapi/postman-workspaces-api-openapi.yml
         type: OpenAPI
       - url: https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api
         type: Documentation
-    description: Use the Workspaces APIs to manage your Postman workspaces, with endpoints that enable you to create, update, and delete workspaces programmatically.
   - aid: postman:environments-api
     name: Postman Environments API
+    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    baseURL: https://api.getpostman.com
     tags:
       - Configuration
       - Environments
       - Variables
-    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
-    baseURL: https://api.getpostman.com
+    description: >-
+      The Environments API enables programmatic management of Postman
+      environments and global variables, including secret variables stored in
+      the Postman Vault, so you can scope work to dev/staging/prod environments.
     properties:
       - url: openapi/postman-environments-api-openapi.yml
         type: OpenAPI
       - url: https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api
         type: Documentation
-    description: The Environments API enables you to programmatically manage your Postman environments and global variables, scoping your work to different environments.
   - aid: postman:mock-servers-api
     name: Postman Mock Servers API
+    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    baseURL: https://api.getpostman.com
     tags:
       - API Development
       - Mocking
       - Simulation
-    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
-    baseURL: https://api.getpostman.com
+      - Sandbox
+    description: >-
+      The Mock Servers API performs CRUD operations on mock servers, manages
+      mock responses, controls visibility, and exposes mock call logs - used
+      to simulate API behavior during API-first development and to share
+      reference implementations with partners.
     properties:
       - url: openapi/postman-mock-servers-api-openapi.yml
         type: OpenAPI
       - url: https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api
         type: Documentation
-    description: The Mock Servers API enables you to perform CRUD operations on mock servers and manage mock server responses for simulating API behavior during development.
   - aid: postman:monitors-api
     name: Postman Monitors API
+    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    baseURL: https://api.getpostman.com
     tags:
       - Automation
       - Monitoring
       - Scheduling
       - Testing
-    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
-    baseURL: https://api.getpostman.com
+      - Observability
+    description: >-
+      The Monitors API runs Postman Collections on a recurring schedule to
+      validate API health, performance, and contract conformance. Surfaces
+      metrics, test results, and notification webhooks for incident response.
     properties:
       - url: openapi/postman-monitors-api-openapi.yml
         type: OpenAPI
       - url: https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api
         type: Documentation
-    description: The Monitors API enables you to programmatically run collections on a schedule, manage webhooks, and access metrics for API monitoring instances.
   - aid: postman:apis-api
-    name: Postman APIs API
+    name: Postman APIs / Spec Hub API
+    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    baseURL: https://api.getpostman.com
     tags:
       - API Builder
       - API Design
+      - Spec Hub
       - Specifications
-    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
-    baseURL: https://api.getpostman.com
+      - OpenAPI
+      - GraphQL
+    description: >-
+      The APIs endpoints (Spec Hub) manage API definitions, versions,
+      specifications, and linked elements. Supports OpenAPI 3, AsyncAPI,
+      GraphQL, gRPC/Protobuf, RAML, WSDL, and SOAP definitions and enables
+      design-first API workflows.
     properties:
       - url: openapi/postman-apis-api-openapi.yml
         type: OpenAPI
       - url: https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api
         type: Documentation
-    description: Use the APIs endpoints to manage your API definitions in Postman, including creating, updating, and managing API versions and specifications.
   - aid: postman:private-api-network-api
     name: Postman Private API Network API
+    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    baseURL: https://api.getpostman.com
     tags:
+      - API Catalog
       - API Network
       - Discovery
       - Governance
-    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
-    baseURL: https://api.getpostman.com
+      - Private Network
+    description: >-
+      The Private API Network API manages your internal API catalog -
+      organizing folders, approving submissions, controlling visibility, and
+      integrating CI/CD pipelines that publish APIs into your developer portal.
     properties:
       - url: openapi/postman-private-api-network-api-openapi.yml
         type: OpenAPI
       - url: https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api
         type: Documentation
-    description: The Private API Network API enables you to programmatically manage your private API network, automate management of internal documentation, and integrate with CI/CD pipelines.
   - aid: postman:webhooks-api
     name: Postman Webhooks API
+    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    baseURL: https://api.getpostman.com
     tags:
       - Automation
       - Events
       - Integrations
       - Webhooks
-    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
-    baseURL: https://api.getpostman.com
+    description: >-
+      The Webhooks API creates webhooks that trigger collection runs with
+      custom payloads, integrating Postman with external systems (GitHub,
+      Slack, custom triggers) for event-driven automation.
     properties:
       - url: openapi/postman-webhooks-api-openapi.yml
         type: OpenAPI
@@ -149,357 +307,155 @@ apis:
         type: AsyncAPI
       - url: https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api
         type: Documentation
-    description: >-
-      The Webhooks API enables you to create webhooks that trigger collection
-      runs with custom payloads. Webhooks provide a way to integrate Postman
-      with external systems and automate workflows based on incoming events.
   - aid: postman:collection-runs-api
     name: Postman Collection Runs API
+    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    baseURL: https://api.getpostman.com
     tags:
       - Automation
       - CI/CD
       - Collection Runner
+      - Newman
       - Testing
-    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
-    baseURL: https://api.getpostman.com
+    description: >-
+      The Collection Runs API programmatically launches collection runs,
+      retrieves run results, and powers integration with Newman, the Postman
+      CLI, and CI/CD pipelines for automated test execution.
     properties:
       - url: openapi/postman-collection-runs-api-openapi.yml
         type: OpenAPI
       - url: https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api
         type: Documentation
-    description: >-
-      The Collection Runs API enables you to programmatically run collections,
-      schedule runs, and retrieve results for continuous integration and
-      delivery pipelines.
   - aid: postman:tags-api
     name: Postman Tags API
+    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    baseURL: https://api.getpostman.com
     tags:
       - Governance
       - Metadata
       - Organization
-    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
-    baseURL: https://api.getpostman.com
+      - Discovery
+    description: >-
+      The Tags API manages tags applied to APIs, collections, and workspaces
+      for organization, governance reporting, and discoverability across the
+      Private and Public API Networks.
     properties:
       - url: openapi/postman-tags-api-openapi.yml
         type: OpenAPI
       - url: https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api
         type: Documentation
-    description: >-
-      The Tags API enables you to manage tags on APIs, collections, and
-      workspaces for governance and organization. Tags help categorize and
-      discover API assets across your team.
   - aid: postman:audit-logs-api
     name: Postman Audit Logs API
+    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    baseURL: https://api.getpostman.com
     tags:
       - Audit Logs
       - Compliance
+      - Enterprise
       - Governance
       - Security
-    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
-    baseURL: https://api.getpostman.com
+    description: >-
+      Enterprise-only Audit Logs API exposing team audit events (user actions,
+      configuration changes, security events) for SIEM ingestion and
+      compliance reporting (SOC 2, GDPR, ISO).
     properties:
       - url: openapi/postman-audit-logs-api-openapi.yml
         type: OpenAPI
       - url: https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api
         type: Documentation
-    description: >-
-      The Audit Logs API provides access to team audit logs for compliance
-      and governance. Track user actions, configuration changes, and security
-      events across your Postman organization.
   - aid: postman:secret-scanner-api
     name: Postman Secret Scanner API
+    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    baseURL: https://api.getpostman.com
     tags:
       - Compliance
       - Governance
       - Secret Scanning
       - Security
-    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
-    baseURL: https://api.getpostman.com
+    description: >-
+      The Secret Scanner API manages detected secrets and resolves leaked
+      credentials found in collections, environments, and other elements -
+      part of Postman's API governance and security posture suite.
     properties:
       - url: openapi/postman-secret-scanner-api-openapi.yml
         type: OpenAPI
       - url: https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api
         type: Documentation
+  - aid: postman:billing-api
+    name: Postman Billing API
+    humanURL: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    baseURL: https://api.getpostman.com
+    tags:
+      - Billing
+      - Enterprise
+      - FinOps
+      - Resource Usage
     description: >-
-      The Secret Scanner API enables you to manage detected secrets and resolve
-      leaked credentials found in your Postman collections, environments, and
-      other API assets.
-name: Postman
-tags:
-  - AI Agent Builder
-  - API Development
-  - API Documentation
-  - API Governance
-  - API Monitoring
-  - API Testing
-  - Automation
-  - Client
-  - Clients
-  - Collaboration
-  - Collections
-  - Discovery
-  - Environments
-  - MCP
-  - Mock Servers
-  - Mocking
-  - Network
-  - Platform
-  - Testing
-  - Workflows
-  - Workspaces
-type: Index
-image: https://www.postman.com/assets/logos/postman-logo-horizontal-orange.svg
-access: 3rd-Party
+      The Billing API exposes account billing information, seat allocation,
+      and resource usage so finance and FinOps teams can integrate Postman
+      consumption into chargeback / showback reporting.
+    properties:
+      - url: https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api
+        type: Documentation
+  - aid: postman:scim-api
+    name: Postman SCIM API
+    humanURL: https://learning.postman.com/docs/administration/scim-provisioning/
+    baseURL: https://api.getpostman.com/scim/v2
+    tags:
+      - Enterprise
+      - Identity
+      - Provisioning
+      - SCIM
+      - SSO
+    description: >-
+      The SCIM 2.0 API enables Enterprise customers to provision and
+      deprovision users and groups from their identity provider (Okta,
+      OneLogin, Azure AD, Ping) into Postman team accounts.
+    properties:
+      - url: https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api
+        type: Documentation
+  - aid: postman:mcp-server
+    name: Postman MCP Server
+    humanURL: https://github.com/postmanlabs/postman-mcp-server
+    tags:
+      - AI Agents
+      - MCP
+      - Model Context Protocol
+    description: >-
+      The Postman MCP Server exposes Postman Collections, environments, and
+      workspaces over Anthropic's Model Context Protocol so AI agents
+      (Claude, Cursor, custom LLM clients) can reason over and execute APIs
+      directly from your Postman library.
+    properties:
+      - url: https://github.com/postmanlabs/postman-mcp-server
+        type: GitHub
+  - aid: postman:flows-api
+    name: Postman Flows
+    humanURL: https://www.postman.com/product/flows/
+    tags:
+      - AI
+      - Automation
+      - Flows
+      - Orchestration
+      - Workflows
+    description: >-
+      Postman Flows is a visual workflow builder that chains API calls,
+      transformations, and conditional logic. Flows are executable,
+      debuggable, and cloneable documentation that powers AI agent
+      orchestration and partner integrations.
+    properties:
+      - url: https://www.postman.com/product/flows/
+        type: Documentation
 common:
-  - url: https://marketplace.visualstudio.com/items?itemName=Postman.postman-for-vscode
-    name: VSCode Extension
-    type: VSCodeExtension
-  - url: https://www.youtube.com/c/Postman
-    name: Youtube
-    type: Youtube
   - url: https://www.postman.com/
     name: Postman API Platform
     type: Website
-    description: 'null'
   - url: https://www.postman.com/pricing/
-    name: Plans & Pricing | Postman API Platform
+    name: Plans and Pricing
     type: Pricing
-    description: 'null'
   - url: https://www.postman.com/learn/
-    name: Learn APIs with Postman | Docs, courses, guides, videos - all free.
+    name: Postman Learn
     type: Knowledgebase
-    description: 'null'
-  - url: https://blog.postman.com/
-    name: 'All Things API: News, Tutorials & More | Postman Blog'
-    type: Blog
-    description: 'null'
-  - url: https://www.postman.com/templates/
-    name: Postman Templates | Postman
-    type: Templates
-    description: 'null'
-  - url: https://support.postman.com/hc/en-us
-    name: Postman
-    type: Support
-    description: 'null'
-  - url: https://www.postman.com/release-notes/
-    name: Release Notes | Postman
-    type: ChangeLog
-    description: 'null'
-  - url: https://status.postman.com/
-    name: Postman Status
-    type: Status
-    description: 'null'
-  - url: https://www.postman.com/events/
-    name: Postman Events | Postman
-    type: Events
-    description: 'null'
-  - url: https://learning.postman.com/docs/postman-cli/postman-cli-installation/
-    name: Install the Postman CLI | Postman Docs
-    type: CLI
-    description: 'null'
-  - url: https://www.postman.com/partner-program/
-    name: The Postman Partner Program
-    type: Partners
-    description: 'null'
-  - url: https://www.postman.com/case-studies/
-    name: API Case Studies | Postman API Platform
-    type: Customers
-    description: 'null'
-  - url: https://www.postman.com/case-studies/
-    name: API Case Studies | Postman API Platform
-    type: Customers
-    description: 'null'
-  - url: https://www.postman.com/legal/terms/
-    name: Terms of Service | Postman
-    type: TermsOfService
-    description: 'null'
-  - url: https://www.postman.com/legal/privacy-policy/
-    name: Privacy Policy | Postman
-    type: PrivacyPolicy
-    description: 'null'
-  - url: https://www.postman.com/legal/trademark-policy/
-    name: Trademark Policy | Postman
-    type: Trademark
-    description: 'null'
-  - url: https://www.postman.com/trust/
-    name: Trust Center | Postman
-    type: Trust
-    description: 'null'
-  - url: https://www.postman.com/use-cases/
-    data:
-      - name: API-first development
-      - name: Application development
-      - name: Developer onboarding
-      - name: Developer portals
-      - name: API Testing
-    name: Use Cases
-    type: UseCases
-  - data:
-      - name: 1 Day Collection Recovery
-      - name: 100 Packages
-      - name: 100,000 Mock Server Requests
-      - name: 25 Collection Runs
-      - name: 30 Day Collection Recovery
-      - name: 50 Free Activities in Postbot
-      - name: 90 Day Collection Recovery
-      - name: Access Management
-      - name: Access to Flows
-      - name: Advanced Role-Based Access Control
-      - name: API Admin
-      - name: API Editor
-      - name: API Governance Manager
-      - name: API Monitoring
-      - name: API Network Folder Manager
-      - name: API Network Manager
-      - name: API Viewer
-      - name: Audit Logs
-      - name: Basic Role-Based Access Control
-      - name: Cloud-Based Integrations
-      - name: Cloud-Based Integrations
-      - name: Collection Editor
-      - name: Collection Generation and Sync
-      - name: Collection Recovery
-      - name: Collection Viewer
-      - name: Commenting & Annotations
-      - name: Community Manager
-      - name: Custom Domains
-      - name: Customer Success
-      - name: Define Governance Rules
-      - name: Deployment Control
-      - name: Desktop and Web Appside Extension (vs Code)
-      - name: Element-Level Roles
-      - name: Environment Editor
-      - name: Environment Viewer
-      - name: Graphql Client
-      - name: Grpc Client
-      - name: HTTP Client
-      - name: Internal Workspaces
-      - name: Internal Workspaces (Private)
-      - name: Internal Workspaces (Private)
-      - name: Live Preview
-      - name: Mock Server Editor
-      - name: Mock Server Viewer
-      - name: Mock Servers
-      - name: Monitor Editor
-      - name: Monitor Viewer
-      - name: Mqtt Client
-      - name: Multi-Partner Workspaces
-      - name: Newman CLI
-      - name: Outline-Based Editing
-      - name: Package Library
-      - name: Partner (External)
-      - name: Partner Editor
-      - name: Partner Manager
-      - name: Partner Viewer
-      - name: Postman API Supportaudit Logs
-      - name: Postman CLI
-      - name: Postman Interceptor
-      - name: Postman Proxy
-      - name: Postman Public Docs
-      - name: Postman Vault
-      - name: Priority Email Support
-      - name: Private API Documentation
-      - name: Private API Network
-      - name: Private API Network
-      - name: Private APIs
-      - name: Public API Documentation
-      - name: Public API Network
-      - name: Reporting & Analytics
-      - name: Roles & Permissions
-      - name: Saml
-      - name: Secret Scanning
-      - name: Single & Multi-Partner Workspaces
-      - name: Single Partner Workspaces
-      - name: Single Sign-on (SSO)
-      - name: socket.io Client
-      - name: SSO, Scim, & Saml
-      - name: Super Admin Role
-      - name: Team-Level Roles
-      - name: Test Data Storage
-      - name: Unlimited Collaborators
-      - name: Unlimited Private & Public APIs
-      - name: User Groups
-      - name: User Groups
-      - name: User Level Reporting & Analytics
-      - name: User Provisioning (Scim)
-      - name: View Syntax Errors
-      - name: Websocket Client
-      - name: Workspace Admin
-      - name: Workspace Editor
-      - name: Workspace Themes
-      - name: Workspace Updates
-      - name: Workspace Viewer
-      - name: Workspace-Level Roles
-    name: Features
-    type: Features
-  - url: https://www.postman.com/product/integrations/
-    data:
-      - Name: 1PASSWORD Vault
-      - Name: Aikido
-      - Name: Amazon API Gateway
-      - Name: Apigee
-      - Name: Apimatic
-      - Name: Apisec
-      - Name: Appmap
-      - Name: AWS Gateway for API Builder
-      - Name: AWS Secrets Manager
-      - Name: Azure API Management
-      - Name: Azure Apim for API Builder
-      - Name: Azure DevOps
-      - Name: Azure Key Vault
-      - Name: Bigpanda
-      - Name: Bitbucket
-      - Name: Bitbucket Pipelines
-      - Name: Circleci
-      - Name: Coralogix
-      - Name: Datadog
-      - Name: Dropbox
-      - Name: Github
-      - Name: Github Actions
-      - Name: Gitlab
-      - Name: Gitlab CI/CD
-      - Name: Hashicorp Vault
-      - Name: Helios
-      - Name: Ilert
-      - Name: Jenkins
-      - Name: Jira
-      - Name: Keen
-      - Name: Liblab
-      - Name: Microsoft Power Automate
-      - Name: Microsoft Teams
-      - Name: New Relic
-      - Name: Open API
-      - Name: Opsgenie
-      - Name: Pagerduty
-      - Name: Pynt
-      - Name: Readme
-      - Name: Slack
-      - Name: Snyk
-      - Name: Speedscale
-      - Name: Splunk
-      - Name: Splunk On-Call
-      - Name: Stainless
-      - Name: Statuspage
-      - Name: Travis CI
-      - Name: vs Code
-      - Name: Workato
-    name: Integrations
-    type: Integrations
-  - url: https://www.postman.com/newsletter/
-    type: Newsletter
-  - url: https://github.com/postmanlabs
-    type: GitHub
-  - url: https://www.linkedin.com/company/postman-platform
-    type: LinkedIn
-  - url: https://twitter.com/getpostman
-    type: Twitter
-  - url: https://www.instagram.com/getpostman/
-    type: Instagram
-  - url: https://discord.com/invite/bKjz3CXbB6
-    type: Discord
-  - url: https://community.postman.com/
-    name: Postman Community Forum
-    type: Forum
   - url: https://learning.postman.com/
     name: Postman Learning Center
     type: Documentation
@@ -509,12 +465,90 @@ common:
   - url: https://learning.postman.com/docs/developer/postman-api/authentication/
     name: Postman API Authentication
     type: Authentication
+  - url: https://learning.postman.com/docs/developer/postman-api/postman-api-rate-limits/
+    name: Postman API Rate Limits
+    type: RateLimits
+  - url: https://blog.postman.com/
+    name: Postman Blog
+    type: Blog
+  - url: https://www.postman.com/templates/
+    name: Postman Templates
+    type: Templates
+  - url: https://support.postman.com/hc/en-us
+    name: Postman Support
+    type: Support
+  - url: https://www.postman.com/release-notes/
+    name: Release Notes
+    type: ChangeLog
+  - url: https://status.postman.com/
+    name: Postman Status
+    type: Status
+  - url: https://www.postman.com/events/
+    name: Postman Events
+    type: Events
+  - url: https://learning.postman.com/docs/postman-cli/postman-cli-installation/
+    name: Postman CLI
+    type: CLI
+  - url: https://github.com/postmanlabs/newman
+    name: Newman CLI Collection Runner
+    type: CLI
+  - url: https://www.postman.com/partner-program/
+    name: Postman Partner Program
+    type: Partners
+  - url: https://www.postman.com/case-studies/
+    name: Postman Case Studies
+    type: Customers
+  - url: https://www.postman.com/legal/terms/
+    name: Terms of Service
+    type: TermsOfService
+  - url: https://www.postman.com/legal/privacy-policy/
+    name: Privacy Policy
+    type: PrivacyPolicy
+  - url: https://www.postman.com/legal/trademark-policy/
+    name: Trademark Policy
+    type: Trademark
+  - url: https://www.postman.com/trust/
+    name: Postman Trust Center
+    type: Trust
+  - url: https://security.postman.com/
+    name: Postman Customer Trust Portal
+    type: Security
+  - url: https://www.postman.com/trust/compliance/
+    name: Compliance Certifications
+    type: Compliance
+  - url: https://marketplace.visualstudio.com/items?itemName=Postman.postman-for-vscode
+    name: Postman VS Code Extension
+    type: VSCodeExtension
+  - url: https://www.youtube.com/c/Postman
+    name: Postman YouTube
+    type: Youtube
+  - url: https://www.linkedin.com/company/postman-platform
+    name: Postman LinkedIn
+    type: LinkedIn
+  - url: https://twitter.com/getpostman
+    name: Postman X / Twitter
+    type: Twitter
+  - url: https://www.instagram.com/getpostman/
+    name: Postman Instagram
+    type: Instagram
+  - url: https://discord.com/invite/bKjz3CXbB6
+    name: Postman Discord
+    type: Discord
+  - url: https://community.postman.com/
+    name: Postman Community Forum
+    type: Forum
+  - url: https://stackoverflow.com/questions/tagged/postman
+    name: Stack Overflow - Postman
+    type: StackOverflow
   - url: https://www.postman.com/downloads/
     name: Download Postman
     type: Downloads
   - url: https://www.postman.com/explore
-    name: Postman API Network
+    name: Public API Network
     type: APINetwork
+  - url: https://www.postman.com/explore/mcp
+    name: Postman MCP Network
+    type: MCPNetwork
   - url: https://academy.postman.com/
     name: Postman Academy
     type: Academy
@@ -531,64 +565,184 @@ common:
     name: Contact Sales
     type: ContactSales
   - url: https://www.postman.com/company/press-media/
-    name: Press & Media
+    name: Press and Media
     type: Press
-  - url: https://security.postman.com/
-    name: Postman Customer Trust Portal
-    type: Security
-  - url: https://www.postman.com/trust/compliance/
-    name: Compliance Certifications
-    type: Compliance
   - url: https://learning.postman.com/docs/developer/collection-sdk/
     name: Postman Collection SDK
     type: SDK
-  - url: https://github.com/postmanlabs/newman
-    name: Newman CLI Collection Runner
-    type: CLI
+  - url: https://schema.postman.com/
+    name: Postman Collection JSON Schemas
+    type: SchemaCatalog
   - url: https://www.postman.com/product/ai-agent-builder/
     name: Postman AI Agent Builder
     type: AIAgentBuilder
-  - url: https://learning.postman.com/docs/postman-ai-agent-builder/mcp-server-flows/mcp-server-flows/
-    name: Postman MCP Server Flows
+  - url: https://github.com/postmanlabs/postman-mcp-server
+    name: Postman MCP Server
     type: MCPServer
-  - url: https://identity.getpostman.com/signup
-    name: Sign Up for Postman
-    type: SignUp
+  - url: https://www.postman.com/product/flows/
+    name: Postman Flows
+    type: Flows
+  - url: https://www.postman.com/product/api-governance/
+    name: Postman API Governance
+    type: Governance
   - url: https://www.postman.com/product/workspaces/
     name: Postman Workspaces
     type: Workspaces
-  - url: https://learning.postman.com/docs/developer/postman-api/rate-limits/
-    type: Rate Limits
-  - url: https://www.postman.com/product/api-governance/
-    type: Governance
-  - url: https://www.postman.com/product/flows/
-    type: Flows
-  - url: https://stackoverflow.com/questions/tagged/postman
-    type: Stack Overflow
-  - url: https://github.com/postmanlabs
-    type: GitHub Organization
-  - url: https://go.postman.co/
-    type: Console
+  - url: https://www.postman.com/product/api-catalog/
+    name: Postman API Catalog
+    type: APICatalog
+  - url: https://identity.getpostman.com/signup
+    name: Sign Up for Postman
+    type: SignUp
   - url: https://identity.getpostman.com/login
+    name: Login
     type: Login
-created: '2025-01-08T00:00:00.000Z'
-modified: '2026-04-28'
-position: Consumer
-segments:
-  - Clients
-  - Workflows
-  - Documentation
-  - Testing
-  - Monitoring
-  - Governance
-description: >-
-  Postman is an API platform for building and using APIs. Postman simplifies each
-  step of the API lifecycle and streamlines collaboration so you can create better
-  APIs—faster.
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
-  - name: Postman
-    email: help@postman.com
-    url: https://www.postman.com
-specificationVersion: '0.19'
+  - url: https://go.postman.co/
+    name: Postman Console
+    type: Console
+  - url: https://github.com/postmanlabs
+    name: Postman Labs GitHub
+    type: GitHubOrganization
+  - url: https://www.postman.com/newsletter/
+    name: Postman Newsletter
+    type: Newsletter
+  - url: https://www.postman.com/use-cases/
+    name: Postman Use Cases
+    type: UseCases
+    data:
+      - name: API-First Development
+      - name: API Testing and Quality
+      - name: API Documentation
+      - name: API Mocking and Simulation
+      - name: API Monitoring and Observability
+      - name: API Governance and Compliance
+      - name: API Discovery and Catalog
+      - name: Developer Portals
+      - name: Developer Onboarding
+      - name: Partner API Programs
+      - name: CI/CD and Test Automation
+      - name: AI Agent Development
+      - name: MCP Server Publishing
+      - name: API Workflow Orchestration
+  - name: Features
+    type: Features
+    data:
+      - name: API Client (HTTP, GraphQL, gRPC, WebSocket, MQTT, Socket.io)
+      - name: Collections
+      - name: Workspaces (Personal, Team, Partner, Private, Public)
+      - name: Environments and Variables
+      - name: Postman Vault (Encrypted Secret Storage)
+      - name: Mock Servers
+      - name: Monitors and Scheduled Collection Runs
+      - name: Documentation and Custom Domains
+      - name: Collection Runner
+      - name: Newman CLI
+      - name: Postman CLI
+      - name: Spec Hub (OpenAPI, AsyncAPI, GraphQL, gRPC, RAML, WSDL)
+      - name: Live Collections
+      - name: SDK Generator
+      - name: Postman Flows (Visual Workflow Builder)
+      - name: Postman AI Agent Builder
+      - name: Postman MCP Server
+      - name: Postman MCP Generator
+      - name: Postman Insights (Production API Observability)
+      - name: API Governance (Rules, Reports, Linting)
+      - name: Custom Governance Rules
+      - name: Secret Scanner
+      - name: Security Warnings
+      - name: Audit Logs
+      - name: Private API Network
+      - name: Public API Network
+      - name: API Catalog
+      - name: Role-Based Access Control (Basic and Advanced)
+      - name: Element-Level Roles
+      - name: Single Sign-On (SAML, SSO)
+      - name: SCIM 2.0 User Provisioning
+      - name: Postman Interceptor
+      - name: Postman Proxy
+      - name: VS Code Extension
+      - name: Postbot AI Assistant
+      - name: Partner Workspaces
+      - name: Reporting and Analytics
+      - name: Data-Driven Testing
+      - name: Test Data Storage
+      - name: Webhooks and Integrations
+      - name: Multi-Region Monitors
+      - name: Private Cloud Runners
+      - name: 90-Day Collection Recovery
+  - name: Solutions
+    type: Solutions
+    data:
+      - name: API-First Development
+      - name: Enterprise API Platform
+      - name: API Testing at Scale
+      - name: API Governance and Compliance
+      - name: Developer Experience
+      - name: AI Agents and MCP
+      - name: Partner Integrations
+      - name: Microservices and Distributed Systems
+      - name: API Productization
+  - name: Compliance
+    type: Compliance
+    data:
+      - name: SOC 2 Type II
+      - name: SOC 3
+      - name: PCI DSS
+      - name: GDPR
+      - name: CCPA
+      - name: Cloud Security Alliance STAR
+      - name: EU-U.S. Data Privacy Framework
+      - name: UK Extension to the DPF
+      - name: Swiss-U.S. Data Privacy Framework
+  - url: https://www.postman.com/product/integrations/
+    name: Integrations
+    type: Integrations
+    data:
+      - name: 1Password Vault
+      - name: Aikido Security
+      - name: Amazon API Gateway
+      - name: Apigee
+      - name: APIMatic
+      - name: APIsec
+      - name: AppMap
+      - name: AWS API Gateway
+      - name: AWS Secrets Manager
+      - name: Azure API Management
+      - name: Azure DevOps
+      - name: Azure Key Vault
+      - name: BigPanda
+      - name: Bitbucket
+      - name: Bitbucket Pipelines
+      - name: CircleCI
+      - name: Coralogix
+      - name: Datadog
+      - name: Dropbox
+      - name: GitHub
+      - name: GitHub Actions
+      - name: GitLab
+      - name: GitLab CI/CD
+      - name: HashiCorp Vault
+      - name: Helios
+      - name: ilert
+      - name: Jenkins
+      - name: Jira
+      - name: Keen
+      - name: liblab
+      - name: Microsoft Power Automate
+      - name: Microsoft Teams
+      - name: New Relic
+      - name: OpenAPI
+      - name: Opsgenie
+      - name: PagerDuty
+      - name: Pynt
+      - name: ReadMe
+      - name: Slack
+      - name: Snyk
+      - name: Speedscale
+      - name: Splunk
+      - name: Splunk On-Call
+      - name: Stainless
+      - name: StatusPage
+      - name: Travis CI
+      - name: VS Code
+      - name: Workato

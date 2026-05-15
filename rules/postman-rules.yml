@@ -1,0 +1,132 @@
+extends:
+  - "spectral:oas"
+  - "spectral:asyncapi"
+formats:
+  - oas3_1
+documentationUrl: https://learning.postman.com/docs/api-governance/governance/configurable-rules/
+functions: []
+rules:
+  # ---- Postman-specific structural rules ----
+  postman-info-title-required:
+    description: All Postman API specs must declare info.title.
+    given: $
+    severity: error
+    then:
+      field: info.title
+      function: truthy
+  postman-info-version-required:
+    description: All Postman API specs must declare info.version.
+    given: $
+    severity: error
+    then:
+      field: info.version
+      function: truthy
+  postman-info-contact-required:
+    description: Postman API specs should declare info.contact with help@postman.com.
+    given: $
+    severity: warn
+    then:
+      field: info.contact.email
+      function: truthy
+  postman-server-required:
+    description: At least one server URL must be defined.
+    given: $.servers
+    severity: error
+    then:
+      function: length
+      functionOptions:
+        min: 1
+  postman-server-getpostman:
+    description: The Postman API base server should be https://api.getpostman.com.
+    given: $.servers[*].url
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://api\\.getpostman\\.com.*"
+  # ---- Authentication rules ----
+  postman-api-key-security:
+    description: Postman APIs authenticate with the x-api-key header.
+    given: $.components.securitySchemes
+    severity: error
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          patternProperties:
+            ".*":
+              type: object
+              properties:
+                type:
+                  enum: ["apiKey", "http", "oauth2", "openIdConnect"]
+  # ---- Operation rules ----
+  postman-operation-title-case-summary:
+    description: All operation summaries must use Title Case (e.g. "Get All Collections").
+    given: $.paths[*][get,post,put,delete,patch,options,head].summary
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: "^([A-Z][a-z0-9]*\\s)*[A-Z][a-z0-9]*$"
+  postman-operation-id-camel:
+    description: operationId should be lowerCamelCase.
+    given: $.paths[*][get,post,put,delete,patch,options,head].operationId
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+  postman-operation-tag-required:
+    description: Every operation must be tagged.
+    given: $.paths[*][get,post,put,delete,patch,options,head]
+    severity: error
+    then:
+      field: tags
+      function: truthy
+  postman-operation-response-401:
+    description: Every operation should document a 401 unauthorized response.
+    given: $.paths[*][get,post,put,delete,patch,options,head].responses
+    severity: warn
+    then:
+      field: "401"
+      function: truthy
+  postman-operation-response-429:
+    description: Every operation should document a 429 rate limited response.
+    given: $.paths[*][get,post,put,delete,patch,options,head].responses
+    severity: warn
+    then:
+      field: "429"
+      function: truthy
+  # ---- Naming rules ----
+  postman-path-kebab-case:
+    description: Paths should use kebab-case (lowercase with hyphens).
+    given: $.paths
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(/[a-z0-9{}-]+)+/?$"
+        notMatch: "[_A-Z]"
+  postman-schema-pascal-case:
+    description: components.schemas keys should be PascalCase.
+    given: $.components.schemas
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z0-9]*$"
+  # ---- Documentation rules ----
+  postman-description-required:
+    description: Every operation must declare a description.
+    given: $.paths[*][get,post,put,delete,patch,options,head]
+    severity: warn
+    then:
+      field: description
+      function: truthy
+  postman-secret-leak-warning:
+    description: Pre-commit safeguard - reject specs that embed a literal x-api-key value (governance + secret-scanner alignment).
+    given: $..[?(@property == 'x-api-key')]
+    severity: error
+    then:
+      function: undefined

@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-structure.org/draft-2025/structure",
+  "title": "PostmanCollection",
+  "description": "JSON Structure description of the Postman Collection v2.1.0 format (https://schema.postman.com/collection/json/v2.1.0/draft-07/collection.json).",
+  "type": "object",
+  "required": ["info", "item"],
+  "properties": {
+    "info": {
+      "type": "object",
+      "description": "Detail describing the collection.",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string" },
+        "_postman_id": { "type": "string", "format": "uuid" },
+        "description": { "oneOf": [{ "type": "string" }, { "type": "object" }] },
+        "version": { "oneOf": [{ "type": "string" }, { "type": "object" }] },
+        "schema": { "type": "string", "format": "uri" }
+      }
+    },
+    "item": {
+      "type": "array",
+      "description": "Items in a collection - either requests or folders (item-group).",
+      "items": { "$ref": "#/$defs/Item" }
+    },
+    "event": {
+      "type": "array",
+      "description": "Collection-level event scripts (test, prerequest).",
+      "items": { "$ref": "#/$defs/Event" }
+    },
+    "variable": {
+      "type": "array",
+      "description": "Collection-level variables.",
+      "items": { "$ref": "#/$defs/Variable" }
+    },
+    "auth": { "$ref": "#/$defs/Auth" },
+    "protocolProfileBehavior": { "type": "object" }
+  },
+  "$defs": {
+    "Item": {
+      "oneOf": [
+        { "$ref": "#/$defs/Request" },
+        { "$ref": "#/$defs/Folder" }
+      ]
+    },
+    "Folder": {
+      "type": "object",
+      "required": ["name", "item"],
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "item": { "type": "array", "items": { "$ref": "#/$defs/Item" } },
+        "event": { "type": "array", "items": { "$ref": "#/$defs/Event" } },
+        "auth": { "$ref": "#/$defs/Auth" }
+      }
+    },
+    "Request": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string" },
+        "request": {
+          "type": "object",
+          "properties": {
+            "method": { "type": "string", "enum": ["GET","POST","PUT","DELETE","PATCH","HEAD","OPTIONS"] },
+            "url": { "oneOf": [{ "type": "string" }, { "type": "object" }] },
+            "header": { "type": "array", "items": { "$ref": "#/$defs/Header" } },
+            "body": { "type": "object" },
+            "auth": { "$ref": "#/$defs/Auth" },
+            "description": { "type": "string" }
+          }
+        },
+        "response": { "type": "array", "items": { "type": "object" } },
+        "event": { "type": "array", "items": { "$ref": "#/$defs/Event" } }
+      }
+    },
+    "Event": {
+      "type": "object",
+      "required": ["listen", "script"],
+      "properties": {
+        "listen": { "type": "string", "enum": ["test", "prerequest"] },
+        "script": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "string" },
+            "type": { "type": "string", "enum": ["text/javascript"] },
+            "exec": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "Variable": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "key": { "type": "string" },
+        "value": {},
+        "type": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "Auth": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["apikey","awsv4","basic","bearer","digest","edgegrid","hawk","noauth","oauth1","oauth2","ntlm","jwt"] }
+      }
+    },
+    "Header": {
+      "type": "object",
+      "required": ["key", "value"],
+      "properties": {
+        "key": { "type": "string" },
+        "value": { "type": "string" },
+        "disabled": { "type": "boolean" },
+        "description": { "type": "string" }
+      }
+    }
+  }
+}

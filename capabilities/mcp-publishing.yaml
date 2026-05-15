@@ -1,0 +1,83 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Postman MCP Publishing
+  description: >-
+    Workflow that converts a Postman Collection or OpenAPI specification into
+    an MCP server using Postman's MCP Generator and AI Agent Builder, then
+    publishes the resulting MCP server so AI agents (Claude, Cursor, and
+    other MCP clients) can call the API as MCP tools. Exposes the workflow
+    over both REST and MCP for chained agent orchestration.
+  tags:
+    - Postman
+    - MCP
+    - Model Context Protocol
+    - AI Agent Builder
+    - MCP Generator
+    - Flows
+  created: '2026-05-15'
+  modified: '2026-05-15'
+imports:
+  - name: postman
+    path: ./shared/postman-apis.yaml
+capability:
+  consumes:
+    - type: workflow
+      namespace: mcp-publishing
+      description: Convert a Postman Collection into an MCP server and publish it.
+      steps:
+        - name: load-collection
+          call: postman.getcollection
+          description: Load the source Postman Collection.
+        - name: generate-mcp-server
+          description: Run the Postman MCP Generator to convert the collection into MCP tool definitions.
+        - name: deploy-mcp-server
+          description: Deploy the generated MCP server to a runtime (Postman MCP Server, local, or cloud).
+        - name: register-with-agent
+          description: Register the MCP server with the Postman AI Agent Builder or external MCP client.
+        - name: smoke-test
+          call: postman.runcollection
+          description: Execute a smoke-test collection against the deployed MCP server.
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: mcp-publishing-rest
+      description: REST adapter for the MCP publishing workflow.
+      resources:
+        - path: /mcp/publish
+          name: publishmcp
+          operations:
+            - method: POST
+              name: publishmcp
+              description: Publish a Postman Collection as an MCP server.
+              call: mcp-publishing.run
+              outputParameters:
+                - type: object
+                  mapping: $.
+    - type: mcp
+      port: 9090
+      namespace: mcp-publishing-mcp
+      transport: http
+      description: MCP adapter for the MCP-publishing workflow (an MCP tool that creates MCP servers).
+      tools:
+        - name: publishCollectionAsMcp
+          description: Publish a Postman Collection as a runnable MCP server for AI agents.
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: mcp-publishing.run
+          inputParameters:
+            - name: collectionUid
+              type: string
+              description: UID of the Postman Collection to publish as MCP.
+              required: true
+            - name: target
+              type: string
+              description: Deployment target (postman-cloud, self-hosted).
+          outputParameters:
+            - type: object
+              mapping: $.
+binds:
+  - namespace: env
+    keys:
+      POSTMAN_TOKEN: POSTMAN_TOKEN
