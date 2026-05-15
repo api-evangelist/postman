@@ -1,0 +1,146 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  title: Postman Webhooks Trigger Bridge
+  description: >-
+    Manages Postman Webhooks so Naftiko capability events (capability
+    deployed, governance violation, observability alert) can trigger
+    Postman collection runs — and Postman events (monitor failure,
+    integration notification) can land in Naftiko's webhook-driven
+    workflows. Bidirectional event glue between the two systems.
+  tags:
+    - Naftiko
+    - Postman
+    - Partnership
+    - Webhooks
+    - Events
+    - Bidirectional-Bridge
+  created: '2026-05-15'
+  modified: '2026-05-15'
+
+binds:
+  - namespace: postman-env
+    description: Postman API key.
+    keys:
+      POSTMAN_API_KEY: POSTMAN_API_KEY
+
+capability:
+  consumes:
+    - namespace: postman
+      type: http
+      baseUri: https://api.getpostman.com
+      authentication:
+        type: bearer
+        token: '{{POSTMAN_API_KEY}}'
+      resources:
+        - name: list-webhooks
+          path: '/webhooks'
+          operations:
+            - name: list-webhooks
+              method: GET
+            - name: create-webhook
+              method: POST
+        - name: webhook
+          path: '/webhooks/{{webhook_id}}'
+          operations:
+            - name: get-webhook
+              method: GET
+              inputParameters:
+                - { name: webhook_id, in: path, required: true }
+            - name: update-webhook
+              method: PUT
+              inputParameters:
+                - { name: webhook_id, in: path, required: true }
+            - name: delete-webhook
+              method: DELETE
+              inputParameters:
+                - { name: webhook_id, in: path, required: true }
+        - name: trigger-webhook
+          path: '/webhooks/{{webhook_id}}/trigger'
+          operations:
+            - name: trigger-webhook
+              method: POST
+              inputParameters:
+                - { name: webhook_id, in: path, required: true }
+
+  exposes:
+    - type: rest
+      address: 0.0.0.0
+      port: 8080
+      namespace: postman-webhooks-trigger-bridge-rest
+      description: REST surface for managing + triggering Postman Webhooks.
+      resources:
+        - name: webhooks
+          path: '/webhooks'
+          operations:
+            - name: list-webhooks
+              method: GET
+              call: postman.list-webhooks
+            - name: create-webhook
+              method: POST
+              call: postman.create-webhook
+        - name: webhook
+          path: '/webhooks/{webhook_id}'
+          operations:
+            - name: get-webhook
+              method: GET
+              inputParameters:
+                - { name: webhook_id, in: path, type: string, required: true }
+              call: postman.get-webhook
+            - name: update-webhook
+              method: PUT
+              inputParameters:
+                - { name: webhook_id, in: path, type: string, required: true }
+              call: postman.update-webhook
+            - name: delete-webhook
+              method: DELETE
+              inputParameters:
+                - { name: webhook_id, in: path, type: string, required: true }
+              call: postman.delete-webhook
+        - name: trigger-webhook
+          path: '/webhooks/{webhook_id}/trigger'
+          operations:
+            - name: trigger-webhook
+              method: POST
+              inputParameters:
+                - { name: webhook_id, in: path, type: string, required: true }
+              call: postman.trigger-webhook
+
+    - type: mcp
+      address: 0.0.0.0
+      port: 3010
+      namespace: postman-webhooks-trigger-bridge-mcp
+      description: MCP server for managing + triggering Postman Webhooks from Naftiko-built agents.
+      tools:
+        - name: list-webhooks
+          description: List Postman Webhooks (event-driven collection-run triggers).
+          hints: { readOnly: true }
+          call: postman.list-webhooks
+        - name: create-webhook
+          description: Create a new Postman Webhook (typically pointing at a Naftiko capability event source).
+          hints: { destructiveHint: false }
+          call: postman.create-webhook
+        - name: get-webhook
+          description: Get a single Postman Webhook by ID.
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: webhook_id, type: string, required: true, description: Postman webhook UUID. }
+          call: postman.get-webhook
+        - name: update-webhook
+          description: Update a Postman Webhook.
+          hints: { destructiveHint: true }
+          inputParameters:
+            - { name: webhook_id, type: string, required: true, description: Postman webhook UUID. }
+          call: postman.update-webhook
+        - name: delete-webhook
+          description: Delete a Postman Webhook.
+          hints: { destructiveHint: true }
+          inputParameters:
+            - { name: webhook_id, type: string, required: true, description: Postman webhook UUID. }
+          call: postman.delete-webhook
+        - name: trigger-webhook
+          description: Trigger a Postman Webhook manually (force a Naftiko-event-driven collection run).
+          hints: { destructiveHint: false }
+          inputParameters:
+            - { name: webhook_id, type: string, required: true, description: Postman webhook UUID. }
+          call: postman.trigger-webhook

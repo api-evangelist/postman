@@ -1,0 +1,137 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  title: Postman Monitors Trigger
+  description: >-
+    Creates and triggers Postman Monitors from Naftiko spec so a Naftiko
+    capability can stand up its own contract / health / performance
+    monitor against either an upstream API it consumes or a downstream
+    expose it ships. Continuous validation that the capability still
+    matches reality.
+  tags:
+    - Naftiko
+    - Postman
+    - Partnership
+    - Monitors
+    - Contract-Testing
+    - Health
+  created: '2026-05-15'
+  modified: '2026-05-15'
+
+binds:
+  - namespace: postman-env
+    description: Postman API key.
+    keys:
+      POSTMAN_API_KEY: POSTMAN_API_KEY
+
+capability:
+  consumes:
+    - namespace: postman
+      type: http
+      baseUri: https://api.getpostman.com
+      authentication:
+        type: bearer
+        token: '{{POSTMAN_API_KEY}}'
+      resources:
+        - name: list-monitors
+          path: '/monitors'
+          operations:
+            - name: list-monitors
+              method: GET
+              inputParameters:
+                - { name: workspace, in: query, type: string, required: false }
+            - name: create-monitor
+              method: POST
+        - name: monitor
+          path: '/monitors/{{monitor_id}}'
+          operations:
+            - name: get-monitor
+              method: GET
+              inputParameters:
+                - { name: monitor_id, in: path, required: true }
+            - name: delete-monitor
+              method: DELETE
+              inputParameters:
+                - { name: monitor_id, in: path, required: true }
+        - name: run-monitor
+          path: '/monitors/{{monitor_id}}/run'
+          operations:
+            - name: run-monitor
+              method: POST
+              inputParameters:
+                - { name: monitor_id, in: path, required: true }
+
+  exposes:
+    - type: rest
+      address: 0.0.0.0
+      port: 8080
+      namespace: postman-monitors-trigger-rest
+      description: REST surface for managing + triggering Postman Monitors.
+      resources:
+        - name: monitors
+          path: '/monitors'
+          operations:
+            - name: list-monitors
+              method: GET
+              inputParameters:
+                - { name: workspace, in: query, type: string, required: false }
+              call: postman.list-monitors
+            - name: create-monitor
+              method: POST
+              call: postman.create-monitor
+        - name: monitor
+          path: '/monitors/{monitor_id}'
+          operations:
+            - name: get-monitor
+              method: GET
+              inputParameters:
+                - { name: monitor_id, in: path, type: string, required: true }
+              call: postman.get-monitor
+            - name: delete-monitor
+              method: DELETE
+              inputParameters:
+                - { name: monitor_id, in: path, type: string, required: true }
+              call: postman.delete-monitor
+        - name: run-monitor
+          path: '/monitors/{monitor_id}/run'
+          operations:
+            - name: run-monitor
+              method: POST
+              inputParameters:
+                - { name: monitor_id, in: path, type: string, required: true }
+              call: postman.run-monitor
+
+    - type: mcp
+      address: 0.0.0.0
+      port: 3010
+      namespace: postman-monitors-trigger-mcp
+      description: MCP server for managing + triggering Postman Monitors from agents.
+      tools:
+        - name: list-monitors
+          description: List Postman Monitors (optionally filtered by workspace).
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: workspace, type: string, required: false, description: Filter to a workspace UUID. }
+          call: postman.list-monitors
+        - name: create-monitor
+          description: Create a new Postman Monitor (recurring collection run).
+          hints: { destructiveHint: false }
+          call: postman.create-monitor
+        - name: get-monitor
+          description: Get a single Postman Monitor (status, schedule, recent runs).
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: monitor_id, type: string, required: true, description: Postman monitor UID. }
+          call: postman.get-monitor
+        - name: delete-monitor
+          description: Delete a Postman Monitor.
+          hints: { destructiveHint: true }
+          inputParameters:
+            - { name: monitor_id, type: string, required: true, description: Postman monitor UID. }
+          call: postman.delete-monitor
+        - name: run-monitor
+          description: Trigger an on-demand run of a Postman Monitor.
+          hints: { destructiveHint: false }
+          inputParameters:
+            - { name: monitor_id, type: string, required: true, description: Postman monitor UID. }
+          call: postman.run-monitor

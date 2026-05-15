@@ -1,0 +1,131 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  title: Postman Environments Sync
+  description: >-
+    Manages Postman Environments (variable sets per dev / staging / prod
+    scope) from Naftiko capability spec — when a Naftiko capability
+    declares a consume credential, this capability provisions the matching
+    Postman Environment variable so collection runs and monitors reuse the
+    same secrets governance the Naftiko engine ships.
+  tags:
+    - Naftiko
+    - Postman
+    - Partnership
+    - Environments
+    - Secrets
+    - Variables
+  created: '2026-05-15'
+  modified: '2026-05-15'
+
+binds:
+  - namespace: postman-env
+    description: Postman API key.
+    keys:
+      POSTMAN_API_KEY: POSTMAN_API_KEY
+
+capability:
+  consumes:
+    - namespace: postman
+      type: http
+      baseUri: https://api.getpostman.com
+      authentication:
+        type: bearer
+        token: '{{POSTMAN_API_KEY}}'
+      resources:
+        - name: list-environments
+          path: '/environments'
+          operations:
+            - name: list-environments
+              method: GET
+              inputParameters:
+                - { name: workspace, in: query, type: string, required: false }
+            - name: create-environment
+              method: POST
+        - name: environment
+          path: '/environments/{{environment_uid}}'
+          operations:
+            - name: get-environment
+              method: GET
+              inputParameters:
+                - { name: environment_uid, in: path, required: true }
+            - name: update-environment
+              method: PUT
+              inputParameters:
+                - { name: environment_uid, in: path, required: true }
+            - name: delete-environment
+              method: DELETE
+              inputParameters:
+                - { name: environment_uid, in: path, required: true }
+
+  exposes:
+    - type: rest
+      address: 0.0.0.0
+      port: 8080
+      namespace: postman-environments-sync-rest
+      description: REST surface for managing Postman Environments from Naftiko spec.
+      resources:
+        - name: environments
+          path: '/environments'
+          operations:
+            - name: list-environments
+              method: GET
+              inputParameters:
+                - { name: workspace, in: query, type: string, required: false }
+              call: postman.list-environments
+            - name: create-environment
+              method: POST
+              call: postman.create-environment
+        - name: environment
+          path: '/environments/{environment_uid}'
+          operations:
+            - name: get-environment
+              method: GET
+              inputParameters:
+                - { name: environment_uid, in: path, type: string, required: true }
+              call: postman.get-environment
+            - name: update-environment
+              method: PUT
+              inputParameters:
+                - { name: environment_uid, in: path, type: string, required: true }
+              call: postman.update-environment
+            - name: delete-environment
+              method: DELETE
+              inputParameters:
+                - { name: environment_uid, in: path, type: string, required: true }
+              call: postman.delete-environment
+
+    - type: mcp
+      address: 0.0.0.0
+      port: 3010
+      namespace: postman-environments-sync-mcp
+      description: MCP server for managing Postman Environments from Naftiko spec.
+      tools:
+        - name: list-environments
+          description: List Postman Environments (optionally filtered by workspace).
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: workspace, type: string, required: false, description: Filter to a workspace UUID. }
+          call: postman.list-environments
+        - name: create-environment
+          description: Create a new Postman Environment with variable set.
+          hints: { destructiveHint: false }
+          call: postman.create-environment
+        - name: get-environment
+          description: Get a single Postman Environment with all its variables.
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: environment_uid, type: string, required: true, description: Postman environment UID. }
+          call: postman.get-environment
+        - name: update-environment
+          description: Update a Postman Environment.
+          hints: { destructiveHint: true }
+          inputParameters:
+            - { name: environment_uid, type: string, required: true, description: Postman environment UID. }
+          call: postman.update-environment
+        - name: delete-environment
+          description: Delete a Postman Environment.
+          hints: { destructiveHint: true }
+          inputParameters:
+            - { name: environment_uid, type: string, required: true, description: Postman environment UID. }
+          call: postman.delete-environment

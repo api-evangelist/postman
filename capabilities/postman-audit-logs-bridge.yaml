@@ -1,0 +1,102 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  title: Postman Audit Logs Bridge
+  description: >-
+    Pulls Postman Enterprise Audit Logs (user actions, API changes,
+    workspace mutations, team membership changes) and bridges them into
+    Naftiko's OpenTelemetry pipeline so a single SIEM dashboard correlates
+    Naftiko capability activity with the Postman developer activity
+    that produced it. End-to-end accountability across both surfaces.
+  tags:
+    - Naftiko
+    - Postman
+    - Partnership
+    - Audit
+    - Observability
+    - SIEM
+    - Compliance
+  created: '2026-05-15'
+  modified: '2026-05-15'
+
+binds:
+  - namespace: postman-env
+    description: Postman API key (Enterprise audit logs require Enterprise tier).
+    keys:
+      POSTMAN_API_KEY: POSTMAN_API_KEY
+
+capability:
+  consumes:
+    - namespace: postman
+      type: http
+      baseUri: https://api.getpostman.com
+      authentication:
+        type: bearer
+        token: '{{POSTMAN_API_KEY}}'
+      resources:
+        - name: list-audit-logs
+          path: '/audit/logs'
+          operations:
+            - name: list-audit-logs
+              method: GET
+              inputParameters:
+                - { name: since, in: query, type: string, required: false }
+                - { name: until, in: query, type: string, required: false }
+                - { name: action, in: query, type: string, required: false }
+                - { name: actor_id, in: query, type: string, required: false }
+                - { name: cursor, in: query, type: string, required: false }
+                - { name: limit, in: query, type: integer, required: false }
+        - name: list-audit-actions
+          path: '/audit/actions'
+          operations:
+            - name: list-audit-actions
+              method: GET
+
+  exposes:
+    - type: rest
+      address: 0.0.0.0
+      port: 8080
+      namespace: postman-audit-logs-bridge-rest
+      description: REST surface for Postman audit log polling + action enumeration.
+      resources:
+        - name: list-audit-logs
+          path: '/audit/logs'
+          operations:
+            - name: list-audit-logs
+              method: GET
+              inputParameters:
+                - { name: since, in: query, type: string, required: false }
+                - { name: until, in: query, type: string, required: false }
+                - { name: action, in: query, type: string, required: false }
+                - { name: actor_id, in: query, type: string, required: false }
+                - { name: cursor, in: query, type: string, required: false }
+                - { name: limit, in: query, type: integer, required: false }
+              call: postman.list-audit-logs
+        - name: list-audit-actions
+          path: '/audit/actions'
+          operations:
+            - name: list-audit-actions
+              method: GET
+              call: postman.list-audit-actions
+
+    - type: mcp
+      address: 0.0.0.0
+      port: 3010
+      namespace: postman-audit-logs-bridge-mcp
+      description: MCP server for SOC / compliance agents to query Postman audit logs.
+      tools:
+        - name: list-audit-logs
+          description: List Postman Enterprise audit log entries with optional filters.
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: since, type: string, required: false, description: ISO 8601 timestamp lower bound. }
+            - { name: until, type: string, required: false, description: ISO 8601 timestamp upper bound. }
+            - { name: action, type: string, required: false, description: Filter by action name (e.g. user.signin). }
+            - { name: actor_id, type: string, required: false, description: Filter to a specific actor UUID. }
+            - { name: cursor, type: string, required: false, description: Pagination cursor. }
+            - { name: limit, type: integer, required: false, description: Max entries per page. }
+          call: postman.list-audit-logs
+        - name: list-audit-actions
+          description: List the set of audit action names Postman emits.
+          hints: { readOnly: true }
+          call: postman.list-audit-actions

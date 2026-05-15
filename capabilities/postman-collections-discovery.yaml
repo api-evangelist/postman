@@ -1,0 +1,132 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  title: Postman Collections Discovery
+  description: >-
+    Pulls Postman Workspaces and Collections into Naftiko Fleet discovery
+    so Backstage shows every Postman collection a team has shipped
+    alongside Naftiko-declared capabilities. Single pane of glass for
+    "what API surface is documented, mocked, monitored, or running" —
+    across Postman and Naftiko together.
+  tags:
+    - Naftiko
+    - Postman
+    - Partnership
+    - Discovery
+    - Collections
+    - Workspaces
+    - Backstage
+  created: '2026-05-15'
+  modified: '2026-05-15'
+
+binds:
+  - namespace: postman-env
+    description: Postman API key (workspace-scoped or org-scoped).
+    keys:
+      POSTMAN_API_KEY: POSTMAN_API_KEY
+
+capability:
+  consumes:
+    - namespace: postman
+      type: http
+      baseUri: https://api.getpostman.com
+      authentication:
+        type: bearer
+        token: '{{POSTMAN_API_KEY}}'
+      resources:
+        - name: list-workspaces
+          path: '/workspaces'
+          operations:
+            - name: list-workspaces
+              method: GET
+        - name: get-workspace
+          path: '/workspaces/{{workspace_id}}'
+          operations:
+            - name: get-workspace
+              method: GET
+              inputParameters:
+                - { name: workspace_id, in: path, required: true }
+        - name: list-collections
+          path: '/collections'
+          operations:
+            - name: list-collections
+              method: GET
+              inputParameters:
+                - { name: workspace, in: query, type: string, required: false }
+                - { name: name, in: query, type: string, required: false }
+        - name: get-collection
+          path: '/collections/{{collection_uid}}'
+          operations:
+            - name: get-collection
+              method: GET
+              inputParameters:
+                - { name: collection_uid, in: path, required: true }
+
+  exposes:
+    - type: rest
+      address: 0.0.0.0
+      port: 8080
+      namespace: postman-collections-discovery-rest
+      description: REST surface for Naftiko Fleet to discover Postman workspaces + collections.
+      resources:
+        - name: list-workspaces
+          path: '/workspaces'
+          operations:
+            - name: list-workspaces
+              method: GET
+              call: postman.list-workspaces
+        - name: get-workspace
+          path: '/workspaces/{workspace_id}'
+          operations:
+            - name: get-workspace
+              method: GET
+              inputParameters:
+                - { name: workspace_id, in: path, type: string, required: true }
+              call: postman.get-workspace
+        - name: list-collections
+          path: '/collections'
+          operations:
+            - name: list-collections
+              method: GET
+              inputParameters:
+                - { name: workspace, in: query, type: string, required: false }
+                - { name: name, in: query, type: string, required: false }
+              call: postman.list-collections
+        - name: get-collection
+          path: '/collections/{collection_uid}'
+          operations:
+            - name: get-collection
+              method: GET
+              inputParameters:
+                - { name: collection_uid, in: path, type: string, required: true }
+              call: postman.get-collection
+
+    - type: mcp
+      address: 0.0.0.0
+      port: 3010
+      namespace: postman-collections-discovery-mcp
+      description: MCP server exposing Postman discovery to AI agents.
+      tools:
+        - name: list-workspaces
+          description: List all Postman workspaces accessible by the API key.
+          hints: { readOnly: true }
+          call: postman.list-workspaces
+        - name: get-workspace
+          description: Get a single Postman workspace with its collections, environments, mocks, and monitors.
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: workspace_id, type: string, required: true, description: Postman workspace UUID. }
+          call: postman.get-workspace
+        - name: list-collections
+          description: List Postman collections, filterable by workspace or name.
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: workspace, type: string, required: false, description: Filter to a specific workspace UUID. }
+            - { name: name, type: string, required: false, description: Filter by collection name substring. }
+          call: postman.list-collections
+        - name: get-collection
+          description: Get a full Postman collection (folders, requests, scripts, tests).
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: collection_uid, type: string, required: true, description: Postman collection UID. }
+          call: postman.get-collection

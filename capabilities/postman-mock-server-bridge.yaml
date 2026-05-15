@@ -1,0 +1,152 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  title: Postman Mock Server Bridge
+  description: >-
+    Manages Postman Mock Servers from Naftiko spec — create / list / get
+    / delete mocks, optionally pointing them at a Naftiko-built capability
+    so the Naftiko engine can stand up a Postman-hosted mock for any
+    consume side without leaving the spec layer. Useful for design-time
+    capability testing without provisioning real upstream credentials.
+  tags:
+    - Naftiko
+    - Postman
+    - Partnership
+    - Mock-Server
+    - Testing
+    - Design-Time
+  created: '2026-05-15'
+  modified: '2026-05-15'
+
+binds:
+  - namespace: postman-env
+    description: Postman API key.
+    keys:
+      POSTMAN_API_KEY: POSTMAN_API_KEY
+
+capability:
+  consumes:
+    - namespace: postman
+      type: http
+      baseUri: https://api.getpostman.com
+      authentication:
+        type: bearer
+        token: '{{POSTMAN_API_KEY}}'
+      resources:
+        - name: list-mocks
+          path: '/mocks'
+          operations:
+            - name: list-mocks
+              method: GET
+              inputParameters:
+                - { name: workspace, in: query, type: string, required: false }
+            - name: create-mock
+              method: POST
+        - name: mock
+          path: '/mocks/{{mock_id}}'
+          operations:
+            - name: get-mock
+              method: GET
+              inputParameters:
+                - { name: mock_id, in: path, required: true }
+            - name: update-mock
+              method: PUT
+              inputParameters:
+                - { name: mock_id, in: path, required: true }
+            - name: delete-mock
+              method: DELETE
+              inputParameters:
+                - { name: mock_id, in: path, required: true }
+        - name: mock-call-logs
+          path: '/mocks/{{mock_id}}/call-logs'
+          operations:
+            - name: list-mock-call-logs
+              method: GET
+              inputParameters:
+                - { name: mock_id, in: path, required: true }
+
+  exposes:
+    - type: rest
+      address: 0.0.0.0
+      port: 8080
+      namespace: postman-mock-server-bridge-rest
+      description: REST surface for managing Postman Mock Servers.
+      resources:
+        - name: mocks
+          path: '/mocks'
+          operations:
+            - name: list-mocks
+              method: GET
+              inputParameters:
+                - { name: workspace, in: query, type: string, required: false }
+              call: postman.list-mocks
+            - name: create-mock
+              method: POST
+              call: postman.create-mock
+        - name: mock
+          path: '/mocks/{mock_id}'
+          operations:
+            - name: get-mock
+              method: GET
+              inputParameters:
+                - { name: mock_id, in: path, type: string, required: true }
+              call: postman.get-mock
+            - name: update-mock
+              method: PUT
+              inputParameters:
+                - { name: mock_id, in: path, type: string, required: true }
+              call: postman.update-mock
+            - name: delete-mock
+              method: DELETE
+              inputParameters:
+                - { name: mock_id, in: path, type: string, required: true }
+              call: postman.delete-mock
+        - name: mock-call-logs
+          path: '/mocks/{mock_id}/call-logs'
+          operations:
+            - name: list-mock-call-logs
+              method: GET
+              inputParameters:
+                - { name: mock_id, in: path, type: string, required: true }
+              call: postman.list-mock-call-logs
+
+    - type: mcp
+      address: 0.0.0.0
+      port: 3010
+      namespace: postman-mock-server-bridge-mcp
+      description: MCP server for managing Postman Mock Servers from Naftiko spec.
+      tools:
+        - name: list-mocks
+          description: List Postman Mock Servers (optionally filtered by workspace).
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: workspace, type: string, required: false, description: Filter to a workspace UUID. }
+          call: postman.list-mocks
+        - name: create-mock
+          description: Create a new Postman Mock Server.
+          hints: { destructiveHint: false }
+          call: postman.create-mock
+        - name: get-mock
+          description: Get a single Postman Mock Server by ID.
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: mock_id, type: string, required: true, description: Postman mock UID. }
+          call: postman.get-mock
+        - name: update-mock
+          description: Update a Postman Mock Server.
+          hints: { destructiveHint: true }
+          inputParameters:
+            - { name: mock_id, type: string, required: true, description: Postman mock UID. }
+          call: postman.update-mock
+        - name: delete-mock
+          description: Delete a Postman Mock Server.
+          hints: { destructiveHint: true }
+          inputParameters:
+            - { name: mock_id, type: string, required: true, description: Postman mock UID. }
+          call: postman.delete-mock
+        - name: list-mock-call-logs
+          description: List recent mock call logs for a Postman Mock Server (debugging consume-side calls).
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: mock_id, type: string, required: true, description: Postman mock UID. }
+          call: postman.list-mock-call-logs

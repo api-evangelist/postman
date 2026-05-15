@@ -1,0 +1,155 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  title: Postman Private API Network Publish
+  description: >-
+    Publishes Naftiko-built capabilities into Postman's Private API
+    Network catalog with approval workflow and visibility controls so
+    enterprise developers discover Naftiko capabilities the same way they
+    discover other internal APIs — inside the same Postman developer
+    experience their team already uses every day.
+  tags:
+    - Naftiko
+    - Postman
+    - Partnership
+    - Private-API-Network
+    - Catalog
+    - Discoverability
+  created: '2026-05-15'
+  modified: '2026-05-15'
+
+binds:
+  - namespace: postman-env
+    description: Postman API key.
+    keys:
+      POSTMAN_API_KEY: POSTMAN_API_KEY
+
+capability:
+  consumes:
+    - namespace: postman
+      type: http
+      baseUri: https://api.getpostman.com
+      authentication:
+        type: bearer
+        token: '{{POSTMAN_API_KEY}}'
+      resources:
+        - name: list-network-elements
+          path: '/network/private'
+          operations:
+            - name: list-network-elements
+              method: GET
+              inputParameters:
+                - { name: parentFolderId, in: query, type: string, required: false }
+            - name: add-network-element
+              method: POST
+        - name: network-element
+          path: '/network/private/{{element_id}}'
+          operations:
+            - name: get-network-element
+              method: GET
+              inputParameters:
+                - { name: element_id, in: path, required: true }
+            - name: update-network-element
+              method: PUT
+              inputParameters:
+                - { name: element_id, in: path, required: true }
+            - name: remove-network-element
+              method: DELETE
+              inputParameters:
+                - { name: element_id, in: path, required: true }
+        - name: network-folders
+          path: '/network/private/folders'
+          operations:
+            - name: list-network-folders
+              method: GET
+            - name: create-network-folder
+              method: POST
+
+  exposes:
+    - type: rest
+      address: 0.0.0.0
+      port: 8080
+      namespace: postman-private-api-network-publish-rest
+      description: REST surface for publishing Naftiko capabilities into the Postman Private API Network.
+      resources:
+        - name: network-elements
+          path: '/network'
+          operations:
+            - name: list-network-elements
+              method: GET
+              inputParameters:
+                - { name: parentFolderId, in: query, type: string, required: false }
+              call: postman.list-network-elements
+            - name: add-network-element
+              method: POST
+              call: postman.add-network-element
+        - name: network-element
+          path: '/network/{element_id}'
+          operations:
+            - name: get-network-element
+              method: GET
+              inputParameters:
+                - { name: element_id, in: path, type: string, required: true }
+              call: postman.get-network-element
+            - name: update-network-element
+              method: PUT
+              inputParameters:
+                - { name: element_id, in: path, type: string, required: true }
+              call: postman.update-network-element
+            - name: remove-network-element
+              method: DELETE
+              inputParameters:
+                - { name: element_id, in: path, type: string, required: true }
+              call: postman.remove-network-element
+        - name: network-folders
+          path: '/network/folders'
+          operations:
+            - name: list-network-folders
+              method: GET
+              call: postman.list-network-folders
+            - name: create-network-folder
+              method: POST
+              call: postman.create-network-folder
+
+    - type: mcp
+      address: 0.0.0.0
+      port: 3010
+      namespace: postman-private-api-network-publish-mcp
+      description: MCP server for managing the Postman Private API Network from Naftiko spec.
+      tools:
+        - name: list-network-elements
+          description: List elements in the Postman Private API Network catalog.
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: parentFolderId, type: string, required: false, description: Filter to a specific folder. }
+          call: postman.list-network-elements
+        - name: add-network-element
+          description: Add a Naftiko capability (or any element) to the Postman Private API Network.
+          hints: { destructiveHint: false }
+          call: postman.add-network-element
+        - name: get-network-element
+          description: Get a single Postman Private API Network element.
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: element_id, type: string, required: true, description: Network element ID. }
+          call: postman.get-network-element
+        - name: update-network-element
+          description: Update a Postman Private API Network element.
+          hints: { destructiveHint: true }
+          inputParameters:
+            - { name: element_id, type: string, required: true, description: Network element ID. }
+          call: postman.update-network-element
+        - name: remove-network-element
+          description: Remove an element from the Postman Private API Network.
+          hints: { destructiveHint: true }
+          inputParameters:
+            - { name: element_id, type: string, required: true, description: Network element ID. }
+          call: postman.remove-network-element
+        - name: list-network-folders
+          description: List folders in the Postman Private API Network catalog.
+          hints: { readOnly: true }
+          call: postman.list-network-folders
+        - name: create-network-folder
+          description: Create a new folder in the Postman Private API Network.
+          hints: { destructiveHint: false }
+          call: postman.create-network-folder

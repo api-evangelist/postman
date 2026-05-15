@@ -1,0 +1,107 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  title: Postman Collection Import
+  description: >-
+    Imports a Postman Collection and synthesizes a Naftiko capability YAML
+    from it — every request becomes a Naftiko consume operation; the
+    folder structure becomes the capability shape. Lets a Naftiko Fleet
+    absorb existing Postman collections as governed capabilities without
+    rewriting from scratch.
+  tags:
+    - Naftiko
+    - Postman
+    - Partnership
+    - Collections
+    - Migration
+    - Capability-Synthesis
+  created: '2026-05-15'
+  modified: '2026-05-15'
+
+binds:
+  - namespace: postman-env
+    description: Postman API key.
+    keys:
+      POSTMAN_API_KEY: POSTMAN_API_KEY
+
+capability:
+  consumes:
+    - namespace: postman
+      type: http
+      baseUri: https://api.getpostman.com
+      authentication:
+        type: bearer
+        token: '{{POSTMAN_API_KEY}}'
+      resources:
+        - name: get-collection
+          path: '/collections/{{collection_uid}}'
+          operations:
+            - name: get-collection
+              method: GET
+              inputParameters:
+                - { name: collection_uid, in: path, required: true }
+        - name: get-collection-fork
+          path: '/collections/fork/{{collection_uid}}'
+          operations:
+            - name: fork-collection
+              method: POST
+              inputParameters:
+                - { name: collection_uid, in: path, required: true }
+        - name: transform-to-openapi
+          path: '/collections/transformations'
+          operations:
+            - name: transform-to-openapi
+              method: POST
+
+  exposes:
+    - type: rest
+      address: 0.0.0.0
+      port: 8080
+      namespace: postman-collection-import-rest
+      description: REST surface for ingesting Postman Collections as Naftiko capability drafts.
+      resources:
+        - name: get-collection
+          path: '/collections/{collection_uid}'
+          operations:
+            - name: get-collection
+              method: GET
+              inputParameters:
+                - { name: collection_uid, in: path, type: string, required: true }
+              call: postman.get-collection
+        - name: fork-collection
+          path: '/collections/fork/{collection_uid}'
+          operations:
+            - name: fork-collection
+              method: POST
+              inputParameters:
+                - { name: collection_uid, in: path, type: string, required: true }
+              call: postman.fork-collection
+        - name: transform-to-openapi
+          path: '/collections/transformations'
+          operations:
+            - name: transform-to-openapi
+              method: POST
+              call: postman.transform-to-openapi
+
+    - type: mcp
+      address: 0.0.0.0
+      port: 3010
+      namespace: postman-collection-import-mcp
+      description: MCP server for migrating Postman Collections into Naftiko capability drafts.
+      tools:
+        - name: get-collection
+          description: Get a full Postman collection (used as source for Naftiko capability synthesis).
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: collection_uid, type: string, required: true, description: Postman collection UID. }
+          call: postman.get-collection
+        - name: fork-collection
+          description: Fork a Postman collection (e.g., to make a Naftiko-owned working copy before migration).
+          hints: { destructiveHint: false }
+          inputParameters:
+            - { name: collection_uid, type: string, required: true, description: Postman collection UID. }
+          call: postman.fork-collection
+        - name: transform-to-openapi
+          description: Transform a Postman collection to an OpenAPI spec (used as input to capability synthesis).
+          hints: { destructiveHint: false }
+          call: postman.transform-to-openapi
