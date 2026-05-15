@@ -1,0 +1,248 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  title: Postman Fabric Gateway Bridge
+  description: >-
+    Registers Naftiko-built MCP servers, internal APIs, and SaaS credentials
+    with Postman Fabric Gateway — Postman's AI-native agent gateway
+    (announced May 2026) — so agent traffic to Naftiko-shipped capabilities
+    is governed by Fabric's consumer / route / service-level policy. Naftiko
+    ships the artifacts; Fabric Gateway routes and governs agent traffic to
+    them. Supports both cloud and hybrid Fabric deployments.
+  tags:
+    - Naftiko
+    - Postman
+    - Partnership
+    - Fabric-Gateway
+    - Agent-Gateway
+    - MCP
+    - Governance
+  created: '2026-05-15'
+  modified: '2026-05-15'
+
+binds:
+  - namespace: postman-env
+    description: Postman API key + Fabric Gateway control-plane endpoint.
+    keys:
+      POSTMAN_API_KEY: POSTMAN_API_KEY
+      POSTMAN_FABRIC_BASE: POSTMAN_FABRIC_BASE
+
+capability:
+  consumes:
+    - namespace: postman-fabric
+      type: http
+      baseUri: '{{POSTMAN_FABRIC_BASE}}'
+      authentication:
+        type: bearer
+        token: '{{POSTMAN_API_KEY}}'
+      resources:
+        - name: list-mcp-servers
+          path: '/fabric/mcp-servers'
+          operations:
+            - name: list-mcp-servers
+              method: GET
+              inputParameters:
+                - { name: visibility, in: query, type: string, required: false }
+            - name: register-mcp-server
+              method: POST
+        - name: mcp-server
+          path: '/fabric/mcp-servers/{{mcp_server_id}}'
+          operations:
+            - name: get-mcp-server
+              method: GET
+              inputParameters:
+                - { name: mcp_server_id, in: path, required: true }
+            - name: update-mcp-server
+              method: PUT
+              inputParameters:
+                - { name: mcp_server_id, in: path, required: true }
+            - name: delete-mcp-server
+              method: DELETE
+              inputParameters:
+                - { name: mcp_server_id, in: path, required: true }
+        - name: list-routes
+          path: '/fabric/routes'
+          operations:
+            - name: list-routes
+              method: GET
+              inputParameters:
+                - { name: service_id, in: query, type: string, required: false }
+            - name: create-route
+              method: POST
+        - name: list-services
+          path: '/fabric/services'
+          operations:
+            - name: list-services
+              method: GET
+            - name: register-service
+              method: POST
+        - name: list-policies
+          path: '/fabric/policies'
+          operations:
+            - name: list-policies
+              method: GET
+              inputParameters:
+                - { name: scope, in: query, type: string, required: false }
+            - name: create-policy
+              method: POST
+        - name: list-credentials
+          path: '/fabric/credentials'
+          operations:
+            - name: list-credentials
+              method: GET
+              inputParameters:
+                - { name: service_id, in: query, type: string, required: false }
+            - name: register-credential
+              method: POST
+
+  exposes:
+    - type: rest
+      address: 0.0.0.0
+      port: 8080
+      namespace: postman-fabric-gateway-bridge-rest
+      description: REST surface for managing Postman Fabric Gateway resources from Naftiko spec.
+      resources:
+        - name: mcp-servers
+          path: '/fabric/mcp-servers'
+          operations:
+            - name: list-mcp-servers
+              method: GET
+              inputParameters:
+                - { name: visibility, in: query, type: string, required: false }
+              call: postman-fabric.list-mcp-servers
+            - name: register-mcp-server
+              method: POST
+              call: postman-fabric.register-mcp-server
+        - name: mcp-server
+          path: '/fabric/mcp-servers/{mcp_server_id}'
+          operations:
+            - name: get-mcp-server
+              method: GET
+              inputParameters:
+                - { name: mcp_server_id, in: path, type: string, required: true }
+              call: postman-fabric.get-mcp-server
+            - name: update-mcp-server
+              method: PUT
+              inputParameters:
+                - { name: mcp_server_id, in: path, type: string, required: true }
+              call: postman-fabric.update-mcp-server
+            - name: delete-mcp-server
+              method: DELETE
+              inputParameters:
+                - { name: mcp_server_id, in: path, type: string, required: true }
+              call: postman-fabric.delete-mcp-server
+        - name: routes
+          path: '/fabric/routes'
+          operations:
+            - name: list-routes
+              method: GET
+              inputParameters:
+                - { name: service_id, in: query, type: string, required: false }
+              call: postman-fabric.list-routes
+            - name: create-route
+              method: POST
+              call: postman-fabric.create-route
+        - name: services
+          path: '/fabric/services'
+          operations:
+            - name: list-services
+              method: GET
+              call: postman-fabric.list-services
+            - name: register-service
+              method: POST
+              call: postman-fabric.register-service
+        - name: policies
+          path: '/fabric/policies'
+          operations:
+            - name: list-policies
+              method: GET
+              inputParameters:
+                - { name: scope, in: query, type: string, required: false }
+              call: postman-fabric.list-policies
+            - name: create-policy
+              method: POST
+              call: postman-fabric.create-policy
+        - name: credentials
+          path: '/fabric/credentials'
+          operations:
+            - name: list-credentials
+              method: GET
+              inputParameters:
+                - { name: service_id, in: query, type: string, required: false }
+              call: postman-fabric.list-credentials
+            - name: register-credential
+              method: POST
+              call: postman-fabric.register-credential
+
+    - type: mcp
+      address: 0.0.0.0
+      port: 3010
+      namespace: postman-fabric-gateway-bridge-mcp
+      description: MCP server for managing Postman Fabric Gateway from Naftiko-built agents.
+      tools:
+        - name: list-mcp-servers
+          description: List MCP servers registered with Postman Fabric Gateway (public + private).
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: visibility, type: string, required: false, description: Filter by visibility (public / private). }
+          call: postman-fabric.list-mcp-servers
+        - name: register-mcp-server
+          description: Register a new MCP server with Postman Fabric Gateway (typically a Naftiko-built MCP).
+          hints: { destructiveHint: false }
+          call: postman-fabric.register-mcp-server
+        - name: get-mcp-server
+          description: Get a single Fabric Gateway MCP server registration.
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: mcp_server_id, type: string, required: true, description: Fabric MCP server ID. }
+          call: postman-fabric.get-mcp-server
+        - name: update-mcp-server
+          description: Update a Fabric Gateway MCP server registration.
+          hints: { destructiveHint: true }
+          inputParameters:
+            - { name: mcp_server_id, type: string, required: true, description: Fabric MCP server ID. }
+          call: postman-fabric.update-mcp-server
+        - name: delete-mcp-server
+          description: Deregister an MCP server from Postman Fabric Gateway.
+          hints: { destructiveHint: true }
+          inputParameters:
+            - { name: mcp_server_id, type: string, required: true, description: Fabric MCP server ID. }
+          call: postman-fabric.delete-mcp-server
+        - name: list-routes
+          description: List Fabric Gateway routes (consumer / route / service-level scoping).
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: service_id, type: string, required: false, description: Filter to a specific service. }
+          call: postman-fabric.list-routes
+        - name: create-route
+          description: Create a new Fabric Gateway route (typically pointing at a Naftiko-built service).
+          hints: { destructiveHint: false }
+          call: postman-fabric.create-route
+        - name: list-services
+          description: List Fabric Gateway service registrations.
+          hints: { readOnly: true }
+          call: postman-fabric.list-services
+        - name: register-service
+          description: Register a new service with Fabric Gateway (typically a Naftiko-exposed REST or MCP capability).
+          hints: { destructiveHint: false }
+          call: postman-fabric.register-service
+        - name: list-policies
+          description: List Fabric Gateway policies (consumer / route / service-level).
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: scope, type: string, required: false, description: Filter by policy scope (consumer / route / service). }
+          call: postman-fabric.list-policies
+        - name: create-policy
+          description: Create a new Fabric Gateway agent-traffic policy.
+          hints: { destructiveHint: false }
+          call: postman-fabric.create-policy
+        - name: list-credentials
+          description: List centralized SaaS credentials managed by Fabric Gateway.
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: service_id, type: string, required: false, description: Filter to a specific service. }
+          call: postman-fabric.list-credentials
+        - name: register-credential
+          description: Register a centralized SaaS credential with Fabric Gateway.
+          hints: { destructiveHint: false }
+          call: postman-fabric.register-credential
