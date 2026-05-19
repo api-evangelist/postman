@@ -1,0 +1,172 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Postman Private API Network API — Network Requests
+  description: 'Postman Private API Network API — Network Requests. 3 operations. Lead operation: Postman Get all network
+    requests. Self-contained Naftiko capability covering one Postman business surface.'
+  tags:
+  - Postman
+  - Network Requests
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    POSTMAN_API_KEY: POSTMAN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: private-api-network-network-requests
+    baseUri: https://api.getpostman.com
+    description: Postman Private API Network API — Network Requests business capability. Self-contained, no shared references.
+    resources:
+    - name: network-private-network-request
+      path: /network/private/network-request
+      operations:
+      - name: getnetworkrequests
+        method: GET
+        description: Postman Get all network requests
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: status
+          in: query
+          type: string
+        - name: offset
+          in: query
+          type: integer
+        - name: limit
+          in: query
+          type: integer
+    - name: network-private-network-request-requestId-approve
+      path: /network/private/network-request/{requestId}/approve
+      operations:
+      - name: approvenetworkrequest
+        method: PUT
+        description: Postman Approve a network request
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: requestId
+          in: path
+          type: integer
+          required: true
+    - name: network-private-network-request-requestId-deny
+      path: /network/private/network-request/{requestId}/deny
+      operations:
+      - name: denynetworkrequest
+        method: PUT
+        description: Postman Deny a network request
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: requestId
+          in: path
+          type: integer
+          required: true
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.POSTMAN_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: private-api-network-network-requests-rest
+    port: 8080
+    description: REST adapter for Postman Private API Network API — Network Requests. One Spectral-compliant resource per
+      consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/network/private/network-request
+      name: network-private-network-request
+      description: REST surface for network-private-network-request.
+      operations:
+      - method: GET
+        name: getnetworkrequests
+        description: Postman Get all network requests
+        call: private-api-network-network-requests.getnetworkrequests
+        with:
+          status: rest.status
+          offset: rest.offset
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/network/private/network-request/{requestid}/approve
+      name: network-private-network-request-requestid-approve
+      description: REST surface for network-private-network-request-requestId-approve.
+      operations:
+      - method: PUT
+        name: approvenetworkrequest
+        description: Postman Approve a network request
+        call: private-api-network-network-requests.approvenetworkrequest
+        with:
+          requestId: rest.requestId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/network/private/network-request/{requestid}/deny
+      name: network-private-network-request-requestid-deny
+      description: REST surface for network-private-network-request-requestId-deny.
+      operations:
+      - method: PUT
+        name: denynetworkrequest
+        description: Postman Deny a network request
+        call: private-api-network-network-requests.denynetworkrequest
+        with:
+          requestId: rest.requestId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: private-api-network-network-requests-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Postman Private API Network API — Network Requests. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: postman-get-all-network-requests
+      description: Postman Get all network requests
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: private-api-network-network-requests.getnetworkrequests
+      with:
+        status: tools.status
+        offset: tools.offset
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: postman-approve-network-request
+      description: Postman Approve a network request
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: private-api-network-network-requests.approvenetworkrequest
+      with:
+        requestId: tools.requestId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: postman-deny-network-request
+      description: Postman Deny a network request
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: private-api-network-network-requests.denynetworkrequest
+      with:
+        requestId: tools.requestId
+      outputParameters:
+      - type: object
+        mapping: $.

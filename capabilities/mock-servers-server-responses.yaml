@@ -1,0 +1,189 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Postman Mock Servers API — Server Responses
+  description: 'Postman Mock Servers API — Server Responses. 4 operations. Lead operation: Postman Get mock server responses.
+    Self-contained Naftiko capability covering one Postman business surface.'
+  tags:
+  - Postman
+  - Server Responses
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    POSTMAN_API_KEY: POSTMAN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: mock-servers-server-responses
+    baseUri: https://api.getpostman.com
+    description: Postman Mock Servers API — Server Responses business capability. Self-contained, no shared references.
+    resources:
+    - name: mocks-mockId-serverResponses
+      path: /mocks/{mockId}/serverResponses
+      operations:
+      - name: getmockserverresponses
+        method: GET
+        description: Postman Get mock server responses
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createserverresponse
+        method: POST
+        description: Postman Create a server response
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: mocks-mockId-serverResponses-serverResponseId
+      path: /mocks/{mockId}/serverResponses/{serverResponseId}
+      operations:
+      - name: updateserverresponse
+        method: PUT
+        description: Postman Update a server response
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serverResponseId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteserverresponse
+        method: DELETE
+        description: Postman Delete a server response
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serverResponseId
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.POSTMAN_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: mock-servers-server-responses-rest
+    port: 8080
+    description: REST adapter for Postman Mock Servers API — Server Responses. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/mocks/{mockid}/serverresponses
+      name: mocks-mockid-serverresponses
+      description: REST surface for mocks-mockId-serverResponses.
+      operations:
+      - method: GET
+        name: getmockserverresponses
+        description: Postman Get mock server responses
+        call: mock-servers-server-responses.getmockserverresponses
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createserverresponse
+        description: Postman Create a server response
+        call: mock-servers-server-responses.createserverresponse
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/mocks/{mockid}/serverresponses/{serverresponseid}
+      name: mocks-mockid-serverresponses-serverresponseid
+      description: REST surface for mocks-mockId-serverResponses-serverResponseId.
+      operations:
+      - method: PUT
+        name: updateserverresponse
+        description: Postman Update a server response
+        call: mock-servers-server-responses.updateserverresponse
+        with:
+          serverResponseId: rest.serverResponseId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteserverresponse
+        description: Postman Delete a server response
+        call: mock-servers-server-responses.deleteserverresponse
+        with:
+          serverResponseId: rest.serverResponseId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: mock-servers-server-responses-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Postman Mock Servers API — Server Responses. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: postman-get-mock-server-responses
+      description: Postman Get mock server responses
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: mock-servers-server-responses.getmockserverresponses
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: postman-create-server-response
+      description: Postman Create a server response
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: mock-servers-server-responses.createserverresponse
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: postman-update-server-response
+      description: Postman Update a server response
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: mock-servers-server-responses.updateserverresponse
+      with:
+        serverResponseId: tools.serverResponseId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: postman-delete-server-response
+      description: Postman Delete a server response
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: mock-servers-server-responses.deleteserverresponse
+      with:
+        serverResponseId: tools.serverResponseId
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,145 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Postman Private API Network API — Private API Network
+  description: 'Postman Private API Network API — Private API Network. 1 operations. Lead operation: Postman Get all elements
+    in the private API network. Self-contained Naftiko capability covering one Postman business surface.'
+  tags:
+  - Postman
+  - Private API Network
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    POSTMAN_API_KEY: POSTMAN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: private-api-network-private-api-network
+    baseUri: https://api.getpostman.com
+    description: Postman Private API Network API — Private API Network business capability. Self-contained, no shared references.
+    resources:
+    - name: network-private
+      path: /network/private
+      operations:
+      - name: getprivatenetworkelements
+        method: GET
+        description: Postman Get all elements in the private API network
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: since
+          in: query
+          type: string
+          description: Return elements added after this date (ISO 8601).
+        - name: until
+          in: query
+          type: string
+          description: Return elements added before this date (ISO 8601).
+        - name: addedBy
+          in: query
+          type: integer
+          description: Filter by the user who added the element.
+        - name: name
+          in: query
+          type: string
+          description: Filter by element name (partial match).
+        - name: summary
+          in: query
+          type: string
+          description: Filter by element summary (partial match).
+        - name: description
+          in: query
+          type: string
+          description: Filter by element description (partial match).
+        - name: type
+          in: query
+          type: string
+          description: Filter by element type.
+        - name: offset
+          in: query
+          type: integer
+        - name: limit
+          in: query
+          type: integer
+        - name: parentFolderId
+          in: query
+          type: integer
+          description: Filter by parent folder ID.
+        - name: sort
+          in: query
+          type: string
+          description: Sort field.
+        - name: direction
+          in: query
+          type: string
+          description: Sort direction.
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.POSTMAN_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: private-api-network-private-api-network-rest
+    port: 8080
+    description: REST adapter for Postman Private API Network API — Private API Network. One Spectral-compliant resource per
+      consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/network/private
+      name: network-private
+      description: REST surface for network-private.
+      operations:
+      - method: GET
+        name: getprivatenetworkelements
+        description: Postman Get all elements in the private API network
+        call: private-api-network-private-api-network.getprivatenetworkelements
+        with:
+          since: rest.since
+          until: rest.until
+          addedBy: rest.addedBy
+          name: rest.name
+          summary: rest.summary
+          description: rest.description
+          type: rest.type
+          offset: rest.offset
+          limit: rest.limit
+          parentFolderId: rest.parentFolderId
+          sort: rest.sort
+          direction: rest.direction
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: private-api-network-private-api-network-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Postman Private API Network API — Private API Network. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: postman-get-all-elements-private
+      description: Postman Get all elements in the private API network
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: private-api-network-private-api-network.getprivatenetworkelements
+      with:
+        since: tools.since
+        until: tools.until
+        addedBy: tools.addedBy
+        name: tools.name
+        summary: tools.summary
+        description: tools.description
+        type: tools.type
+        offset: tools.offset
+        limit: tools.limit
+        parentFolderId: tools.parentFolderId
+        sort: tools.sort
+        direction: tools.direction
+      outputParameters:
+      - type: object
+        mapping: $.

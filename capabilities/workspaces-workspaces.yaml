@@ -1,0 +1,281 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Postman Workspaces API — Workspaces
+  description: 'Postman Workspaces API — Workspaces. 7 operations. Lead operation: Postman Get all workspaces. Self-contained
+    Naftiko capability covering one Postman business surface.'
+  tags:
+  - Postman
+  - Workspaces
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    POSTMAN_API_KEY: POSTMAN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: workspaces-workspaces
+    baseUri: https://api.getpostman.com
+    description: Postman Workspaces API — Workspaces business capability. Self-contained, no shared references.
+    resources:
+    - name: workspaces
+      path: /workspaces
+      operations:
+      - name: getallworkspaces
+        method: GET
+        description: Postman Get all workspaces
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: type
+          in: query
+          type: string
+          description: Filter workspaces by type.
+        - name: include
+          in: query
+          type: string
+          description: Additional information to include in the response.
+      - name: createworkspace
+        method: POST
+        description: Postman Create a workspace
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: workspaces-workspaceId
+      path: /workspaces/{workspaceId}
+      operations:
+      - name: getworkspace
+        method: GET
+        description: Postman Get a workspace
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateworkspace
+        method: PUT
+        description: Postman Update a workspace
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteworkspace
+        method: DELETE
+        description: Postman Delete a workspace
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: workspaces-workspaceId-global-variables
+      path: /workspaces/{workspaceId}/global-variables
+      operations:
+      - name: getworkspaceglobalvariables
+        method: GET
+        description: Postman Get workspace global variables
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateworkspaceglobalvariables
+        method: PUT
+        description: Postman Update workspace global variables
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.POSTMAN_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: workspaces-workspaces-rest
+    port: 8080
+    description: REST adapter for Postman Workspaces API — Workspaces. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/workspaces
+      name: workspaces
+      description: REST surface for workspaces.
+      operations:
+      - method: GET
+        name: getallworkspaces
+        description: Postman Get all workspaces
+        call: workspaces-workspaces.getallworkspaces
+        with:
+          type: rest.type
+          include: rest.include
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createworkspace
+        description: Postman Create a workspace
+        call: workspaces-workspaces.createworkspace
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/workspaces/{workspaceid}
+      name: workspaces-workspaceid
+      description: REST surface for workspaces-workspaceId.
+      operations:
+      - method: GET
+        name: getworkspace
+        description: Postman Get a workspace
+        call: workspaces-workspaces.getworkspace
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateworkspace
+        description: Postman Update a workspace
+        call: workspaces-workspaces.updateworkspace
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteworkspace
+        description: Postman Delete a workspace
+        call: workspaces-workspaces.deleteworkspace
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/workspaces/{workspaceid}/global-variables
+      name: workspaces-workspaceid-global-variables
+      description: REST surface for workspaces-workspaceId-global-variables.
+      operations:
+      - method: GET
+        name: getworkspaceglobalvariables
+        description: Postman Get workspace global variables
+        call: workspaces-workspaces.getworkspaceglobalvariables
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateworkspaceglobalvariables
+        description: Postman Update workspace global variables
+        call: workspaces-workspaces.updateworkspaceglobalvariables
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: workspaces-workspaces-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Postman Workspaces API — Workspaces. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: postman-get-all-workspaces
+      description: Postman Get all workspaces
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: workspaces-workspaces.getallworkspaces
+      with:
+        type: tools.type
+        include: tools.include
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: postman-create-workspace
+      description: Postman Create a workspace
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: workspaces-workspaces.createworkspace
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: postman-get-workspace
+      description: Postman Get a workspace
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: workspaces-workspaces.getworkspace
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: postman-update-workspace
+      description: Postman Update a workspace
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: workspaces-workspaces.updateworkspace
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: postman-delete-workspace
+      description: Postman Delete a workspace
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: workspaces-workspaces.deleteworkspace
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: postman-get-workspace-global-variables
+      description: Postman Get workspace global variables
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: workspaces-workspaces.getworkspaceglobalvariables
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: postman-update-workspace-global-variables
+      description: Postman Update workspace global variables
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: workspaces-workspaces.updateworkspaceglobalvariables
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

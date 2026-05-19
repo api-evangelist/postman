@@ -1,0 +1,105 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Postman Audit Logs API — Audit Logs
+  description: 'Postman Audit Logs API — Audit Logs. 1 operations. Lead operation: Postman Get audit logs. Self-contained
+    Naftiko capability covering one Postman business surface.'
+  tags:
+  - Postman
+  - Audit Logs
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    POSTMAN_API_KEY: POSTMAN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: audit-logs-audit-logs
+    baseUri: https://api.getpostman.com
+    description: Postman Audit Logs API — Audit Logs business capability. Self-contained, no shared references.
+    resources:
+    - name: audit-logs
+      path: /audit/logs
+      operations:
+      - name: getauditlogs
+        method: GET
+        description: Postman Get audit logs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: since
+          in: query
+          type: string
+          description: Return audit events since this date (ISO 8601).
+        - name: until
+          in: query
+          type: string
+          description: Return audit events until this date (ISO 8601).
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of results to return.
+        - name: cursor
+          in: query
+          type: string
+          description: Pagination cursor for the next page of results.
+        - name: orderBy
+          in: query
+          type: string
+          description: Sort order for results.
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.POSTMAN_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: audit-logs-audit-logs-rest
+    port: 8080
+    description: REST adapter for Postman Audit Logs API — Audit Logs. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/audit/logs
+      name: audit-logs
+      description: REST surface for audit-logs.
+      operations:
+      - method: GET
+        name: getauditlogs
+        description: Postman Get audit logs
+        call: audit-logs-audit-logs.getauditlogs
+        with:
+          since: rest.since
+          until: rest.until
+          limit: rest.limit
+          cursor: rest.cursor
+          orderBy: rest.orderBy
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: audit-logs-audit-logs-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Postman Audit Logs API — Audit Logs. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: postman-get-audit-logs
+      description: Postman Get audit logs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: audit-logs-audit-logs.getauditlogs
+      with:
+        since: tools.since
+        until: tools.until
+        limit: tools.limit
+        cursor: tools.cursor
+        orderBy: tools.orderBy
+      outputParameters:
+      - type: object
+        mapping: $.

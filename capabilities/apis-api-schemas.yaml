@@ -1,0 +1,202 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Postman APIs API — API Schemas
+  description: 'Postman APIs API — API Schemas. 4 operations. Lead operation: Postman Get all API schemas. Self-contained
+    Naftiko capability covering one Postman business surface.'
+  tags:
+  - Postman
+  - API Schemas
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    POSTMAN_API_KEY: POSTMAN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: apis-api-schemas
+    baseUri: https://api.getpostman.com
+    description: Postman APIs API — API Schemas business capability. Self-contained, no shared references.
+    resources:
+    - name: apis-apiId-schemas
+      path: /apis/{apiId}/schemas
+      operations:
+      - name: getapischemas
+        method: GET
+        description: Postman Get all API schemas
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cursor
+          in: query
+          type: string
+        - name: limit
+          in: query
+          type: integer
+      - name: createapischema
+        method: POST
+        description: Postman Create an API schema
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apis-apiId-schemas-schemaId
+      path: /apis/{apiId}/schemas/{schemaId}
+      operations:
+      - name: getapischema
+        method: GET
+        description: Postman Get an API schema
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: schemaId
+          in: path
+          type: string
+          required: true
+    - name: apis-apiId-schemas-schemaId-files
+      path: /apis/{apiId}/schemas/{schemaId}/files
+      operations:
+      - name: getapischemafiles
+        method: GET
+        description: Postman Get API schema files
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: schemaId
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.POSTMAN_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: apis-api-schemas-rest
+    port: 8080
+    description: REST adapter for Postman APIs API — API Schemas. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/apis/{apiid}/schemas
+      name: apis-apiid-schemas
+      description: REST surface for apis-apiId-schemas.
+      operations:
+      - method: GET
+        name: getapischemas
+        description: Postman Get all API schemas
+        call: apis-api-schemas.getapischemas
+        with:
+          cursor: rest.cursor
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createapischema
+        description: Postman Create an API schema
+        call: apis-api-schemas.createapischema
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/{apiid}/schemas/{schemaid}
+      name: apis-apiid-schemas-schemaid
+      description: REST surface for apis-apiId-schemas-schemaId.
+      operations:
+      - method: GET
+        name: getapischema
+        description: Postman Get an API schema
+        call: apis-api-schemas.getapischema
+        with:
+          schemaId: rest.schemaId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/{apiid}/schemas/{schemaid}/files
+      name: apis-apiid-schemas-schemaid-files
+      description: REST surface for apis-apiId-schemas-schemaId-files.
+      operations:
+      - method: GET
+        name: getapischemafiles
+        description: Postman Get API schema files
+        call: apis-api-schemas.getapischemafiles
+        with:
+          schemaId: rest.schemaId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: apis-api-schemas-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Postman APIs API — API Schemas. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: postman-get-all-api-schemas
+      description: Postman Get all API schemas
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: apis-api-schemas.getapischemas
+      with:
+        cursor: tools.cursor
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: postman-create-api-schema
+      description: Postman Create an API schema
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: apis-api-schemas.createapischema
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: postman-get-api-schema
+      description: Postman Get an API schema
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: apis-api-schemas.getapischema
+      with:
+        schemaId: tools.schemaId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: postman-get-api-schema-files
+      description: Postman Get API schema files
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: apis-api-schemas.getapischemafiles
+      with:
+        schemaId: tools.schemaId
+      outputParameters:
+      - type: object
+        mapping: $.

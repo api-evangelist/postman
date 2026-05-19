@@ -1,0 +1,107 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Postman Tags API
+  description: 'Postman Tags API. 2 operations. Lead operation: Postman Get tags for an entity. Self-contained Naftiko capability
+    covering one Postman business surface.'
+  tags:
+  - Postman
+  - Postman Tags API
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    POSTMAN_API_KEY: POSTMAN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: tags
+    baseUri: https://api.getpostman.com
+    description: Postman Tags API business capability. Self-contained, no shared references.
+    resources:
+    - name: tags-entityType-entityId
+      path: /tags/{entityType}/{entityId}
+      operations:
+      - name: getentitytags
+        method: GET
+        description: Postman Get tags for an entity
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateentitytags
+        method: PUT
+        description: Postman Update tags for an entity
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.POSTMAN_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: tags-rest
+    port: 8080
+    description: REST adapter for Postman Tags API. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/tags/{entitytype}/{entityid}
+      name: tags-entitytype-entityid
+      description: REST surface for tags-entityType-entityId.
+      operations:
+      - method: GET
+        name: getentitytags
+        description: Postman Get tags for an entity
+        call: tags.getentitytags
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateentitytags
+        description: Postman Update tags for an entity
+        call: tags.updateentitytags
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: tags-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Postman Tags API. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: postman-get-tags-entity
+      description: Postman Get tags for an entity
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: tags.getentitytags
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: postman-update-tags-entity
+      description: Postman Update tags for an entity
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: tags.updateentitytags
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
