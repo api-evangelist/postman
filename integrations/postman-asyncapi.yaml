@@ -1,0 +1,112 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Register AsyncAPI specs as Postman API schemas
+  description: For each AsyncAPI document, create or update a corresponding Postman API record so async channels show up alongside REST collections in the catalog.
+  tags:
+  - Postman
+  - Integration
+  - Standards
+  - asyncapi
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    POSTMAN_API_KEY: POSTMAN_API_KEY
+    ASYNCAPI_API_KEY: ASYNCAPI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: postman
+    baseUri: https://api.getpostman.com
+    description: Postman API operations consumed by this integration.
+    resources:
+    - name: apis
+      path: /apis
+      operations:
+      - name: createapi
+        method: POST
+        description: Register an AsyncAPI document as a new Postman API.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apis-apiid-schemas
+      path: /apis/{apiId}/schemas
+      operations:
+      - name: createapischema
+        method: POST
+        description: Attach the AsyncAPI document to the Postman API as a schema.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: apiId
+          in: path
+          type: string
+          description: Path parameter apiId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: asyncapi
+    baseUri: https://api.asyncapi.com
+    description: AsyncAPI Studio API operations consumed by this integration.
+    resources:
+    - name: v1-parse
+      path: /v1/parse
+      operations:
+      - name: parsedocument
+        method: GET
+        description: 'AsyncAPI Studio API: parseDocument'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+  exposes:
+  - type: mcp
+    namespace: postman-asyncapi-mcp
+    description: MCP adapter for the postman-asyncapi integration.
+    tools:
+    - name: postman_asyncapi
+      description: Execute the postman asyncapi integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: postman-asyncapi-rest
+    port: 8080
+    description: REST adapter for the postman-asyncapi integration.
+    resources:
+    - path: /postman-asyncapi
+      name: postman-asyncapi
+      description: REST surface for the postman-asyncapi integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the postman-asyncapi integration.
+        call: postman_asyncapi
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

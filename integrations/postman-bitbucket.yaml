@@ -1,0 +1,159 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Publish Postman collection from a Bitbucket pipeline
+  description: A Bitbucket Pipelines build publishes the generated Postman collection through this capability so the collection version always matches the build artifact.
+  tags:
+  - Postman
+  - Integration
+  - Source control
+  - bitbucket
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    POSTMAN_API_KEY: POSTMAN_API_KEY
+    BITBUCKET_API_KEY: BITBUCKET_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: postman
+    baseUri: https://api.getpostman.com
+    description: Postman API operations consumed by this integration.
+    resources:
+    - name: collections
+      path: /collections
+      operations:
+      - name: createcollection
+        method: POST
+        description: Create a new Postman collection from a Bitbucket build artifact.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: collections-collectionid
+      path: /collections/{collectionId}
+      operations:
+      - name: updatecollection
+        method: PUT
+        description: Update the existing Postman collection in place from the latest Bitbucket build.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collectionId
+          in: path
+          type: string
+          description: Path parameter collectionId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: bitbucket
+    baseUri: https://api.bitbucket.org/2.0
+    description: Bitbucket Cloud API operations consumed by this integration.
+    resources:
+    - name: repositories-workspace-repo-slug-src-commit-path
+      path: /repositories/{workspace}/{repo_slug}/src/{commit}/{path}
+      operations:
+      - name: getrepofile
+        method: GET
+        description: 'Bitbucket Cloud API: getRepoFile'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: workspace
+          in: path
+          type: string
+          description: Path parameter workspace.
+          required: true
+        - name: repo_slug
+          in: path
+          type: string
+          description: Path parameter repo_slug.
+          required: true
+        - name: commit
+          in: path
+          type: string
+          description: Path parameter commit.
+          required: true
+        - name: path
+          in: path
+          type: string
+          description: Path parameter path.
+          required: true
+    - name: repositories-workspace-repo-slug-pullrequests
+      path: /repositories/{workspace}/{repo_slug}/pullrequests
+      operations:
+      - name: createpullrequest
+        method: POST
+        description: 'Bitbucket Cloud API: createPullRequest'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: workspace
+          in: path
+          type: string
+          description: Path parameter workspace.
+          required: true
+        - name: repo_slug
+          in: path
+          type: string
+          description: Path parameter repo_slug.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: postman-bitbucket-mcp
+    description: MCP adapter for the postman-bitbucket integration.
+    tools:
+    - name: postman_bitbucket
+      description: Execute the postman bitbucket integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: postman-bitbucket-rest
+    port: 8080
+    description: REST adapter for the postman-bitbucket integration.
+    resources:
+    - path: /postman-bitbucket
+      name: postman-bitbucket
+      description: REST surface for the postman-bitbucket integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the postman-bitbucket integration.
+        call: postman_bitbucket
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

@@ -1,0 +1,107 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Import a Bruno collection into a Postman workspace
+  description: Convert a Bruno (.bru) collection into Postman collection JSON and create the matching Postman collection so teams can move between the two clients.
+  tags:
+  - Postman
+  - Integration
+  - Mocking
+  - bruno
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    POSTMAN_API_KEY: POSTMAN_API_KEY
+    BRUNO_API_KEY: BRUNO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: postman
+    baseUri: https://api.getpostman.com
+    description: Postman API operations consumed by this integration.
+    resources:
+    - name: collections
+      path: /collections
+      operations:
+      - name: createcollection
+        method: POST
+        description: Create the Postman collection from the converted Bruno collection.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: workspaces
+      path: /workspaces
+      operations:
+      - name: getallworkspaces
+        method: GET
+        description: Pick the destination Postman workspace for the imported collection.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+  - type: http
+    namespace: bruno
+    baseUri: https://api.usebruno.com
+    description: Bruno Collection Format operations consumed by this integration.
+    resources:
+    - name: collections-id-export
+      path: /collections/{id}/export
+      operations:
+      - name: exportcollection
+        method: GET
+        description: 'Bruno Collection Format: exportCollection'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Path parameter id.
+          required: true
+  exposes:
+  - type: mcp
+    namespace: postman-bruno-mcp
+    description: MCP adapter for the postman-bruno integration.
+    tools:
+    - name: postman_bruno
+      description: Execute the postman bruno integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: postman-bruno-rest
+    port: 8080
+    description: REST adapter for the postman-bruno integration.
+    resources:
+    - path: /postman-bruno
+      name: postman-bruno
+      description: REST surface for the postman-bruno integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the postman-bruno integration.
+        call: postman_bruno
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

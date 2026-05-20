@@ -1,0 +1,270 @@
+# Curated top Postman integrations grouped by category.
+# Each entry becomes one Naftiko capability YAML in integrations/.
+# Domain: API platform — collections, mocks, monitors, governance, design.
+
+# Source control / collection sync (3)
+- partner: github
+  name: Sync a Postman collection from a GitHub repository
+  category: Source control
+  use_case: On push to main in a GitHub repo, read the OpenAPI / collection JSON and update or fork the matching Postman collection so the design lives next to the code.
+  partner_baseUri: https://api.github.com
+  partner_api: GitHub REST API
+  provider_ops:
+    - method: GET
+      path: /collections/{collectionId}
+      name: getCollection
+      description: Fetch the current Postman collection that the GitHub repo backs.
+    - method: PUT
+      path: /collections/{collectionId}
+      name: updateCollection
+      description: Replace the Postman collection contents with the JSON pulled from GitHub.
+    - method: POST
+      path: /collections/fork/{collectionId}
+      name: forkCollection
+      description: Fork the Postman collection into a branch-specific workspace.
+  partner_ops:
+    - method: GET
+      path: /repos/{owner}/{repo}/contents/{path}
+      name: getRepoFile
+    - method: POST
+      path: /repos/{owner}/{repo}/issues
+      name: createIssue
+
+- partner: gitlab
+  name: Mirror Postman collections in a GitLab project
+  category: Source control
+  use_case: On merge to the GitLab default branch, push the resolved OpenAPI into Postman as a versioned API schema so the GitLab project stays the source of truth.
+  partner_baseUri: https://gitlab.com/api/v4
+  partner_api: GitLab API
+  provider_ops:
+    - method: POST
+      path: /apis/{apiId}/schemas
+      name: createApiSchema
+      description: Create a Postman API schema from the OpenAPI document in GitLab.
+    - method: PUT
+      path: /apis/{apiId}
+      name: updateApi
+      description: Update the Postman API record (name, summary) from GitLab project metadata.
+  partner_ops:
+    - method: GET
+      path: /projects/{id}/repository/files/{file_path}
+      name: getRepoFile
+    - method: GET
+      path: /projects/{id}/merge_requests
+      name: listMergeRequests
+
+- partner: bitbucket
+  name: Publish Postman collection from a Bitbucket pipeline
+  category: Source control
+  use_case: A Bitbucket Pipelines build publishes the generated Postman collection through this capability so the collection version always matches the build artifact.
+  partner_baseUri: https://api.bitbucket.org/2.0
+  partner_api: Bitbucket Cloud API
+  provider_ops:
+    - method: POST
+      path: /collections
+      name: createCollection
+      description: Create a new Postman collection from a Bitbucket build artifact.
+    - method: PUT
+      path: /collections/{collectionId}
+      name: updateCollection
+      description: Update the existing Postman collection in place from the latest Bitbucket build.
+  partner_ops:
+    - method: GET
+      path: /repositories/{workspace}/{repo_slug}/src/{commit}/{path}
+      name: getRepoFile
+    - method: POST
+      path: /repositories/{workspace}/{repo_slug}/pullrequests
+      name: createPullRequest
+
+# Notifications (1)
+- partner: slack
+  name: Post Postman monitor failures to a Slack channel
+  category: Notifications
+  use_case: When a Postman monitor run reports failures, post a rich Slack alert with the failed assertions and a link back to the monitor run.
+  partner_baseUri: https://hooks.slack.com
+  partner_api: Slack Incoming Webhooks
+  provider_ops:
+    - method: GET
+      path: /monitors/{monitorId}
+      name: getMonitor
+      description: Fetch monitor metadata for the alert payload.
+    - method: POST
+      path: /monitors/{monitorId}/run
+      name: runMonitor
+      description: Re-run the monitor on demand from a Slack interaction.
+  partner_ops:
+    - method: POST
+      path: /services/{T}/{B}/{X}
+      name: postMessage
+
+# Observability (1)
+- partner: datadog
+  name: Forward Postman monitor results to Datadog metrics
+  category: Observability
+  use_case: Translate each Postman monitor run into Datadog custom metrics and events so API health rolls up next to the rest of the platform's SLOs.
+  partner_baseUri: https://api.datadoghq.com
+  partner_api: Datadog API
+  provider_ops:
+    - method: GET
+      path: /monitors
+      name: getAllMonitors
+      description: List all Postman monitors to seed Datadog dashboards.
+    - method: POST
+      path: /monitors/{monitorId}/run
+      name: runMonitor
+      description: Trigger a monitor run from a Datadog synthetic schedule.
+  partner_ops:
+    - method: POST
+      path: /api/v2/series
+      name: submitMetrics
+    - method: POST
+      path: /api/v1/events
+      name: postEvent
+
+# Linting / governance (2)
+- partner: spectral
+  name: Lint Postman API schemas with Spectral on every change
+  category: Governance
+  use_case: When a Postman API schema is created or updated, run Spectral against it and write the violations back as comments on the API.
+  partner_baseUri: https://api.stoplight.io
+  partner_api: Stoplight Spectral CLI service
+  provider_ops:
+    - method: GET
+      path: /apis/{apiId}/schemas/{schemaId}
+      name: getApiSchema
+      description: Fetch the OpenAPI schema to lint with Spectral.
+    - method: POST
+      path: /apis/{apiId}/comments
+      name: createApiComment
+      description: Post Spectral lint findings back to the Postman API as comments.
+  partner_ops:
+    - method: POST
+      path: /v1/lint
+      name: lintDocument
+
+- partner: stoplight
+  name: Cross-publish Postman collections to Stoplight projects
+  category: Governance
+  use_case: Mirror Postman API schemas into a Stoplight project so design-time docs and runtime collections stay in lockstep.
+  partner_baseUri: https://stoplight.io/api
+  partner_api: Stoplight Platform API
+  provider_ops:
+    - method: GET
+      path: /apis/{apiId}
+      name: getApi
+      description: Read the Postman API record to mirror into Stoplight.
+    - method: GET
+      path: /apis/{apiId}/schemas/{schemaId}
+      name: getApiSchema
+      description: Read the Postman OpenAPI schema to upsert in Stoplight.
+  partner_ops:
+    - method: POST
+      path: /v1/projects/{project_id}/nodes
+      name: upsertNode
+
+# Mocking (2)
+- partner: microcks
+  name: Promote a Postman mock server to a Microcks mock
+  category: Mocking
+  use_case: When a Postman mock is published, register the same collection as a Microcks mock so CI/CD environments can reuse one mock surface across teams.
+  partner_baseUri: https://mocks.naftiko.net
+  partner_api: Microcks API
+  provider_ops:
+    - method: GET
+      path: /mocks/{mockId}
+      name: getMock
+      description: Read the Postman mock server definition.
+    - method: GET
+      path: /mocks/{mockId}/serverResponses
+      name: getMockServerResponses
+      description: Read the canned responses to import into Microcks.
+  partner_ops:
+    - method: POST
+      path: /api/import
+      name: importMock
+
+- partner: bruno
+  name: Import a Bruno collection into a Postman workspace
+  category: Mocking
+  use_case: Convert a Bruno (.bru) collection into Postman collection JSON and create the matching Postman collection so teams can move between the two clients.
+  partner_baseUri: https://api.usebruno.com
+  partner_api: Bruno Collection Format
+  provider_ops:
+    - method: POST
+      path: /collections
+      name: createCollection
+      description: Create the Postman collection from the converted Bruno collection.
+    - method: GET
+      path: /workspaces
+      name: getAllWorkspaces
+      description: Pick the destination Postman workspace for the imported collection.
+  partner_ops:
+    - method: GET
+      path: /collections/{id}/export
+      name: exportCollection
+
+# Standards (1)
+- partner: asyncapi
+  name: Register AsyncAPI specs as Postman API schemas
+  category: Standards
+  use_case: For each AsyncAPI document, create or update a corresponding Postman API record so async channels show up alongside REST collections in the catalog.
+  partner_baseUri: https://api.asyncapi.com
+  partner_api: AsyncAPI Studio API
+  provider_ops:
+    - method: POST
+      path: /apis
+      name: createApi
+      description: Register an AsyncAPI document as a new Postman API.
+    - method: POST
+      path: /apis/{apiId}/schemas
+      name: createApiSchema
+      description: Attach the AsyncAPI document to the Postman API as a schema.
+  partner_ops:
+    - method: GET
+      path: /v1/parse
+      name: parseDocument
+
+# Security (1)
+- partner: snyk
+  name: Scan Postman-detected secrets with Snyk and open a fix issue
+  category: Security
+  use_case: When the Postman secret scanner finds a leaked secret, open a Snyk issue and resolve the detected secret in Postman once Snyk confirms remediation.
+  partner_baseUri: https://api.snyk.io
+  partner_api: Snyk REST API
+  provider_ops:
+    - method: GET
+      path: /secret-scanner/detected-secrets
+      name: getDetectedSecrets
+      description: List Postman-detected secrets to triage with Snyk.
+    - method: PUT
+      path: /secret-scanner/detected-secrets/{secretId}
+      name: resolveDetectedSecret
+      description: Mark the Postman-detected secret as resolved once Snyk confirms remediation.
+  partner_ops:
+    - method: POST
+      path: /rest/orgs/{org_id}/issues
+      name: createIssue
+
+# Incident management (1)
+- partner: jira
+  name: Open a Jira ticket for failing Postman monitors
+  category: Incident management
+  use_case: When a Postman monitor fails its assertions, open a Jira issue in the on-call project with the run logs and a link back to the monitor.
+  partner_baseUri: https://yourcompany.atlassian.net
+  partner_api: Jira Cloud REST API
+  provider_ops:
+    - method: GET
+      path: /monitors/{monitorId}
+      name: getMonitor
+      description: Read the Postman monitor metadata for the Jira ticket body.
+    - method: GET
+      path: /monitors
+      name: getAllMonitors
+      description: List monitors to map onto Jira components.
+  partner_ops:
+    - method: POST
+      path: /rest/api/3/issue
+      name: createIssue
+    - method: PUT
+      path: /rest/api/3/issue/{issueIdOrKey}
+      name: updateIssue

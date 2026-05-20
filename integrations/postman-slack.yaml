@@ -1,0 +1,132 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Post Postman monitor failures to a Slack channel
+  description: When a Postman monitor run reports failures, post a rich Slack alert with the failed assertions and a link back to the monitor run.
+  tags:
+  - Postman
+  - Integration
+  - Notifications
+  - slack
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    POSTMAN_API_KEY: POSTMAN_API_KEY
+    SLACK_API_KEY: SLACK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: postman
+    baseUri: https://api.getpostman.com
+    description: Postman API operations consumed by this integration.
+    resources:
+    - name: monitors-monitorid
+      path: /monitors/{monitorId}
+      operations:
+      - name: getmonitor
+        method: GET
+        description: Fetch monitor metadata for the alert payload.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: monitorId
+          in: path
+          type: string
+          description: Path parameter monitorId.
+          required: true
+    - name: monitors-monitorid-run
+      path: /monitors/{monitorId}/run
+      operations:
+      - name: runmonitor
+        method: POST
+        description: Re-run the monitor on demand from a Slack interaction.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: monitorId
+          in: path
+          type: string
+          description: Path parameter monitorId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: slack
+    baseUri: https://hooks.slack.com
+    description: Slack Incoming Webhooks operations consumed by this integration.
+    resources:
+    - name: services-t-b-x
+      path: /services/{T}/{B}/{X}
+      operations:
+      - name: postmessage
+        method: POST
+        description: 'Slack Incoming Webhooks: postMessage'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: T
+          in: path
+          type: string
+          description: Path parameter T.
+          required: true
+        - name: B
+          in: path
+          type: string
+          description: Path parameter B.
+          required: true
+        - name: X
+          in: path
+          type: string
+          description: Path parameter X.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: postman-slack-mcp
+    description: MCP adapter for the postman-slack integration.
+    tools:
+    - name: postman_slack
+      description: Execute the postman slack integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: postman-slack-rest
+    port: 8080
+    description: REST adapter for the postman-slack integration.
+    resources:
+    - path: /postman-slack
+      name: postman-slack
+      description: REST surface for the postman-slack integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the postman-slack integration.
+        call: postman_slack
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

@@ -1,0 +1,176 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sync a Postman collection from a GitHub repository
+  description: On push to main in a GitHub repo, read the OpenAPI / collection JSON and update or fork the matching Postman collection so the design lives next to the code.
+  tags:
+  - Postman
+  - Integration
+  - Source control
+  - github
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    POSTMAN_API_KEY: POSTMAN_API_KEY
+    GITHUB_API_KEY: GITHUB_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: postman
+    baseUri: https://api.getpostman.com
+    description: Postman API operations consumed by this integration.
+    resources:
+    - name: collections-collectionid
+      path: /collections/{collectionId}
+      operations:
+      - name: getcollection
+        method: GET
+        description: Fetch the current Postman collection that the GitHub repo backs.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collectionId
+          in: path
+          type: string
+          description: Path parameter collectionId.
+          required: true
+    - name: collections-collectionid
+      path: /collections/{collectionId}
+      operations:
+      - name: updatecollection
+        method: PUT
+        description: Replace the Postman collection contents with the JSON pulled from GitHub.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collectionId
+          in: path
+          type: string
+          description: Path parameter collectionId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: collections-fork-collectionid
+      path: /collections/fork/{collectionId}
+      operations:
+      - name: forkcollection
+        method: POST
+        description: Fork the Postman collection into a branch-specific workspace.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collectionId
+          in: path
+          type: string
+          description: Path parameter collectionId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: github
+    baseUri: https://api.github.com
+    description: GitHub REST API operations consumed by this integration.
+    resources:
+    - name: repos-owner-repo-contents-path
+      path: /repos/{owner}/{repo}/contents/{path}
+      operations:
+      - name: getrepofile
+        method: GET
+        description: 'GitHub REST API: getRepoFile'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: owner
+          in: path
+          type: string
+          description: Path parameter owner.
+          required: true
+        - name: repo
+          in: path
+          type: string
+          description: Path parameter repo.
+          required: true
+        - name: path
+          in: path
+          type: string
+          description: Path parameter path.
+          required: true
+    - name: repos-owner-repo-issues
+      path: /repos/{owner}/{repo}/issues
+      operations:
+      - name: createissue
+        method: POST
+        description: 'GitHub REST API: createIssue'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: owner
+          in: path
+          type: string
+          description: Path parameter owner.
+          required: true
+        - name: repo
+          in: path
+          type: string
+          description: Path parameter repo.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: postman-github-mcp
+    description: MCP adapter for the postman-github integration.
+    tools:
+    - name: postman_github
+      description: Execute the postman github integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: postman-github-rest
+    port: 8080
+    description: REST adapter for the postman-github integration.
+    resources:
+    - path: /postman-github
+      name: postman-github
+      description: REST surface for the postman-github integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the postman-github integration.
+        call: postman_github
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

@@ -1,0 +1,122 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Lint Postman API schemas with Spectral on every change
+  description: When a Postman API schema is created or updated, run Spectral against it and write the violations back as comments on the API.
+  tags:
+  - Postman
+  - Integration
+  - Governance
+  - spectral
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    POSTMAN_API_KEY: POSTMAN_API_KEY
+    SPECTRAL_API_KEY: SPECTRAL_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: postman
+    baseUri: https://api.getpostman.com
+    description: Postman API operations consumed by this integration.
+    resources:
+    - name: apis-apiid-schemas-schemaid
+      path: /apis/{apiId}/schemas/{schemaId}
+      operations:
+      - name: getapischema
+        method: GET
+        description: Fetch the OpenAPI schema to lint with Spectral.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: apiId
+          in: path
+          type: string
+          description: Path parameter apiId.
+          required: true
+        - name: schemaId
+          in: path
+          type: string
+          description: Path parameter schemaId.
+          required: true
+    - name: apis-apiid-comments
+      path: /apis/{apiId}/comments
+      operations:
+      - name: createapicomment
+        method: POST
+        description: Post Spectral lint findings back to the Postman API as comments.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: apiId
+          in: path
+          type: string
+          description: Path parameter apiId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: spectral
+    baseUri: https://api.stoplight.io
+    description: Stoplight Spectral CLI service operations consumed by this integration.
+    resources:
+    - name: v1-lint
+      path: /v1/lint
+      operations:
+      - name: lintdocument
+        method: POST
+        description: 'Stoplight Spectral CLI service: lintDocument'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: postman-spectral-mcp
+    description: MCP adapter for the postman-spectral integration.
+    tools:
+    - name: postman_spectral
+      description: Execute the postman spectral integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: postman-spectral-rest
+    port: 8080
+    description: REST adapter for the postman-spectral integration.
+    resources:
+    - path: /postman-spectral
+      name: postman-spectral
+      description: REST surface for the postman-spectral integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the postman-spectral integration.
+        call: postman_spectral
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

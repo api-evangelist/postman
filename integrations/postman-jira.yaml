@@ -1,0 +1,129 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Open a Jira ticket for failing Postman monitors
+  description: When a Postman monitor fails its assertions, open a Jira issue in the on-call project with the run logs and a link back to the monitor.
+  tags:
+  - Postman
+  - Integration
+  - Incident management
+  - jira
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    POSTMAN_API_KEY: POSTMAN_API_KEY
+    JIRA_API_KEY: JIRA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: postman
+    baseUri: https://api.getpostman.com
+    description: Postman API operations consumed by this integration.
+    resources:
+    - name: monitors-monitorid
+      path: /monitors/{monitorId}
+      operations:
+      - name: getmonitor
+        method: GET
+        description: Read the Postman monitor metadata for the Jira ticket body.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: monitorId
+          in: path
+          type: string
+          description: Path parameter monitorId.
+          required: true
+    - name: monitors
+      path: /monitors
+      operations:
+      - name: getallmonitors
+        method: GET
+        description: List monitors to map onto Jira components.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+  - type: http
+    namespace: jira
+    baseUri: https://yourcompany.atlassian.net
+    description: Jira Cloud REST API operations consumed by this integration.
+    resources:
+    - name: rest-api-3-issue
+      path: /rest/api/3/issue
+      operations:
+      - name: createissue
+        method: POST
+        description: 'Jira Cloud REST API: createIssue'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: rest-api-3-issue-issueidorkey
+      path: /rest/api/3/issue/{issueIdOrKey}
+      operations:
+      - name: updateissue
+        method: PUT
+        description: 'Jira Cloud REST API: updateIssue'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: issueIdOrKey
+          in: path
+          type: string
+          description: Path parameter issueIdOrKey.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: postman-jira-mcp
+    description: MCP adapter for the postman-jira integration.
+    tools:
+    - name: postman_jira
+      description: Execute the postman jira integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: postman-jira-rest
+    port: 8080
+    description: REST adapter for the postman-jira integration.
+    resources:
+    - path: /postman-jira
+      name: postman-jira
+      description: REST surface for the postman-jira integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the postman-jira integration.
+        call: postman_jira
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

@@ -1,0 +1,112 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Promote a Postman mock server to a Microcks mock
+  description: When a Postman mock is published, register the same collection as a Microcks mock so CI/CD environments can reuse one mock surface across teams.
+  tags:
+  - Postman
+  - Integration
+  - Mocking
+  - microcks
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    POSTMAN_API_KEY: POSTMAN_API_KEY
+    MICROCKS_API_KEY: MICROCKS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: postman
+    baseUri: https://api.getpostman.com
+    description: Postman API operations consumed by this integration.
+    resources:
+    - name: mocks-mockid
+      path: /mocks/{mockId}
+      operations:
+      - name: getmock
+        method: GET
+        description: Read the Postman mock server definition.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: mockId
+          in: path
+          type: string
+          description: Path parameter mockId.
+          required: true
+    - name: mocks-mockid-serverresponses
+      path: /mocks/{mockId}/serverResponses
+      operations:
+      - name: getmockserverresponses
+        method: GET
+        description: Read the canned responses to import into Microcks.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: mockId
+          in: path
+          type: string
+          description: Path parameter mockId.
+          required: true
+  - type: http
+    namespace: microcks
+    baseUri: https://mocks.naftiko.net
+    description: Microcks API operations consumed by this integration.
+    resources:
+    - name: api-import
+      path: /api/import
+      operations:
+      - name: importmock
+        method: POST
+        description: 'Microcks API: importMock'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: postman-microcks-mcp
+    description: MCP adapter for the postman-microcks integration.
+    tools:
+    - name: postman_microcks
+      description: Execute the postman microcks integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: postman-microcks-rest
+    port: 8080
+    description: REST adapter for the postman-microcks integration.
+    resources:
+    - path: /postman-microcks
+      name: postman-microcks
+      description: REST surface for the postman-microcks integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the postman-microcks integration.
+        call: postman_microcks
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

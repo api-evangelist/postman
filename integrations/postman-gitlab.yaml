@@ -1,0 +1,144 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Mirror Postman collections in a GitLab project
+  description: On merge to the GitLab default branch, push the resolved OpenAPI into Postman as a versioned API schema so the GitLab project stays the source of truth.
+  tags:
+  - Postman
+  - Integration
+  - Source control
+  - gitlab
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    POSTMAN_API_KEY: POSTMAN_API_KEY
+    GITLAB_API_KEY: GITLAB_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: postman
+    baseUri: https://api.getpostman.com
+    description: Postman API operations consumed by this integration.
+    resources:
+    - name: apis-apiid-schemas
+      path: /apis/{apiId}/schemas
+      operations:
+      - name: createapischema
+        method: POST
+        description: Create a Postman API schema from the OpenAPI document in GitLab.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: apiId
+          in: path
+          type: string
+          description: Path parameter apiId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apis-apiid
+      path: /apis/{apiId}
+      operations:
+      - name: updateapi
+        method: PUT
+        description: Update the Postman API record (name, summary) from GitLab project metadata.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: apiId
+          in: path
+          type: string
+          description: Path parameter apiId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: gitlab
+    baseUri: https://gitlab.com/api/v4
+    description: GitLab API operations consumed by this integration.
+    resources:
+    - name: projects-id-repository-files-file-path
+      path: /projects/{id}/repository/files/{file_path}
+      operations:
+      - name: getrepofile
+        method: GET
+        description: 'GitLab API: getRepoFile'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Path parameter id.
+          required: true
+        - name: file_path
+          in: path
+          type: string
+          description: Path parameter file_path.
+          required: true
+    - name: projects-id-merge-requests
+      path: /projects/{id}/merge_requests
+      operations:
+      - name: listmergerequests
+        method: GET
+        description: 'GitLab API: listMergeRequests'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Path parameter id.
+          required: true
+  exposes:
+  - type: mcp
+    namespace: postman-gitlab-mcp
+    description: MCP adapter for the postman-gitlab integration.
+    tools:
+    - name: postman_gitlab
+      description: Execute the postman gitlab integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: postman-gitlab-rest
+    port: 8080
+    description: REST adapter for the postman-gitlab integration.
+    resources:
+    - path: /postman-gitlab
+      name: postman-gitlab
+      description: REST surface for the postman-gitlab integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the postman-gitlab integration.
+        call: postman_gitlab
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
