@@ -1,0 +1,83 @@
+arazzo: 1.0.1
+info:
+  title: Postman Manage Workspace Global Variables
+  summary: Create a workspace, then set and verify its global variables.
+  description: >-
+    Global variables live at the workspace level and are shared across every
+    collection in the workspace. This workflow creates a workspace, writes a set
+    of global variables into it, and reads them back to confirm the write. Each
+    step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: workspacesApi
+  url: ../openapi/postman-workspaces-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: manage-workspace-global-variables
+  summary: Create a workspace and manage its global variables.
+  description: >-
+    Creates a workspace, replaces its global variable set, and reads the
+    variables back to verify the update.
+  inputs:
+    type: object
+    required:
+    - workspaceName
+    - globalVariables
+    properties:
+      workspaceName:
+        type: string
+        description: The name of the workspace to create.
+      workspaceType:
+        type: string
+        description: The workspace type (personal, team, private, public, partner).
+        default: team
+      globalVariables:
+        type: array
+        description: The global variables to set (key/value/type/enabled).
+        items:
+          type: object
+  steps:
+  - stepId: createWorkspace
+    description: >-
+      Create the workspace that will hold the global variables.
+    operationId: createWorkspace
+    requestBody:
+      contentType: application/json
+      payload:
+        workspace:
+          name: $inputs.workspaceName
+          type: $inputs.workspaceType
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      workspaceId: $response.body#/workspace/id
+  - stepId: setGlobalVariables
+    description: >-
+      Replace the workspace's global variables with the supplied set.
+    operationId: updateWorkspaceGlobalVariables
+    parameters:
+    - name: workspaceId
+      in: path
+      value: $steps.createWorkspace.outputs.workspaceId
+    requestBody:
+      contentType: application/json
+      payload:
+        values: $inputs.globalVariables
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: getGlobalVariables
+    description: >-
+      Read the global variables back to confirm the write succeeded.
+    operationId: getWorkspaceGlobalVariables
+    parameters:
+    - name: workspaceId
+      in: path
+      value: $steps.createWorkspace.outputs.workspaceId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      values: $response.body#/values
+  outputs:
+    workspaceId: $steps.createWorkspace.outputs.workspaceId
+    values: $steps.getGlobalVariables.outputs.values

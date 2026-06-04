@@ -1,0 +1,72 @@
+arazzo: 1.0.1
+info:
+  title: Postman Review the Latest Collection Run
+  summary: List a collection's run history and pull the latest run's full details.
+  description: >-
+    A CI/CD-oriented pattern for inspecting collection test results. The
+    workflow lists the run history for a collection, selects the most recent
+    run, and fetches its detailed execution and assertion results. Each step
+    spells out its request inline so the flow can be read and executed without
+    opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: collectionRunsApi
+  url: ../openapi/postman-collection-runs-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: review-latest-collection-run
+  summary: Fetch the run history then the newest run's detailed results.
+  description: >-
+    Lists collection runs ordered by recency, takes the first (latest) run ID,
+    and fetches that run's detailed assertion and execution results.
+  inputs:
+    type: object
+    required:
+    - collectionId
+    properties:
+      collectionId:
+        type: string
+        description: The collection's unique ID or UID.
+      limit:
+        type: integer
+        description: Maximum number of runs to fetch in the history.
+        default: 10
+  steps:
+  - stepId: listRuns
+    description: >-
+      List the collection's recent run history, most recent first.
+    operationId: getCollectionRuns
+    parameters:
+    - name: collectionId
+      in: path
+      value: $inputs.collectionId
+    - name: limit
+      in: query
+      value: $inputs.limit
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      latestRunId: $response.body#/runs/0/id
+      latestRunStatus: $response.body#/runs/0/status
+  - stepId: getRun
+    description: >-
+      Fetch the detailed results for the latest run, including individual
+      request executions and assertions.
+    operationId: getCollectionRun
+    parameters:
+    - name: collectionId
+      in: path
+      value: $inputs.collectionId
+    - name: runId
+      in: path
+      value: $steps.listRuns.outputs.latestRunId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/run/status
+      duration: $response.body#/run/duration
+      failedAssertions: $response.body#/run/stats/assertions/failed
+  outputs:
+    latestRunId: $steps.listRuns.outputs.latestRunId
+    status: $steps.getRun.outputs.status
+    failedAssertions: $steps.getRun.outputs.failedAssertions

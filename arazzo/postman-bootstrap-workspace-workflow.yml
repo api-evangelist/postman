@@ -1,0 +1,118 @@
+arazzo: 1.0.1
+info:
+  title: Postman Bootstrap a Workspace
+  summary: Create a workspace, then seed it with a collection and an environment.
+  description: >-
+    The canonical way to stand up a new Postman working area from scratch. The
+    workflow creates a team workspace, creates a starter collection scoped to
+    that workspace, and creates a matching environment in the same workspace so
+    requests have variables to resolve against. Every step spells out its
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI descriptions.
+  version: 1.0.0
+sourceDescriptions:
+- name: workspacesApi
+  url: ../openapi/postman-workspaces-api-openapi.yml
+  type: openapi
+- name: collectionsApi
+  url: ../openapi/postman-collections-api-openapi.yml
+  type: openapi
+- name: environmentsApi
+  url: ../openapi/postman-environments-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: bootstrap-workspace
+  summary: Provision a workspace with a starter collection and environment.
+  description: >-
+    Creates a new workspace, then creates a collection and an environment inside
+    that workspace, chaining the new workspace ID into both downstream calls.
+  inputs:
+    type: object
+    required:
+    - workspaceName
+    - collectionName
+    - environmentName
+    properties:
+      workspaceName:
+        type: string
+        description: The name of the workspace to create.
+      workspaceType:
+        type: string
+        description: The workspace type (personal, team, private, public, partner).
+        default: team
+      workspaceDescription:
+        type: string
+        description: An optional description for the workspace.
+      collectionName:
+        type: string
+        description: The name of the starter collection to create.
+      environmentName:
+        type: string
+        description: The name of the environment to create.
+  steps:
+  - stepId: createWorkspace
+    description: >-
+      Create the workspace that will own the collection and environment.
+    operationId: createWorkspace
+    requestBody:
+      contentType: application/json
+      payload:
+        workspace:
+          name: $inputs.workspaceName
+          type: $inputs.workspaceType
+          description: $inputs.workspaceDescription
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      workspaceId: $response.body#/workspace/id
+  - stepId: createCollection
+    description: >-
+      Create a starter collection inside the new workspace using the minimal
+      v2.1.0 collection schema.
+    operationId: $sourceDescriptions.collectionsApi.createCollection
+    parameters:
+    - name: workspace
+      in: query
+      value: $steps.createWorkspace.outputs.workspaceId
+    requestBody:
+      contentType: application/json
+      payload:
+        collection:
+          info:
+            name: $inputs.collectionName
+            schema: https://schema.getpostman.com/json/collection/v2.1.0/collection.json
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      collectionId: $response.body#/collection/id
+      collectionUid: $response.body#/collection/uid
+  - stepId: createEnvironment
+    description: >-
+      Create an environment in the same workspace so the collection's requests
+      have variables to resolve against.
+    operationId: $sourceDescriptions.environmentsApi.createEnvironment
+    parameters:
+    - name: workspace
+      in: query
+      value: $steps.createWorkspace.outputs.workspaceId
+    requestBody:
+      contentType: application/json
+      payload:
+        environment:
+          name: $inputs.environmentName
+          values:
+          - key: baseUrl
+            value: https://api.example.com
+            type: default
+            enabled: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      environmentId: $response.body#/environment/id
+      environmentUid: $response.body#/environment/uid
+  outputs:
+    workspaceId: $steps.createWorkspace.outputs.workspaceId
+    collectionId: $steps.createCollection.outputs.collectionId
+    collectionUid: $steps.createCollection.outputs.collectionUid
+    environmentId: $steps.createEnvironment.outputs.environmentId
+    environmentUid: $steps.createEnvironment.outputs.environmentUid

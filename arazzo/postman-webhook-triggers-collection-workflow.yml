@@ -1,0 +1,83 @@
+arazzo: 1.0.1
+info:
+  title: Postman Webhook Triggers a Collection
+  summary: Create a collection, then create a webhook that runs it on incoming POSTs.
+  description: >-
+    Webhooks let external systems trigger a Postman collection run by sending an
+    HTTP POST to a generated URL. This workflow creates a collection and then
+    creates a webhook bound to it, capturing the generated webhook URL. Each
+    step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI descriptions.
+  version: 1.0.0
+sourceDescriptions:
+- name: collectionsApi
+  url: ../openapi/postman-collections-api-openapi.yml
+  type: openapi
+- name: webhooksApi
+  url: ../openapi/postman-webhooks-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: webhook-triggers-collection
+  summary: Create a collection and a webhook that triggers it.
+  description: >-
+    Creates a collection, then creates a webhook whose generated URL triggers a
+    run of that collection when it receives a POST.
+  inputs:
+    type: object
+    required:
+    - collectionName
+    - webhookName
+    properties:
+      collectionName:
+        type: string
+        description: The name of the collection to create.
+      webhookName:
+        type: string
+        description: The name of the webhook to create.
+      workspace:
+        type: string
+        description: Optional workspace ID to create the collection and webhook in.
+  steps:
+  - stepId: createCollection
+    description: >-
+      Create the collection the webhook will trigger.
+    operationId: createCollection
+    parameters:
+    - name: workspace
+      in: query
+      value: $inputs.workspace
+    requestBody:
+      contentType: application/json
+      payload:
+        collection:
+          info:
+            name: $inputs.collectionName
+            schema: https://schema.getpostman.com/json/collection/v2.1.0/collection.json
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      collectionUid: $response.body#/collection/uid
+  - stepId: createWebhook
+    description: >-
+      Create a webhook bound to the collection UID and capture the generated
+      trigger URL.
+    operationId: createWebhook
+    parameters:
+    - name: workspace
+      in: query
+      value: $inputs.workspace
+    requestBody:
+      contentType: application/json
+      payload:
+        webhook:
+          name: $inputs.webhookName
+          collection: $steps.createCollection.outputs.collectionUid
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      webhookId: $response.body#/webhook/id
+      webhookUrl: $response.body#/webhook/webhookUrl
+  outputs:
+    collectionUid: $steps.createCollection.outputs.collectionUid
+    webhookId: $steps.createWebhook.outputs.webhookId
+    webhookUrl: $steps.createWebhook.outputs.webhookUrl

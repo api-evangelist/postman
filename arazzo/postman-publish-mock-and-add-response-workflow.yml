@@ -1,0 +1,88 @@
+arazzo: 1.0.1
+info:
+  title: Postman Publish a Mock and Add a Custom Response
+  summary: Publish an existing mock server, add a custom server response, and verify it.
+  description: >-
+    Once a mock server exists you often want to make it publicly accessible and
+    layer custom responses on top of the collection examples. This workflow
+    publishes a mock server, creates a custom server response on it, and lists
+    the mock's server responses to confirm the new response is present. Each
+    step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: mockServersApi
+  url: ../openapi/postman-mock-servers-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: publish-mock-and-add-response
+  summary: Publish a mock server and attach a custom server response.
+  description: >-
+    Publishes a mock server, creates a custom server response on it, and lists
+    the server responses to confirm the addition.
+  inputs:
+    type: object
+    required:
+    - mockId
+    - responseName
+    - statusCode
+    properties:
+      mockId:
+        type: string
+        description: The mock server's unique ID or UID.
+      responseName:
+        type: string
+        description: The name of the custom server response.
+      statusCode:
+        type: integer
+        description: The HTTP status code the custom response should return.
+      responseBody:
+        type: string
+        description: The body content of the custom response.
+  steps:
+  - stepId: publishMock
+    description: >-
+      Publish the mock server so it is publicly accessible without
+      authentication.
+    operationId: publishMock
+    parameters:
+    - name: mockId
+      in: path
+      value: $inputs.mockId
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: createServerResponse
+    description: >-
+      Create a custom server response on the mock server.
+    operationId: createServerResponse
+    parameters:
+    - name: mockId
+      in: path
+      value: $inputs.mockId
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.responseName
+        statusCode: $inputs.statusCode
+        body: $inputs.responseBody
+        language: json
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      serverResponseId: $response.body#/id
+  - stepId: listServerResponses
+    description: >-
+      List the mock server's custom responses to confirm the new response is
+      present.
+    operationId: getMockServerResponses
+    parameters:
+    - name: mockId
+      in: path
+      value: $inputs.mockId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      firstResponseId: $response.body#/0/id
+  outputs:
+    mockId: $inputs.mockId
+    serverResponseId: $steps.createServerResponse.outputs.serverResponseId

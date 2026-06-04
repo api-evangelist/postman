@@ -1,0 +1,86 @@
+arazzo: 1.0.1
+info:
+  title: Postman Audit Mock Server Call Logs
+  summary: Read a mock server, review its custom responses, and pull its call logs.
+  description: >-
+    An observability pattern for a running mock server. The workflow reads a
+    mock server's configuration, lists the custom server responses configured on
+    it, and pulls its recent call logs to see what traffic the mock has served.
+    Each step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: mockServersApi
+  url: ../openapi/postman-mock-servers-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: audit-mock-call-logs
+  summary: Inspect a mock server and its served call logs.
+  description: >-
+    Reads a mock server, lists its server responses, and fetches its recent
+    call logs for auditing.
+  inputs:
+    type: object
+    required:
+    - mockId
+    properties:
+      mockId:
+        type: string
+        description: The mock server's unique ID or UID.
+      limit:
+        type: integer
+        description: Maximum number of call logs to return.
+        default: 100
+  steps:
+  - stepId: getMock
+    description: >-
+      Read the mock server's configuration and URL.
+    operationId: getMock
+    parameters:
+    - name: mockId
+      in: path
+      value: $inputs.mockId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      mockUrl: $response.body#/mock/mockUrl
+  - stepId: listServerResponses
+    description: >-
+      List the custom server responses configured on the mock.
+    operationId: getMockServerResponses
+    parameters:
+    - name: mockId
+      in: path
+      value: $inputs.mockId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      responses: $response.body
+  - stepId: getCallLogs
+    description: >-
+      Pull the mock server's recent call logs, most recent first, including
+      request and response bodies.
+    operationId: getMockCallLogs
+    parameters:
+    - name: mockId
+      in: path
+      value: $inputs.mockId
+    - name: limit
+      in: query
+      value: $inputs.limit
+    - name: include
+      in: query
+      value: request.body
+    - name: sort
+      in: query
+      value: servedAt
+    - name: direction
+      in: query
+      value: desc
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      callLogs: $response.body#/callLogs
+  outputs:
+    mockUrl: $steps.getMock.outputs.mockUrl
+    callLogs: $steps.getCallLogs.outputs.callLogs

@@ -1,0 +1,111 @@
+arazzo: 1.0.1
+info:
+  title: Postman Environment Lifecycle
+  summary: Create, read, update, and delete a Postman environment with variables.
+  description: >-
+    Exercises the full lifecycle for a Postman environment and its variables.
+    The workflow creates an environment with starter variables, reads it back,
+    replaces the variable set with an updated list, and finally deletes it. Each
+    step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: environmentsApi
+  url: ../openapi/postman-environments-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: environment-crud
+  summary: Walk an environment through create, get, update, and delete.
+  description: >-
+    Creates an environment with variables, retrieves it, replaces its variable
+    set, and deletes it, chaining the environment ID through each step.
+  inputs:
+    type: object
+    required:
+    - environmentName
+    - initialValues
+    - updatedValues
+    properties:
+      environmentName:
+        type: string
+        description: The name of the environment to create.
+      workspace:
+        type: string
+        description: Optional workspace ID to create the environment in.
+      initialValues:
+        type: array
+        description: The initial environment variables (key/value/type/enabled).
+        items:
+          type: object
+      updatedValues:
+        type: array
+        description: The replacement environment variables to apply on update.
+        items:
+          type: object
+  steps:
+  - stepId: createEnvironment
+    description: >-
+      Create the environment with its initial set of variables.
+    operationId: createEnvironment
+    parameters:
+    - name: workspace
+      in: query
+      value: $inputs.workspace
+    requestBody:
+      contentType: application/json
+      payload:
+        environment:
+          name: $inputs.environmentName
+          values: $inputs.initialValues
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      environmentId: $response.body#/environment/id
+      environmentUid: $response.body#/environment/uid
+  - stepId: getEnvironment
+    description: >-
+      Read the environment back to confirm its name and variables.
+    operationId: getEnvironment
+    parameters:
+    - name: environmentId
+      in: path
+      value: $steps.createEnvironment.outputs.environmentId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      values: $response.body#/environment/values
+  - stepId: updateEnvironment
+    description: >-
+      Replace the environment's variables with an updated set. This replaces
+      the entire variable list.
+    operationId: updateEnvironment
+    parameters:
+    - name: environmentId
+      in: path
+      value: $steps.createEnvironment.outputs.environmentId
+    requestBody:
+      contentType: application/json
+      payload:
+        environment:
+          name: $inputs.environmentName
+          values: $inputs.updatedValues
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      updatedUid: $response.body#/environment/uid
+  - stepId: deleteEnvironment
+    description: >-
+      Delete the environment to clean up. This action is irreversible.
+    operationId: deleteEnvironment
+    parameters:
+    - name: environmentId
+      in: path
+      value: $steps.createEnvironment.outputs.environmentId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      deletedId: $response.body#/environment/id
+  outputs:
+    environmentId: $steps.createEnvironment.outputs.environmentId
+    environmentUid: $steps.createEnvironment.outputs.environmentUid
+    deletedId: $steps.deleteEnvironment.outputs.deletedId

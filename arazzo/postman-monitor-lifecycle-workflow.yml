@@ -1,0 +1,113 @@
+arazzo: 1.0.1
+info:
+  title: Postman Monitor Lifecycle
+  summary: Create, update the schedule, run, and delete a Postman monitor.
+  description: >-
+    Manages a monitor across its full lifecycle. The workflow creates a monitor,
+    updates its schedule, triggers a manual run to validate the change, and
+    deletes the monitor to stop all scheduled runs. Each step spells out its
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: monitorsApi
+  url: ../openapi/postman-monitors-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: monitor-lifecycle
+  summary: Create a monitor, reschedule it, run it, then delete it.
+  description: >-
+    Creates a monitor, updates its cron schedule, triggers a run to validate,
+    and deletes it, chaining the monitor ID through each step.
+  inputs:
+    type: object
+    required:
+    - monitorName
+    - collectionUid
+    - cron
+    - updatedCron
+    properties:
+      monitorName:
+        type: string
+        description: The name of the monitor to create.
+      collectionUid:
+        type: string
+        description: The UID of the collection to monitor.
+      cron:
+        type: string
+        description: The initial cron expression for the schedule.
+      updatedCron:
+        type: string
+        description: The new cron expression to apply on update.
+      timezone:
+        type: string
+        description: The timezone for the schedule.
+        default: America/New_York
+  steps:
+  - stepId: createMonitor
+    description: >-
+      Create the monitor on its initial schedule.
+    operationId: createMonitor
+    requestBody:
+      contentType: application/json
+      payload:
+        monitor:
+          name: $inputs.monitorName
+          collection: $inputs.collectionUid
+          schedule:
+            cron: $inputs.cron
+            timezone: $inputs.timezone
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      monitorId: $response.body#/monitor/id
+  - stepId: updateMonitor
+    description: >-
+      Update the monitor's cron schedule.
+    operationId: updateMonitor
+    parameters:
+    - name: monitorId
+      in: path
+      value: $steps.createMonitor.outputs.monitorId
+    requestBody:
+      contentType: application/json
+      payload:
+        monitor:
+          name: $inputs.monitorName
+          collection: $inputs.collectionUid
+          schedule:
+            cron: $inputs.updatedCron
+            timezone: $inputs.timezone
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      updatedId: $response.body#/monitor/id
+  - stepId: runMonitor
+    description: >-
+      Trigger a manual run to validate the rescheduled monitor.
+    operationId: runMonitor
+    parameters:
+    - name: monitorId
+      in: path
+      value: $steps.createMonitor.outputs.monitorId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      runStatus: $response.body#/run/info/status
+  - stepId: deleteMonitor
+    description: >-
+      Delete the monitor, stopping all scheduled runs. This action is
+      irreversible.
+    operationId: deleteMonitor
+    parameters:
+    - name: monitorId
+      in: path
+      value: $steps.createMonitor.outputs.monitorId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      deletedId: $response.body#/monitor/id
+  outputs:
+    monitorId: $steps.createMonitor.outputs.monitorId
+    runStatus: $steps.runMonitor.outputs.runStatus
+    deletedId: $steps.deleteMonitor.outputs.deletedId

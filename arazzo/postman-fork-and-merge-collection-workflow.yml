@@ -1,0 +1,99 @@
+arazzo: 1.0.1
+info:
+  title: Postman Fork and Merge a Collection
+  summary: Fork a collection into a workspace, then merge the fork back into the source.
+  description: >-
+    Models the collaborative fork-and-merge pattern used to propose changes to a
+    shared collection. The workflow creates a workspace to hold the fork, forks
+    the source collection into it, then merges the fork back into the original
+    using a chosen strategy. Each step spells out its request inline so the flow
+    can be read and executed without opening the underlying OpenAPI
+    descriptions.
+  version: 1.0.0
+sourceDescriptions:
+- name: collectionsApi
+  url: ../openapi/postman-collections-api-openapi.yml
+  type: openapi
+- name: workspacesApi
+  url: ../openapi/postman-workspaces-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: fork-and-merge-collection
+  summary: Fork a source collection and merge the fork back into it.
+  description: >-
+    Creates a workspace, forks the source collection into it, and merges the
+    resulting fork back into the source collection using the supplied strategy.
+  inputs:
+    type: object
+    required:
+    - sourceCollectionId
+    - forkWorkspaceName
+    - forkLabel
+    properties:
+      sourceCollectionId:
+        type: string
+        description: The ID or UID of the collection to fork.
+      forkWorkspaceName:
+        type: string
+        description: The name of the workspace to create for the fork.
+      forkLabel:
+        type: string
+        description: The label to apply to the fork.
+      mergeStrategy:
+        type: string
+        description: The merge strategy (deleteSource or updateSourceWithDestination).
+        default: deleteSource
+  steps:
+  - stepId: createForkWorkspace
+    description: >-
+      Create a workspace to receive the forked collection.
+    operationId: createWorkspace
+    requestBody:
+      contentType: application/json
+      payload:
+        workspace:
+          name: $inputs.forkWorkspaceName
+          type: personal
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      workspaceId: $response.body#/workspace/id
+  - stepId: forkCollection
+    description: >-
+      Fork the source collection into the newly created workspace, keeping a
+      link to the source for the later merge.
+    operationId: forkCollection
+    parameters:
+    - name: collectionId
+      in: path
+      value: $inputs.sourceCollectionId
+    - name: workspace
+      in: query
+      value: $steps.createForkWorkspace.outputs.workspaceId
+    requestBody:
+      contentType: application/json
+      payload:
+        label: $inputs.forkLabel
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      forkUid: $response.body#/collection/uid
+  - stepId: mergeFork
+    description: >-
+      Merge the forked collection back into the source collection using the
+      requested strategy.
+    operationId: mergeCollection
+    requestBody:
+      contentType: application/json
+      payload:
+        strategy: $inputs.mergeStrategy
+        source: $steps.forkCollection.outputs.forkUid
+        destination: $inputs.sourceCollectionId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      mergedUid: $response.body#/collection/uid
+  outputs:
+    forkWorkspaceId: $steps.createForkWorkspace.outputs.workspaceId
+    forkUid: $steps.forkCollection.outputs.forkUid
+    mergedUid: $steps.mergeFork.outputs.mergedUid

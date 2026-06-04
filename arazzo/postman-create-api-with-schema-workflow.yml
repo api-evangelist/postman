@@ -1,0 +1,101 @@
+arazzo: 1.0.1
+info:
+  title: Postman Create an API with a Schema
+  summary: Create an API in a workspace, add a version, and attach an OpenAPI schema.
+  description: >-
+    Stands up a new API definition in the Postman API Builder. The workflow
+    creates an API in a workspace, creates a named version of it, and attaches
+    an OpenAPI 3.1 schema to the API. Each step spells out its request inline so
+    the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apisApi
+  url: ../openapi/postman-apis-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-api-with-schema
+  summary: Create an API, version it, and attach an OpenAPI schema.
+  description: >-
+    Creates an API in the supplied workspace, creates a version, and adds an
+    OpenAPI 3.1 schema, chaining the API ID through each step.
+  inputs:
+    type: object
+    required:
+    - workspace
+    - apiName
+    - versionName
+    - schemaContent
+    properties:
+      workspace:
+        type: string
+        description: The workspace ID to create the API in.
+      apiName:
+        type: string
+        description: The name of the API to create.
+      apiSummary:
+        type: string
+        description: A brief summary for the API.
+      versionName:
+        type: string
+        description: The version name to create (e.g. 1.0.0).
+      schemaContent:
+        type: string
+        description: The OpenAPI schema content as a YAML string.
+  steps:
+  - stepId: createApi
+    description: >-
+      Create the API in the supplied workspace.
+    operationId: createApi
+    parameters:
+    - name: workspace
+      in: query
+      value: $inputs.workspace
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.apiName
+        summary: $inputs.apiSummary
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      apiId: $response.body#/id
+  - stepId: createApiVersion
+    description: >-
+      Create a named version of the API.
+    operationId: createApiVersion
+    parameters:
+    - name: apiId
+      in: path
+      value: $steps.createApi.outputs.apiId
+    requestBody:
+      contentType: application/json
+      payload:
+        version:
+          name: $inputs.versionName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      versionId: $response.body#/id
+  - stepId: createApiSchema
+    description: >-
+      Attach an OpenAPI 3.1 schema, in YAML, to the API.
+    operationId: createApiSchema
+    parameters:
+    - name: apiId
+      in: path
+      value: $steps.createApi.outputs.apiId
+    requestBody:
+      contentType: application/json
+      payload:
+        type: openapi3_1
+        language: yaml
+        schema: $inputs.schemaContent
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      schemaId: $response.body#/id
+  outputs:
+    apiId: $steps.createApi.outputs.apiId
+    versionId: $steps.createApiVersion.outputs.versionId
+    schemaId: $steps.createApiSchema.outputs.schemaId

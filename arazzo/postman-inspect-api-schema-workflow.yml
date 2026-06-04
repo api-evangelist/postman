@@ -1,0 +1,93 @@
+arazzo: 1.0.1
+info:
+  title: Postman Inspect an API Schema
+  summary: Read an API, list its schemas, fetch one schema, and read its files.
+  description: >-
+    A read-only path for drilling into an API definition's schema. The workflow
+    reads an API including its schemas, lists the API's schemas, fetches a single
+    schema, and reads the underlying schema files. Each step spells out its
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apisApi
+  url: ../openapi/postman-apis-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: inspect-api-schema
+  summary: Drill from an API into one of its schemas and its files.
+  description: >-
+    Reads an API with its schemas included, lists the schemas, selects the first
+    schema ID, fetches that schema, and reads its files.
+  inputs:
+    type: object
+    required:
+    - apiId
+    properties:
+      apiId:
+        type: string
+        description: The API's unique ID.
+  steps:
+  - stepId: getApi
+    description: >-
+      Read the API including its schema list.
+    operationId: getApi
+    parameters:
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    - name: include
+      in: query
+      value:
+      - schemas
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      apiName: $response.body#/name
+  - stepId: listSchemas
+    description: >-
+      List all schemas associated with the API and take the first one.
+    operationId: getApiSchemas
+    parameters:
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      schemaId: $response.body#/schemas/0/id
+  - stepId: getSchema
+    description: >-
+      Fetch the selected schema's details.
+    operationId: getApiSchema
+    parameters:
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    - name: schemaId
+      in: path
+      value: $steps.listSchemas.outputs.schemaId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      schemaType: $response.body#/type
+  - stepId: getSchemaFiles
+    description: >-
+      Read the files that make up the schema.
+    operationId: getApiSchemaFiles
+    parameters:
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    - name: schemaId
+      in: path
+      value: $steps.listSchemas.outputs.schemaId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      files: $response.body#/files
+  outputs:
+    apiName: $steps.getApi.outputs.apiName
+    schemaId: $steps.listSchemas.outputs.schemaId
+    schemaType: $steps.getSchema.outputs.schemaType
+    files: $steps.getSchemaFiles.outputs.files

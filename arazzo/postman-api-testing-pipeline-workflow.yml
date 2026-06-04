@@ -1,0 +1,157 @@
+arazzo: 1.0.1
+info:
+  title: Postman Stand Up an API Testing Pipeline
+  summary: Build a workspace, collection, and environment, then monitor and run the collection.
+  description: >-
+    Assembles a complete continuous API testing setup in one pass. The workflow
+    creates a workspace, creates a collection and an environment inside it,
+    creates a monitor that runs the collection against the environment on a
+    schedule, and triggers the monitor to validate the pipeline. Each step
+    spells out its request inline so the flow can be read and executed without
+    opening the underlying OpenAPI descriptions.
+  version: 1.0.0
+sourceDescriptions:
+- name: workspacesApi
+  url: ../openapi/postman-workspaces-api-openapi.yml
+  type: openapi
+- name: collectionsApi
+  url: ../openapi/postman-collections-api-openapi.yml
+  type: openapi
+- name: environmentsApi
+  url: ../openapi/postman-environments-api-openapi.yml
+  type: openapi
+- name: monitorsApi
+  url: ../openapi/postman-monitors-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: api-testing-pipeline
+  summary: Provision a workspace, collection, environment, and a scheduled monitor.
+  description: >-
+    Creates a workspace, a collection and environment within it, a monitor bound
+    to the collection and environment, and runs the monitor to validate the
+    pipeline end to end.
+  inputs:
+    type: object
+    required:
+    - workspaceName
+    - collectionName
+    - environmentName
+    - monitorName
+    - cron
+    properties:
+      workspaceName:
+        type: string
+        description: The name of the workspace to create.
+      collectionName:
+        type: string
+        description: The name of the collection to create and test.
+      environmentName:
+        type: string
+        description: The name of the environment to create.
+      monitorName:
+        type: string
+        description: The name of the monitor to create.
+      cron:
+        type: string
+        description: The cron expression for the monitor schedule.
+      timezone:
+        type: string
+        description: The timezone for the monitor schedule.
+        default: America/New_York
+  steps:
+  - stepId: createWorkspace
+    description: >-
+      Create the workspace that holds the testing assets.
+    operationId: createWorkspace
+    requestBody:
+      contentType: application/json
+      payload:
+        workspace:
+          name: $inputs.workspaceName
+          type: team
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      workspaceId: $response.body#/workspace/id
+  - stepId: createCollection
+    description: >-
+      Create the collection to be tested inside the new workspace.
+    operationId: $sourceDescriptions.collectionsApi.createCollection
+    parameters:
+    - name: workspace
+      in: query
+      value: $steps.createWorkspace.outputs.workspaceId
+    requestBody:
+      contentType: application/json
+      payload:
+        collection:
+          info:
+            name: $inputs.collectionName
+            schema: https://schema.getpostman.com/json/collection/v2.1.0/collection.json
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      collectionUid: $response.body#/collection/uid
+  - stepId: createEnvironment
+    description: >-
+      Create the environment the monitor will run the collection against.
+    operationId: $sourceDescriptions.environmentsApi.createEnvironment
+    parameters:
+    - name: workspace
+      in: query
+      value: $steps.createWorkspace.outputs.workspaceId
+    requestBody:
+      contentType: application/json
+      payload:
+        environment:
+          name: $inputs.environmentName
+          values:
+          - key: baseUrl
+            value: https://api.example.com
+            type: default
+            enabled: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      environmentUid: $response.body#/environment/uid
+  - stepId: createMonitor
+    description: >-
+      Create a monitor that runs the collection against the environment on the
+      supplied schedule.
+    operationId: $sourceDescriptions.monitorsApi.createMonitor
+    parameters:
+    - name: workspace
+      in: query
+      value: $steps.createWorkspace.outputs.workspaceId
+    requestBody:
+      contentType: application/json
+      payload:
+        monitor:
+          name: $inputs.monitorName
+          collection: $steps.createCollection.outputs.collectionUid
+          environment: $steps.createEnvironment.outputs.environmentUid
+          schedule:
+            cron: $inputs.cron
+            timezone: $inputs.timezone
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      monitorId: $response.body#/monitor/id
+  - stepId: runMonitor
+    description: >-
+      Trigger the monitor once to validate the testing pipeline.
+    operationId: $sourceDescriptions.monitorsApi.runMonitor
+    parameters:
+    - name: monitorId
+      in: path
+      value: $steps.createMonitor.outputs.monitorId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      runStatus: $response.body#/run/info/status
+  outputs:
+    workspaceId: $steps.createWorkspace.outputs.workspaceId
+    collectionUid: $steps.createCollection.outputs.collectionUid
+    environmentUid: $steps.createEnvironment.outputs.environmentUid
+    monitorId: $steps.createMonitor.outputs.monitorId
+    runStatus: $steps.runMonitor.outputs.runStatus

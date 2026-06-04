@@ -1,0 +1,98 @@
+arazzo: 1.0.1
+info:
+  title: Postman Create a Mock Server from a Collection
+  summary: Create a collection, stand up a mock server from it, and read the mock back.
+  description: >-
+    The standard path to a working mock server: a collection supplies the
+    example responses that the mock serves. This workflow creates a collection,
+    creates a mock server backed by that collection, and reads the mock back to
+    capture its public mock URL. Each step spells out its request inline so the
+    flow can be read and executed without opening the underlying OpenAPI
+    descriptions.
+  version: 1.0.0
+sourceDescriptions:
+- name: collectionsApi
+  url: ../openapi/postman-collections-api-openapi.yml
+  type: openapi
+- name: mockServersApi
+  url: ../openapi/postman-mock-servers-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-mock-from-collection
+  summary: Create a collection and a mock server backed by it.
+  description: >-
+    Creates a collection, creates a mock server that serves the collection's
+    examples, and reads the mock back to obtain its mock URL.
+  inputs:
+    type: object
+    required:
+    - collectionName
+    - mockName
+    properties:
+      collectionName:
+        type: string
+        description: The name of the collection to create and mock.
+      mockName:
+        type: string
+        description: The name of the mock server.
+      workspace:
+        type: string
+        description: Optional workspace ID to create the collection and mock in.
+  steps:
+  - stepId: createCollection
+    description: >-
+      Create the collection whose example responses the mock server will serve.
+    operationId: createCollection
+    parameters:
+    - name: workspace
+      in: query
+      value: $inputs.workspace
+    requestBody:
+      contentType: application/json
+      payload:
+        collection:
+          info:
+            name: $inputs.collectionName
+            schema: https://schema.getpostman.com/json/collection/v2.1.0/collection.json
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      collectionId: $response.body#/collection/id
+  - stepId: createMock
+    description: >-
+      Create a mock server backed by the new collection, kept private by
+      default.
+    operationId: createMock
+    parameters:
+    - name: workspace
+      in: query
+      value: $inputs.workspace
+    requestBody:
+      contentType: application/json
+      payload:
+        mock:
+          name: $inputs.mockName
+          collection: $steps.createCollection.outputs.collectionId
+          private: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      mockId: $response.body#/mock/id
+      mockUrl: $response.body#/mock/mockUrl
+  - stepId: getMock
+    description: >-
+      Read the mock server back to confirm its configuration and capture the
+      mock URL.
+    operationId: getMock
+    parameters:
+    - name: mockId
+      in: path
+      value: $steps.createMock.outputs.mockId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      mockUrl: $response.body#/mock/mockUrl
+  outputs:
+    collectionId: $steps.createCollection.outputs.collectionId
+    mockId: $steps.createMock.outputs.mockId
+    mockUrl: $steps.getMock.outputs.mockUrl

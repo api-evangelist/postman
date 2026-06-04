@@ -1,0 +1,106 @@
+arazzo: 1.0.1
+info:
+  title: Postman Collection Lifecycle
+  summary: Create, read, update, and delete a Postman collection end to end.
+  description: >-
+    Exercises the full create-read-update-delete lifecycle for a Postman
+    collection. The workflow creates a collection, reads it back to confirm its
+    contents, replaces its definition with an updated name, and finally deletes
+    it. Each step spells out its request inline so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: collectionsApi
+  url: ../openapi/postman-collections-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: collection-crud
+  summary: Walk a collection through create, get, update, and delete.
+  description: >-
+    Creates a collection, retrieves it, updates its name via a full
+    replacement, and deletes it, chaining the collection ID through each step.
+  inputs:
+    type: object
+    required:
+    - collectionName
+    - updatedName
+    properties:
+      collectionName:
+        type: string
+        description: The name to give the new collection.
+      updatedName:
+        type: string
+        description: The new name to apply when updating the collection.
+      workspace:
+        type: string
+        description: Optional workspace ID to create the collection in.
+  steps:
+  - stepId: createCollection
+    description: >-
+      Create a new collection using the minimal v2.1.0 collection schema.
+    operationId: createCollection
+    parameters:
+    - name: workspace
+      in: query
+      value: $inputs.workspace
+    requestBody:
+      contentType: application/json
+      payload:
+        collection:
+          info:
+            name: $inputs.collectionName
+            schema: https://schema.getpostman.com/json/collection/v2.1.0/collection.json
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      collectionId: $response.body#/collection/id
+      collectionUid: $response.body#/collection/uid
+  - stepId: getCollection
+    description: >-
+      Read the collection back to confirm it was created with the expected
+      definition.
+    operationId: getCollection
+    parameters:
+    - name: collectionId
+      in: path
+      value: $steps.createCollection.outputs.collectionId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      name: $response.body#/collection/info/name
+  - stepId: updateCollection
+    description: >-
+      Replace the collection definition with an updated name. This is a full
+      replacement, not a partial update.
+    operationId: updateCollection
+    parameters:
+    - name: collectionId
+      in: path
+      value: $steps.createCollection.outputs.collectionId
+    requestBody:
+      contentType: application/json
+      payload:
+        collection:
+          info:
+            name: $inputs.updatedName
+            schema: https://schema.getpostman.com/json/collection/v2.1.0/collection.json
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      updatedUid: $response.body#/collection/uid
+  - stepId: deleteCollection
+    description: >-
+      Delete the collection to clean up. This action is irreversible.
+    operationId: deleteCollection
+    parameters:
+    - name: collectionId
+      in: path
+      value: $steps.createCollection.outputs.collectionId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      deletedId: $response.body#/collection/id
+  outputs:
+    collectionId: $steps.createCollection.outputs.collectionId
+    collectionUid: $steps.createCollection.outputs.collectionUid
+    deletedId: $steps.deleteCollection.outputs.deletedId

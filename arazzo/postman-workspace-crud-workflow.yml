@@ -1,0 +1,103 @@
+arazzo: 1.0.1
+info:
+  title: Postman Workspace Lifecycle
+  summary: Create, read, update, and delete a Postman workspace.
+  description: >-
+    Exercises the full create-read-update-delete lifecycle for a Postman
+    workspace. The workflow creates a workspace, reads it back with its
+    associated resources, updates its name and description, and finally deletes
+    it. Each step spells out its request inline so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: workspacesApi
+  url: ../openapi/postman-workspaces-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: workspace-crud
+  summary: Walk a workspace through create, get, update, and delete.
+  description: >-
+    Creates a workspace, retrieves it, updates its name and description, and
+    deletes it, chaining the workspace ID through each step.
+  inputs:
+    type: object
+    required:
+    - workspaceName
+    - updatedName
+    properties:
+      workspaceName:
+        type: string
+        description: The name of the workspace to create.
+      workspaceType:
+        type: string
+        description: The workspace type (personal, team, private, public, partner).
+        default: team
+      updatedName:
+        type: string
+        description: The new name to apply when updating the workspace.
+      updatedDescription:
+        type: string
+        description: The new description to apply when updating the workspace.
+  steps:
+  - stepId: createWorkspace
+    description: >-
+      Create the workspace.
+    operationId: createWorkspace
+    requestBody:
+      contentType: application/json
+      payload:
+        workspace:
+          name: $inputs.workspaceName
+          type: $inputs.workspaceType
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      workspaceId: $response.body#/workspace/id
+  - stepId: getWorkspace
+    description: >-
+      Read the workspace back with its associated collections, environments,
+      mocks, and monitors.
+    operationId: getWorkspace
+    parameters:
+    - name: workspaceId
+      in: path
+      value: $steps.createWorkspace.outputs.workspaceId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      name: $response.body#/workspace/name
+  - stepId: updateWorkspace
+    description: >-
+      Update the workspace's name and description.
+    operationId: updateWorkspace
+    parameters:
+    - name: workspaceId
+      in: path
+      value: $steps.createWorkspace.outputs.workspaceId
+    requestBody:
+      contentType: application/json
+      payload:
+        workspace:
+          name: $inputs.updatedName
+          type: $inputs.workspaceType
+          description: $inputs.updatedDescription
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      updatedId: $response.body#/workspace/id
+  - stepId: deleteWorkspace
+    description: >-
+      Delete the workspace and all of its associated data. This action is
+      irreversible.
+    operationId: deleteWorkspace
+    parameters:
+    - name: workspaceId
+      in: path
+      value: $steps.createWorkspace.outputs.workspaceId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      deletedId: $response.body#/workspace/id
+  outputs:
+    workspaceId: $steps.createWorkspace.outputs.workspaceId
+    deletedId: $steps.deleteWorkspace.outputs.deletedId

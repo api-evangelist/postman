@@ -1,0 +1,101 @@
+arazzo: 1.0.1
+info:
+  title: Postman Create and Run a Monitor
+  summary: Create a scheduled monitor for a collection, then trigger and read a run.
+  description: >-
+    Monitors run a collection on a schedule and surface test results. This
+    workflow creates a monitor bound to a collection and environment, manually
+    triggers a run, and reads the monitor back to confirm its last-run state.
+    Each step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: monitorsApi
+  url: ../openapi/postman-monitors-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-and-run-monitor
+  summary: Create a monitor, run it on demand, and read its state.
+  description: >-
+    Creates a monitor for the supplied collection and environment on a cron
+    schedule, triggers a manual run, and reads the monitor back to confirm its
+    last run.
+  inputs:
+    type: object
+    required:
+    - monitorName
+    - collectionUid
+    - cron
+    properties:
+      monitorName:
+        type: string
+        description: The name of the monitor to create.
+      collectionUid:
+        type: string
+        description: The UID of the collection to monitor.
+      environmentUid:
+        type: string
+        description: The UID of the environment to use during runs.
+      cron:
+        type: string
+        description: The cron expression defining the run schedule.
+      timezone:
+        type: string
+        description: The timezone for the schedule.
+        default: America/New_York
+      workspace:
+        type: string
+        description: Optional workspace ID to create the monitor in.
+  steps:
+  - stepId: createMonitor
+    description: >-
+      Create a monitor bound to the collection and environment on the supplied
+      cron schedule.
+    operationId: createMonitor
+    parameters:
+    - name: workspace
+      in: query
+      value: $inputs.workspace
+    requestBody:
+      contentType: application/json
+      payload:
+        monitor:
+          name: $inputs.monitorName
+          collection: $inputs.collectionUid
+          environment: $inputs.environmentUid
+          schedule:
+            cron: $inputs.cron
+            timezone: $inputs.timezone
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      monitorId: $response.body#/monitor/id
+      monitorUid: $response.body#/monitor/uid
+  - stepId: runMonitor
+    description: >-
+      Manually trigger a monitor run and capture the run status.
+    operationId: runMonitor
+    parameters:
+    - name: monitorId
+      in: path
+      value: $steps.createMonitor.outputs.monitorId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      runStatus: $response.body#/run/info/status
+  - stepId: getMonitor
+    description: >-
+      Read the monitor back to confirm its schedule and last-run details.
+    operationId: getMonitor
+    parameters:
+    - name: monitorId
+      in: path
+      value: $steps.createMonitor.outputs.monitorId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      lastRunStatus: $response.body#/monitor/lastRun/status
+  outputs:
+    monitorId: $steps.createMonitor.outputs.monitorId
+    runStatus: $steps.runMonitor.outputs.runStatus
+    lastRunStatus: $steps.getMonitor.outputs.lastRunStatus

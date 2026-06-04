@@ -1,0 +1,94 @@
+arazzo: 1.0.1
+info:
+  title: Postman Publish a Collection to the Private API Network
+  summary: Create a collection, organize a network folder, and publish the collection into it.
+  description: >-
+    Curates the private API network catalog. This workflow creates a collection,
+    creates a folder in the private API network to organize it, and publishes
+    the collection into that folder so it becomes discoverable across the team.
+    Each step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI descriptions.
+  version: 1.0.0
+sourceDescriptions:
+- name: collectionsApi
+  url: ../openapi/postman-collections-api-openapi.yml
+  type: openapi
+- name: privateApiNetworkApi
+  url: ../openapi/postman-private-api-network-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: publish-collection-to-network
+  summary: Create a collection and publish it into a private API network folder.
+  description: >-
+    Creates a collection, creates a network folder, and adds the collection to
+    the private API network under that folder.
+  inputs:
+    type: object
+    required:
+    - collectionName
+    - folderName
+    properties:
+      collectionName:
+        type: string
+        description: The name of the collection to create and publish.
+      folderName:
+        type: string
+        description: The name of the private API network folder to create.
+      summary:
+        type: string
+        description: A custom summary for the element in the network.
+      workspace:
+        type: string
+        description: Optional workspace ID to create the collection in.
+  steps:
+  - stepId: createCollection
+    description: >-
+      Create the collection that will be published to the network.
+    operationId: createCollection
+    parameters:
+    - name: workspace
+      in: query
+      value: $inputs.workspace
+    requestBody:
+      contentType: application/json
+      payload:
+        collection:
+          info:
+            name: $inputs.collectionName
+            schema: https://schema.getpostman.com/json/collection/v2.1.0/collection.json
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      collectionId: $response.body#/collection/id
+  - stepId: createNetworkFolder
+    description: >-
+      Create a folder in the private API network to organize the collection.
+    operationId: createNetworkFolder
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.folderName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      folderId: $response.body#/id
+  - stepId: addNetworkElement
+    description: >-
+      Publish the collection to the private API network under the new folder,
+      making it discoverable to the team.
+    operationId: addNetworkElement
+    requestBody:
+      contentType: application/json
+      payload:
+        type: collection
+        id: $steps.createCollection.outputs.collectionId
+        parentFolderId: $steps.createNetworkFolder.outputs.folderId
+        summary: $inputs.summary
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      elementId: $response.body#/id
+  outputs:
+    collectionId: $steps.createCollection.outputs.collectionId
+    folderId: $steps.createNetworkFolder.outputs.folderId
+    elementId: $steps.addNetworkElement.outputs.elementId

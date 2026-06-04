@@ -1,0 +1,98 @@
+arazzo: 1.0.1
+info:
+  title: Postman Tag a Collection for Governance
+  summary: Create a collection, apply governance tags to it, and read the tags back.
+  description: >-
+    Tags drive governance by labeling assets with domain, lifecycle, or
+    compliance metadata. This workflow creates a collection, applies a set of
+    tags to it, and reads the tags back to confirm them. Each step spells out
+    its request inline so the flow can be read and executed without opening the
+    underlying OpenAPI descriptions.
+  version: 1.0.0
+sourceDescriptions:
+- name: collectionsApi
+  url: ../openapi/postman-collections-api-openapi.yml
+  type: openapi
+- name: tagsApi
+  url: ../openapi/postman-tags-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: tag-collection
+  summary: Create a collection and govern it with tags.
+  description: >-
+    Creates a collection, replaces its tag set with the supplied governance
+    tags, and reads the tags back to confirm.
+  inputs:
+    type: object
+    required:
+    - collectionName
+    - tags
+    properties:
+      collectionName:
+        type: string
+        description: The name of the collection to create and tag.
+      tags:
+        type: array
+        description: The tags to apply, each an object with a lowercase hyphenated slug.
+        items:
+          type: object
+      workspace:
+        type: string
+        description: Optional workspace ID to create the collection in.
+  steps:
+  - stepId: createCollection
+    description: >-
+      Create the collection that will be tagged.
+    operationId: createCollection
+    parameters:
+    - name: workspace
+      in: query
+      value: $inputs.workspace
+    requestBody:
+      contentType: application/json
+      payload:
+        collection:
+          info:
+            name: $inputs.collectionName
+            schema: https://schema.getpostman.com/json/collection/v2.1.0/collection.json
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      collectionId: $response.body#/collection/id
+  - stepId: setTags
+    description: >-
+      Replace the collection's tags with the supplied governance tags.
+    operationId: updateEntityTags
+    parameters:
+    - name: entityType
+      in: path
+      value: collections
+    - name: entityId
+      in: path
+      value: $steps.createCollection.outputs.collectionId
+    requestBody:
+      contentType: application/json
+      payload:
+        tags: $inputs.tags
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      appliedTags: $response.body#/tags
+  - stepId: getTags
+    description: >-
+      Read the collection's tags back to confirm the governance labels.
+    operationId: getEntityTags
+    parameters:
+    - name: entityType
+      in: path
+      value: collections
+    - name: entityId
+      in: path
+      value: $steps.createCollection.outputs.collectionId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      tags: $response.body#/tags
+  outputs:
+    collectionId: $steps.createCollection.outputs.collectionId
+    tags: $steps.getTags.outputs.tags
