@@ -1,0 +1,3054 @@
+{
+  "item": [
+    {
+      "id": "624d3c3d-bcfc-41e5-9af1-e7a4e3ddf657",
+      "name": "Collections",
+      "description": {
+        "content": "Operations for managing Postman collections including CRUD operations, forking, merging, and pull requests.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b149709e-f6e4-4af5-b909-45e4b8b9da83",
+          "name": "Postman Get all collections",
+          "request": {
+            "name": "Postman Get all collections",
+            "description": {
+              "content": "Gets all of your Postman collections. The response includes all of your subscribed collections. By default, the response returns abbreviated collection data. To get full collection details, use the collection UID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collections"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "workspace",
+                  "value": "<string>",
+                  "description": "Filter results to a specific workspace by providing the workspace ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Filter results by collection name (case-insensitive partial match)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3166e3ba-4d6d-47ca-8673-ababa43c5985",
+              "name": "Successful response with list of collections",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"collections\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"owner\": \"string\",\n      \"uid\": \"string\",\n      \"createdAt\": \"1953-02-22T23:31:07.660Z\",\n      \"updatedAt\": \"2011-03-07T09:10:06.326Z\",\n      \"isPublic\": false,\n      \"fork\": {\n        \"label\": \"string\",\n        \"createdAt\": \"1968-04-02T05:56:36.911Z\",\n        \"from\": \"string\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"owner\": \"string\",\n      \"uid\": \"string\",\n      \"createdAt\": \"2006-03-28T09:25:18.945Z\",\n      \"updatedAt\": \"2025-04-06T03:23:26.298Z\",\n      \"isPublic\": false,\n      \"fork\": {\n        \"label\": \"string\",\n        \"createdAt\": \"2009-08-25T10:45:40.910Z\",\n        \"from\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70589709-cd38-4a47-8101-cda219b38661",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"authenticationError\",\n    \"message\": \"Invalid API Key. Every request requires a valid API Key to be sent.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c9563bf-85aa-46e0-832e-065c51719d30",
+              "name": "Too many requests - rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"rateLimited\",\n  \"message\": \"Rate limit exceeded. Please retry after some time.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efa0b283-ac56-4c84-a92e-74cfac5b4296",
+              "name": "An unexpected error occurred on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"serverError\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7e875dff-7992-4693-a1e4-e4a105c242f0",
+          "name": "Postman Create a collection",
+          "request": {
+            "name": "Postman Create a collection",
+            "description": {
+              "content": "Creates a new collection in your Postman account. You can include the collection content in the request body, including requests, folders, and scripts.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collections"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "workspace",
+                  "value": "<string>",
+                  "description": "The workspace ID to create the collection in. If not specified, the collection is created in your personal workspace."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"<string>\",\n      \"schema\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    \"item\": [\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"<string>\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"<string>\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"response\": [\n          \"<object>\",\n          \"<object>\"\n        ],\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"<string>\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"<string>\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"<string>\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"<string>\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"response\": [\n          \"<object>\",\n          \"<object>\"\n        ],\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"<string>\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"<string>\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"<string>\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"<string>\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"<string>\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6fd34636-197a-41c9-b9ad-a64d05e9c383",
+              "name": "Successfully created collection",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"string\",\n      \"schema\": \"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\",\n      \"description\": \"string\"\n    },\n    \"item\": [\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"number\",\n        \"description\": \"string\"\n      },\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"any\",\n        \"description\": \"string\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"awsv4\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"collection\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"uid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "538f88e0-9f18-4809-b79c-85a7b38f4d25",
+              "name": "Bad request - invalid input or malformed request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"string\",\n      \"schema\": \"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\",\n      \"description\": \"string\"\n    },\n    \"item\": [\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"number\",\n        \"description\": \"string\"\n      },\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"any\",\n        \"description\": \"string\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"awsv4\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"badRequestError\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6ddaed49-1907-4994-aa84-a8c6fc2173f9",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"string\",\n      \"schema\": \"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\",\n      \"description\": \"string\"\n    },\n    \"item\": [\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"number\",\n        \"description\": \"string\"\n      },\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"any\",\n        \"description\": \"string\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"awsv4\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"authenticationError\",\n    \"message\": \"Invalid API Key. Every request requires a valid API Key to be sent.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff6572a4-54a4-4361-a148-65f8f81d98a3",
+              "name": "Too many requests - rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"string\",\n      \"schema\": \"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\",\n      \"description\": \"string\"\n    },\n    \"item\": [\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"number\",\n        \"description\": \"string\"\n      },\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"any\",\n        \"description\": \"string\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"awsv4\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"rateLimited\",\n  \"message\": \"Rate limit exceeded. Please retry after some time.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c286b47e-588d-4c2c-99f3-5a625cc100e3",
+              "name": "An unexpected error occurred on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"string\",\n      \"schema\": \"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\",\n      \"description\": \"string\"\n    },\n    \"item\": [\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"number\",\n        \"description\": \"string\"\n      },\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"any\",\n        \"description\": \"string\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"awsv4\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"serverError\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fca6c73d-0a4c-452b-a6e1-ca2b74b2ca56",
+          "name": "Postman Get a collection",
+          "request": {
+            "name": "Postman Get a collection",
+            "description": {
+              "content": "Gets information about a single collection. The response includes the full collection definition including requests, folders, scripts, variables, and other metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collections",
+                ":collectionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_key",
+                  "value": "<string>",
+                  "description": "A collection's read-only access key. Using this parameter does not require an API key."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "collectionId",
+                  "description": "(Required) The collection's unique ID or UID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7de55862-6ff1-45bd-a1d4-42a5d184e84e",
+              "name": "Successful response with collection details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"schema\": \"string\",\n      \"_postman_id\": \"string\",\n      \"updatedAt\": \"1958-06-25T17:16:08.380Z\"\n    },\n    \"item\": [\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"PUT\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"file\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"PUT\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"urlencoded\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"any\",\n        \"description\": \"string\"\n      },\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"number\",\n        \"description\": \"string\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"apikey\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bde3ca62-6c08-44f4-81df-8b61e8f2a0ca",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"authenticationError\",\n    \"message\": \"Invalid API Key. Every request requires a valid API Key to be sent.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c1cbbc8-03ac-4bd8-b9f6-8f9e817c7909",
+              "name": "The requested resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"instanceNotFoundError\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e826ee41-621f-463f-8bd3-9d8beffe36c3",
+              "name": "Too many requests - rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"rateLimited\",\n  \"message\": \"Rate limit exceeded. Please retry after some time.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d881b1ab-0462-4086-9441-32300b667f11",
+              "name": "An unexpected error occurred on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"serverError\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "115cac1c-3e43-4d30-9335-19a552c5fd60",
+          "name": "Postman Update a collection",
+          "request": {
+            "name": "Postman Update a collection",
+            "description": {
+              "content": "Updates an existing collection. This replaces the entire collection definition with the data provided in the request body. Acts as a complete replacement, not a partial update.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collections",
+                ":collectionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "collectionId",
+                  "description": "(Required) The collection's unique ID or UID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"<string>\",\n      \"schema\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    \"item\": [\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"<string>\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"<string>\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"response\": [\n          \"<object>\",\n          \"<object>\"\n        ],\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"<string>\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"<string>\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"<string>\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"<string>\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"response\": [\n          \"<object>\",\n          \"<object>\"\n        ],\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"<string>\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"<string>\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"<string>\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"<string>\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"<string>\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "209d34f0-73a9-41f1-a166-cc72677f32f5",
+              "name": "Successfully updated collection",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"string\",\n      \"schema\": \"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\",\n      \"description\": \"string\"\n    },\n    \"item\": [\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"number\",\n        \"description\": \"string\"\n      },\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"any\",\n        \"description\": \"string\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"awsv4\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"collection\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"uid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13feafe7-53e0-4d7a-810c-e7698b4b14d0",
+              "name": "Bad request - invalid input or malformed request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"string\",\n      \"schema\": \"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\",\n      \"description\": \"string\"\n    },\n    \"item\": [\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"number\",\n        \"description\": \"string\"\n      },\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"any\",\n        \"description\": \"string\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"awsv4\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"badRequestError\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8bc28269-9ab2-4c5e-86db-edf9db8a4769",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"string\",\n      \"schema\": \"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\",\n      \"description\": \"string\"\n    },\n    \"item\": [\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"number\",\n        \"description\": \"string\"\n      },\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"any\",\n        \"description\": \"string\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"awsv4\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"authenticationError\",\n    \"message\": \"Invalid API Key. Every request requires a valid API Key to be sent.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e05714e-e6c3-479e-bf8e-3956528f03c1",
+              "name": "The requested resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"string\",\n      \"schema\": \"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\",\n      \"description\": \"string\"\n    },\n    \"item\": [\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"number\",\n        \"description\": \"string\"\n      },\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"any\",\n        \"description\": \"string\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"awsv4\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"instanceNotFoundError\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c26dddd1-ddf3-43c0-9e9a-453ecaf3ebf8",
+              "name": "Too many requests - rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"string\",\n      \"schema\": \"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\",\n      \"description\": \"string\"\n    },\n    \"item\": [\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"number\",\n        \"description\": \"string\"\n      },\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"any\",\n        \"description\": \"string\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"awsv4\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"rateLimited\",\n  \"message\": \"Rate limit exceeded. Please retry after some time.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bbdb9844-d865-48b6-8cac-200c71ebbc07",
+              "name": "An unexpected error occurred on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"string\",\n      \"schema\": \"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\",\n      \"description\": \"string\"\n    },\n    \"item\": [\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"string\",\n          \"header\": [\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            },\n            {\n              \"key\": \"string\",\n              \"value\": \"string\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"string\"\n          },\n          \"description\": \"string\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exec\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"number\",\n        \"description\": \"string\"\n      },\n      {\n        \"key\": \"string\",\n        \"value\": \"string\",\n        \"type\": \"any\",\n        \"description\": \"string\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"awsv4\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"text/javascript\",\n          \"exec\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"serverError\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6da1a732-767c-4229-9e0e-3ba583a5b381",
+          "name": "Postman Delete a collection",
+          "request": {
+            "name": "Postman Delete a collection",
+            "description": {
+              "content": "Deletes a collection from your Postman account. This action is irreversible.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collections",
+                ":collectionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "collectionId",
+                  "description": "(Required) The collection's unique ID or UID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5082133a-eb61-48c6-91ea-23208d27fd14",
+              "name": "Successfully deleted collection",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"collection\": {\n    \"id\": \"string\",\n    \"uid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f7b1c596-5760-470c-9432-320475b0d33a",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"authenticationError\",\n    \"message\": \"Invalid API Key. Every request requires a valid API Key to be sent.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9912828d-9579-4ab7-8123-3ce8918f2590",
+              "name": "The requested resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"instanceNotFoundError\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cbc91ef4-dfd9-4bc8-b711-77ffd8bb7ece",
+              "name": "Too many requests - rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"rateLimited\",\n  \"message\": \"Rate limit exceeded. Please retry after some time.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e3c5d600-605a-4e93-ad67-09e22bce211b",
+              "name": "An unexpected error occurred on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"serverError\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c74a406-3f14-4b47-bfea-1ae9215e0c65",
+          "name": "Postman Get all requests in a collection",
+          "request": {
+            "name": "Postman Get all requests in a collection",
+            "description": {
+              "content": "Gets all the requests in a collection. Returns request metadata including name, method, URL, and folder hierarchy.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collections",
+                ":collectionId",
+                "requests"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "collectionId",
+                  "description": "(Required) The collection's unique ID or UID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e0a173e1-367f-46e6-ab32-7da465d8efaa",
+              "name": "Successful response with list of requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"method\": \"string\",\n      \"createdAt\": \"1959-06-27T04:37:31.854Z\",\n      \"updatedAt\": \"1979-01-18T21:51:55.886Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"method\": \"string\",\n      \"createdAt\": \"1956-04-27T09:14:20.501Z\",\n      \"updatedAt\": \"2003-06-26T00:13:30.016Z\"\n    }\n  ],\n  \"meta\": {\n    \"total\": 9484,\n    \"limit\": 3146,\n    \"offset\": 1655\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd7da368-8949-4684-b922-98eda7f8caeb",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"authenticationError\",\n    \"message\": \"Invalid API Key. Every request requires a valid API Key to be sent.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13e0a3ed-ffa6-49da-ab36-ee244dd89cd4",
+              "name": "The requested resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"instanceNotFoundError\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "566baf86-07c7-474b-a343-f9657e867f31",
+              "name": "Too many requests - rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"rateLimited\",\n  \"message\": \"Rate limit exceeded. Please retry after some time.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ca1d32e9-231b-4bce-bb57-fb1a1b0d4709",
+          "name": "Postman Get all folders in a collection",
+          "request": {
+            "name": "Postman Get all folders in a collection",
+            "description": {
+              "content": "Gets all the folders in a collection. Returns folder metadata and hierarchy structure.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collections",
+                ":collectionId",
+                "folders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "collectionId",
+                  "description": "(Required) The collection's unique ID or UID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "586ac0c3-7b73-4429-8a58-da460d14340a",
+              "name": "Successful response with list of folders",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId",
+                    "folders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"createdAt\": \"1966-07-23T21:28:23.252Z\",\n      \"updatedAt\": \"2020-11-06T21:17:26.223Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"createdAt\": \"2002-11-25T19:40:38.948Z\",\n      \"updatedAt\": \"2006-07-28T22:07:21.894Z\"\n    }\n  ],\n  \"meta\": {\n    \"total\": 1783,\n    \"limit\": 1404,\n    \"offset\": 7646\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "69a83c9c-1585-4953-b6dc-99bef917bc34",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId",
+                    "folders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"authenticationError\",\n    \"message\": \"Invalid API Key. Every request requires a valid API Key to be sent.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c0ec7ac-57fa-44bb-838f-e98505c3d61b",
+              "name": "The requested resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId",
+                    "folders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"instanceNotFoundError\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6e318bb-b95e-49ab-ac90-50e8157f22d2",
+              "name": "Too many requests - rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId",
+                    "folders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"rateLimited\",\n  \"message\": \"Rate limit exceeded. Please retry after some time.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0288a42a-5adc-43c9-bf25-6d807a9e0772",
+          "name": "Postman Get all responses in a collection",
+          "request": {
+            "name": "Postman Get all responses in a collection",
+            "description": {
+              "content": "Gets all saved example responses in a collection. Includes response body, headers, and status codes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collections",
+                ":collectionId",
+                "responses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "collectionId",
+                  "description": "(Required) The collection's unique ID or UID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4a8a220d-c873-42e8-8cc3-cea119603fb3",
+              "name": "Successful response with list of responses",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId",
+                    "responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"createdAt\": \"1966-07-23T21:28:23.252Z\",\n      \"updatedAt\": \"2020-11-06T21:17:26.223Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"createdAt\": \"2002-11-25T19:40:38.948Z\",\n      \"updatedAt\": \"2006-07-28T22:07:21.894Z\"\n    }\n  ],\n  \"meta\": {\n    \"total\": 1783,\n    \"limit\": 1404,\n    \"offset\": 7646\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "201468d7-ee17-46e8-bfd7-26deabfffe0f",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId",
+                    "responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"authenticationError\",\n    \"message\": \"Invalid API Key. Every request requires a valid API Key to be sent.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7193f0d4-44b1-4c13-a76d-f11e187235f1",
+              "name": "The requested resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId",
+                    "responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"instanceNotFoundError\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e55d8a16-3221-4eda-935a-aea5bae3d70e",
+              "name": "Too many requests - rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collectionId",
+                    "responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"rateLimited\",\n  \"message\": \"Rate limit exceeded. Please retry after some time.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fca6b8c9-854f-459e-8e13-a2ae731a644c",
+          "name": "Postman Fork a collection",
+          "request": {
+            "name": "Postman Fork a collection",
+            "description": {
+              "content": "Creates a fork of an existing collection into a specified workspace. Forking creates a copy that maintains a link to the source collection for future merges.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collections",
+                "fork",
+                ":collectionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "workspace",
+                  "value": "<string>",
+                  "description": "(Required) The workspace ID to fork the collection into."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "collectionId",
+                  "description": "(Required) The collection's unique ID or UID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"label\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ea6a86a8-54df-45c0-903c-2fe7df8f1268",
+              "name": "Successfully forked collection",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    "fork",
+                    ":collectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"collection\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"uid\": \"string\",\n    \"fork\": {\n      \"label\": \"string\",\n      \"from\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "32666400-63f7-4985-bc1f-a8df24d68651",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    "fork",
+                    ":collectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"authenticationError\",\n    \"message\": \"Invalid API Key. Every request requires a valid API Key to be sent.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da2b5a0c-e542-4c6b-9d17-1bd5d4c34b7d",
+              "name": "The requested resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    "fork",
+                    ":collectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"instanceNotFoundError\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e1dd939c-4449-4f5d-874f-1582a09750ca",
+              "name": "Too many requests - rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    "fork",
+                    ":collectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collectionId",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"rateLimited\",\n  \"message\": \"Rate limit exceeded. Please retry after some time.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ccb9efcb-7aa8-4240-9445-81de4efb7a08",
+          "name": "Postman Merge a fork",
+          "request": {
+            "name": "Postman Merge a fork",
+            "description": {
+              "content": "Merges a forked collection back into its source collection. You can choose the merge strategy to resolve conflicts.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collections",
+                "merge"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"source\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"strategy\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8261ca14-5aa7-43b3-94bd-4a98cca74c89",
+              "name": "Successfully merged collection",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"strategy\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"collection\": {\n    \"id\": \"string\",\n    \"uid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a5b9734b-a793-4d87-b6df-d3dff13758eb",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"strategy\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"authenticationError\",\n    \"message\": \"Invalid API Key. Every request requires a valid API Key to be sent.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "051471b6-8805-4dc1-bbef-06e064b422d4",
+              "name": "The requested resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"strategy\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"instanceNotFoundError\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e1e27bce-8210-4203-8856-e0c818af2384",
+              "name": "Too many requests - rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"strategy\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"rateLimited\",\n  \"message\": \"Rate limit exceeded. Please retry after some time.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getpostman.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5622a269-01a0-4059-86a9-bc88e0bed6a9",
+    "name": "Postman Collections API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Postman Collections API enables you to manage and automate your Postman\ncollections programmatically. Collections are groups of saved API requests that\ncan be organized into folders, include documentation, tests, and pre-request\nscripts.\n\n## Authentication\nAll requests require an API key passed in the `x-api-key` header. Generate your\nAPI key from your Postman account settings.\n\n## Rate Limits\nThe Postman API has rate limits that vary by plan. Free plans are limited to\n60 requests per minute. Paid plans have higher limits.\n\n## Base URL\nAll API endpoints are relative to `https://api.getpostman.com`.\n\n\nContact Support:\n Name: Postman Developer Support\n Email: help@postman.com",
+      "type": "text/plain"
+    }
+  }
+}

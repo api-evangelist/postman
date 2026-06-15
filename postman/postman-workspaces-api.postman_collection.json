@@ -1,0 +1,2172 @@
+{
+  "info": {
+    "_postman_id": "79519939-cb5d-4f66-96da-d1668c64a3ab",
+    "name": "Postman Workspaces API",
+    "description": "The Postman Workspaces API enables you to manage your Postman workspaces\nprogrammatically. Workspaces let you organize your API work and collaborate\nwith your team. You can create personal, team, partner, and public workspaces.\n\n## Authentication\nAll requests require an API key passed in the `x-api-key` header.\n\n## Rate Limits\nThe Postman API has rate limits that vary by plan. See Postman documentation\nfor current limits.\n\n\nContact Support:\n Name: Postman Developer Support\n Email: help@postman.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T13:04:20.000Z",
+    "updatedAt": "2026-06-05T13:04:20.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-79519939-cb5d-4f66-96da-d1668c64a3ab"
+  },
+  "item": [
+    {
+      "name": "workspaces",
+      "item": [
+        {
+          "name": "{workspaceId}",
+          "item": [
+            {
+              "name": "global-variables",
+              "item": [
+                {
+                  "name": "Postman Get workspace global variables",
+                  "id": "08edc21f-232f-4a5f-9dc8-a3a65de3504c",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:workspaceId/global-variables",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":workspaceId",
+                        "global-variables"
+                      ],
+                      "variable": [
+                        {
+                          "id": "e3722b0b-8762-4e41-90d8-592661b0d733",
+                          "key": "workspaceId",
+                          "value": "<string>",
+                          "description": "(Required) The workspace's unique ID."
+                        }
+                      ]
+                    },
+                    "description": "Gets all global variables for the specified workspace. Global variables are available across all collections in the workspace."
+                  },
+                  "response": [
+                    {
+                      "id": "ae52f190-91bb-4214-9a6d-bf5de5424052",
+                      "name": "Successful response with global variables",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/workspaces/:workspaceId/global-variables",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "workspaces",
+                            ":workspaceId",
+                            "global-variables"
+                          ],
+                          "variable": [
+                            {
+                              "key": "workspaceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"values\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"secret\",\n      \"enabled\": \"<boolean>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"default\",\n      \"enabled\": \"<boolean>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-06-05T13:04:20.000Z",
+                      "updatedAt": "2026-06-05T13:04:20.000Z",
+                      "uid": "35240-ae52f190-91bb-4214-9a6d-bf5de5424052"
+                    },
+                    {
+                      "id": "3ca619ea-8690-473e-b293-949f4d8817d6",
+                      "name": "Authentication credentials are missing or invalid",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/workspaces/:workspaceId/global-variables",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "workspaces",
+                            ":workspaceId",
+                            "global-variables"
+                          ],
+                          "variable": [
+                            {
+                              "key": "workspaceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:04:20.000Z",
+                      "updatedAt": "2026-06-05T13:04:20.000Z",
+                      "uid": "35240-3ca619ea-8690-473e-b293-949f4d8817d6"
+                    },
+                    {
+                      "id": "1e54a5f9-131a-4a41-afe6-21366715b097",
+                      "name": "The requested resource was not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/workspaces/:workspaceId/global-variables",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "workspaces",
+                            ":workspaceId",
+                            "global-variables"
+                          ],
+                          "variable": [
+                            {
+                              "key": "workspaceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:04:20.000Z",
+                      "updatedAt": "2026-06-05T13:04:20.000Z",
+                      "uid": "35240-1e54a5f9-131a-4a41-afe6-21366715b097"
+                    },
+                    {
+                      "id": "33b3ab29-08df-4ca2-a917-cbc50f7c7ee9",
+                      "name": "Too many requests - rate limit exceeded",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/workspaces/:workspaceId/global-variables",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "workspaces",
+                            ":workspaceId",
+                            "global-variables"
+                          ],
+                          "variable": [
+                            {
+                              "key": "workspaceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-06-05T13:04:20.000Z",
+                      "updatedAt": "2026-06-05T13:04:20.000Z",
+                      "uid": "35240-33b3ab29-08df-4ca2-a917-cbc50f7c7ee9"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T13:04:20.000Z",
+                  "updatedAt": "2026-06-05T13:04:20.000Z",
+                  "uid": "35240-08edc21f-232f-4a5f-9dc8-a3a65de3504c"
+                },
+                {
+                  "name": "Postman Update workspace global variables",
+                  "id": "a46fe0b6-5e59-4846-b1d2-d8cd86e64292",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"values\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"secret\",\n      \"enabled\": \"<boolean>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"default\",\n      \"enabled\": \"<boolean>\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:workspaceId/global-variables",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":workspaceId",
+                        "global-variables"
+                      ],
+                      "variable": [
+                        {
+                          "id": "24df4028-5fec-4ab0-95a0-2c27eefc03b3",
+                          "key": "workspaceId",
+                          "value": "<string>",
+                          "description": "(Required) The workspace's unique ID."
+                        }
+                      ]
+                    },
+                    "description": "Updates the global variables for the specified workspace. This replaces the entire set of global variables."
+                  },
+                  "response": [
+                    {
+                      "id": "38e4999b-5143-4abe-a43c-6d32be77932b",
+                      "name": "Successfully updated global variables",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"values\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"secret\",\n      \"enabled\": \"<boolean>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"default\",\n      \"enabled\": \"<boolean>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/workspaces/:workspaceId/global-variables",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "workspaces",
+                            ":workspaceId",
+                            "global-variables"
+                          ],
+                          "variable": [
+                            {
+                              "key": "workspaceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-06-05T13:04:20.000Z",
+                      "updatedAt": "2026-06-05T13:04:20.000Z",
+                      "uid": "35240-38e4999b-5143-4abe-a43c-6d32be77932b"
+                    },
+                    {
+                      "id": "fd7b5586-b4f1-4cc2-be39-223032b4302c",
+                      "name": "Authentication credentials are missing or invalid",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"values\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"secret\",\n      \"enabled\": \"<boolean>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"default\",\n      \"enabled\": \"<boolean>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/workspaces/:workspaceId/global-variables",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "workspaces",
+                            ":workspaceId",
+                            "global-variables"
+                          ],
+                          "variable": [
+                            {
+                              "key": "workspaceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:04:20.000Z",
+                      "updatedAt": "2026-06-05T13:04:20.000Z",
+                      "uid": "35240-fd7b5586-b4f1-4cc2-be39-223032b4302c"
+                    },
+                    {
+                      "id": "ceba55f9-a078-42b5-9391-150e32b53e04",
+                      "name": "The requested resource was not found",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"values\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"secret\",\n      \"enabled\": \"<boolean>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"default\",\n      \"enabled\": \"<boolean>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/workspaces/:workspaceId/global-variables",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "workspaces",
+                            ":workspaceId",
+                            "global-variables"
+                          ],
+                          "variable": [
+                            {
+                              "key": "workspaceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:04:20.000Z",
+                      "updatedAt": "2026-06-05T13:04:20.000Z",
+                      "uid": "35240-ceba55f9-a078-42b5-9391-150e32b53e04"
+                    },
+                    {
+                      "id": "93350851-4342-44f2-8e38-014e93514c17",
+                      "name": "Too many requests - rate limit exceeded",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"values\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"secret\",\n      \"enabled\": \"<boolean>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"default\",\n      \"enabled\": \"<boolean>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/workspaces/:workspaceId/global-variables",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "workspaces",
+                            ":workspaceId",
+                            "global-variables"
+                          ],
+                          "variable": [
+                            {
+                              "key": "workspaceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-06-05T13:04:20.000Z",
+                      "updatedAt": "2026-06-05T13:04:20.000Z",
+                      "uid": "35240-93350851-4342-44f2-8e38-014e93514c17"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T13:04:20.000Z",
+                  "updatedAt": "2026-06-05T13:04:20.000Z",
+                  "uid": "35240-a46fe0b6-5e59-4846-b1d2-d8cd86e64292"
+                }
+              ],
+              "id": "5bcc377d-b99e-4c14-a83b-ff7c4115c7e8",
+              "createdAt": "2026-06-05T13:04:20.000Z",
+              "updatedAt": "2026-06-05T13:04:20.000Z",
+              "uid": "35240-5bcc377d-b99e-4c14-a83b-ff7c4115c7e8"
+            },
+            {
+              "name": "Postman Get a workspace",
+              "id": "fa209d7e-fa45-4d9e-a9de-a062319d0f2e",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces/:workspaceId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces",
+                    ":workspaceId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "45100883-ae6b-42d7-a0bf-8eb3016f8ed0",
+                      "key": "workspaceId",
+                      "value": "<string>",
+                      "description": "(Required) The workspace's unique ID."
+                    }
+                  ]
+                },
+                "description": "Gets information about a single workspace, including its name, type, description, and associated collections, environments, mocks, and monitors."
+              },
+              "response": [
+                {
+                  "id": "bb66dbb7-8bf6-405a-b9a9-76bdb8075ad8",
+                  "name": "Successful response with workspace details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:workspaceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":workspaceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"workspace\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"type\": \"partner\",\n    \"description\": \"<string>\",\n    \"visibility\": \"team\",\n    \"createdBy\": \"<string>\",\n    \"updatedBy\": \"<string>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"collections\": [\n      {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      },\n      {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      }\n    ],\n    \"environments\": [\n      {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      },\n      {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      }\n    ],\n    \"mocks\": [\n      {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      },\n      {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      }\n    ],\n    \"monitors\": [\n      {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      },\n      {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      }\n    ],\n    \"apis\": [\n      {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\"\n      },\n      {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:20.000Z",
+                  "updatedAt": "2026-06-05T13:04:20.000Z",
+                  "uid": "35240-bb66dbb7-8bf6-405a-b9a9-76bdb8075ad8"
+                },
+                {
+                  "id": "a05a496e-d5f8-41f6-a554-cb07d488e321",
+                  "name": "Authentication credentials are missing or invalid",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:workspaceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":workspaceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:20.000Z",
+                  "updatedAt": "2026-06-05T13:04:20.000Z",
+                  "uid": "35240-a05a496e-d5f8-41f6-a554-cb07d488e321"
+                },
+                {
+                  "id": "9f313686-0af5-4869-8043-ee792fc09e81",
+                  "name": "The requested resource was not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:workspaceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":workspaceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:20.000Z",
+                  "updatedAt": "2026-06-05T13:04:20.000Z",
+                  "uid": "35240-9f313686-0af5-4869-8043-ee792fc09e81"
+                },
+                {
+                  "id": "921f2015-df29-4b1e-bef1-c1ab8007bf3f",
+                  "name": "Too many requests - rate limit exceeded",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:workspaceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":workspaceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-06-05T13:04:20.000Z",
+                  "updatedAt": "2026-06-05T13:04:20.000Z",
+                  "uid": "35240-921f2015-df29-4b1e-bef1-c1ab8007bf3f"
+                },
+                {
+                  "id": "86566387-ff26-47ea-9b0a-919f06396495",
+                  "name": "An unexpected error occurred on the server",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:workspaceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":workspaceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:20.000Z",
+                  "updatedAt": "2026-06-05T13:04:20.000Z",
+                  "uid": "35240-86566387-ff26-47ea-9b0a-919f06396495"
+                }
+              ],
+              "createdAt": "2026-06-05T13:04:20.000Z",
+              "updatedAt": "2026-06-05T13:04:20.000Z",
+              "uid": "35240-fa209d7e-fa45-4d9e-a9de-a062319d0f2e"
+            },
+            {
+              "name": "Postman Update a workspace",
+              "id": "a04920a6-400f-4daf-8173-aeb8d1c35c8a",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"workspace\": {\n    \"name\": \"<string>\",\n    \"type\": \"private\",\n    \"description\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces/:workspaceId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces",
+                    ":workspaceId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "06b9c815-4276-4c2e-ba3a-afcda32587d9",
+                      "key": "workspaceId",
+                      "value": "<string>",
+                      "description": "(Required) The workspace's unique ID."
+                    }
+                  ]
+                },
+                "description": "Updates an existing workspace's name, description, or type. Only the fields provided in the request body will be updated."
+              },
+              "response": [
+                {
+                  "id": "3152d0ef-e0a8-4562-a055-41d6069aefe8",
+                  "name": "Successfully updated workspace",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"workspace\": {\n    \"name\": \"<string>\",\n    \"type\": \"private\",\n    \"description\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:workspaceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":workspaceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"workspace\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:20.000Z",
+                  "updatedAt": "2026-06-05T13:04:20.000Z",
+                  "uid": "35240-3152d0ef-e0a8-4562-a055-41d6069aefe8"
+                },
+                {
+                  "id": "bc29b450-8e2e-4fa9-a579-fe9301351bf5",
+                  "name": "Bad request - invalid input",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"workspace\": {\n    \"name\": \"<string>\",\n    \"type\": \"private\",\n    \"description\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:workspaceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":workspaceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:20.000Z",
+                  "updatedAt": "2026-06-05T13:04:20.000Z",
+                  "uid": "35240-bc29b450-8e2e-4fa9-a579-fe9301351bf5"
+                },
+                {
+                  "id": "7a0c14c8-9480-44a5-b37e-1dfd9f67b4b6",
+                  "name": "Authentication credentials are missing or invalid",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"workspace\": {\n    \"name\": \"<string>\",\n    \"type\": \"private\",\n    \"description\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:workspaceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":workspaceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:20.000Z",
+                  "updatedAt": "2026-06-05T13:04:20.000Z",
+                  "uid": "35240-7a0c14c8-9480-44a5-b37e-1dfd9f67b4b6"
+                },
+                {
+                  "id": "ae929eaf-2f87-4132-a26e-e2280b87a6e3",
+                  "name": "The requested resource was not found",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"workspace\": {\n    \"name\": \"<string>\",\n    \"type\": \"private\",\n    \"description\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:workspaceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":workspaceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:20.000Z",
+                  "updatedAt": "2026-06-05T13:04:20.000Z",
+                  "uid": "35240-ae929eaf-2f87-4132-a26e-e2280b87a6e3"
+                },
+                {
+                  "id": "8355d505-4652-4b56-9948-9890c7a890e3",
+                  "name": "Too many requests - rate limit exceeded",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"workspace\": {\n    \"name\": \"<string>\",\n    \"type\": \"private\",\n    \"description\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:workspaceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":workspaceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-06-05T13:04:20.000Z",
+                  "updatedAt": "2026-06-05T13:04:20.000Z",
+                  "uid": "35240-8355d505-4652-4b56-9948-9890c7a890e3"
+                },
+                {
+                  "id": "abd1eea4-e909-48b0-a879-f0095bb05576",
+                  "name": "An unexpected error occurred on the server",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"workspace\": {\n    \"name\": \"<string>\",\n    \"type\": \"private\",\n    \"description\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:workspaceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":workspaceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:20.000Z",
+                  "updatedAt": "2026-06-05T13:04:20.000Z",
+                  "uid": "35240-abd1eea4-e909-48b0-a879-f0095bb05576"
+                }
+              ],
+              "createdAt": "2026-06-05T13:04:20.000Z",
+              "updatedAt": "2026-06-05T13:04:20.000Z",
+              "uid": "35240-a04920a6-400f-4daf-8173-aeb8d1c35c8a"
+            },
+            {
+              "name": "Postman Delete a workspace",
+              "id": "2e98bfbd-935a-4441-94cc-d97541e7db93",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces/:workspaceId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces",
+                    ":workspaceId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "7fff1db4-a0c2-487b-83eb-7e2ddb39d9ad",
+                      "key": "workspaceId",
+                      "value": "<string>",
+                      "description": "(Required) The workspace's unique ID."
+                    }
+                  ]
+                },
+                "description": "Deletes an existing workspace and all of its associated data. This action is irreversible."
+              },
+              "response": [
+                {
+                  "id": "fcfec761-e76a-4eb2-a43a-f96505bf48c5",
+                  "name": "Successfully deleted workspace",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:workspaceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":workspaceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"workspace\": {\n    \"id\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:20.000Z",
+                  "updatedAt": "2026-06-05T13:04:20.000Z",
+                  "uid": "35240-fcfec761-e76a-4eb2-a43a-f96505bf48c5"
+                },
+                {
+                  "id": "40d2416f-17da-42e9-b1f9-224d7608593a",
+                  "name": "Authentication credentials are missing or invalid",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:workspaceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":workspaceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:20.000Z",
+                  "updatedAt": "2026-06-05T13:04:20.000Z",
+                  "uid": "35240-40d2416f-17da-42e9-b1f9-224d7608593a"
+                },
+                {
+                  "id": "41d856fd-964d-480e-bdb1-6f471728d8a7",
+                  "name": "The requested resource was not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:workspaceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":workspaceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:20.000Z",
+                  "updatedAt": "2026-06-05T13:04:20.000Z",
+                  "uid": "35240-41d856fd-964d-480e-bdb1-6f471728d8a7"
+                },
+                {
+                  "id": "90dc548b-5459-48ca-bfcd-b20cf41dbaeb",
+                  "name": "Too many requests - rate limit exceeded",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:workspaceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":workspaceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-06-05T13:04:20.000Z",
+                  "updatedAt": "2026-06-05T13:04:20.000Z",
+                  "uid": "35240-90dc548b-5459-48ca-bfcd-b20cf41dbaeb"
+                },
+                {
+                  "id": "4a044971-8f81-4ddc-97e1-df228323cc60",
+                  "name": "An unexpected error occurred on the server",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:workspaceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":workspaceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:20.000Z",
+                  "updatedAt": "2026-06-05T13:04:20.000Z",
+                  "uid": "35240-4a044971-8f81-4ddc-97e1-df228323cc60"
+                }
+              ],
+              "createdAt": "2026-06-05T13:04:20.000Z",
+              "updatedAt": "2026-06-05T13:04:20.000Z",
+              "uid": "35240-2e98bfbd-935a-4441-94cc-d97541e7db93"
+            }
+          ],
+          "id": "90505318-9915-4696-a4d0-696a1328e753",
+          "createdAt": "2026-06-05T13:04:20.000Z",
+          "updatedAt": "2026-06-05T13:04:20.000Z",
+          "uid": "35240-90505318-9915-4696-a4d0-696a1328e753"
+        },
+        {
+          "name": "Postman Get all workspaces",
+          "id": "fa4a7023-2550-44ef-abd4-79df0e91d904",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workspaces?type=partner&include=collections",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workspaces"
+              ],
+              "query": [
+                {
+                  "description": "Filter workspaces by type.",
+                  "key": "type",
+                  "value": "partner"
+                },
+                {
+                  "description": "Additional information to include in the response.",
+                  "key": "include",
+                  "value": "collections"
+                }
+              ]
+            },
+            "description": "Gets all workspaces accessible to the authenticated user. This includes personal, team, partner, and public workspaces. The response contains metadata about each workspace."
+          },
+          "response": [
+            {
+              "id": "d401956b-60af-43c0-a6fb-15af947daae7",
+              "name": "Successful response with list of workspaces",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces?type=partner&include=collections",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter workspaces by type.",
+                      "key": "type",
+                      "value": "partner"
+                    },
+                    {
+                      "description": "Additional information to include in the response.",
+                      "key": "include",
+                      "value": "collections"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"workspaces\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"type\": \"private\",\n      \"visibility\": \"partner\",\n      \"createdBy\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"type\": \"partner\",\n      \"visibility\": \"partner\",\n      \"createdBy\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-06-05T13:04:20.000Z",
+              "updatedAt": "2026-06-05T13:04:20.000Z",
+              "uid": "35240-d401956b-60af-43c0-a6fb-15af947daae7"
+            },
+            {
+              "id": "09afbb68-0a15-437b-bfd2-1600026c322b",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces?type=partner&include=collections",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter workspaces by type.",
+                      "key": "type",
+                      "value": "partner"
+                    },
+                    {
+                      "description": "Additional information to include in the response.",
+                      "key": "include",
+                      "value": "collections"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:04:20.000Z",
+              "updatedAt": "2026-06-05T13:04:20.000Z",
+              "uid": "35240-09afbb68-0a15-437b-bfd2-1600026c322b"
+            },
+            {
+              "id": "67fe5b7e-18f2-49de-8a9c-5e760ba23f99",
+              "name": "Too many requests - rate limit exceeded",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces?type=partner&include=collections",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter workspaces by type.",
+                      "key": "type",
+                      "value": "partner"
+                    },
+                    {
+                      "description": "Additional information to include in the response.",
+                      "key": "include",
+                      "value": "collections"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T13:04:20.000Z",
+              "updatedAt": "2026-06-05T13:04:20.000Z",
+              "uid": "35240-67fe5b7e-18f2-49de-8a9c-5e760ba23f99"
+            },
+            {
+              "id": "652f7bfd-ab52-442e-899f-a7155f374c9a",
+              "name": "An unexpected error occurred on the server",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces?type=partner&include=collections",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter workspaces by type.",
+                      "key": "type",
+                      "value": "partner"
+                    },
+                    {
+                      "description": "Additional information to include in the response.",
+                      "key": "include",
+                      "value": "collections"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:04:20.000Z",
+              "updatedAt": "2026-06-05T13:04:20.000Z",
+              "uid": "35240-652f7bfd-ab52-442e-899f-a7155f374c9a"
+            }
+          ],
+          "createdAt": "2026-06-05T13:04:20.000Z",
+          "updatedAt": "2026-06-05T13:04:20.000Z",
+          "uid": "35240-fa4a7023-2550-44ef-abd4-79df0e91d904"
+        },
+        {
+          "name": "Postman Create a workspace",
+          "id": "8078d928-0a40-49a7-9be2-ce2b92f27ee9",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"workspace\": {\n    \"name\": \"<string>\",\n    \"type\": \"private\",\n    \"description\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/workspaces",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workspaces"
+              ]
+            },
+            "description": "Creates a new workspace. You can specify the workspace name, type, description, and visibility settings."
+          },
+          "response": [
+            {
+              "id": "92af781c-6886-4364-a2c3-580955cc509a",
+              "name": "Successfully created workspace",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"workspace\": {\n    \"name\": \"<string>\",\n    \"type\": \"private\",\n    \"description\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"workspace\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:04:20.000Z",
+              "updatedAt": "2026-06-05T13:04:20.000Z",
+              "uid": "35240-92af781c-6886-4364-a2c3-580955cc509a"
+            },
+            {
+              "id": "d1b2f75d-11cd-47ce-9b12-a89e871bc319",
+              "name": "Bad request - invalid input",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"workspace\": {\n    \"name\": \"<string>\",\n    \"type\": \"private\",\n    \"description\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:04:20.000Z",
+              "updatedAt": "2026-06-05T13:04:20.000Z",
+              "uid": "35240-d1b2f75d-11cd-47ce-9b12-a89e871bc319"
+            },
+            {
+              "id": "2e4b2deb-80fb-4c71-8f01-c70c04ed57c7",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"workspace\": {\n    \"name\": \"<string>\",\n    \"type\": \"private\",\n    \"description\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:04:20.000Z",
+              "updatedAt": "2026-06-05T13:04:20.000Z",
+              "uid": "35240-2e4b2deb-80fb-4c71-8f01-c70c04ed57c7"
+            },
+            {
+              "id": "cd7b2bd1-1f9b-4251-8865-288a17c852b8",
+              "name": "Too many requests - rate limit exceeded",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"workspace\": {\n    \"name\": \"<string>\",\n    \"type\": \"private\",\n    \"description\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces"
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T13:04:20.000Z",
+              "updatedAt": "2026-06-05T13:04:20.000Z",
+              "uid": "35240-cd7b2bd1-1f9b-4251-8865-288a17c852b8"
+            },
+            {
+              "id": "eb35fe1e-1934-4d76-b769-35d2d16b9485",
+              "name": "An unexpected error occurred on the server",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"workspace\": {\n    \"name\": \"<string>\",\n    \"type\": \"private\",\n    \"description\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:04:20.000Z",
+              "updatedAt": "2026-06-05T13:04:20.000Z",
+              "uid": "35240-eb35fe1e-1934-4d76-b769-35d2d16b9485"
+            }
+          ],
+          "createdAt": "2026-06-05T13:04:20.000Z",
+          "updatedAt": "2026-06-05T13:04:20.000Z",
+          "uid": "35240-8078d928-0a40-49a7-9be2-ce2b92f27ee9"
+        }
+      ],
+      "id": "8a9bed1d-38ae-44ce-8070-b1dc42d1a7a1",
+      "createdAt": "2026-06-05T13:04:20.000Z",
+      "updatedAt": "2026-06-05T13:04:20.000Z",
+      "uid": "35240-8a9bed1d-38ae-44ce-8070-b1dc42d1a7a1"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.getpostman.com"
+    }
+  ]
+}

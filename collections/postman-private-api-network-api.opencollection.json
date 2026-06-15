@@ -1,0 +1,355 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Postman Private API Network API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Private API Network",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Postman Get all elements in the private API network",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/network/private",
+            "params": [
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "Return elements added after this date (ISO 8601)."
+              },
+              {
+                "name": "until",
+                "value": "",
+                "type": "query",
+                "description": "Return elements added before this date (ISO 8601)."
+              },
+              {
+                "name": "addedBy",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the user who added the element."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter by element name (partial match)."
+              },
+              {
+                "name": "summary",
+                "value": "",
+                "type": "query",
+                "description": "Filter by element summary (partial match)."
+              },
+              {
+                "name": "description",
+                "value": "",
+                "type": "query",
+                "description": "Filter by element description (partial match)."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by element type."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "parentFolderId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by parent folder ID."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort field."
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction."
+              }
+            ]
+          },
+          "docs": "Gets all elements published to the team's private API network. Returns APIs, collections, and workspaces that have been added to the network."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Network Elements",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Postman Add an element to the private API network",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getpostman.com/network/private",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Publishes an element (API, collection, or workspace) to the private API network. The element becomes discoverable by all team members."
+        },
+        {
+          "info": {
+            "name": "Postman Update a network element",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.getpostman.com/network/private/:elementType/:elementId",
+            "params": [
+              {
+                "name": "elementType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "elementId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an element's metadata in the private API network."
+        },
+        {
+          "info": {
+            "name": "Postman Remove an element from the private API network",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getpostman.com/network/private/:elementType/:elementId",
+            "params": [
+              {
+                "name": "elementType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "elementId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Removes an element from the private API network. This only removes it from the network catalog; it does not delete the underlying resource."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Network Folders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Postman Get all network folders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/network/private/network-folder",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "parentFolderId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Gets all folders in the private API network. Folders help organize APIs and collections in the network catalog."
+        },
+        {
+          "info": {
+            "name": "Postman Create a network folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getpostman.com/network/private/network-folder",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new folder in the private API network."
+        },
+        {
+          "info": {
+            "name": "Postman Update a network folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.getpostman.com/network/private/network-folder/:folderId",
+            "params": [
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Postman Update a network folder"
+        },
+        {
+          "info": {
+            "name": "Postman Delete a network folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getpostman.com/network/private/network-folder/:folderId",
+            "params": [
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Postman Delete a network folder"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Network Requests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Postman Get all network requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/network/private/network-request",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Gets all pending requests to add elements to the private API network."
+        },
+        {
+          "info": {
+            "name": "Postman Approve a network request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.getpostman.com/network/private/network-request/:requestId/approve",
+            "params": [
+              {
+                "name": "requestId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Postman Approve a network request"
+        },
+        {
+          "info": {
+            "name": "Postman Deny a network request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.getpostman.com/network/private/network-request/:requestId/deny",
+            "params": [
+              {
+                "name": "requestId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Postman Deny a network request"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

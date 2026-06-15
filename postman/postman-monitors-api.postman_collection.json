@@ -1,0 +1,1940 @@
+{
+  "info": {
+    "_postman_id": "db17824b-04bb-4716-b4ca-66802dd7591e",
+    "name": "Postman Monitors API",
+    "description": "The Postman Monitors API enables you to create and manage monitors that run\ncollections on a schedule. Monitors run collection requests at specified\nintervals and provide notifications when tests fail, enabling continuous\nAPI testing and monitoring.\n\n## Authentication\nAll requests require an API key passed in the `x-api-key` header.\n\n## Rate Limits\nMonitor usage limits vary by plan. Free plans include 1,000 monitoring\nAPI calls per month.\n\n\nContact Support:\n Name: Postman Developer Support\n Email: help@postman.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T13:05:01.000Z",
+    "updatedAt": "2026-06-05T13:05:01.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-db17824b-04bb-4716-b4ca-66802dd7591e"
+  },
+  "item": [
+    {
+      "name": "monitors",
+      "item": [
+        {
+          "name": "{monitorId}",
+          "item": [
+            {
+              "name": "run",
+              "item": [
+                {
+                  "name": "Postman Run a monitor",
+                  "id": "f690bb07-579b-4023-94c7-75d23ae384b1",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/monitors/:monitorId/run",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "monitors",
+                        ":monitorId",
+                        "run"
+                      ],
+                      "variable": [
+                        {
+                          "id": "798ae680-8451-4c4c-a110-c0600da3dd2e",
+                          "key": "monitorId",
+                          "value": "<string>",
+                          "description": "(Required) The monitor's unique ID or UID."
+                        }
+                      ]
+                    },
+                    "description": "Manually triggers a monitor run. The response includes the run results with test pass/fail status, response times, and any errors."
+                  },
+                  "response": [
+                    {
+                      "id": "04672b90-f65b-4f2a-937e-27e1e356a648",
+                      "name": "Successful monitor run with results",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/monitors/:monitorId/run",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "monitors",
+                            ":monitorId",
+                            "run"
+                          ],
+                          "variable": [
+                            {
+                              "key": "monitorId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"run\": {\n    \"info\": {\n      \"jobId\": \"<string>\",\n      \"monitorId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"collectionUid\": \"<string>\",\n      \"environmentUid\": \"<string>\",\n      \"status\": \"abort\",\n      \"startedAt\": \"<dateTime>\",\n      \"finishedAt\": \"<dateTime>\"\n    },\n    \"stats\": {\n      \"assertions\": {\n        \"total\": \"<integer>\",\n        \"failed\": \"<integer>\"\n      },\n      \"requests\": {\n        \"total\": \"<integer>\"\n      }\n    },\n    \"executions\": [\n      {\n        \"id\": \"<integer>\",\n        \"item\": {\n          \"name\": \"<string>\"\n        },\n        \"request\": {\n          \"url\": \"<string>\",\n          \"method\": \"<string>\",\n          \"timestamp\": \"<dateTime>\"\n        },\n        \"response\": {\n          \"statusCode\": \"<integer>\",\n          \"responseTime\": \"<integer>\",\n          \"responseSize\": \"<integer>\"\n        },\n        \"assertions\": [\n          {\n            \"name\": \"<string>\",\n            \"error\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"error\": \"<string>\"\n          }\n        ]\n      },\n      {\n        \"id\": \"<integer>\",\n        \"item\": {\n          \"name\": \"<string>\"\n        },\n        \"request\": {\n          \"url\": \"<string>\",\n          \"method\": \"<string>\",\n          \"timestamp\": \"<dateTime>\"\n        },\n        \"response\": {\n          \"statusCode\": \"<integer>\",\n          \"responseTime\": \"<integer>\",\n          \"responseSize\": \"<integer>\"\n        },\n        \"assertions\": [\n          {\n            \"name\": \"<string>\",\n            \"error\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"error\": \"<string>\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-06-05T13:05:01.000Z",
+                      "updatedAt": "2026-06-05T13:05:01.000Z",
+                      "uid": "35240-04672b90-f65b-4f2a-937e-27e1e356a648"
+                    },
+                    {
+                      "id": "81e4157a-aad4-4e0c-aa99-091a0ebfe93d",
+                      "name": "Authentication credentials are missing or invalid",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/monitors/:monitorId/run",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "monitors",
+                            ":monitorId",
+                            "run"
+                          ],
+                          "variable": [
+                            {
+                              "key": "monitorId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:05:01.000Z",
+                      "updatedAt": "2026-06-05T13:05:01.000Z",
+                      "uid": "35240-81e4157a-aad4-4e0c-aa99-091a0ebfe93d"
+                    },
+                    {
+                      "id": "3b86512c-0b29-4f14-a151-2283bc81a589",
+                      "name": "The requested resource was not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/monitors/:monitorId/run",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "monitors",
+                            ":monitorId",
+                            "run"
+                          ],
+                          "variable": [
+                            {
+                              "key": "monitorId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:05:01.000Z",
+                      "updatedAt": "2026-06-05T13:05:01.000Z",
+                      "uid": "35240-3b86512c-0b29-4f14-a151-2283bc81a589"
+                    },
+                    {
+                      "id": "1417c6cd-6667-4dfe-b35d-3b85f70bfff6",
+                      "name": "Too many requests - rate limit exceeded",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/monitors/:monitorId/run",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "monitors",
+                            ":monitorId",
+                            "run"
+                          ],
+                          "variable": [
+                            {
+                              "key": "monitorId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-06-05T13:05:01.000Z",
+                      "updatedAt": "2026-06-05T13:05:01.000Z",
+                      "uid": "35240-1417c6cd-6667-4dfe-b35d-3b85f70bfff6"
+                    },
+                    {
+                      "id": "db456b21-4695-41a8-9ec6-107128318778",
+                      "name": "An unexpected error occurred on the server",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/monitors/:monitorId/run",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "monitors",
+                            ":monitorId",
+                            "run"
+                          ],
+                          "variable": [
+                            {
+                              "key": "monitorId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:05:01.000Z",
+                      "updatedAt": "2026-06-05T13:05:01.000Z",
+                      "uid": "35240-db456b21-4695-41a8-9ec6-107128318778"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T13:05:01.000Z",
+                  "updatedAt": "2026-06-05T13:05:01.000Z",
+                  "uid": "35240-f690bb07-579b-4023-94c7-75d23ae384b1"
+                }
+              ],
+              "id": "75b6e284-526e-40c7-8ced-7bb5c2ad1791",
+              "createdAt": "2026-06-05T13:05:01.000Z",
+              "updatedAt": "2026-06-05T13:05:01.000Z",
+              "uid": "35240-75b6e284-526e-40c7-8ced-7bb5c2ad1791"
+            },
+            {
+              "name": "Postman Get a monitor",
+              "id": "726a573f-7da3-48c9-92c6-7c180cbd7aca",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/monitors/:monitorId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "monitors",
+                    ":monitorId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "05747af2-8a2e-493b-b9fc-757afb8dfb7c",
+                      "key": "monitorId",
+                      "value": "<string>",
+                      "description": "(Required) The monitor's unique ID or UID."
+                    }
+                  ]
+                },
+                "description": "Gets information about a single monitor, including its configuration, schedule, last run details, and notification settings."
+              },
+              "response": [
+                {
+                  "id": "a739a520-34a2-4620-b628-7a0bdbbd749b",
+                  "name": "Successful response with monitor details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/monitors/:monitorId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "monitors",
+                        ":monitorId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "monitorId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"monitor\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"owner\": \"<string>\",\n    \"collectionUid\": \"<string>\",\n    \"environmentUid\": \"<string>\",\n    \"distribution\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"schedule\": {\n      \"cron\": \"<string>\",\n      \"timezone\": \"<string>\",\n      \"nextRun\": \"<dateTime>\"\n    },\n    \"lastRun\": {\n      \"startedAt\": \"<dateTime>\",\n      \"finishedAt\": \"<dateTime>\",\n      \"status\": \"success\",\n      \"stats\": {\n        \"assertions\": {\n          \"total\": \"<integer>\",\n          \"failed\": \"<integer>\"\n        },\n        \"requests\": {\n          \"total\": \"<integer>\"\n        }\n      }\n    },\n    \"notifications\": {\n      \"onError\": [\n        {\n          \"email\": \"<string>\"\n        },\n        {\n          \"email\": \"<string>\"\n        }\n      ],\n      \"onFailure\": [\n        {\n          \"email\": \"<string>\"\n        },\n        {\n          \"email\": \"<string>\"\n        }\n      ]\n    },\n    \"options\": {\n      \"strictSSL\": \"<boolean>\",\n      \"followRedirects\": \"<boolean>\",\n      \"requestTimeout\": \"<integer>\",\n      \"requestDelay\": \"<integer>\"\n    }\n  }\n}",
+                  "createdAt": "2026-06-05T13:05:01.000Z",
+                  "updatedAt": "2026-06-05T13:05:01.000Z",
+                  "uid": "35240-a739a520-34a2-4620-b628-7a0bdbbd749b"
+                },
+                {
+                  "id": "94c9a498-2ab4-496c-9c08-43ac7de395b9",
+                  "name": "Authentication credentials are missing or invalid",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/monitors/:monitorId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "monitors",
+                        ":monitorId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "monitorId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:05:01.000Z",
+                  "updatedAt": "2026-06-05T13:05:01.000Z",
+                  "uid": "35240-94c9a498-2ab4-496c-9c08-43ac7de395b9"
+                },
+                {
+                  "id": "91e194bd-3c66-4c2c-a860-2a801c930997",
+                  "name": "The requested resource was not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/monitors/:monitorId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "monitors",
+                        ":monitorId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "monitorId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:05:01.000Z",
+                  "updatedAt": "2026-06-05T13:05:01.000Z",
+                  "uid": "35240-91e194bd-3c66-4c2c-a860-2a801c930997"
+                },
+                {
+                  "id": "04befaf9-e597-4fae-8eb3-a26c2f0ff046",
+                  "name": "Too many requests - rate limit exceeded",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/monitors/:monitorId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "monitors",
+                        ":monitorId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "monitorId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-06-05T13:05:01.000Z",
+                  "updatedAt": "2026-06-05T13:05:01.000Z",
+                  "uid": "35240-04befaf9-e597-4fae-8eb3-a26c2f0ff046"
+                },
+                {
+                  "id": "10179d0c-42e8-4b54-9044-5db5684d9848",
+                  "name": "An unexpected error occurred on the server",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/monitors/:monitorId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "monitors",
+                        ":monitorId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "monitorId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:05:01.000Z",
+                  "updatedAt": "2026-06-05T13:05:01.000Z",
+                  "uid": "35240-10179d0c-42e8-4b54-9044-5db5684d9848"
+                }
+              ],
+              "createdAt": "2026-06-05T13:05:01.000Z",
+              "updatedAt": "2026-06-05T13:05:01.000Z",
+              "uid": "35240-726a573f-7da3-48c9-92c6-7c180cbd7aca"
+            },
+            {
+              "name": "Postman Update a monitor",
+              "id": "7a72afb5-c46f-411d-a3be-b2699f8acf14",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"monitor\": {\n    \"name\": \"<string>\",\n    \"collection\": \"<string>\",\n    \"schedule\": {\n      \"cron\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"environment\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/monitors/:monitorId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "monitors",
+                    ":monitorId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "73df3b24-b4fc-4429-84dc-ed7bd63de424",
+                      "key": "monitorId",
+                      "value": "<string>",
+                      "description": "(Required) The monitor's unique ID or UID."
+                    }
+                  ]
+                },
+                "description": "Updates an existing monitor's name, schedule, collection, or environment configuration."
+              },
+              "response": [
+                {
+                  "id": "ddfe86d9-44d8-484f-9abf-b8ac0a34ab01",
+                  "name": "Successfully updated monitor",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"monitor\": {\n    \"name\": \"<string>\",\n    \"collection\": \"<string>\",\n    \"schedule\": {\n      \"cron\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"environment\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/monitors/:monitorId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "monitors",
+                        ":monitorId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "monitorId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"monitor\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"owner\": \"<string>\",\n    \"collectionUid\": \"<string>\",\n    \"environmentUid\": \"<string>\",\n    \"distribution\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"schedule\": {\n      \"cron\": \"<string>\",\n      \"timezone\": \"<string>\",\n      \"nextRun\": \"<dateTime>\"\n    },\n    \"lastRun\": {\n      \"startedAt\": \"<dateTime>\",\n      \"finishedAt\": \"<dateTime>\",\n      \"status\": \"success\",\n      \"stats\": {\n        \"assertions\": {\n          \"total\": \"<integer>\",\n          \"failed\": \"<integer>\"\n        },\n        \"requests\": {\n          \"total\": \"<integer>\"\n        }\n      }\n    },\n    \"notifications\": {\n      \"onError\": [\n        {\n          \"email\": \"<string>\"\n        },\n        {\n          \"email\": \"<string>\"\n        }\n      ],\n      \"onFailure\": [\n        {\n          \"email\": \"<string>\"\n        },\n        {\n          \"email\": \"<string>\"\n        }\n      ]\n    },\n    \"options\": {\n      \"strictSSL\": \"<boolean>\",\n      \"followRedirects\": \"<boolean>\",\n      \"requestTimeout\": \"<integer>\",\n      \"requestDelay\": \"<integer>\"\n    }\n  }\n}",
+                  "createdAt": "2026-06-05T13:05:01.000Z",
+                  "updatedAt": "2026-06-05T13:05:01.000Z",
+                  "uid": "35240-ddfe86d9-44d8-484f-9abf-b8ac0a34ab01"
+                },
+                {
+                  "id": "1652194c-025b-438c-b29f-e8505d95f4ea",
+                  "name": "Bad request - invalid input",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"monitor\": {\n    \"name\": \"<string>\",\n    \"collection\": \"<string>\",\n    \"schedule\": {\n      \"cron\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"environment\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/monitors/:monitorId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "monitors",
+                        ":monitorId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "monitorId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:05:01.000Z",
+                  "updatedAt": "2026-06-05T13:05:01.000Z",
+                  "uid": "35240-1652194c-025b-438c-b29f-e8505d95f4ea"
+                },
+                {
+                  "id": "c6265d21-f9f4-4bbb-9b17-7e443543543c",
+                  "name": "Authentication credentials are missing or invalid",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"monitor\": {\n    \"name\": \"<string>\",\n    \"collection\": \"<string>\",\n    \"schedule\": {\n      \"cron\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"environment\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/monitors/:monitorId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "monitors",
+                        ":monitorId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "monitorId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:05:01.000Z",
+                  "updatedAt": "2026-06-05T13:05:01.000Z",
+                  "uid": "35240-c6265d21-f9f4-4bbb-9b17-7e443543543c"
+                },
+                {
+                  "id": "4d7a3129-f85d-49b5-95e0-37e6ce8fc48a",
+                  "name": "The requested resource was not found",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"monitor\": {\n    \"name\": \"<string>\",\n    \"collection\": \"<string>\",\n    \"schedule\": {\n      \"cron\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"environment\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/monitors/:monitorId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "monitors",
+                        ":monitorId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "monitorId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:05:01.000Z",
+                  "updatedAt": "2026-06-05T13:05:01.000Z",
+                  "uid": "35240-4d7a3129-f85d-49b5-95e0-37e6ce8fc48a"
+                },
+                {
+                  "id": "8aea9cdd-1a36-4285-b7ee-d1dfcc540009",
+                  "name": "Too many requests - rate limit exceeded",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"monitor\": {\n    \"name\": \"<string>\",\n    \"collection\": \"<string>\",\n    \"schedule\": {\n      \"cron\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"environment\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/monitors/:monitorId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "monitors",
+                        ":monitorId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "monitorId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-06-05T13:05:01.000Z",
+                  "updatedAt": "2026-06-05T13:05:01.000Z",
+                  "uid": "35240-8aea9cdd-1a36-4285-b7ee-d1dfcc540009"
+                },
+                {
+                  "id": "79a0796e-9962-49c0-8c88-11f0f8e15492",
+                  "name": "An unexpected error occurred on the server",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"monitor\": {\n    \"name\": \"<string>\",\n    \"collection\": \"<string>\",\n    \"schedule\": {\n      \"cron\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"environment\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/monitors/:monitorId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "monitors",
+                        ":monitorId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "monitorId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:05:01.000Z",
+                  "updatedAt": "2026-06-05T13:05:01.000Z",
+                  "uid": "35240-79a0796e-9962-49c0-8c88-11f0f8e15492"
+                }
+              ],
+              "createdAt": "2026-06-05T13:05:01.000Z",
+              "updatedAt": "2026-06-05T13:05:01.000Z",
+              "uid": "35240-7a72afb5-c46f-411d-a3be-b2699f8acf14"
+            },
+            {
+              "name": "Postman Delete a monitor",
+              "id": "3753fd8f-48cf-4f1e-ab3d-3f5898ce1bdc",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/monitors/:monitorId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "monitors",
+                    ":monitorId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "f0166e2b-63fc-4e02-af46-e84b31fc9cad",
+                      "key": "monitorId",
+                      "value": "<string>",
+                      "description": "(Required) The monitor's unique ID or UID."
+                    }
+                  ]
+                },
+                "description": "Deletes a monitor. This stops all scheduled runs and is irreversible."
+              },
+              "response": [
+                {
+                  "id": "e7f2e42b-6fdc-44c0-8405-43287baf0f88",
+                  "name": "Successfully deleted monitor",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/monitors/:monitorId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "monitors",
+                        ":monitorId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "monitorId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"monitor\": {\n    \"id\": \"<string>\",\n    \"uid\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:05:01.000Z",
+                  "updatedAt": "2026-06-05T13:05:01.000Z",
+                  "uid": "35240-e7f2e42b-6fdc-44c0-8405-43287baf0f88"
+                },
+                {
+                  "id": "6d77d960-b8de-4583-8b01-c1309883402e",
+                  "name": "Authentication credentials are missing or invalid",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/monitors/:monitorId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "monitors",
+                        ":monitorId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "monitorId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:05:01.000Z",
+                  "updatedAt": "2026-06-05T13:05:01.000Z",
+                  "uid": "35240-6d77d960-b8de-4583-8b01-c1309883402e"
+                },
+                {
+                  "id": "842e49d6-d214-4368-88b1-0b3f82d1a970",
+                  "name": "The requested resource was not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/monitors/:monitorId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "monitors",
+                        ":monitorId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "monitorId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:05:01.000Z",
+                  "updatedAt": "2026-06-05T13:05:01.000Z",
+                  "uid": "35240-842e49d6-d214-4368-88b1-0b3f82d1a970"
+                },
+                {
+                  "id": "c28aa706-4ffe-4646-8091-76aefb660668",
+                  "name": "Too many requests - rate limit exceeded",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/monitors/:monitorId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "monitors",
+                        ":monitorId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "monitorId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-06-05T13:05:01.000Z",
+                  "updatedAt": "2026-06-05T13:05:01.000Z",
+                  "uid": "35240-c28aa706-4ffe-4646-8091-76aefb660668"
+                },
+                {
+                  "id": "d44a2c7b-9276-4329-baaf-88e4b9f35278",
+                  "name": "An unexpected error occurred on the server",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/monitors/:monitorId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "monitors",
+                        ":monitorId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "monitorId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:05:01.000Z",
+                  "updatedAt": "2026-06-05T13:05:01.000Z",
+                  "uid": "35240-d44a2c7b-9276-4329-baaf-88e4b9f35278"
+                }
+              ],
+              "createdAt": "2026-06-05T13:05:01.000Z",
+              "updatedAt": "2026-06-05T13:05:01.000Z",
+              "uid": "35240-3753fd8f-48cf-4f1e-ab3d-3f5898ce1bdc"
+            }
+          ],
+          "id": "c3b24b88-de3b-449c-bd20-6947e4eaeac4",
+          "createdAt": "2026-06-05T13:05:01.000Z",
+          "updatedAt": "2026-06-05T13:05:01.000Z",
+          "uid": "35240-c3b24b88-de3b-449c-bd20-6947e4eaeac4"
+        },
+        {
+          "name": "Postman Get all monitors",
+          "id": "5a9a13a6-ccc9-4b7e-97c4-f0cf86ac92b1",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/monitors?workspace=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "monitors"
+              ],
+              "query": [
+                {
+                  "description": "Filter monitors by workspace ID.",
+                  "key": "workspace",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "Gets all monitors accessible to the authenticated user. Returns metadata about each monitor including schedule, last run status, and associated collection."
+          },
+          "response": [
+            {
+              "id": "c2698a95-69c8-453c-ab7c-feae8eb99919",
+              "name": "Successful response with list of monitors",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/monitors?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "monitors"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter monitors by workspace ID.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"monitors\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"uid\": \"<string>\",\n      \"owner\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"uid\": \"<string>\",\n      \"owner\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-06-05T13:05:01.000Z",
+              "updatedAt": "2026-06-05T13:05:01.000Z",
+              "uid": "35240-c2698a95-69c8-453c-ab7c-feae8eb99919"
+            },
+            {
+              "id": "92f22d76-2ae7-4936-b5cf-88490a98c801",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/monitors?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "monitors"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter monitors by workspace ID.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:05:01.000Z",
+              "updatedAt": "2026-06-05T13:05:01.000Z",
+              "uid": "35240-92f22d76-2ae7-4936-b5cf-88490a98c801"
+            },
+            {
+              "id": "a72c30d0-65bd-4481-b59a-19a1c53ba643",
+              "name": "Too many requests - rate limit exceeded",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/monitors?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "monitors"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter monitors by workspace ID.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T13:05:01.000Z",
+              "updatedAt": "2026-06-05T13:05:01.000Z",
+              "uid": "35240-a72c30d0-65bd-4481-b59a-19a1c53ba643"
+            },
+            {
+              "id": "7b54029c-5c2a-4fa0-afc2-ef8fcf742473",
+              "name": "An unexpected error occurred on the server",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/monitors?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "monitors"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter monitors by workspace ID.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:05:01.000Z",
+              "updatedAt": "2026-06-05T13:05:01.000Z",
+              "uid": "35240-7b54029c-5c2a-4fa0-afc2-ef8fcf742473"
+            }
+          ],
+          "createdAt": "2026-06-05T13:05:01.000Z",
+          "updatedAt": "2026-06-05T13:05:01.000Z",
+          "uid": "35240-5a9a13a6-ccc9-4b7e-97c4-f0cf86ac92b1"
+        },
+        {
+          "name": "Postman Create a monitor",
+          "id": "2ad85a4a-94c4-446e-ac8c-6f8c39d4b308",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"monitor\": {\n    \"name\": \"<string>\",\n    \"collection\": \"<string>\",\n    \"schedule\": {\n      \"cron\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"environment\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/monitors?workspace=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "monitors"
+              ],
+              "query": [
+                {
+                  "description": "The workspace ID to create the monitor in.",
+                  "key": "workspace",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "Creates a new monitor that runs a collection on a specified schedule. You must specify the collection to run, the environment to use, and the schedule (cron expression or interval)."
+          },
+          "response": [
+            {
+              "id": "73a2fd32-4e49-4057-9bd0-ee8423e18c0d",
+              "name": "Successfully created monitor",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"monitor\": {\n    \"name\": \"<string>\",\n    \"collection\": \"<string>\",\n    \"schedule\": {\n      \"cron\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"environment\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/monitors?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "monitors"
+                  ],
+                  "query": [
+                    {
+                      "description": "The workspace ID to create the monitor in.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"monitor\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"owner\": \"<string>\",\n    \"collectionUid\": \"<string>\",\n    \"environmentUid\": \"<string>\",\n    \"distribution\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"schedule\": {\n      \"cron\": \"<string>\",\n      \"timezone\": \"<string>\",\n      \"nextRun\": \"<dateTime>\"\n    },\n    \"lastRun\": {\n      \"startedAt\": \"<dateTime>\",\n      \"finishedAt\": \"<dateTime>\",\n      \"status\": \"success\",\n      \"stats\": {\n        \"assertions\": {\n          \"total\": \"<integer>\",\n          \"failed\": \"<integer>\"\n        },\n        \"requests\": {\n          \"total\": \"<integer>\"\n        }\n      }\n    },\n    \"notifications\": {\n      \"onError\": [\n        {\n          \"email\": \"<string>\"\n        },\n        {\n          \"email\": \"<string>\"\n        }\n      ],\n      \"onFailure\": [\n        {\n          \"email\": \"<string>\"\n        },\n        {\n          \"email\": \"<string>\"\n        }\n      ]\n    },\n    \"options\": {\n      \"strictSSL\": \"<boolean>\",\n      \"followRedirects\": \"<boolean>\",\n      \"requestTimeout\": \"<integer>\",\n      \"requestDelay\": \"<integer>\"\n    }\n  }\n}",
+              "createdAt": "2026-06-05T13:05:01.000Z",
+              "updatedAt": "2026-06-05T13:05:01.000Z",
+              "uid": "35240-73a2fd32-4e49-4057-9bd0-ee8423e18c0d"
+            },
+            {
+              "id": "e2dd99be-7f0b-45f1-9977-c977c0928c43",
+              "name": "Bad request - invalid input",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"monitor\": {\n    \"name\": \"<string>\",\n    \"collection\": \"<string>\",\n    \"schedule\": {\n      \"cron\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"environment\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/monitors?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "monitors"
+                  ],
+                  "query": [
+                    {
+                      "description": "The workspace ID to create the monitor in.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:05:01.000Z",
+              "updatedAt": "2026-06-05T13:05:01.000Z",
+              "uid": "35240-e2dd99be-7f0b-45f1-9977-c977c0928c43"
+            },
+            {
+              "id": "4a448ba3-21b6-49f7-a0e1-26f8649b80e2",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"monitor\": {\n    \"name\": \"<string>\",\n    \"collection\": \"<string>\",\n    \"schedule\": {\n      \"cron\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"environment\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/monitors?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "monitors"
+                  ],
+                  "query": [
+                    {
+                      "description": "The workspace ID to create the monitor in.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:05:01.000Z",
+              "updatedAt": "2026-06-05T13:05:01.000Z",
+              "uid": "35240-4a448ba3-21b6-49f7-a0e1-26f8649b80e2"
+            },
+            {
+              "id": "1ed1415a-e166-4959-8487-5f37fbd35bc7",
+              "name": "Too many requests - rate limit exceeded",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"monitor\": {\n    \"name\": \"<string>\",\n    \"collection\": \"<string>\",\n    \"schedule\": {\n      \"cron\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"environment\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/monitors?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "monitors"
+                  ],
+                  "query": [
+                    {
+                      "description": "The workspace ID to create the monitor in.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T13:05:01.000Z",
+              "updatedAt": "2026-06-05T13:05:01.000Z",
+              "uid": "35240-1ed1415a-e166-4959-8487-5f37fbd35bc7"
+            },
+            {
+              "id": "c23bb7a9-8146-4358-95d0-30977fbb165f",
+              "name": "An unexpected error occurred on the server",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"monitor\": {\n    \"name\": \"<string>\",\n    \"collection\": \"<string>\",\n    \"schedule\": {\n      \"cron\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"environment\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/monitors?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "monitors"
+                  ],
+                  "query": [
+                    {
+                      "description": "The workspace ID to create the monitor in.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:05:01.000Z",
+              "updatedAt": "2026-06-05T13:05:01.000Z",
+              "uid": "35240-c23bb7a9-8146-4358-95d0-30977fbb165f"
+            }
+          ],
+          "createdAt": "2026-06-05T13:05:01.000Z",
+          "updatedAt": "2026-06-05T13:05:01.000Z",
+          "uid": "35240-2ad85a4a-94c4-446e-ac8c-6f8c39d4b308"
+        }
+      ],
+      "id": "fda8debb-8fb4-4aaf-9bd4-b11305a020ee",
+      "createdAt": "2026-06-05T13:05:01.000Z",
+      "updatedAt": "2026-06-05T13:05:01.000Z",
+      "uid": "35240-fda8debb-8fb4-4aaf-9bd4-b11305a020ee"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.getpostman.com"
+    }
+  ]
+}

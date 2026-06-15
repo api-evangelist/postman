@@ -1,0 +1,831 @@
+{
+  "info": {
+    "_postman_id": "8cef10ae-e66e-4749-ac35-25b9fd4ce69f",
+    "name": "Postman Tags API",
+    "description": "The Postman Tags API enables you to manage tags on APIs, collections, and\nworkspaces. Tags help you categorize, organize, and discover API assets\nacross your team. Tags are useful for governance, enabling API managers to\nlabel APIs by domain, lifecycle stage, or compliance status.\n\n## Authentication\nAll requests require an API key passed in the `x-api-key` header.\n\n## Rate Limits\nStandard Postman API rate limits apply.\n\n\nContact Support:\n Name: Postman Developer Support\n Email: help@postman.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T13:05:56.000Z",
+    "updatedAt": "2026-06-05T13:05:56.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-8cef10ae-e66e-4749-ac35-25b9fd4ce69f"
+  },
+  "item": [
+    {
+      "name": "tags",
+      "item": [
+        {
+          "name": "{entityType}",
+          "item": [
+            {
+              "name": "{entityId}",
+              "item": [
+                {
+                  "name": "Postman Get tags for an entity",
+                  "id": "3bbdf1bb-b26f-460a-b439-3e53e0933d82",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tags/:entityType/:entityId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tags",
+                        ":entityType",
+                        ":entityId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "a7dcfa45-d574-47c3-bdb2-47880d861028",
+                          "key": "entityType",
+                          "value": "collections",
+                          "description": "(Required) The type of entity to manage tags for."
+                        },
+                        {
+                          "id": "5578620f-c63b-4d3d-9838-74c8136c87ae",
+                          "key": "entityId",
+                          "value": "<string>",
+                          "description": "(Required) The entity's unique ID."
+                        }
+                      ]
+                    },
+                    "description": "Gets all tags associated with a specific entity (API, collection, or workspace)."
+                  },
+                  "response": [
+                    {
+                      "id": "d539983d-f0b3-4334-84e3-560d4540fe46",
+                      "name": "Successful response with tags",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/:entityType/:entityId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            ":entityType",
+                            ":entityId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "entityType"
+                            },
+                            {
+                              "key": "entityId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"tags\": [\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-06-05T13:05:56.000Z",
+                      "updatedAt": "2026-06-05T13:05:56.000Z",
+                      "uid": "35240-d539983d-f0b3-4334-84e3-560d4540fe46"
+                    },
+                    {
+                      "id": "6663ef7c-479f-49fc-a10b-0ebf69b6353f",
+                      "name": "Authentication credentials are missing or invalid",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/:entityType/:entityId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            ":entityType",
+                            ":entityId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "entityType"
+                            },
+                            {
+                              "key": "entityId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:05:56.000Z",
+                      "updatedAt": "2026-06-05T13:05:56.000Z",
+                      "uid": "35240-6663ef7c-479f-49fc-a10b-0ebf69b6353f"
+                    },
+                    {
+                      "id": "92e39421-ff05-43c8-af36-2236d395b2a2",
+                      "name": "Insufficient permissions",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/:entityType/:entityId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            ":entityType",
+                            ":entityId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "entityType"
+                            },
+                            {
+                              "key": "entityId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:05:56.000Z",
+                      "updatedAt": "2026-06-05T13:05:56.000Z",
+                      "uid": "35240-92e39421-ff05-43c8-af36-2236d395b2a2"
+                    },
+                    {
+                      "id": "4d754ee8-71ee-43c8-8980-3e60d518cbad",
+                      "name": "The requested resource was not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/:entityType/:entityId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            ":entityType",
+                            ":entityId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "entityType"
+                            },
+                            {
+                              "key": "entityId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:05:56.000Z",
+                      "updatedAt": "2026-06-05T13:05:56.000Z",
+                      "uid": "35240-4d754ee8-71ee-43c8-8980-3e60d518cbad"
+                    },
+                    {
+                      "id": "e774cf9c-0f82-482d-890a-4cd5ed12b54e",
+                      "name": "Too many requests - rate limit exceeded",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/:entityType/:entityId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            ":entityType",
+                            ":entityId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "entityType"
+                            },
+                            {
+                              "key": "entityId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-06-05T13:05:56.000Z",
+                      "updatedAt": "2026-06-05T13:05:56.000Z",
+                      "uid": "35240-e774cf9c-0f82-482d-890a-4cd5ed12b54e"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T13:05:56.000Z",
+                  "updatedAt": "2026-06-05T13:05:56.000Z",
+                  "uid": "35240-3bbdf1bb-b26f-460a-b439-3e53e0933d82"
+                },
+                {
+                  "name": "Postman Update tags for an entity",
+                  "id": "3685b394-1ff4-4cb8-8620-6c5468ffc9bf",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"tags\": [\n    {\n      \"slug\": \"l5uqi-dbn8hq-p\"\n    },\n    {\n      \"slug\": \"vdu3ycn-5g00166dh0n-tf46xzv\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tags/:entityType/:entityId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tags",
+                        ":entityType",
+                        ":entityId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "11fe00aa-7130-4a0a-9310-b829e4f48d66",
+                          "key": "entityType",
+                          "value": "collections",
+                          "description": "(Required) The type of entity to manage tags for."
+                        },
+                        {
+                          "id": "e1fd8130-9fbc-493c-8a2f-6174a1ad7bcb",
+                          "key": "entityId",
+                          "value": "<string>",
+                          "description": "(Required) The entity's unique ID."
+                        }
+                      ]
+                    },
+                    "description": "Updates (replaces) the tags associated with a specific entity. This replaces all existing tags with the provided list. To add tags without removing existing ones, first GET the current tags and include them in the update."
+                  },
+                  "response": [
+                    {
+                      "id": "b7ce792d-7deb-4f78-b610-1f6fe3f3bdf9",
+                      "name": "Successfully updated tags",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"tags\": [\n    {\n      \"slug\": \"l5uqi-dbn8hq-p\"\n    },\n    {\n      \"slug\": \"vdu3ycn-5g00166dh0n-tf46xzv\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/:entityType/:entityId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            ":entityType",
+                            ":entityId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "entityType"
+                            },
+                            {
+                              "key": "entityId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"tags\": [\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-06-05T13:05:56.000Z",
+                      "updatedAt": "2026-06-05T13:05:56.000Z",
+                      "uid": "35240-b7ce792d-7deb-4f78-b610-1f6fe3f3bdf9"
+                    },
+                    {
+                      "id": "6d12bc17-1bc9-4f2c-8c92-ed52ed0feba7",
+                      "name": "Bad request - invalid input",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"tags\": [\n    {\n      \"slug\": \"l5uqi-dbn8hq-p\"\n    },\n    {\n      \"slug\": \"vdu3ycn-5g00166dh0n-tf46xzv\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/:entityType/:entityId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            ":entityType",
+                            ":entityId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "entityType"
+                            },
+                            {
+                              "key": "entityId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:05:56.000Z",
+                      "updatedAt": "2026-06-05T13:05:56.000Z",
+                      "uid": "35240-6d12bc17-1bc9-4f2c-8c92-ed52ed0feba7"
+                    },
+                    {
+                      "id": "e24ef24e-4421-4b8f-8d5b-611daba3f5a5",
+                      "name": "Authentication credentials are missing or invalid",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"tags\": [\n    {\n      \"slug\": \"l5uqi-dbn8hq-p\"\n    },\n    {\n      \"slug\": \"vdu3ycn-5g00166dh0n-tf46xzv\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/:entityType/:entityId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            ":entityType",
+                            ":entityId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "entityType"
+                            },
+                            {
+                              "key": "entityId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:05:56.000Z",
+                      "updatedAt": "2026-06-05T13:05:56.000Z",
+                      "uid": "35240-e24ef24e-4421-4b8f-8d5b-611daba3f5a5"
+                    },
+                    {
+                      "id": "7b2e06f2-4323-4b74-b35c-dd4b83f855f9",
+                      "name": "Insufficient permissions",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"tags\": [\n    {\n      \"slug\": \"l5uqi-dbn8hq-p\"\n    },\n    {\n      \"slug\": \"vdu3ycn-5g00166dh0n-tf46xzv\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/:entityType/:entityId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            ":entityType",
+                            ":entityId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "entityType"
+                            },
+                            {
+                              "key": "entityId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:05:56.000Z",
+                      "updatedAt": "2026-06-05T13:05:56.000Z",
+                      "uid": "35240-7b2e06f2-4323-4b74-b35c-dd4b83f855f9"
+                    },
+                    {
+                      "id": "3ab5840f-2264-4ba1-ae28-f0f792b35282",
+                      "name": "The requested resource was not found",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"tags\": [\n    {\n      \"slug\": \"l5uqi-dbn8hq-p\"\n    },\n    {\n      \"slug\": \"vdu3ycn-5g00166dh0n-tf46xzv\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/:entityType/:entityId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            ":entityType",
+                            ":entityId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "entityType"
+                            },
+                            {
+                              "key": "entityId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:05:56.000Z",
+                      "updatedAt": "2026-06-05T13:05:56.000Z",
+                      "uid": "35240-3ab5840f-2264-4ba1-ae28-f0f792b35282"
+                    },
+                    {
+                      "id": "c5e2ce5d-3b4c-4153-9325-9fc9a7b3b29a",
+                      "name": "Too many requests - rate limit exceeded",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"tags\": [\n    {\n      \"slug\": \"l5uqi-dbn8hq-p\"\n    },\n    {\n      \"slug\": \"vdu3ycn-5g00166dh0n-tf46xzv\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/:entityType/:entityId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            ":entityType",
+                            ":entityId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "entityType"
+                            },
+                            {
+                              "key": "entityId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-06-05T13:05:56.000Z",
+                      "updatedAt": "2026-06-05T13:05:56.000Z",
+                      "uid": "35240-c5e2ce5d-3b4c-4153-9325-9fc9a7b3b29a"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T13:05:56.000Z",
+                  "updatedAt": "2026-06-05T13:05:56.000Z",
+                  "uid": "35240-3685b394-1ff4-4cb8-8620-6c5468ffc9bf"
+                }
+              ],
+              "id": "b153ff37-e821-41d2-beb5-6eff8a5dcb52",
+              "createdAt": "2026-06-05T13:05:56.000Z",
+              "updatedAt": "2026-06-05T13:05:56.000Z",
+              "uid": "35240-b153ff37-e821-41d2-beb5-6eff8a5dcb52"
+            }
+          ],
+          "id": "38bb1709-f4fb-461d-a796-101d4aa3f390",
+          "createdAt": "2026-06-05T13:05:56.000Z",
+          "updatedAt": "2026-06-05T13:05:56.000Z",
+          "uid": "35240-38bb1709-f4fb-461d-a796-101d4aa3f390"
+        }
+      ],
+      "id": "7cdfa2ba-5777-4844-b699-5747fe3f2a98",
+      "createdAt": "2026-06-05T13:05:56.000Z",
+      "updatedAt": "2026-06-05T13:05:56.000Z",
+      "uid": "35240-7cdfa2ba-5777-4844-b699-5747fe3f2a98"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.getpostman.com"
+    }
+  ]
+}

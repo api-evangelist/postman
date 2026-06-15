@@ -1,0 +1,72 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Postman Tags API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Postman Get tags for an entity",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.getpostman.com/tags/:entityType/:entityId",
+        "params": [
+          {
+            "name": "entityType",
+            "value": "",
+            "type": "path",
+            "description": "The type of entity to manage tags for."
+          },
+          {
+            "name": "entityId",
+            "value": "",
+            "type": "path",
+            "description": "The entity's unique ID."
+          }
+        ]
+      },
+      "docs": "Gets all tags associated with a specific entity (API, collection, or workspace)."
+    },
+    {
+      "info": {
+        "name": "Postman Update tags for an entity",
+        "type": "http"
+      },
+      "http": {
+        "method": "PUT",
+        "url": "https://api.getpostman.com/tags/:entityType/:entityId",
+        "params": [
+          {
+            "name": "entityType",
+            "value": "",
+            "type": "path",
+            "description": "The type of entity to manage tags for."
+          },
+          {
+            "name": "entityId",
+            "value": "",
+            "type": "path",
+            "description": "The entity's unique ID."
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Updates (replaces) the tags associated with a specific entity. This replaces all existing tags with the provided list. To add tags without removing existing ones, first GET the current tags and include them in the update."
+    }
+  ],
+  "bundled": true
+}

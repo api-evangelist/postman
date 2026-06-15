@@ -1,0 +1,683 @@
+{
+  "info": {
+    "_postman_id": "831054de-0552-4296-9d9c-340212a80aab",
+    "name": "Postman Collection Runs API",
+    "description": "The Postman Collection Runs API enables you to programmatically run\ncollections and retrieve run results. This is useful for continuous\nintegration and delivery pipelines, enabling you to execute API tests\nand retrieve results programmatically.\n\n## Authentication\nAll requests require an API key passed in the `x-api-key` header.\n\n## Rate Limits\nCollection run limits vary by plan. Free plans include 25 collection\nruns per month.\n\n\nContact Support:\n Name: Postman Developer Support\n Email: help@postman.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T13:05:42.000Z",
+    "updatedAt": "2026-06-05T13:05:42.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-831054de-0552-4296-9d9c-340212a80aab"
+  },
+  "item": [
+    {
+      "name": "collections",
+      "item": [
+        {
+          "name": "{collectionId}",
+          "item": [
+            {
+              "name": "runs",
+              "item": [
+                {
+                  "name": "{runId}",
+                  "item": [
+                    {
+                      "name": "Postman Get a collection run",
+                      "id": "442ab5e4-ea30-408f-b8e0-775af694cc22",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/:collectionId/runs/:runId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            ":collectionId",
+                            "runs",
+                            ":runId"
+                          ],
+                          "variable": [
+                            {
+                              "id": "ee83a369-6b82-4d3f-abbd-aa2a5ff8006d",
+                              "key": "collectionId",
+                              "value": "<string>",
+                              "description": "(Required) The collection's unique ID or UID."
+                            },
+                            {
+                              "id": "d58eeda6-ab6a-4969-9020-f37bc47edfc9",
+                              "key": "runId",
+                              "value": "<string>",
+                              "description": "(Required) The run's unique ID."
+                            }
+                          ]
+                        },
+                        "description": "Gets detailed information about a specific collection run, including individual request results, test assertions, and response data."
+                      },
+                      "response": [
+                        {
+                          "id": "7f31ebfe-77f0-48ee-ac78-e9a32fbce9df",
+                          "name": "Successful response with run details",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/collections/:collectionId/runs/:runId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "collections",
+                                ":collectionId",
+                                "runs",
+                                ":runId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "collectionId"
+                                },
+                                {
+                                  "key": "runId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"run\": {\n    \"id\": \"<string>\",\n    \"status\": \"queued\",\n    \"source\": \"<string>\",\n    \"startedAt\": \"<dateTime>\",\n    \"finishedAt\": \"<dateTime>\",\n    \"duration\": \"<integer>\",\n    \"stats\": {\n      \"requests\": {\n        \"total\": \"<integer>\",\n        \"failed\": \"<integer>\"\n      },\n      \"assertions\": {\n        \"total\": \"<integer>\",\n        \"failed\": \"<integer>\"\n      }\n    },\n    \"executions\": [\n      {\n        \"id\": \"<string>\",\n        \"itemName\": \"<string>\",\n        \"request\": {\n          \"method\": \"<string>\",\n          \"url\": \"<string>\"\n        },\n        \"response\": {\n          \"statusCode\": \"<integer>\",\n          \"responseTime\": \"<integer>\",\n          \"responseSize\": \"<integer>\"\n        },\n        \"assertions\": [\n          {\n            \"name\": \"<string>\",\n            \"passed\": \"<boolean>\",\n            \"error\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"passed\": \"<boolean>\",\n            \"error\": \"<string>\"\n          }\n        ]\n      },\n      {\n        \"id\": \"<string>\",\n        \"itemName\": \"<string>\",\n        \"request\": {\n          \"method\": \"<string>\",\n          \"url\": \"<string>\"\n        },\n        \"response\": {\n          \"statusCode\": \"<integer>\",\n          \"responseTime\": \"<integer>\",\n          \"responseSize\": \"<integer>\"\n        },\n        \"assertions\": [\n          {\n            \"name\": \"<string>\",\n            \"passed\": \"<boolean>\",\n            \"error\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"passed\": \"<boolean>\",\n            \"error\": \"<string>\"\n          }\n        ]\n      }\n    ],\n    \"collectionId\": \"<string>\",\n    \"environmentId\": \"<string>\",\n    \"createdBy\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-06-05T13:05:42.000Z",
+                          "updatedAt": "2026-06-05T13:05:42.000Z",
+                          "uid": "35240-7f31ebfe-77f0-48ee-ac78-e9a32fbce9df"
+                        },
+                        {
+                          "id": "d6597789-72fc-419e-a0de-d9f4050dfea8",
+                          "name": "Authentication credentials are missing or invalid",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/collections/:collectionId/runs/:runId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "collections",
+                                ":collectionId",
+                                "runs",
+                                ":runId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "collectionId"
+                                },
+                                {
+                                  "key": "runId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-06-05T13:05:42.000Z",
+                          "updatedAt": "2026-06-05T13:05:42.000Z",
+                          "uid": "35240-d6597789-72fc-419e-a0de-d9f4050dfea8"
+                        },
+                        {
+                          "id": "939dbd9b-fed4-4cd3-a5df-d167ec98e85d",
+                          "name": "The requested resource was not found",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/collections/:collectionId/runs/:runId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "collections",
+                                ":collectionId",
+                                "runs",
+                                ":runId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "collectionId"
+                                },
+                                {
+                                  "key": "runId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-06-05T13:05:42.000Z",
+                          "updatedAt": "2026-06-05T13:05:42.000Z",
+                          "uid": "35240-939dbd9b-fed4-4cd3-a5df-d167ec98e85d"
+                        },
+                        {
+                          "id": "4b91e349-d99f-48dd-a1cc-8f383dd96b81",
+                          "name": "Too many requests - rate limit exceeded",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/collections/:collectionId/runs/:runId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "collections",
+                                ":collectionId",
+                                "runs",
+                                ":runId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "collectionId"
+                                },
+                                {
+                                  "key": "runId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Too Many Requests",
+                          "code": 429,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-06-05T13:05:42.000Z",
+                          "updatedAt": "2026-06-05T13:05:42.000Z",
+                          "uid": "35240-4b91e349-d99f-48dd-a1cc-8f383dd96b81"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T13:05:42.000Z",
+                      "updatedAt": "2026-06-05T13:05:42.000Z",
+                      "uid": "35240-442ab5e4-ea30-408f-b8e0-775af694cc22"
+                    }
+                  ],
+                  "id": "54bfb57b-422c-43b8-b0c7-ec61f926d526",
+                  "createdAt": "2026-06-05T13:05:42.000Z",
+                  "updatedAt": "2026-06-05T13:05:42.000Z",
+                  "uid": "35240-54bfb57b-422c-43b8-b0c7-ec61f926d526"
+                },
+                {
+                  "name": "Postman Get collection runs",
+                  "id": "de78d358-6494-44cf-9448-e41e677e72ca",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/:collectionId/runs?cursor=<string>&limit=10&status=running&source=collection_runner",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        ":collectionId",
+                        "runs"
+                      ],
+                      "query": [
+                        {
+                          "description": "Pagination cursor for the next page of results.",
+                          "key": "cursor",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Maximum number of results to return.",
+                          "key": "limit",
+                          "value": "10"
+                        },
+                        {
+                          "description": "Filter by run status.",
+                          "key": "status",
+                          "value": "running"
+                        },
+                        {
+                          "description": "Filter by run source.",
+                          "key": "source",
+                          "value": "collection_runner"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "974bc554-f8ca-444c-a2a6-057222cb626c",
+                          "key": "collectionId",
+                          "value": "<string>",
+                          "description": "(Required) The collection's unique ID or UID."
+                        }
+                      ]
+                    },
+                    "description": "Gets the run history for a collection. Returns a list of past runs with their status, timing, and summary statistics."
+                  },
+                  "response": [
+                    {
+                      "id": "fb8f68e8-f6cc-4298-ad5b-0856cfbdd6c2",
+                      "name": "Successful response with collection runs",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/:collectionId/runs?cursor=<string>&limit=10&status=running&source=collection_runner",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            ":collectionId",
+                            "runs"
+                          ],
+                          "query": [
+                            {
+                              "description": "Pagination cursor for the next page of results.",
+                              "key": "cursor",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum number of results to return.",
+                              "key": "limit",
+                              "value": "10"
+                            },
+                            {
+                              "description": "Filter by run status.",
+                              "key": "status",
+                              "value": "running"
+                            },
+                            {
+                              "description": "Filter by run source.",
+                              "key": "source",
+                              "value": "collection_runner"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "collectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"runs\": [\n    {\n      \"id\": \"<string>\",\n      \"status\": \"finished\",\n      \"source\": \"newman\",\n      \"startedAt\": \"<dateTime>\",\n      \"finishedAt\": \"<dateTime>\",\n      \"stats\": {\n        \"requests\": {\n          \"total\": \"<integer>\",\n          \"failed\": \"<integer>\"\n        },\n        \"assertions\": {\n          \"total\": \"<integer>\",\n          \"failed\": \"<integer>\"\n        }\n      },\n      \"collectionId\": \"<string>\",\n      \"environmentId\": \"<string>\",\n      \"createdBy\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"status\": \"running\",\n      \"source\": \"monitor\",\n      \"startedAt\": \"<dateTime>\",\n      \"finishedAt\": \"<dateTime>\",\n      \"stats\": {\n        \"requests\": {\n          \"total\": \"<integer>\",\n          \"failed\": \"<integer>\"\n        },\n        \"assertions\": {\n          \"total\": \"<integer>\",\n          \"failed\": \"<integer>\"\n        }\n      },\n      \"collectionId\": \"<string>\",\n      \"environmentId\": \"<string>\",\n      \"createdBy\": \"<string>\"\n    }\n  ],\n  \"meta\": {\n    \"total\": \"<integer>\",\n    \"nextCursor\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:05:42.000Z",
+                      "updatedAt": "2026-06-05T13:05:42.000Z",
+                      "uid": "35240-fb8f68e8-f6cc-4298-ad5b-0856cfbdd6c2"
+                    },
+                    {
+                      "id": "5a7fde23-a99d-41d5-8e6f-db1d93e85c2c",
+                      "name": "Authentication credentials are missing or invalid",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/:collectionId/runs?cursor=<string>&limit=10&status=running&source=collection_runner",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            ":collectionId",
+                            "runs"
+                          ],
+                          "query": [
+                            {
+                              "description": "Pagination cursor for the next page of results.",
+                              "key": "cursor",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum number of results to return.",
+                              "key": "limit",
+                              "value": "10"
+                            },
+                            {
+                              "description": "Filter by run status.",
+                              "key": "status",
+                              "value": "running"
+                            },
+                            {
+                              "description": "Filter by run source.",
+                              "key": "source",
+                              "value": "collection_runner"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "collectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:05:42.000Z",
+                      "updatedAt": "2026-06-05T13:05:42.000Z",
+                      "uid": "35240-5a7fde23-a99d-41d5-8e6f-db1d93e85c2c"
+                    },
+                    {
+                      "id": "4348cd53-4e78-490f-a3ec-380d72426de4",
+                      "name": "The requested resource was not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/:collectionId/runs?cursor=<string>&limit=10&status=running&source=collection_runner",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            ":collectionId",
+                            "runs"
+                          ],
+                          "query": [
+                            {
+                              "description": "Pagination cursor for the next page of results.",
+                              "key": "cursor",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum number of results to return.",
+                              "key": "limit",
+                              "value": "10"
+                            },
+                            {
+                              "description": "Filter by run status.",
+                              "key": "status",
+                              "value": "running"
+                            },
+                            {
+                              "description": "Filter by run source.",
+                              "key": "source",
+                              "value": "collection_runner"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "collectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:05:42.000Z",
+                      "updatedAt": "2026-06-05T13:05:42.000Z",
+                      "uid": "35240-4348cd53-4e78-490f-a3ec-380d72426de4"
+                    },
+                    {
+                      "id": "a16ec1a2-6b13-4621-9f3a-a0bfc320c438",
+                      "name": "Too many requests - rate limit exceeded",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/:collectionId/runs?cursor=<string>&limit=10&status=running&source=collection_runner",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            ":collectionId",
+                            "runs"
+                          ],
+                          "query": [
+                            {
+                              "description": "Pagination cursor for the next page of results.",
+                              "key": "cursor",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum number of results to return.",
+                              "key": "limit",
+                              "value": "10"
+                            },
+                            {
+                              "description": "Filter by run status.",
+                              "key": "status",
+                              "value": "running"
+                            },
+                            {
+                              "description": "Filter by run source.",
+                              "key": "source",
+                              "value": "collection_runner"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "collectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-06-05T13:05:42.000Z",
+                      "updatedAt": "2026-06-05T13:05:42.000Z",
+                      "uid": "35240-a16ec1a2-6b13-4621-9f3a-a0bfc320c438"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T13:05:42.000Z",
+                  "updatedAt": "2026-06-05T13:05:42.000Z",
+                  "uid": "35240-de78d358-6494-44cf-9448-e41e677e72ca"
+                }
+              ],
+              "id": "252fc626-26f8-43d2-bff7-61eff2f653bc",
+              "createdAt": "2026-06-05T13:05:42.000Z",
+              "updatedAt": "2026-06-05T13:05:42.000Z",
+              "uid": "35240-252fc626-26f8-43d2-bff7-61eff2f653bc"
+            }
+          ],
+          "id": "55890a1c-6714-4823-ab77-a6b7d0665f66",
+          "createdAt": "2026-06-05T13:05:42.000Z",
+          "updatedAt": "2026-06-05T13:05:42.000Z",
+          "uid": "35240-55890a1c-6714-4823-ab77-a6b7d0665f66"
+        }
+      ],
+      "id": "8eeaba53-4a07-4bbe-80e7-47f0214338df",
+      "createdAt": "2026-06-05T13:05:42.000Z",
+      "updatedAt": "2026-06-05T13:05:42.000Z",
+      "uid": "35240-8eeaba53-4a07-4bbe-80e7-47f0214338df"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.getpostman.com"
+    }
+  ]
+}

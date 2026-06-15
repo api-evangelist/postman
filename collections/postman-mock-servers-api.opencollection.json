@@ -1,0 +1,330 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Postman Mock Servers API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Mocks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Postman Get all mock servers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/mocks",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "query",
+                "description": "Filter by workspace ID."
+              }
+            ]
+          },
+          "docs": "Gets all mock servers accessible to the authenticated user. Returns metadata about each mock server including its URL, associated collection, and environment."
+        },
+        {
+          "info": {
+            "name": "Postman Create a mock server",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getpostman.com/mocks",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "query",
+                "description": "The workspace ID to create the mock server in."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new mock server from an existing collection. The mock server will serve responses based on the examples defined in the collection. You can optionally associate an environment."
+        },
+        {
+          "info": {
+            "name": "Postman Get a mock server",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/mocks/:mockId",
+            "params": [
+              {
+                "name": "mockId",
+                "value": "",
+                "type": "path",
+                "description": "The mock server's unique ID or UID."
+              }
+            ]
+          },
+          "docs": "Gets information about a single mock server including its configuration, URL, associated collection, and environment."
+        },
+        {
+          "info": {
+            "name": "Postman Update a mock server",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.getpostman.com/mocks/:mockId",
+            "params": [
+              {
+                "name": "mockId",
+                "value": "",
+                "type": "path",
+                "description": "The mock server's unique ID or UID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing mock server configuration including its name, description, associated environment, and privacy settings."
+        },
+        {
+          "info": {
+            "name": "Postman Delete a mock server",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getpostman.com/mocks/:mockId",
+            "params": [
+              {
+                "name": "mockId",
+                "value": "",
+                "type": "path",
+                "description": "The mock server's unique ID or UID."
+              }
+            ]
+          },
+          "docs": "Deletes a mock server. This action is irreversible."
+        },
+        {
+          "info": {
+            "name": "Postman Publish a mock server",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getpostman.com/mocks/:mockId/publish",
+            "params": [
+              {
+                "name": "mockId",
+                "value": "",
+                "type": "path",
+                "description": "The mock server's unique ID or UID."
+              }
+            ]
+          },
+          "docs": "Publishes a mock server, making it publicly accessible without requiring authentication."
+        },
+        {
+          "info": {
+            "name": "Postman Unpublish a mock server",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getpostman.com/mocks/:mockId/unpublish",
+            "params": [
+              {
+                "name": "mockId",
+                "value": "",
+                "type": "path",
+                "description": "The mock server's unique ID or UID."
+              }
+            ]
+          },
+          "docs": "Unpublishes a mock server, making it private and requiring authentication to access."
+        },
+        {
+          "info": {
+            "name": "Postman Get mock server call logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/mocks/:mockId/call-logs",
+            "params": [
+              {
+                "name": "mockId",
+                "value": "",
+                "type": "path",
+                "description": "The mock server's unique ID or UID."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of call logs to return."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor for the next page of results."
+              },
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "Return call logs since this timestamp (ISO 8601)."
+              },
+              {
+                "name": "until",
+                "value": "",
+                "type": "query",
+                "description": "Return call logs until this timestamp (ISO 8601)."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Include request and/or response body in the call logs."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order for call logs."
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction."
+              }
+            ]
+          },
+          "docs": "Gets the call logs for a mock server. Call logs show requests that have been made to the mock server, including the request details, matched response, and timestamps."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Server Responses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Postman Get mock server responses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/mocks/:mockId/serverResponses",
+            "params": [
+              {
+                "name": "mockId",
+                "value": "",
+                "type": "path",
+                "description": "The mock server's unique ID or UID."
+              }
+            ]
+          },
+          "docs": "Gets all server responses configured for a mock server. Server responses are custom responses that override the default collection-based responses."
+        },
+        {
+          "info": {
+            "name": "Postman Create a server response",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getpostman.com/mocks/:mockId/serverResponses",
+            "params": [
+              {
+                "name": "mockId",
+                "value": "",
+                "type": "path",
+                "description": "The mock server's unique ID or UID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new server response for a mock server. Server responses allow you to define custom responses for specific request patterns."
+        },
+        {
+          "info": {
+            "name": "Postman Update a server response",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.getpostman.com/mocks/:mockId/serverResponses/:serverResponseId",
+            "params": [
+              {
+                "name": "mockId",
+                "value": "",
+                "type": "path",
+                "description": "The mock server's unique ID or UID."
+              },
+              {
+                "name": "serverResponseId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing server response for a mock server."
+        },
+        {
+          "info": {
+            "name": "Postman Delete a server response",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getpostman.com/mocks/:mockId/serverResponses/:serverResponseId",
+            "params": [
+              {
+                "name": "mockId",
+                "value": "",
+                "type": "path",
+                "description": "The mock server's unique ID or UID."
+              },
+              {
+                "name": "serverResponseId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a server response from a mock server."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

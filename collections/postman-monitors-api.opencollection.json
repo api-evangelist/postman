@@ -1,0 +1,148 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Postman Monitors API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Monitors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Postman Get all monitors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/monitors",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "query",
+                "description": "Filter monitors by workspace ID."
+              }
+            ]
+          },
+          "docs": "Gets all monitors accessible to the authenticated user. Returns metadata about each monitor including schedule, last run status, and associated collection."
+        },
+        {
+          "info": {
+            "name": "Postman Create a monitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getpostman.com/monitors",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "query",
+                "description": "The workspace ID to create the monitor in."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new monitor that runs a collection on a specified schedule. You must specify the collection to run, the environment to use, and the schedule (cron expression or interval)."
+        },
+        {
+          "info": {
+            "name": "Postman Get a monitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/monitors/:monitorId",
+            "params": [
+              {
+                "name": "monitorId",
+                "value": "",
+                "type": "path",
+                "description": "The monitor's unique ID or UID."
+              }
+            ]
+          },
+          "docs": "Gets information about a single monitor, including its configuration, schedule, last run details, and notification settings."
+        },
+        {
+          "info": {
+            "name": "Postman Update a monitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.getpostman.com/monitors/:monitorId",
+            "params": [
+              {
+                "name": "monitorId",
+                "value": "",
+                "type": "path",
+                "description": "The monitor's unique ID or UID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing monitor's name, schedule, collection, or environment configuration."
+        },
+        {
+          "info": {
+            "name": "Postman Delete a monitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getpostman.com/monitors/:monitorId",
+            "params": [
+              {
+                "name": "monitorId",
+                "value": "",
+                "type": "path",
+                "description": "The monitor's unique ID or UID."
+              }
+            ]
+          },
+          "docs": "Deletes a monitor. This stops all scheduled runs and is irreversible."
+        },
+        {
+          "info": {
+            "name": "Postman Run a monitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getpostman.com/monitors/:monitorId/run",
+            "params": [
+              {
+                "name": "monitorId",
+                "value": "",
+                "type": "path",
+                "description": "The monitor's unique ID or UID."
+              }
+            ]
+          },
+          "docs": "Manually triggers a monitor run. The response includes the run results with test pass/fail status, response times, and any errors."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

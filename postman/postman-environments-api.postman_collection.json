@@ -1,0 +1,1645 @@
+{
+  "info": {
+    "_postman_id": "ab4720bb-0e3a-4561-9c38-adfc750e629b",
+    "name": "Postman Environments API",
+    "description": "The Postman Environments API enables you to manage your Postman environments\nprogrammatically. Environments store variable key-value pairs that can be used\nacross requests and collections, enabling you to scope your work to different\ncontexts such as development, staging, and production.\n\n## Authentication\nAll requests require an API key passed in the `x-api-key` header.\n\n## Rate Limits\nThe Postman API has rate limits that vary by plan.\n\n\nContact Support:\n Name: Postman Developer Support\n Email: help@postman.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T13:04:33.000Z",
+    "updatedAt": "2026-06-05T13:04:33.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-ab4720bb-0e3a-4561-9c38-adfc750e629b"
+  },
+  "item": [
+    {
+      "name": "environments",
+      "item": [
+        {
+          "name": "{environmentId}",
+          "item": [
+            {
+              "name": "Postman Get an environment",
+              "id": "04db2610-8570-44e7-8200-9a9e4538cd3a",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/environments/:environmentId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "environments",
+                    ":environmentId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "ffecee73-378e-4bb6-a1db-f6f023462d07",
+                      "key": "environmentId",
+                      "value": "<string>",
+                      "description": "(Required) The environment's unique ID or UID."
+                    }
+                  ]
+                },
+                "description": "Gets information about a single environment, including its variables. Variable values that are marked as secret will be masked in the response."
+              },
+              "response": [
+                {
+                  "id": "47d29da1-9784-49ba-97e3-8b9813593140",
+                  "name": "Successful response with environment details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"environment\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"owner\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"values\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"secret\",\n        \"enabled\": true\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      }\n    ],\n    \"isPublic\": \"<boolean>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:34.000Z",
+                  "updatedAt": "2026-06-05T13:04:34.000Z",
+                  "uid": "35240-47d29da1-9784-49ba-97e3-8b9813593140"
+                },
+                {
+                  "id": "20d3146f-191f-46f4-8ea9-088470bb3608",
+                  "name": "Authentication credentials are missing or invalid",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:34.000Z",
+                  "updatedAt": "2026-06-05T13:04:34.000Z",
+                  "uid": "35240-20d3146f-191f-46f4-8ea9-088470bb3608"
+                },
+                {
+                  "id": "8183d559-b78d-4b2a-be96-8acd6f7a6579",
+                  "name": "The requested resource was not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:34.000Z",
+                  "updatedAt": "2026-06-05T13:04:34.000Z",
+                  "uid": "35240-8183d559-b78d-4b2a-be96-8acd6f7a6579"
+                },
+                {
+                  "id": "38e86dd9-222d-4b94-b1af-71b1f1d43e8c",
+                  "name": "Too many requests - rate limit exceeded",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-06-05T13:04:34.000Z",
+                  "updatedAt": "2026-06-05T13:04:34.000Z",
+                  "uid": "35240-38e86dd9-222d-4b94-b1af-71b1f1d43e8c"
+                },
+                {
+                  "id": "76f8bb6d-a564-4d58-b670-b2406860a44f",
+                  "name": "An unexpected error occurred on the server",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:34.000Z",
+                  "updatedAt": "2026-06-05T13:04:34.000Z",
+                  "uid": "35240-76f8bb6d-a564-4d58-b670-b2406860a44f"
+                }
+              ],
+              "createdAt": "2026-06-05T13:04:34.000Z",
+              "updatedAt": "2026-06-05T13:04:34.000Z",
+              "uid": "35240-04db2610-8570-44e7-8200-9a9e4538cd3a"
+            },
+            {
+              "name": "Postman Update an environment",
+              "id": "76b74e60-d8b2-488b-bf5f-35161214aef4",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"environment\": {\n    \"name\": \"<string>\",\n    \"values\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/environments/:environmentId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "environments",
+                    ":environmentId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "417d85d6-f141-4317-b1e8-4ebeb8a8120f",
+                      "key": "environmentId",
+                      "value": "<string>",
+                      "description": "(Required) The environment's unique ID or UID."
+                    }
+                  ]
+                },
+                "description": "Updates an existing environment. You can update the name and variables. This replaces the entire set of variables with the values provided."
+              },
+              "response": [
+                {
+                  "id": "1f391d69-6ca5-407a-8559-95627309797c",
+                  "name": "Successfully updated environment",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"environment\": {\n    \"name\": \"<string>\",\n    \"values\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      }\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"environment\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uid\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:34.000Z",
+                  "updatedAt": "2026-06-05T13:04:34.000Z",
+                  "uid": "35240-1f391d69-6ca5-407a-8559-95627309797c"
+                },
+                {
+                  "id": "b44a9710-1589-4f55-94a0-ce1fe7543574",
+                  "name": "Bad request - invalid input",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"environment\": {\n    \"name\": \"<string>\",\n    \"values\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      }\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:34.000Z",
+                  "updatedAt": "2026-06-05T13:04:34.000Z",
+                  "uid": "35240-b44a9710-1589-4f55-94a0-ce1fe7543574"
+                },
+                {
+                  "id": "feb03721-7dd2-401b-879c-b482af61f72e",
+                  "name": "Authentication credentials are missing or invalid",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"environment\": {\n    \"name\": \"<string>\",\n    \"values\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      }\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:34.000Z",
+                  "updatedAt": "2026-06-05T13:04:34.000Z",
+                  "uid": "35240-feb03721-7dd2-401b-879c-b482af61f72e"
+                },
+                {
+                  "id": "4cf48bfb-6b87-4df1-a100-effdc0140b40",
+                  "name": "The requested resource was not found",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"environment\": {\n    \"name\": \"<string>\",\n    \"values\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      }\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:34.000Z",
+                  "updatedAt": "2026-06-05T13:04:34.000Z",
+                  "uid": "35240-4cf48bfb-6b87-4df1-a100-effdc0140b40"
+                },
+                {
+                  "id": "e63db3f8-5378-4e96-9b72-de38e85310b7",
+                  "name": "Too many requests - rate limit exceeded",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"environment\": {\n    \"name\": \"<string>\",\n    \"values\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      }\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-06-05T13:04:34.000Z",
+                  "updatedAt": "2026-06-05T13:04:34.000Z",
+                  "uid": "35240-e63db3f8-5378-4e96-9b72-de38e85310b7"
+                },
+                {
+                  "id": "f4c1c696-72d0-4205-a237-b13038619519",
+                  "name": "An unexpected error occurred on the server",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"environment\": {\n    \"name\": \"<string>\",\n    \"values\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      }\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:34.000Z",
+                  "updatedAt": "2026-06-05T13:04:34.000Z",
+                  "uid": "35240-f4c1c696-72d0-4205-a237-b13038619519"
+                }
+              ],
+              "createdAt": "2026-06-05T13:04:34.000Z",
+              "updatedAt": "2026-06-05T13:04:34.000Z",
+              "uid": "35240-76b74e60-d8b2-488b-bf5f-35161214aef4"
+            },
+            {
+              "name": "Postman Delete an environment",
+              "id": "e0f19cfc-ce4a-4262-90a3-f07de41aa9e0",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/environments/:environmentId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "environments",
+                    ":environmentId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "2cf51711-424d-45cc-b4d7-ebd1cda0e25a",
+                      "key": "environmentId",
+                      "value": "<string>",
+                      "description": "(Required) The environment's unique ID or UID."
+                    }
+                  ]
+                },
+                "description": "Deletes an existing environment. This action is irreversible."
+              },
+              "response": [
+                {
+                  "id": "2c380b51-7e8b-4f50-bc52-5e7366652c5f",
+                  "name": "Successfully deleted environment",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"environment\": {\n    \"id\": \"<string>\",\n    \"uid\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:34.000Z",
+                  "updatedAt": "2026-06-05T13:04:34.000Z",
+                  "uid": "35240-2c380b51-7e8b-4f50-bc52-5e7366652c5f"
+                },
+                {
+                  "id": "a0fac88f-a454-43ab-9bb3-5624e3ecd026",
+                  "name": "Authentication credentials are missing or invalid",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:34.000Z",
+                  "updatedAt": "2026-06-05T13:04:34.000Z",
+                  "uid": "35240-a0fac88f-a454-43ab-9bb3-5624e3ecd026"
+                },
+                {
+                  "id": "e4ea96d5-46c7-45af-9f6b-bb1762a02794",
+                  "name": "The requested resource was not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:34.000Z",
+                  "updatedAt": "2026-06-05T13:04:34.000Z",
+                  "uid": "35240-e4ea96d5-46c7-45af-9f6b-bb1762a02794"
+                },
+                {
+                  "id": "7ece4b56-85ba-459a-8d18-e4767548d72c",
+                  "name": "Too many requests - rate limit exceeded",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-06-05T13:04:34.000Z",
+                  "updatedAt": "2026-06-05T13:04:34.000Z",
+                  "uid": "35240-7ece4b56-85ba-459a-8d18-e4767548d72c"
+                },
+                {
+                  "id": "afecf917-44de-4542-bc02-c73d1ae6ab7f",
+                  "name": "An unexpected error occurred on the server",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:34.000Z",
+                  "updatedAt": "2026-06-05T13:04:34.000Z",
+                  "uid": "35240-afecf917-44de-4542-bc02-c73d1ae6ab7f"
+                }
+              ],
+              "createdAt": "2026-06-05T13:04:34.000Z",
+              "updatedAt": "2026-06-05T13:04:34.000Z",
+              "uid": "35240-e0f19cfc-ce4a-4262-90a3-f07de41aa9e0"
+            }
+          ],
+          "id": "2d88a91f-ff5b-45fb-b09b-e04d3143b50c",
+          "createdAt": "2026-06-05T13:04:34.000Z",
+          "updatedAt": "2026-06-05T13:04:34.000Z",
+          "uid": "35240-2d88a91f-ff5b-45fb-b09b-e04d3143b50c"
+        },
+        {
+          "name": "Postman Get all environments",
+          "id": "fc5f9c24-fceb-4704-98e9-0122ed40bc28",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/environments?workspace=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "environments"
+              ],
+              "query": [
+                {
+                  "description": "Filter environments by workspace ID.",
+                  "key": "workspace",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "Gets all environments for the authenticated user. The response includes basic metadata for each environment. To get the full environment with variables, use the single environment endpoint."
+          },
+          "response": [
+            {
+              "id": "66286278-11d6-4b4f-bb5e-578d3c88f7aa",
+              "name": "Successful response with list of environments",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/environments?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "environments"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter environments by workspace ID.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"environments\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"owner\": \"<string>\",\n      \"uid\": \"<string>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\",\n      \"isPublic\": \"<boolean>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"owner\": \"<string>\",\n      \"uid\": \"<string>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\",\n      \"isPublic\": \"<boolean>\"\n    }\n  ]\n}",
+              "createdAt": "2026-06-05T13:04:34.000Z",
+              "updatedAt": "2026-06-05T13:04:34.000Z",
+              "uid": "35240-66286278-11d6-4b4f-bb5e-578d3c88f7aa"
+            },
+            {
+              "id": "289ba1a4-a8ba-4f96-ab87-a8f7dabca449",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/environments?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "environments"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter environments by workspace ID.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:04:34.000Z",
+              "updatedAt": "2026-06-05T13:04:34.000Z",
+              "uid": "35240-289ba1a4-a8ba-4f96-ab87-a8f7dabca449"
+            },
+            {
+              "id": "9f7bcb39-fbe8-4755-ba7e-d778f508b565",
+              "name": "Too many requests - rate limit exceeded",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/environments?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "environments"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter environments by workspace ID.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T13:04:34.000Z",
+              "updatedAt": "2026-06-05T13:04:34.000Z",
+              "uid": "35240-9f7bcb39-fbe8-4755-ba7e-d778f508b565"
+            },
+            {
+              "id": "b034adba-3200-4da4-b29e-254543341165",
+              "name": "An unexpected error occurred on the server",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/environments?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "environments"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter environments by workspace ID.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:04:34.000Z",
+              "updatedAt": "2026-06-05T13:04:34.000Z",
+              "uid": "35240-b034adba-3200-4da4-b29e-254543341165"
+            }
+          ],
+          "createdAt": "2026-06-05T13:04:34.000Z",
+          "updatedAt": "2026-06-05T13:04:34.000Z",
+          "uid": "35240-fc5f9c24-fceb-4704-98e9-0122ed40bc28"
+        },
+        {
+          "name": "Postman Create an environment",
+          "id": "f9ec6020-6d5f-4ff1-a538-fe3f9eaa146e",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"environment\": {\n    \"name\": \"<string>\",\n    \"values\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/environments?workspace=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "environments"
+              ],
+              "query": [
+                {
+                  "description": "The workspace ID to create the environment in.",
+                  "key": "workspace",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "Creates a new environment with the specified name and variables. You can optionally specify a workspace to create the environment in."
+          },
+          "response": [
+            {
+              "id": "5778e16e-19d8-46b2-9019-522dfd7a0b94",
+              "name": "Successfully created environment",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"environment\": {\n    \"name\": \"<string>\",\n    \"values\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/environments?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "environments"
+                  ],
+                  "query": [
+                    {
+                      "description": "The workspace ID to create the environment in.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"environment\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uid\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:04:34.000Z",
+              "updatedAt": "2026-06-05T13:04:34.000Z",
+              "uid": "35240-5778e16e-19d8-46b2-9019-522dfd7a0b94"
+            },
+            {
+              "id": "639f37ff-6897-4b67-a6b4-8c200d8de65a",
+              "name": "Bad request - invalid input",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"environment\": {\n    \"name\": \"<string>\",\n    \"values\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/environments?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "environments"
+                  ],
+                  "query": [
+                    {
+                      "description": "The workspace ID to create the environment in.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:04:34.000Z",
+              "updatedAt": "2026-06-05T13:04:34.000Z",
+              "uid": "35240-639f37ff-6897-4b67-a6b4-8c200d8de65a"
+            },
+            {
+              "id": "4643a79e-301b-4091-bcae-d4f8809bd8e0",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"environment\": {\n    \"name\": \"<string>\",\n    \"values\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/environments?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "environments"
+                  ],
+                  "query": [
+                    {
+                      "description": "The workspace ID to create the environment in.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:04:34.000Z",
+              "updatedAt": "2026-06-05T13:04:34.000Z",
+              "uid": "35240-4643a79e-301b-4091-bcae-d4f8809bd8e0"
+            },
+            {
+              "id": "e3e32218-7c3a-49ea-b7d0-d744ba32678b",
+              "name": "Too many requests - rate limit exceeded",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"environment\": {\n    \"name\": \"<string>\",\n    \"values\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/environments?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "environments"
+                  ],
+                  "query": [
+                    {
+                      "description": "The workspace ID to create the environment in.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T13:04:34.000Z",
+              "updatedAt": "2026-06-05T13:04:34.000Z",
+              "uid": "35240-e3e32218-7c3a-49ea-b7d0-d744ba32678b"
+            },
+            {
+              "id": "4be4f8a7-9fee-4c4b-a778-ac0939242afe",
+              "name": "An unexpected error occurred on the server",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"environment\": {\n    \"name\": \"<string>\",\n    \"values\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"default\",\n        \"enabled\": true\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/environments?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "environments"
+                  ],
+                  "query": [
+                    {
+                      "description": "The workspace ID to create the environment in.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:04:34.000Z",
+              "updatedAt": "2026-06-05T13:04:34.000Z",
+              "uid": "35240-4be4f8a7-9fee-4c4b-a778-ac0939242afe"
+            }
+          ],
+          "createdAt": "2026-06-05T13:04:34.000Z",
+          "updatedAt": "2026-06-05T13:04:34.000Z",
+          "uid": "35240-f9ec6020-6d5f-4ff1-a538-fe3f9eaa146e"
+        }
+      ],
+      "id": "b4dc41e4-412c-4c28-92d9-74023fa4479c",
+      "createdAt": "2026-06-05T13:04:34.000Z",
+      "updatedAt": "2026-06-05T13:04:34.000Z",
+      "uid": "35240-b4dc41e4-412c-4c28-92d9-74023fa4479c"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.getpostman.com"
+    }
+  ]
+}

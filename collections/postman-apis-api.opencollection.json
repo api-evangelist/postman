@@ -1,0 +1,462 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Postman APIs API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Default",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Postman Get all APIs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/apis",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "query",
+                "description": "The workspace ID to get APIs from. Required."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return."
+              },
+              {
+                "name": "createdBy",
+                "value": "",
+                "type": "query",
+                "description": "Filter by creator user ID."
+              },
+              {
+                "name": "description",
+                "value": "",
+                "type": "query",
+                "description": "Filter by description text (partial match)."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter by API name (partial match)."
+              }
+            ]
+          },
+          "docs": "Gets all APIs in a workspace. Returns metadata about each API including name, description, and creation date."
+        },
+        {
+          "info": {
+            "name": "Postman Create an API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getpostman.com/apis",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "query",
+                "description": "The workspace ID to create the API in. Required."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new API in the specified workspace. After creating the API, you can add versions, schemas, and linked resources."
+        },
+        {
+          "info": {
+            "name": "Postman Get an API",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/apis/:apiId",
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's unique ID."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Additional data to include in the response."
+              }
+            ]
+          },
+          "docs": "Gets information about a single API including its versions, schemas, and linked resources."
+        },
+        {
+          "info": {
+            "name": "Postman Update an API",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.getpostman.com/apis/:apiId",
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's unique ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing API's name or description."
+        },
+        {
+          "info": {
+            "name": "Postman Delete an API",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getpostman.com/apis/:apiId",
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's unique ID."
+              }
+            ]
+          },
+          "docs": "Deletes an API and all of its associated versions and schemas. This action is irreversible."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "API Versions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Postman Get all API versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/apis/:apiId/versions",
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's unique ID."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Gets all versions of an API. Each version can have its own schema and linked resources."
+        },
+        {
+          "info": {
+            "name": "Postman Create an API version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getpostman.com/apis/:apiId/versions",
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's unique ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new version of an API. You can optionally create the version from an existing version to copy its schema and relations."
+        },
+        {
+          "info": {
+            "name": "Postman Get an API version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/apis/:apiId/versions/:versionId",
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's unique ID."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "The API version's unique ID."
+              }
+            ]
+          },
+          "docs": "Gets information about a specific version of an API."
+        },
+        {
+          "info": {
+            "name": "Postman Update an API version",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.getpostman.com/apis/:apiId/versions/:versionId",
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's unique ID."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "The API version's unique ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the name of an API version."
+        },
+        {
+          "info": {
+            "name": "Postman Delete an API version",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getpostman.com/apis/:apiId/versions/:versionId",
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's unique ID."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "The API version's unique ID."
+              }
+            ]
+          },
+          "docs": "Deletes an API version and its schema."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "API Schemas",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Postman Get all API schemas",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/apis/:apiId/schemas",
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's unique ID."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Gets all schemas associated with an API. Schemas define the structure of the API using formats like OpenAPI, RAML, or GraphQL."
+        },
+        {
+          "info": {
+            "name": "Postman Create an API schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getpostman.com/apis/:apiId/schemas",
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's unique ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new schema for an API. Specify the schema type and language, then provide the schema content."
+        },
+        {
+          "info": {
+            "name": "Postman Get an API schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/apis/:apiId/schemas/:schemaId",
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's unique ID."
+              },
+              {
+                "name": "schemaId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Gets a specific schema for an API, including its content."
+        },
+        {
+          "info": {
+            "name": "Postman Get API schema files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/apis/:apiId/schemas/:schemaId/files",
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's unique ID."
+              },
+              {
+                "name": "schemaId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Gets the files associated with an API schema. Multi-file schemas may have multiple files."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "API Comments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Postman Get API comments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/apis/:apiId/comments",
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's unique ID."
+              }
+            ]
+          },
+          "docs": "Gets all comments on an API definition."
+        },
+        {
+          "info": {
+            "name": "Postman Create an API comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getpostman.com/apis/:apiId/comments",
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's unique ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new comment on an API definition."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

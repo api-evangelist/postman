@@ -1,0 +1,441 @@
+{
+  "item": [
+    {
+      "id": "b249b2dc-2572-4764-8ce3-e306c04a8932",
+      "name": "Audit Logs",
+      "description": {
+        "content": "Operations for accessing team audit logs.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5d2c51f8-8778-4e1b-836d-322f1eb9bfd0",
+          "name": "Postman Get audit logs",
+          "request": {
+            "name": "Postman Get audit logs",
+            "description": {
+              "content": "Gets team audit log events. You can filter by date range, event name, and user. Audit logs include user sign-ins, collection changes, workspace modifications, team membership changes, and other security and governance events.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "audit",
+                "logs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "since",
+                  "value": "<dateTime>",
+                  "description": "Return audit events since this date (ISO 8601)."
+                },
+                {
+                  "disabled": false,
+                  "key": "until",
+                  "value": "<dateTime>",
+                  "description": "Return audit events until this date (ISO 8601)."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Maximum number of results to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Pagination cursor for the next page of results."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderBy",
+                  "value": "desc",
+                  "description": "Sort order for results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1a8d7110-29f1-4756-9bcd-5d388df85456",
+              "name": "Successful response with audit log events",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audit",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "since",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "until",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trails\": [\n    {\n      \"id\": \"string\",\n      \"ip\": \"string\",\n      \"userAgent\": \"string\",\n      \"action\": \"user.sign_in\",\n      \"timestamp\": \"1958-09-08T22:30:18.789Z\",\n      \"message\": \"string\",\n      \"user\": {\n        \"id\": 8178,\n        \"name\": \"string\",\n        \"email\": \"h87nHW@uouTBuzAEvyjVfIBipLzIumfxHNU.wiy\",\n        \"username\": \"string\"\n      },\n      \"data\": {\n        \"team\": {\n          \"id\": 898,\n          \"name\": \"string\"\n        },\n        \"actor\": {\n          \"id\": 6340,\n          \"name\": \"string\",\n          \"email\": \"string\"\n        },\n        \"variables\": {\n          \"key_0\": 8224.85789392174\n        },\n        \"key_0\": \"string\",\n        \"key_1\": 3485.920285671953\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"ip\": \"string\",\n      \"userAgent\": \"string\",\n      \"action\": \"user.sign_in\",\n      \"timestamp\": \"2016-10-01T21:38:03.983Z\",\n      \"message\": \"string\",\n      \"user\": {\n        \"id\": 9341,\n        \"name\": \"string\",\n        \"email\": \"6VS@t.at\",\n        \"username\": \"string\"\n      },\n      \"data\": {\n        \"team\": {\n          \"id\": 9008,\n          \"name\": \"string\"\n        },\n        \"actor\": {\n          \"id\": 6771,\n          \"name\": \"string\",\n          \"email\": \"string\"\n        },\n        \"variables\": {\n          \"key_0\": 9657.922265215548,\n          \"key_1\": false,\n          \"key_2\": 2412\n        },\n        \"key_0\": 1644\n      }\n    }\n  ],\n  \"meta\": {\n    \"nextCursor\": \"string\",\n    \"total\": 6028\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "28637408-2b2d-4a9c-a39c-2cd70648f063",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audit",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "since",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "until",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"string\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "38de97fb-64cc-4a04-b9ca-e3bf1ea6383b",
+              "name": "Insufficient permissions - Enterprise plan required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audit",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "since",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "until",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"string\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efb8ca4e-95f1-4b88-a7bb-055b35a9103e",
+              "name": "Too many requests - rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audit",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "since",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "until",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f2d000f5-2d35-4a64-b3d3-c6c2f2ac5d5a",
+              "name": "An unexpected error occurred on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audit",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "since",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "until",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"name\": \"string\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getpostman.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ecbafdde-bff7-46fc-893d-c6d86f8caccf",
+    "name": "Postman Audit Logs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Postman Audit Logs API provides access to team audit logs for compliance\nand governance. Audit logs track user actions, configuration changes, and\nsecurity events across your Postman organization. This API is available\non Enterprise plans.\n\n## Authentication\nAll requests require an API key passed in the `x-api-key` header.\n\n## Rate Limits\nStandard Postman API rate limits apply.\n\n## Availability\nThis API is only available on Postman Enterprise plans.\n\n\nContact Support:\n Name: Postman Developer Support\n Email: help@postman.com",
+      "type": "text/plain"
+    }
+  }
+}

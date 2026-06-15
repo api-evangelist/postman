@@ -1,0 +1,169 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Postman Workspaces API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workspaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Postman Get all workspaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/workspaces",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter workspaces by type."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Additional information to include in the response."
+              }
+            ]
+          },
+          "docs": "Gets all workspaces accessible to the authenticated user. This includes personal, team, partner, and public workspaces. The response contains metadata about each workspace."
+        },
+        {
+          "info": {
+            "name": "Postman Create a workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getpostman.com/workspaces",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new workspace. You can specify the workspace name, type, description, and visibility settings."
+        },
+        {
+          "info": {
+            "name": "Postman Get a workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/workspaces/:workspaceId",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "The workspace's unique ID."
+              }
+            ]
+          },
+          "docs": "Gets information about a single workspace, including its name, type, description, and associated collections, environments, mocks, and monitors."
+        },
+        {
+          "info": {
+            "name": "Postman Update a workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.getpostman.com/workspaces/:workspaceId",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "The workspace's unique ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing workspace's name, description, or type. Only the fields provided in the request body will be updated."
+        },
+        {
+          "info": {
+            "name": "Postman Delete a workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getpostman.com/workspaces/:workspaceId",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "The workspace's unique ID."
+              }
+            ]
+          },
+          "docs": "Deletes an existing workspace and all of its associated data. This action is irreversible."
+        },
+        {
+          "info": {
+            "name": "Postman Get workspace global variables",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/workspaces/:workspaceId/global-variables",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "The workspace's unique ID."
+              }
+            ]
+          },
+          "docs": "Gets all global variables for the specified workspace. Global variables are available across all collections in the workspace."
+        },
+        {
+          "info": {
+            "name": "Postman Update workspace global variables",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.getpostman.com/workspaces/:workspaceId/global-variables",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "The workspace's unique ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the global variables for the specified workspace. This replaces the entire set of global variables."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

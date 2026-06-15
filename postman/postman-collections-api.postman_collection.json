@@ -1,0 +1,3093 @@
+{
+  "info": {
+    "_postman_id": "9e937b1a-23ce-44f5-aca9-a113f8a6150d",
+    "name": "Postman Collections API",
+    "description": "The Postman Collections API enables you to manage and automate your Postman\ncollections programmatically. Collections are groups of saved API requests that\ncan be organized into folders, include documentation, tests, and pre-request\nscripts.\n\n## Authentication\nAll requests require an API key passed in the `x-api-key` header. Generate your\nAPI key from your Postman account settings.\n\n## Rate Limits\nThe Postman API has rate limits that vary by plan. Free plans are limited to\n60 requests per minute. Paid plans have higher limits.\n\n## Base URL\nAll API endpoints are relative to `https://api.getpostman.com`.\n\n\nContact Support:\n Name: Postman Developer Support\n Email: help@postman.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T13:04:06.000Z",
+    "updatedAt": "2026-06-05T13:04:06.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-9e937b1a-23ce-44f5-aca9-a113f8a6150d"
+  },
+  "item": [
+    {
+      "name": "collections",
+      "item": [
+        {
+          "name": "{collectionId}",
+          "item": [
+            {
+              "name": "requests",
+              "item": [
+                {
+                  "name": "Postman Get all requests in a collection",
+                  "id": "383ac897-1b92-4022-b294-3c145696157f",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/:collectionId/requests",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        ":collectionId",
+                        "requests"
+                      ],
+                      "variable": [
+                        {
+                          "id": "1602867e-becc-4ddc-9c1b-a7d32cbb19cd",
+                          "key": "collectionId",
+                          "value": "<string>",
+                          "description": "(Required) The collection's unique ID or UID."
+                        }
+                      ]
+                    },
+                    "description": "Gets all the requests in a collection. Returns request metadata including name, method, URL, and folder hierarchy."
+                  },
+                  "response": [
+                    {
+                      "id": "e636a316-da22-4de0-b94f-ce158812ab67",
+                      "name": "Successful response with list of requests",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/:collectionId/requests",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            ":collectionId",
+                            "requests"
+                          ],
+                          "variable": [
+                            {
+                              "key": "collectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"method\": \"<string>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"method\": \"<string>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    }\n  ],\n  \"meta\": {\n    \"total\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"offset\": \"<integer>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:04:07.000Z",
+                      "updatedAt": "2026-06-05T13:04:07.000Z",
+                      "uid": "35240-e636a316-da22-4de0-b94f-ce158812ab67"
+                    },
+                    {
+                      "id": "0fa315f6-1d14-461d-991b-b1453aaf3819",
+                      "name": "Authentication credentials are missing or invalid",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/:collectionId/requests",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            ":collectionId",
+                            "requests"
+                          ],
+                          "variable": [
+                            {
+                              "key": "collectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:04:07.000Z",
+                      "updatedAt": "2026-06-05T13:04:07.000Z",
+                      "uid": "35240-0fa315f6-1d14-461d-991b-b1453aaf3819"
+                    },
+                    {
+                      "id": "51fd39e4-5be9-4a10-bc84-8ce0328ead83",
+                      "name": "The requested resource was not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/:collectionId/requests",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            ":collectionId",
+                            "requests"
+                          ],
+                          "variable": [
+                            {
+                              "key": "collectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:04:07.000Z",
+                      "updatedAt": "2026-06-05T13:04:07.000Z",
+                      "uid": "35240-51fd39e4-5be9-4a10-bc84-8ce0328ead83"
+                    },
+                    {
+                      "id": "e53df55f-c8b9-47a2-a859-6d6b068489bb",
+                      "name": "Too many requests - rate limit exceeded",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/:collectionId/requests",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            ":collectionId",
+                            "requests"
+                          ],
+                          "variable": [
+                            {
+                              "key": "collectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-06-05T13:04:07.000Z",
+                      "updatedAt": "2026-06-05T13:04:07.000Z",
+                      "uid": "35240-e53df55f-c8b9-47a2-a859-6d6b068489bb"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-383ac897-1b92-4022-b294-3c145696157f"
+                }
+              ],
+              "id": "da08fad8-36be-4391-a5ca-2e50c6450e89",
+              "createdAt": "2026-06-05T13:04:07.000Z",
+              "updatedAt": "2026-06-05T13:04:07.000Z",
+              "uid": "35240-da08fad8-36be-4391-a5ca-2e50c6450e89"
+            },
+            {
+              "name": "folders",
+              "item": [
+                {
+                  "name": "Postman Get all folders in a collection",
+                  "id": "f4ab20db-a466-4433-b7f7-d1f4d735a174",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/:collectionId/folders",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        ":collectionId",
+                        "folders"
+                      ],
+                      "variable": [
+                        {
+                          "id": "d314fd2a-da77-4ddd-aed0-54f43d0fc773",
+                          "key": "collectionId",
+                          "value": "<string>",
+                          "description": "(Required) The collection's unique ID or UID."
+                        }
+                      ]
+                    },
+                    "description": "Gets all the folders in a collection. Returns folder metadata and hierarchy structure."
+                  },
+                  "response": [
+                    {
+                      "id": "ece764de-9cac-4a29-ae62-d47a7d1413d8",
+                      "name": "Successful response with list of folders",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/:collectionId/folders",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            ":collectionId",
+                            "folders"
+                          ],
+                          "variable": [
+                            {
+                              "key": "collectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    }\n  ],\n  \"meta\": {\n    \"total\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"offset\": \"<integer>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:04:07.000Z",
+                      "updatedAt": "2026-06-05T13:04:07.000Z",
+                      "uid": "35240-ece764de-9cac-4a29-ae62-d47a7d1413d8"
+                    },
+                    {
+                      "id": "a0692978-edd6-4251-a719-95cf10d2a7ee",
+                      "name": "Authentication credentials are missing or invalid",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/:collectionId/folders",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            ":collectionId",
+                            "folders"
+                          ],
+                          "variable": [
+                            {
+                              "key": "collectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:04:07.000Z",
+                      "updatedAt": "2026-06-05T13:04:07.000Z",
+                      "uid": "35240-a0692978-edd6-4251-a719-95cf10d2a7ee"
+                    },
+                    {
+                      "id": "9c7a641a-c4ac-4672-874d-25ad18a698a7",
+                      "name": "The requested resource was not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/:collectionId/folders",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            ":collectionId",
+                            "folders"
+                          ],
+                          "variable": [
+                            {
+                              "key": "collectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:04:07.000Z",
+                      "updatedAt": "2026-06-05T13:04:07.000Z",
+                      "uid": "35240-9c7a641a-c4ac-4672-874d-25ad18a698a7"
+                    },
+                    {
+                      "id": "7d03f308-1892-47b2-bf66-6f8bca057719",
+                      "name": "Too many requests - rate limit exceeded",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/:collectionId/folders",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            ":collectionId",
+                            "folders"
+                          ],
+                          "variable": [
+                            {
+                              "key": "collectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-06-05T13:04:07.000Z",
+                      "updatedAt": "2026-06-05T13:04:07.000Z",
+                      "uid": "35240-7d03f308-1892-47b2-bf66-6f8bca057719"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-f4ab20db-a466-4433-b7f7-d1f4d735a174"
+                }
+              ],
+              "id": "90f52dae-bc83-429a-9517-485ce97e5596",
+              "createdAt": "2026-06-05T13:04:07.000Z",
+              "updatedAt": "2026-06-05T13:04:07.000Z",
+              "uid": "35240-90f52dae-bc83-429a-9517-485ce97e5596"
+            },
+            {
+              "name": "responses",
+              "item": [
+                {
+                  "name": "Postman Get all responses in a collection",
+                  "id": "64246ecb-3ee2-4c73-aeb4-888d862b1c62",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/:collectionId/responses",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        ":collectionId",
+                        "responses"
+                      ],
+                      "variable": [
+                        {
+                          "id": "e285d9b0-4596-4ec0-bd9f-84acef1593b1",
+                          "key": "collectionId",
+                          "value": "<string>",
+                          "description": "(Required) The collection's unique ID or UID."
+                        }
+                      ]
+                    },
+                    "description": "Gets all saved example responses in a collection. Includes response body, headers, and status codes."
+                  },
+                  "response": [
+                    {
+                      "id": "f31e92ca-ce0d-4fcf-8af0-caf9011852fe",
+                      "name": "Successful response with list of responses",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/:collectionId/responses",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            ":collectionId",
+                            "responses"
+                          ],
+                          "variable": [
+                            {
+                              "key": "collectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    }\n  ],\n  \"meta\": {\n    \"total\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"offset\": \"<integer>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:04:07.000Z",
+                      "updatedAt": "2026-06-05T13:04:07.000Z",
+                      "uid": "35240-f31e92ca-ce0d-4fcf-8af0-caf9011852fe"
+                    },
+                    {
+                      "id": "81646ce8-06c1-4c8f-9cb0-277058144071",
+                      "name": "Authentication credentials are missing or invalid",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/:collectionId/responses",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            ":collectionId",
+                            "responses"
+                          ],
+                          "variable": [
+                            {
+                              "key": "collectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:04:07.000Z",
+                      "updatedAt": "2026-06-05T13:04:07.000Z",
+                      "uid": "35240-81646ce8-06c1-4c8f-9cb0-277058144071"
+                    },
+                    {
+                      "id": "c480eec5-41d6-4f1a-92fb-2683dbf89a50",
+                      "name": "The requested resource was not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/:collectionId/responses",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            ":collectionId",
+                            "responses"
+                          ],
+                          "variable": [
+                            {
+                              "key": "collectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:04:07.000Z",
+                      "updatedAt": "2026-06-05T13:04:07.000Z",
+                      "uid": "35240-c480eec5-41d6-4f1a-92fb-2683dbf89a50"
+                    },
+                    {
+                      "id": "60483a69-153f-4cfc-b2a4-0649d15f5062",
+                      "name": "Too many requests - rate limit exceeded",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/:collectionId/responses",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            ":collectionId",
+                            "responses"
+                          ],
+                          "variable": [
+                            {
+                              "key": "collectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-06-05T13:04:07.000Z",
+                      "updatedAt": "2026-06-05T13:04:07.000Z",
+                      "uid": "35240-60483a69-153f-4cfc-b2a4-0649d15f5062"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-64246ecb-3ee2-4c73-aeb4-888d862b1c62"
+                }
+              ],
+              "id": "cd0741d7-7f54-41b7-9722-e5b2a8090dea",
+              "createdAt": "2026-06-05T13:04:07.000Z",
+              "updatedAt": "2026-06-05T13:04:07.000Z",
+              "uid": "35240-cd0741d7-7f54-41b7-9722-e5b2a8090dea"
+            },
+            {
+              "name": "Postman Get a collection",
+              "id": "67acacf0-279a-4b3d-99cd-13e846b00461",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/collections/:collectionId?access_key=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "collections",
+                    ":collectionId"
+                  ],
+                  "query": [
+                    {
+                      "description": "A collection's read-only access key. Using this parameter does not require an API key.",
+                      "key": "access_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "2cbb1314-a108-41ea-b524-a3ff3adf1885",
+                      "key": "collectionId",
+                      "value": "<string>",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "description": "Gets information about a single collection. The response includes the full collection definition including requests, folders, scripts, variables, and other metadata."
+              },
+              "response": [
+                {
+                  "id": "40ed5eaa-69c7-425d-92bf-f99b57c6dcb1",
+                  "name": "Successful response with collection details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/:collectionId?access_key=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        ":collectionId"
+                      ],
+                      "query": [
+                        {
+                          "description": "A collection's read-only access key. Using this parameter does not require an API key.",
+                          "key": "access_key",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "collectionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"schema\": \"<string>\",\n      \"_postman_id\": \"<string>\",\n      \"updatedAt\": \"<dateTime>\"\n    },\n    \"item\": [\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"PUT\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"raw\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"any\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"string\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"oauth1\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"prerequest\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-40ed5eaa-69c7-425d-92bf-f99b57c6dcb1"
+                },
+                {
+                  "id": "f5476f76-f93f-483e-92d2-020b9734a415",
+                  "name": "Authentication credentials are missing or invalid",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/:collectionId?access_key=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        ":collectionId"
+                      ],
+                      "query": [
+                        {
+                          "description": "A collection's read-only access key. Using this parameter does not require an API key.",
+                          "key": "access_key",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "collectionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-f5476f76-f93f-483e-92d2-020b9734a415"
+                },
+                {
+                  "id": "5b71383e-2c4f-4fbf-ac37-bf6838a74513",
+                  "name": "The requested resource was not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/:collectionId?access_key=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        ":collectionId"
+                      ],
+                      "query": [
+                        {
+                          "description": "A collection's read-only access key. Using this parameter does not require an API key.",
+                          "key": "access_key",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "collectionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-5b71383e-2c4f-4fbf-ac37-bf6838a74513"
+                },
+                {
+                  "id": "aa0cb751-8b54-4657-9669-6ac140b35697",
+                  "name": "Too many requests - rate limit exceeded",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/:collectionId?access_key=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        ":collectionId"
+                      ],
+                      "query": [
+                        {
+                          "description": "A collection's read-only access key. Using this parameter does not require an API key.",
+                          "key": "access_key",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "collectionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-aa0cb751-8b54-4657-9669-6ac140b35697"
+                },
+                {
+                  "id": "4d154e52-de49-40ca-9520-5811459c4af0",
+                  "name": "An unexpected error occurred on the server",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/:collectionId?access_key=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        ":collectionId"
+                      ],
+                      "query": [
+                        {
+                          "description": "A collection's read-only access key. Using this parameter does not require an API key.",
+                          "key": "access_key",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "collectionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-4d154e52-de49-40ca-9520-5811459c4af0"
+                }
+              ],
+              "createdAt": "2026-06-05T13:04:07.000Z",
+              "updatedAt": "2026-06-05T13:04:07.000Z",
+              "uid": "35240-67acacf0-279a-4b3d-99cd-13e846b00461"
+            },
+            {
+              "name": "Postman Update a collection",
+              "id": "089cd633-449a-4d75-b8ef-f32ff1074ef5",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"<string>\",\n      \"schema\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    \"item\": [\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"DELETE\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"boolean\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"any\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"ntlm\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"prerequest\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/collections/:collectionId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "collections",
+                    ":collectionId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "3d463876-d2f2-439b-9e74-d3b5ae450321",
+                      "key": "collectionId",
+                      "value": "<string>",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "description": "Updates an existing collection. This replaces the entire collection definition with the data provided in the request body. Acts as a complete replacement, not a partial update."
+              },
+              "response": [
+                {
+                  "id": "474dbb1a-be15-4d23-9743-60b4ba2f767b",
+                  "name": "Successfully updated collection",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"<string>\",\n      \"schema\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    \"item\": [\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"DELETE\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"boolean\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"any\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"ntlm\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"prerequest\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/:collectionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        ":collectionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "collectionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"collection\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uid\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-474dbb1a-be15-4d23-9743-60b4ba2f767b"
+                },
+                {
+                  "id": "81a2a113-de8c-4506-9d34-b1bd6e175ba5",
+                  "name": "Bad request - invalid input or malformed request body",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"<string>\",\n      \"schema\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    \"item\": [\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"DELETE\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"boolean\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"any\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"ntlm\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"prerequest\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/:collectionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        ":collectionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "collectionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-81a2a113-de8c-4506-9d34-b1bd6e175ba5"
+                },
+                {
+                  "id": "eb814529-9660-4c86-b6fc-1f6473cbaa4a",
+                  "name": "Authentication credentials are missing or invalid",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"<string>\",\n      \"schema\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    \"item\": [\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"DELETE\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"boolean\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"any\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"ntlm\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"prerequest\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/:collectionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        ":collectionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "collectionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-eb814529-9660-4c86-b6fc-1f6473cbaa4a"
+                },
+                {
+                  "id": "661aa87f-1dd7-4c30-848a-b3822301ea76",
+                  "name": "The requested resource was not found",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"<string>\",\n      \"schema\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    \"item\": [\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"DELETE\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"boolean\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"any\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"ntlm\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"prerequest\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/:collectionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        ":collectionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "collectionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-661aa87f-1dd7-4c30-848a-b3822301ea76"
+                },
+                {
+                  "id": "ff937a2f-fb5f-45c7-b4eb-574a4e25c135",
+                  "name": "Too many requests - rate limit exceeded",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"<string>\",\n      \"schema\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    \"item\": [\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"DELETE\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"boolean\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"any\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"ntlm\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"prerequest\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/:collectionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        ":collectionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "collectionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-ff937a2f-fb5f-45c7-b4eb-574a4e25c135"
+                },
+                {
+                  "id": "b03e1ddb-64c0-4545-aee6-5443fcf7a410",
+                  "name": "An unexpected error occurred on the server",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"<string>\",\n      \"schema\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    \"item\": [\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"DELETE\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"boolean\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"any\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"ntlm\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"prerequest\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/:collectionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        ":collectionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "collectionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-b03e1ddb-64c0-4545-aee6-5443fcf7a410"
+                }
+              ],
+              "createdAt": "2026-06-05T13:04:07.000Z",
+              "updatedAt": "2026-06-05T13:04:07.000Z",
+              "uid": "35240-089cd633-449a-4d75-b8ef-f32ff1074ef5"
+            },
+            {
+              "name": "Postman Delete a collection",
+              "id": "46941768-7d1a-48fa-8ed5-809ea5c0cafa",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/collections/:collectionId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "collections",
+                    ":collectionId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "61bfe655-a115-4815-81ee-fcae78d7dfa8",
+                      "key": "collectionId",
+                      "value": "<string>",
+                      "description": "(Required) The collection's unique ID or UID."
+                    }
+                  ]
+                },
+                "description": "Deletes a collection from your Postman account. This action is irreversible."
+              },
+              "response": [
+                {
+                  "id": "94b5846d-b2a5-4d9b-863d-04b5396e00c8",
+                  "name": "Successfully deleted collection",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/:collectionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        ":collectionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "collectionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"collection\": {\n    \"id\": \"<string>\",\n    \"uid\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-94b5846d-b2a5-4d9b-863d-04b5396e00c8"
+                },
+                {
+                  "id": "bb8378d7-d9b5-4dc0-9a76-035e183713bc",
+                  "name": "Authentication credentials are missing or invalid",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/:collectionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        ":collectionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "collectionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-bb8378d7-d9b5-4dc0-9a76-035e183713bc"
+                },
+                {
+                  "id": "78dd409a-3c44-4b8f-896b-441a193ff3ba",
+                  "name": "The requested resource was not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/:collectionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        ":collectionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "collectionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-78dd409a-3c44-4b8f-896b-441a193ff3ba"
+                },
+                {
+                  "id": "2f68f0d1-cbc4-45a5-8185-fa06ccdf81f3",
+                  "name": "Too many requests - rate limit exceeded",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/:collectionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        ":collectionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "collectionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-2f68f0d1-cbc4-45a5-8185-fa06ccdf81f3"
+                },
+                {
+                  "id": "9b7adb94-a74a-4c1c-a8de-3b97776f2ac4",
+                  "name": "An unexpected error occurred on the server",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/:collectionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        ":collectionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "collectionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-9b7adb94-a74a-4c1c-a8de-3b97776f2ac4"
+                }
+              ],
+              "createdAt": "2026-06-05T13:04:07.000Z",
+              "updatedAt": "2026-06-05T13:04:07.000Z",
+              "uid": "35240-46941768-7d1a-48fa-8ed5-809ea5c0cafa"
+            }
+          ],
+          "id": "e8c83e27-cf88-4197-8d02-4afbe7a9af97",
+          "createdAt": "2026-06-05T13:04:07.000Z",
+          "updatedAt": "2026-06-05T13:04:07.000Z",
+          "uid": "35240-e8c83e27-cf88-4197-8d02-4afbe7a9af97"
+        },
+        {
+          "name": "fork",
+          "item": [
+            {
+              "name": "{collectionId}",
+              "item": [
+                {
+                  "name": "Postman Fork a collection",
+                  "id": "7b6defac-0fb4-4889-baa9-d253e1a9ea5f",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"label\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/fork/:collectionId?workspace=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        "fork",
+                        ":collectionId"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The workspace ID to fork the collection into.",
+                          "key": "workspace",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "4dc545c8-97b4-4d86-93b9-a7b67b1a8bc2",
+                          "key": "collectionId",
+                          "value": "<string>",
+                          "description": "(Required) The collection's unique ID or UID."
+                        }
+                      ]
+                    },
+                    "description": "Creates a fork of an existing collection into a specified workspace. Forking creates a copy that maintains a link to the source collection for future merges."
+                  },
+                  "response": [
+                    {
+                      "id": "a87489f6-a44b-4989-b5ac-3ee478135251",
+                      "name": "Successfully forked collection",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"label\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/fork/:collectionId?workspace=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            "fork",
+                            ":collectionId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The workspace ID to fork the collection into.",
+                              "key": "workspace",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "collectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"collection\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"fork\": {\n      \"label\": \"<string>\",\n      \"from\": \"<string>\"\n    }\n  }\n}",
+                      "createdAt": "2026-06-05T13:04:07.000Z",
+                      "updatedAt": "2026-06-05T13:04:07.000Z",
+                      "uid": "35240-a87489f6-a44b-4989-b5ac-3ee478135251"
+                    },
+                    {
+                      "id": "22b47b57-4a81-4e3f-8208-bfd94d6f6bc3",
+                      "name": "Authentication credentials are missing or invalid",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"label\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/fork/:collectionId?workspace=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            "fork",
+                            ":collectionId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The workspace ID to fork the collection into.",
+                              "key": "workspace",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "collectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:04:07.000Z",
+                      "updatedAt": "2026-06-05T13:04:07.000Z",
+                      "uid": "35240-22b47b57-4a81-4e3f-8208-bfd94d6f6bc3"
+                    },
+                    {
+                      "id": "b3a49629-5f68-46c1-bf71-22acb2adf8b7",
+                      "name": "The requested resource was not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"label\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/fork/:collectionId?workspace=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            "fork",
+                            ":collectionId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The workspace ID to fork the collection into.",
+                              "key": "workspace",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "collectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-06-05T13:04:07.000Z",
+                      "updatedAt": "2026-06-05T13:04:07.000Z",
+                      "uid": "35240-b3a49629-5f68-46c1-bf71-22acb2adf8b7"
+                    },
+                    {
+                      "id": "32a7590e-adc3-4c89-aee5-811f9a68bf3d",
+                      "name": "Too many requests - rate limit exceeded",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"label\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/collections/fork/:collectionId?workspace=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "collections",
+                            "fork",
+                            ":collectionId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The workspace ID to fork the collection into.",
+                              "key": "workspace",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "collectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-06-05T13:04:07.000Z",
+                      "updatedAt": "2026-06-05T13:04:07.000Z",
+                      "uid": "35240-32a7590e-adc3-4c89-aee5-811f9a68bf3d"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-7b6defac-0fb4-4889-baa9-d253e1a9ea5f"
+                }
+              ],
+              "id": "63025bb5-091b-4c09-8491-1d484fddb6b8",
+              "createdAt": "2026-06-05T13:04:07.000Z",
+              "updatedAt": "2026-06-05T13:04:07.000Z",
+              "uid": "35240-63025bb5-091b-4c09-8491-1d484fddb6b8"
+            }
+          ],
+          "id": "7b3347a6-ded1-4a09-b647-be7831819d20",
+          "createdAt": "2026-06-05T13:04:07.000Z",
+          "updatedAt": "2026-06-05T13:04:07.000Z",
+          "uid": "35240-7b3347a6-ded1-4a09-b647-be7831819d20"
+        },
+        {
+          "name": "merge",
+          "item": [
+            {
+              "name": "Postman Merge a fork",
+              "id": "81278ca3-024b-41fe-8840-27847b38eec9",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"strategy\": \"deleteSource\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/collections/merge",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "collections",
+                    "merge"
+                  ]
+                },
+                "description": "Merges a forked collection back into its source collection. You can choose the merge strategy to resolve conflicts."
+              },
+              "response": [
+                {
+                  "id": "de3343fc-fe49-4961-883e-a270b21200c6",
+                  "name": "Successfully merged collection",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"source\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"strategy\": \"deleteSource\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/merge",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        "merge"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"collection\": {\n    \"id\": \"<string>\",\n    \"uid\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-de3343fc-fe49-4961-883e-a270b21200c6"
+                },
+                {
+                  "id": "457cb4ab-cf99-4858-b34e-54c49d253af1",
+                  "name": "Authentication credentials are missing or invalid",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"source\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"strategy\": \"deleteSource\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/merge",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        "merge"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-457cb4ab-cf99-4858-b34e-54c49d253af1"
+                },
+                {
+                  "id": "50c29854-b69c-4de6-b293-0da8c525611b",
+                  "name": "The requested resource was not found",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"source\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"strategy\": \"deleteSource\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/merge",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        "merge"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-50c29854-b69c-4de6-b293-0da8c525611b"
+                },
+                {
+                  "id": "7dabd342-b107-4d2a-823b-d2588fe70064",
+                  "name": "Too many requests - rate limit exceeded",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"source\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"strategy\": \"deleteSource\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/collections/merge",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "collections",
+                        "merge"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-06-05T13:04:07.000Z",
+                  "updatedAt": "2026-06-05T13:04:07.000Z",
+                  "uid": "35240-7dabd342-b107-4d2a-823b-d2588fe70064"
+                }
+              ],
+              "createdAt": "2026-06-05T13:04:07.000Z",
+              "updatedAt": "2026-06-05T13:04:07.000Z",
+              "uid": "35240-81278ca3-024b-41fe-8840-27847b38eec9"
+            }
+          ],
+          "id": "f83f11fd-e76c-4112-81cd-e2dd9d5af7a4",
+          "createdAt": "2026-06-05T13:04:07.000Z",
+          "updatedAt": "2026-06-05T13:04:07.000Z",
+          "uid": "35240-f83f11fd-e76c-4112-81cd-e2dd9d5af7a4"
+        },
+        {
+          "name": "Postman Get all collections",
+          "id": "02c9df2e-e0c9-46cc-975c-87b30cfcd565",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/collections?workspace=<string>&name=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "collections"
+              ],
+              "query": [
+                {
+                  "description": "Filter results to a specific workspace by providing the workspace ID.",
+                  "key": "workspace",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filter results by collection name (case-insensitive partial match).",
+                  "key": "name",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "Gets all of your Postman collections. The response includes all of your subscribed collections. By default, the response returns abbreviated collection data. To get full collection details, use the collection UID."
+          },
+          "response": [
+            {
+              "id": "3ddcd28d-a9c1-4b4d-a4b8-e32448acd72b",
+              "name": "Successful response with list of collections",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/collections?workspace=<string>&name=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "collections"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter results to a specific workspace by providing the workspace ID.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter results by collection name (case-insensitive partial match).",
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"collections\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"owner\": \"<string>\",\n      \"uid\": \"<string>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\",\n      \"isPublic\": \"<boolean>\",\n      \"fork\": {\n        \"label\": \"<string>\",\n        \"createdAt\": \"<dateTime>\",\n        \"from\": \"<string>\"\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"owner\": \"<string>\",\n      \"uid\": \"<string>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\",\n      \"isPublic\": \"<boolean>\",\n      \"fork\": {\n        \"label\": \"<string>\",\n        \"createdAt\": \"<dateTime>\",\n        \"from\": \"<string>\"\n      }\n    }\n  ]\n}",
+              "createdAt": "2026-06-05T13:04:07.000Z",
+              "updatedAt": "2026-06-05T13:04:07.000Z",
+              "uid": "35240-3ddcd28d-a9c1-4b4d-a4b8-e32448acd72b"
+            },
+            {
+              "id": "87016f20-4bf2-44d4-9fd5-1c1b7c4aa4b2",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/collections?workspace=<string>&name=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "collections"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter results to a specific workspace by providing the workspace ID.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter results by collection name (case-insensitive partial match).",
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:04:07.000Z",
+              "updatedAt": "2026-06-05T13:04:07.000Z",
+              "uid": "35240-87016f20-4bf2-44d4-9fd5-1c1b7c4aa4b2"
+            },
+            {
+              "id": "7a068a29-4d8c-46ad-99dd-c87941c11076",
+              "name": "Too many requests - rate limit exceeded",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/collections?workspace=<string>&name=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "collections"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter results to a specific workspace by providing the workspace ID.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter results by collection name (case-insensitive partial match).",
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T13:04:07.000Z",
+              "updatedAt": "2026-06-05T13:04:07.000Z",
+              "uid": "35240-7a068a29-4d8c-46ad-99dd-c87941c11076"
+            },
+            {
+              "id": "6d57a11e-4608-4150-8945-75d6294a1c47",
+              "name": "An unexpected error occurred on the server",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/collections?workspace=<string>&name=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "collections"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter results to a specific workspace by providing the workspace ID.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter results by collection name (case-insensitive partial match).",
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:04:07.000Z",
+              "updatedAt": "2026-06-05T13:04:07.000Z",
+              "uid": "35240-6d57a11e-4608-4150-8945-75d6294a1c47"
+            }
+          ],
+          "createdAt": "2026-06-05T13:04:07.000Z",
+          "updatedAt": "2026-06-05T13:04:07.000Z",
+          "uid": "35240-02c9df2e-e0c9-46cc-975c-87b30cfcd565"
+        },
+        {
+          "name": "Postman Create a collection",
+          "id": "902f21ea-7e75-426c-9058-f18b023ccfe4",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"<string>\",\n      \"schema\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    \"item\": [\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"DELETE\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"boolean\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"any\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"ntlm\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"prerequest\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/collections?workspace=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "collections"
+              ],
+              "query": [
+                {
+                  "description": "The workspace ID to create the collection in. If not specified, the collection is created in your personal workspace.",
+                  "key": "workspace",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "Creates a new collection in your Postman account. You can include the collection content in the request body, including requests, folders, and scripts."
+          },
+          "response": [
+            {
+              "id": "146ead86-786c-47a5-bae2-9981f7a9d33f",
+              "name": "Successfully created collection",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"<string>\",\n      \"schema\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    \"item\": [\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"DELETE\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"boolean\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"any\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"ntlm\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"prerequest\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/collections?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "collections"
+                  ],
+                  "query": [
+                    {
+                      "description": "The workspace ID to create the collection in. If not specified, the collection is created in your personal workspace.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"collection\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uid\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:04:07.000Z",
+              "updatedAt": "2026-06-05T13:04:07.000Z",
+              "uid": "35240-146ead86-786c-47a5-bae2-9981f7a9d33f"
+            },
+            {
+              "id": "a2fb213f-6e54-45d6-8f7e-ff59ea85eadb",
+              "name": "Bad request - invalid input or malformed request body",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"<string>\",\n      \"schema\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    \"item\": [\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"DELETE\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"boolean\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"any\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"ntlm\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"prerequest\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/collections?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "collections"
+                  ],
+                  "query": [
+                    {
+                      "description": "The workspace ID to create the collection in. If not specified, the collection is created in your personal workspace.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:04:07.000Z",
+              "updatedAt": "2026-06-05T13:04:07.000Z",
+              "uid": "35240-a2fb213f-6e54-45d6-8f7e-ff59ea85eadb"
+            },
+            {
+              "id": "8c5caf21-0076-494c-a0a7-192922da641b",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"<string>\",\n      \"schema\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    \"item\": [\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"DELETE\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"boolean\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"any\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"ntlm\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"prerequest\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/collections?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "collections"
+                  ],
+                  "query": [
+                    {
+                      "description": "The workspace ID to create the collection in. If not specified, the collection is created in your personal workspace.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:04:07.000Z",
+              "updatedAt": "2026-06-05T13:04:07.000Z",
+              "uid": "35240-8c5caf21-0076-494c-a0a7-192922da641b"
+            },
+            {
+              "id": "17de8d5e-cdb7-45ba-a44e-7e09feebbaae",
+              "name": "Too many requests - rate limit exceeded",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"<string>\",\n      \"schema\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    \"item\": [\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"DELETE\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"boolean\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"any\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"ntlm\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"prerequest\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/collections?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "collections"
+                  ],
+                  "query": [
+                    {
+                      "description": "The workspace ID to create the collection in. If not specified, the collection is created in your personal workspace.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-06-05T13:04:07.000Z",
+              "updatedAt": "2026-06-05T13:04:07.000Z",
+              "uid": "35240-17de8d5e-cdb7-45ba-a44e-7e09feebbaae"
+            },
+            {
+              "id": "aa9d1e84-2656-4dda-a799-b415de7b8087",
+              "name": "An unexpected error occurred on the server",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"<string>\",\n      \"schema\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    \"item\": [\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"DELETE\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      },\n      {\n        \"name\": \"<string>\",\n        \"id\": \"<string>\",\n        \"request\": {\n          \"method\": \"HEAD\",\n          \"url\": \"<string>\",\n          \"header\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ],\n          \"body\": {\n            \"mode\": \"graphql\",\n            \"raw\": \"<string>\"\n          },\n          \"description\": \"<string>\"\n        },\n        \"item\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/CollectionItem detected>\"\n          }\n        ],\n        \"event\": [\n          {\n            \"listen\": \"prerequest\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          },\n          {\n            \"listen\": \"test\",\n            \"script\": {\n              \"type\": \"<string>\",\n              \"exec\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        ]\n      }\n    ],\n    \"variable\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"boolean\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\",\n        \"type\": \"any\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"auth\": {\n      \"type\": \"ntlm\"\n    },\n    \"event\": [\n      {\n        \"listen\": \"test\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      {\n        \"listen\": \"prerequest\",\n        \"script\": {\n          \"type\": \"<string>\",\n          \"exec\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/collections?workspace=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "collections"
+                  ],
+                  "query": [
+                    {
+                      "description": "The workspace ID to create the collection in. If not specified, the collection is created in your personal workspace.",
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"name\": \"<string>\",\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T13:04:07.000Z",
+              "updatedAt": "2026-06-05T13:04:07.000Z",
+              "uid": "35240-aa9d1e84-2656-4dda-a799-b415de7b8087"
+            }
+          ],
+          "createdAt": "2026-06-05T13:04:07.000Z",
+          "updatedAt": "2026-06-05T13:04:07.000Z",
+          "uid": "35240-902f21ea-7e75-426c-9058-f18b023ccfe4"
+        }
+      ],
+      "id": "f17a17af-d3c8-4afe-a115-7a83d16ce8e0",
+      "createdAt": "2026-06-05T13:04:07.000Z",
+      "updatedAt": "2026-06-05T13:04:07.000Z",
+      "uid": "35240-f17a17af-d3c8-4afe-a115-7a83d16ce8e0"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.getpostman.com"
+    }
+  ]
+}

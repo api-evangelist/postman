@@ -1,0 +1,242 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Postman Collections API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Collections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Postman Get all collections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/collections",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to a specific workspace by providing the workspace ID."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by collection name (case-insensitive partial match)."
+              }
+            ]
+          },
+          "docs": "Gets all of your Postman collections. The response includes all of your subscribed collections. By default, the response returns abbreviated collection data. To get full collection details, use the collection UID."
+        },
+        {
+          "info": {
+            "name": "Postman Create a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getpostman.com/collections",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "query",
+                "description": "The workspace ID to create the collection in. If not specified, the collection is created in your personal workspace."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new collection in your Postman account. You can include the collection content in the request body, including requests, folders, and scripts."
+        },
+        {
+          "info": {
+            "name": "Postman Get a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/collections/:collectionId",
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID or UID."
+              },
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "A collection's read-only access key. Using this parameter does not require an API key."
+              }
+            ]
+          },
+          "docs": "Gets information about a single collection. The response includes the full collection definition including requests, folders, scripts, variables, and other metadata."
+        },
+        {
+          "info": {
+            "name": "Postman Update a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.getpostman.com/collections/:collectionId",
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID or UID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing collection. This replaces the entire collection definition with the data provided in the request body. Acts as a complete replacement, not a partial update."
+        },
+        {
+          "info": {
+            "name": "Postman Delete a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getpostman.com/collections/:collectionId",
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID or UID."
+              }
+            ]
+          },
+          "docs": "Deletes a collection from your Postman account. This action is irreversible."
+        },
+        {
+          "info": {
+            "name": "Postman Get all requests in a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/collections/:collectionId/requests",
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID or UID."
+              }
+            ]
+          },
+          "docs": "Gets all the requests in a collection. Returns request metadata including name, method, URL, and folder hierarchy."
+        },
+        {
+          "info": {
+            "name": "Postman Get all folders in a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/collections/:collectionId/folders",
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID or UID."
+              }
+            ]
+          },
+          "docs": "Gets all the folders in a collection. Returns folder metadata and hierarchy structure."
+        },
+        {
+          "info": {
+            "name": "Postman Get all responses in a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getpostman.com/collections/:collectionId/responses",
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID or UID."
+              }
+            ]
+          },
+          "docs": "Gets all saved example responses in a collection. Includes response body, headers, and status codes."
+        },
+        {
+          "info": {
+            "name": "Postman Fork a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getpostman.com/collections/fork/:collectionId",
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID or UID."
+              },
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "query",
+                "description": "The workspace ID to fork the collection into."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a fork of an existing collection into a specified workspace. Forking creates a copy that maintains a link to the source collection for future merges."
+        },
+        {
+          "info": {
+            "name": "Postman Merge a fork",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getpostman.com/collections/merge",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Merges a forked collection back into its source collection. You can choose the merge strategy to resolve conflicts."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
