@@ -1,23 +1,26 @@
 openapi: 3.1.0
 info:
-  title: Postman Collections API
-  description: |
-    The Postman Collections API enables you to manage and automate your Postman
-    collections programmatically. Collections are groups of saved API requests that
-    can be organized into folders, include documentation, tests, and pre-request
-    scripts.
+  title: Postman APIs API Comments Collections API
+  description: 'The Postman APIs API enables you to manage your API definitions in Postman''s
+
+    API Builder. You can create APIs, manage versions, add schemas (OpenAPI,
+
+    GraphQL, etc.), and link collections, environments, mock servers, monitors,
+
+    and documentation to your API definitions.
+
 
     ## Authentication
-    All requests require an API key passed in the `x-api-key` header. Generate your
-    API key from your Postman account settings.
+
+    All requests require an API key passed in the `x-api-key` header.
+
 
     ## Rate Limits
-    The Postman API has rate limits that vary by plan. Free plans are limited to
-    60 requests per minute. Paid plans have higher limits.
 
-    ## Base URL
-    All API endpoints are relative to `https://api.getpostman.com`.
-  version: '1.0.0'
+    Standard Postman API rate limits apply.
+
+    '
+  version: 1.0.0
   contact:
     name: Postman Developer Support
     url: https://learning.postman.com/docs/developer/postman-api/intro-api/
@@ -26,37 +29,34 @@ info:
     name: Postman Terms of Service
     url: https://www.postman.com/legal/terms/
 servers:
-  - url: https://api.getpostman.com
-    description: Postman Production API Server
-tags:
-  - name: Collections
-    description: Operations for managing Postman collections including CRUD operations, forking, merging, and pull requests.
+- url: https://api.getpostman.com
+  description: Postman Production API Server
 security:
-  - apiKeyAuth: []
+- apiKeyAuth: []
+tags:
+- name: Collections
+  description: Operations for managing Postman collections including CRUD operations, forking, merging, and pull requests.
 paths:
   /collections:
     get:
       tags:
-        - Collections
+      - Collections
       summary: Postman Get all collections
       operationId: getAllCollections
-      description: >-
-        Gets all of your Postman collections. The response includes all of your
-        subscribed collections. By default, the response returns abbreviated
-        collection data. To get full collection details, use the collection UID.
+      description: Gets all of your Postman collections. The response includes all of your subscribed collections. By default, the response returns abbreviated collection data. To get full collection details, use the collection UID.
       parameters:
-        - name: workspace
-          in: query
-          description: Filter results to a specific workspace by providing the workspace ID.
-          required: false
-          schema:
-            type: string
-        - name: name
-          in: query
-          description: Filter results by collection name (case-insensitive partial match).
-          required: false
-          schema:
-            type: string
+      - name: workspace
+        in: query
+        description: Filter results to a specific workspace by providing the workspace ID.
+        required: false
+        schema:
+          type: string
+      - name: name
+        in: query
+        description: Filter results by collection name (case-insensitive partial match).
+        required: false
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with list of collections
@@ -77,20 +77,17 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     post:
       tags:
-        - Collections
+      - Collections
       summary: Postman Create a collection
       operationId: createCollection
-      description: >-
-        Creates a new collection in your Postman account. You can include the
-        collection content in the request body, including requests, folders,
-        and scripts.
+      description: Creates a new collection in your Postman account. You can include the collection content in the request body, including requests, folders, and scripts.
       parameters:
-        - name: workspace
-          in: query
-          description: The workspace ID to create the collection in. If not specified, the collection is created in your personal workspace.
-          required: false
-          schema:
-            type: string
+      - name: workspace
+        in: query
+        description: The workspace ID to create the collection in. If not specified, the collection is created in your personal workspace.
+        required: false
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -98,7 +95,7 @@ paths:
             schema:
               type: object
               required:
-                - collection
+              - collection
               properties:
                 collection:
                   $ref: '#/components/schemas/CollectionInput'
@@ -133,21 +130,18 @@ paths:
   /collections/{collectionId}:
     get:
       tags:
-        - Collections
+      - Collections
       summary: Postman Get a collection
       operationId: getCollection
-      description: >-
-        Gets information about a single collection. The response includes the
-        full collection definition including requests, folders, scripts,
-        variables, and other metadata.
+      description: Gets information about a single collection. The response includes the full collection definition including requests, folders, scripts, variables, and other metadata.
       parameters:
-        - $ref: '#/components/parameters/CollectionIdParam'
-        - name: access_key
-          in: query
-          description: A collection's read-only access key. Using this parameter does not require an API key.
-          required: false
-          schema:
-            type: string
+      - $ref: '#/components/parameters/CollectionIdParam'
+      - name: access_key
+        in: query
+        description: A collection's read-only access key. Using this parameter does not require an API key.
+        required: false
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with collection details
@@ -168,15 +162,12 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     put:
       tags:
-        - Collections
+      - Collections
       summary: Postman Update a collection
       operationId: updateCollection
-      description: >-
-        Updates an existing collection. This replaces the entire collection
-        definition with the data provided in the request body. Acts as a
-        complete replacement, not a partial update.
+      description: Updates an existing collection. This replaces the entire collection definition with the data provided in the request body. Acts as a complete replacement, not a partial update.
       parameters:
-        - $ref: '#/components/parameters/CollectionIdParam'
+      - $ref: '#/components/parameters/CollectionIdParam'
       requestBody:
         required: true
         content:
@@ -184,7 +175,7 @@ paths:
             schema:
               type: object
               required:
-                - collection
+              - collection
               properties:
                 collection:
                   $ref: '#/components/schemas/CollectionInput'
@@ -217,14 +208,12 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     delete:
       tags:
-        - Collections
+      - Collections
       summary: Postman Delete a collection
       operationId: deleteCollection
-      description: >-
-        Deletes a collection from your Postman account. This action is
-        irreversible.
+      description: Deletes a collection from your Postman account. This action is irreversible.
       parameters:
-        - $ref: '#/components/parameters/CollectionIdParam'
+      - $ref: '#/components/parameters/CollectionIdParam'
       responses:
         '200':
           description: Successfully deleted collection
@@ -251,14 +240,12 @@ paths:
   /collections/{collectionId}/requests:
     get:
       tags:
-        - Collections
+      - Collections
       summary: Postman Get all requests in a collection
       operationId: getCollectionRequests
-      description: >-
-        Gets all the requests in a collection. Returns request metadata
-        including name, method, URL, and folder hierarchy.
+      description: Gets all the requests in a collection. Returns request metadata including name, method, URL, and folder hierarchy.
       parameters:
-        - $ref: '#/components/parameters/CollectionIdParam'
+      - $ref: '#/components/parameters/CollectionIdParam'
       responses:
         '200':
           description: Successful response with list of requests
@@ -282,14 +269,12 @@ paths:
   /collections/{collectionId}/folders:
     get:
       tags:
-        - Collections
+      - Collections
       summary: Postman Get all folders in a collection
       operationId: getCollectionFolders
-      description: >-
-        Gets all the folders in a collection. Returns folder metadata and
-        hierarchy structure.
+      description: Gets all the folders in a collection. Returns folder metadata and hierarchy structure.
       parameters:
-        - $ref: '#/components/parameters/CollectionIdParam'
+      - $ref: '#/components/parameters/CollectionIdParam'
       responses:
         '200':
           description: Successful response with list of folders
@@ -313,14 +298,12 @@ paths:
   /collections/{collectionId}/responses:
     get:
       tags:
-        - Collections
+      - Collections
       summary: Postman Get all responses in a collection
       operationId: getCollectionResponses
-      description: >-
-        Gets all saved example responses in a collection. Includes response
-        body, headers, and status codes.
+      description: Gets all saved example responses in a collection. Includes response body, headers, and status codes.
       parameters:
-        - $ref: '#/components/parameters/CollectionIdParam'
+      - $ref: '#/components/parameters/CollectionIdParam'
       responses:
         '200':
           description: Successful response with list of responses
@@ -344,21 +327,18 @@ paths:
   /collections/fork/{collectionId}:
     post:
       tags:
-        - Collections
+      - Collections
       summary: Postman Fork a collection
       operationId: forkCollection
-      description: >-
-        Creates a fork of an existing collection into a specified workspace.
-        Forking creates a copy that maintains a link to the source collection
-        for future merges.
+      description: Creates a fork of an existing collection into a specified workspace. Forking creates a copy that maintains a link to the source collection for future merges.
       parameters:
-        - $ref: '#/components/parameters/CollectionIdParam'
-        - name: workspace
-          in: query
-          description: The workspace ID to fork the collection into.
-          required: true
-          schema:
-            type: string
+      - $ref: '#/components/parameters/CollectionIdParam'
+      - name: workspace
+        in: query
+        description: The workspace ID to fork the collection into.
+        required: true
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -366,7 +346,7 @@ paths:
             schema:
               type: object
               required:
-                - label
+              - label
               properties:
                 label:
                   type: string
@@ -404,12 +384,10 @@ paths:
   /collections/merge:
     post:
       tags:
-        - Collections
+      - Collections
       summary: Postman Merge a fork
       operationId: mergeCollection
-      description: >-
-        Merges a forked collection back into its source collection. You can
-        choose the merge strategy to resolve conflicts.
+      description: Merges a forked collection back into its source collection. You can choose the merge strategy to resolve conflicts.
       requestBody:
         required: true
         content:
@@ -417,14 +395,14 @@ paths:
             schema:
               type: object
               required:
-                - source
-                - destination
+              - source
+              - destination
               properties:
                 strategy:
                   type: string
                   enum:
-                    - deleteSource
-                    - updateSourceWithDestination
+                  - deleteSource
+                  - updateSourceWithDestination
                   description: The merge strategy to use
                 source:
                   type: string
@@ -454,59 +432,157 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimitError'
 components:
-  securitySchemes:
-    apiKeyAuth:
-      type: apiKey
-      name: x-api-key
-      in: header
-      description: Postman API key for authentication. Generate from your Postman account settings.
-  parameters:
-    CollectionIdParam:
-      name: collectionId
-      in: path
-      required: true
-      description: The collection's unique ID or UID.
-      schema:
-        type: string
   schemas:
-    CollectionListItem:
+    Auth:
       type: object
-      description: Abbreviated collection information returned in list responses.
+      description: Authentication configuration for requests.
+      properties:
+        type:
+          type: string
+          enum:
+          - apikey
+          - awsv4
+          - basic
+          - bearer
+          - digest
+          - edgegrid
+          - hawk
+          - noauth
+          - ntlm
+          - oauth1
+          - oauth2
+          description: The authentication type
+    FolderListItem:
+      type: object
       properties:
         id:
           type: string
-          description: The collection's unique ID
         name:
           type: string
-          description: The collection name
-        owner:
-          type: string
-          description: The owner ID of the collection
-        uid:
-          type: string
-          description: The collection's UID in the format {ownerId}-{collectionId}
         createdAt:
           type: string
           format: date-time
-          description: The date and time at which the collection was created
         updatedAt:
           type: string
           format: date-time
-          description: The date and time at which the collection was last updated
-        isPublic:
-          type: boolean
-          description: Whether the collection is publicly accessible
-        fork:
+    RequestListItem:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        method:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    Variable:
+      type: object
+      description: A Postman variable with key-value pair and type.
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        type:
+          type: string
+          enum:
+          - string
+          - boolean
+          - number
+          - any
+        description:
+          type: string
+    CollectionItem:
+      type: object
+      description: A request or folder within a collection.
+      properties:
+        name:
+          type: string
+          description: The item name
+        id:
+          type: string
+          description: The item ID
+        request:
           type: object
-          description: Fork information if the collection is a fork
+          description: The request definition (present for request items)
           properties:
-            label:
+            method:
               type: string
-            createdAt:
+              enum:
+              - GET
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+              - HEAD
+              - OPTIONS
+            url:
+              oneOf:
+              - type: string
+              - type: object
+                properties:
+                  raw:
+                    type: string
+                  host:
+                    type: array
+                    items:
+                      type: string
+                  path:
+                    type: array
+                    items:
+                      type: string
+                  query:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                        value:
+                          type: string
+            header:
+              type: array
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                  value:
+                    type: string
+            body:
+              type: object
+              properties:
+                mode:
+                  type: string
+                  enum:
+                  - raw
+                  - urlencoded
+                  - formdata
+                  - file
+                  - graphql
+                raw:
+                  type: string
+            description:
               type: string
-              format: date-time
-            from:
-              type: string
+        response:
+          type: array
+          description: Saved example responses
+          items:
+            type: object
+        item:
+          type: array
+          description: Sub-items (for folder items)
+          items:
+            $ref: '#/components/schemas/CollectionItem'
+        event:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
     Collection:
       type: object
       description: Full collection definition including requests, folders, and metadata.
@@ -546,17 +622,55 @@ components:
           description: Collection-level scripts (pre-request and test scripts)
           items:
             $ref: '#/components/schemas/Event'
+    CollectionListItem:
+      type: object
+      description: Abbreviated collection information returned in list responses.
+      properties:
+        id:
+          type: string
+          description: The collection's unique ID
+        name:
+          type: string
+          description: The collection name
+        owner:
+          type: string
+          description: The owner ID of the collection
+        uid:
+          type: string
+          description: The collection's UID in the format {ownerId}-{collectionId}
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the collection was created
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the collection was last updated
+        isPublic:
+          type: boolean
+          description: Whether the collection is publicly accessible
+        fork:
+          type: object
+          description: Fork information if the collection is a fork
+          properties:
+            label:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            from:
+              type: string
     CollectionInput:
       type: object
       description: Input format for creating or updating a collection.
       required:
-        - info
+      - info
       properties:
         info:
           type: object
           required:
-            - name
-            - schema
+          - name
+          - schema
           properties:
             name:
               type: string
@@ -582,108 +696,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Event'
-    CollectionItem:
-      type: object
-      description: A request or folder within a collection.
-      properties:
-        name:
-          type: string
-          description: The item name
-        id:
-          type: string
-          description: The item ID
-        request:
-          type: object
-          description: The request definition (present for request items)
-          properties:
-            method:
-              type: string
-              enum: [GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS]
-            url:
-              oneOf:
-                - type: string
-                - type: object
-                  properties:
-                    raw:
-                      type: string
-                    host:
-                      type: array
-                      items:
-                        type: string
-                    path:
-                      type: array
-                      items:
-                        type: string
-                    query:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          key:
-                            type: string
-                          value:
-                            type: string
-            header:
-              type: array
-              items:
-                type: object
-                properties:
-                  key:
-                    type: string
-                  value:
-                    type: string
-            body:
-              type: object
-              properties:
-                mode:
-                  type: string
-                  enum: [raw, urlencoded, formdata, file, graphql]
-                raw:
-                  type: string
-            description:
-              type: string
-        response:
-          type: array
-          description: Saved example responses
-          items:
-            type: object
-        item:
-          type: array
-          description: Sub-items (for folder items)
-          items:
-            $ref: '#/components/schemas/CollectionItem'
-        event:
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
-    RequestListItem:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        method:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    FolderListItem:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
     ResponseListItem:
       type: object
       properties:
@@ -697,45 +709,6 @@ components:
         updatedAt:
           type: string
           format: date-time
-    Variable:
-      type: object
-      description: A Postman variable with key-value pair and type.
-      properties:
-        key:
-          type: string
-        value:
-          type: string
-        type:
-          type: string
-          enum: [string, boolean, number, any]
-        description:
-          type: string
-    Auth:
-      type: object
-      description: Authentication configuration for requests.
-      properties:
-        type:
-          type: string
-          enum: [apikey, awsv4, basic, bearer, digest, edgegrid, hawk, noauth, ntlm, oauth1, oauth2]
-          description: The authentication type
-    Event:
-      type: object
-      description: A script event (pre-request or test).
-      properties:
-        listen:
-          type: string
-          enum: [prerequest, test]
-          description: When the script runs
-        script:
-          type: object
-          properties:
-            type:
-              type: string
-              example: text/javascript
-            exec:
-              type: array
-              items:
-                type: string
     PaginationMeta:
       type: object
       properties:
@@ -748,6 +721,26 @@ components:
         offset:
           type: integer
           description: Current offset
+    Event:
+      type: object
+      description: A script event (pre-request or test).
+      properties:
+        listen:
+          type: string
+          enum:
+          - prerequest
+          - test
+          description: When the script runs
+        script:
+          type: object
+          properties:
+            type:
+              type: string
+              example: text/javascript
+            exec:
+              type: array
+              items:
+                type: string
   responses:
     BadRequestError:
       description: Bad request - invalid input or malformed request body
@@ -762,6 +755,21 @@ components:
                   name:
                     type: string
                     example: badRequestError
+                  message:
+                    type: string
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: instanceNotFoundError
                   message:
                     type: string
     UnauthorizedError:
@@ -780,21 +788,6 @@ components:
                   message:
                     type: string
                     example: Invalid API Key. Every request requires a valid API Key to be sent.
-    NotFoundError:
-      description: The requested resource was not found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    example: instanceNotFoundError
-                  message:
-                    type: string
     RateLimitError:
       description: Too many requests - rate limit exceeded
       content:
@@ -823,3 +816,17 @@ components:
                     example: serverError
                   message:
                     type: string
+  parameters:
+    CollectionIdParam:
+      name: collectionId
+      in: path
+      required: true
+      description: The collection's unique ID or UID.
+      schema:
+        type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.

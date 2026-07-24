@@ -1,0 +1,328 @@
+openapi: 3.1.0
+info:
+  title: Postman APIs API Comments API Schemas API
+  description: 'The Postman APIs API enables you to manage your API definitions in Postman''s
+
+    API Builder. You can create APIs, manage versions, add schemas (OpenAPI,
+
+    GraphQL, etc.), and link collections, environments, mock servers, monitors,
+
+    and documentation to your API definitions.
+
+
+    ## Authentication
+
+    All requests require an API key passed in the `x-api-key` header.
+
+
+    ## Rate Limits
+
+    Standard Postman API rate limits apply.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Postman Developer Support
+    url: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    email: help@postman.com
+  license:
+    name: Postman Terms of Service
+    url: https://www.postman.com/legal/terms/
+servers:
+- url: https://api.getpostman.com
+  description: Postman Production API Server
+security:
+- apiKeyAuth: []
+tags:
+- name: API Schemas
+  description: Operations for managing API schemas and specifications.
+paths:
+  /apis/{apiId}/schemas:
+    get:
+      tags:
+      - API Schemas
+      summary: Postman Get all API schemas
+      operationId: getApiSchemas
+      description: Gets all schemas associated with an API. Schemas define the structure of the API using formats like OpenAPI, RAML, or GraphQL.
+      parameters:
+      - $ref: '#/components/parameters/ApiIdParam'
+      - name: cursor
+        in: query
+        schema:
+          type: string
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 10
+      responses:
+        '200':
+          description: Successful response with API schemas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  schemas:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ApiSchema'
+                  meta:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      nextCursor:
+                        type: string
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+    post:
+      tags:
+      - API Schemas
+      summary: Postman Create an API schema
+      operationId: createApiSchema
+      description: Creates a new schema for an API. Specify the schema type and language, then provide the schema content.
+      parameters:
+      - $ref: '#/components/parameters/ApiIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - type
+              - language
+              - schema
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - openapi3_1
+                  - openapi3
+                  - openapi2
+                  - openapi1
+                  - raml
+                  - graphql
+                  - proto2
+                  - proto3
+                  - wsdl1
+                  - wsdl2
+                  - asyncapi2
+                  description: The schema type
+                language:
+                  type: string
+                  enum:
+                  - json
+                  - yaml
+                  description: The schema format
+                schema:
+                  type: string
+                  description: The schema content as a string
+      responses:
+        '200':
+          description: Successfully created API schema
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiSchema'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /apis/{apiId}/schemas/{schemaId}:
+    get:
+      tags:
+      - API Schemas
+      summary: Postman Get an API schema
+      operationId: getApiSchema
+      description: Gets a specific schema for an API, including its content.
+      parameters:
+      - $ref: '#/components/parameters/ApiIdParam'
+      - name: schemaId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with schema details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiSchema'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /apis/{apiId}/schemas/{schemaId}/files:
+    get:
+      tags:
+      - API Schemas
+      summary: Postman Get API schema files
+      operationId: getApiSchemaFiles
+      description: Gets the files associated with an API schema. Multi-file schemas may have multiple files.
+      parameters:
+      - $ref: '#/components/parameters/ApiIdParam'
+      - name: schemaId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with schema files
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  files:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        path:
+                          type: string
+                        content:
+                          type: string
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+components:
+  responses:
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+  parameters:
+    ApiIdParam:
+      name: apiId
+      in: path
+      required: true
+      description: The API's unique ID.
+      schema:
+        type: string
+  schemas:
+    ApiSchema:
+      type: object
+      description: An API schema definition.
+      properties:
+        id:
+          type: string
+        apiId:
+          type: string
+        type:
+          type: string
+          enum:
+          - openapi3_1
+          - openapi3
+          - openapi2
+          - openapi1
+          - raml
+          - graphql
+          - proto2
+          - proto3
+          - wsdl1
+          - wsdl2
+          - asyncapi2
+        language:
+          type: string
+          enum:
+          - json
+          - yaml
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: integer
+        updatedAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: integer
+        files:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              path:
+                type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.

@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  title: Postman APIs API Comments Tags API
+  title: Postman APIs API Comments Network Requests API
   description: 'The Postman APIs API enables you to manage your API definitions in Postman''s
 
     API Builder. You can create APIs, manage versions, add schemas (OpenAPI,
@@ -34,31 +34,73 @@ servers:
 security:
 - apiKeyAuth: []
 tags:
-- name: Tags
-  description: Operations for managing tags on Postman entities.
+- name: Network Requests
+  description: Operations for managing requests to add elements to the network.
 paths:
-  /tags/{entityType}/{entityId}:
+  /network/private/network-request:
     get:
       tags:
-      - Tags
-      summary: Postman Get tags for an entity
-      operationId: getEntityTags
-      description: Gets all tags associated with a specific entity (API, collection, or workspace).
+      - Network Requests
+      summary: Postman Get all network requests
+      operationId: getNetworkRequests
+      description: Gets all pending requests to add elements to the private API network.
       parameters:
-      - $ref: '#/components/parameters/EntityTypeParam'
-      - $ref: '#/components/parameters/EntityIdParam'
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - pending
+          - approved
+          - denied
+      - name: offset
+        in: query
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 10
       responses:
         '200':
-          description: Successful response with tags
+          description: Successful response with network requests
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  tags:
+                  requests:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Tag'
+                      $ref: '#/components/schemas/NetworkRequest'
+                  meta:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /network/private/network-request/{requestId}/approve:
+    put:
+      tags:
+      - Network Requests
+      summary: Postman Approve a network request
+      operationId: approveNetworkRequest
+      parameters:
+      - name: requestId
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successfully approved network request
         '401':
           $ref: '#/components/responses/UnauthorizedError'
         '403':
@@ -67,50 +109,21 @@ paths:
           $ref: '#/components/responses/NotFoundError'
         '429':
           $ref: '#/components/responses/RateLimitError'
+  /network/private/network-request/{requestId}/deny:
     put:
       tags:
-      - Tags
-      summary: Postman Update tags for an entity
-      operationId: updateEntityTags
-      description: Updates (replaces) the tags associated with a specific entity. This replaces all existing tags with the provided list. To add tags without removing existing ones, first GET the current tags and include them in the update.
+      - Network Requests
+      summary: Postman Deny a network request
+      operationId: denyNetworkRequest
       parameters:
-      - $ref: '#/components/parameters/EntityTypeParam'
-      - $ref: '#/components/parameters/EntityIdParam'
-      requestBody:
+      - name: requestId
+        in: path
         required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-              - tags
-              properties:
-                tags:
-                  type: array
-                  items:
-                    type: object
-                    required:
-                    - slug
-                    properties:
-                      slug:
-                        type: string
-                        description: The tag identifier (lowercase, hyphenated)
-                        example: production-ready
-                        pattern: ^[a-z0-9]+(-[a-z0-9]+)*$
+        schema:
+          type: integer
       responses:
         '200':
-          description: Successfully updated tags
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  tags:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Tag'
-        '400':
-          $ref: '#/components/responses/BadRequestError'
+          description: Successfully denied network request
         '401':
           $ref: '#/components/responses/UnauthorizedError'
         '403':
@@ -120,9 +133,45 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimitError'
 components:
+  schemas:
+    NetworkRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          enum:
+          - api
+          - collection
+          - workspace
+        elementId:
+          type: string
+        name:
+          type: string
+        summary:
+          type: string
+        status:
+          type: string
+          enum:
+          - pending
+          - approved
+          - denied
+        requestedBy:
+          type: integer
+        requestedAt:
+          type: string
+          format: date-time
+        respondedBy:
+          type: integer
+        respondedAt:
+          type: string
+          format: date-time
+        message:
+          type: string
   responses:
     ForbiddenError:
-      description: Insufficient permissions
+      description: Insufficient permissions to perform this operation
       content:
         application/json:
           schema:
@@ -174,51 +223,6 @@ components:
                 type: string
               message:
                 type: string
-    BadRequestError:
-      description: Bad request - invalid input
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-  parameters:
-    EntityTypeParam:
-      name: entityType
-      in: path
-      required: true
-      description: The type of entity to manage tags for.
-      schema:
-        type: string
-        enum:
-        - apis
-        - collections
-        - workspaces
-    EntityIdParam:
-      name: entityId
-      in: path
-      required: true
-      description: The entity's unique ID.
-      schema:
-        type: string
-  schemas:
-    Tag:
-      type: object
-      description: A tag attached to a Postman entity for categorization and governance.
-      properties:
-        slug:
-          type: string
-          description: The tag identifier (lowercase, hyphenated)
-          example: production-ready
-        name:
-          type: string
-          description: The display name of the tag
   securitySchemes:
     apiKeyAuth:
       type: apiKey

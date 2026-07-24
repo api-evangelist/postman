@@ -1,19 +1,26 @@
 openapi: 3.1.0
 info:
-  title: Postman Collection Runs API
-  description: |
-    The Postman Collection Runs API enables you to programmatically run
-    collections and retrieve run results. This is useful for continuous
-    integration and delivery pipelines, enabling you to execute API tests
-    and retrieve results programmatically.
+  title: Postman APIs API Comments Collection Runs API
+  description: 'The Postman APIs API enables you to manage your API definitions in Postman''s
+
+    API Builder. You can create APIs, manage versions, add schemas (OpenAPI,
+
+    GraphQL, etc.), and link collections, environments, mock servers, monitors,
+
+    and documentation to your API definitions.
+
 
     ## Authentication
+
     All requests require an API key passed in the `x-api-key` header.
 
+
     ## Rate Limits
-    Collection run limits vary by plan. Free plans include 25 collection
-    runs per month.
-  version: '1.0.0'
+
+    Standard Postman API rate limits apply.
+
+    '
+  version: 1.0.0
   contact:
     name: Postman Developer Support
     url: https://learning.postman.com/docs/developer/postman-api/intro-api/
@@ -22,49 +29,57 @@ info:
     name: Postman Terms of Service
     url: https://www.postman.com/legal/terms/
 servers:
-  - url: https://api.getpostman.com
-    description: Postman Production API Server
-tags:
-  - name: Collection Runs
-    description: Operations for running collections and retrieving results.
+- url: https://api.getpostman.com
+  description: Postman Production API Server
 security:
-  - apiKeyAuth: []
+- apiKeyAuth: []
+tags:
+- name: Collection Runs
+  description: Operations for running collections and retrieving results.
 paths:
   /collections/{collectionId}/runs:
     get:
       tags:
-        - Collection Runs
+      - Collection Runs
       summary: Postman Get collection runs
       operationId: getCollectionRuns
-      description: >-
-        Gets the run history for a collection. Returns a list of past runs
-        with their status, timing, and summary statistics.
+      description: Gets the run history for a collection. Returns a list of past runs with their status, timing, and summary statistics.
       parameters:
-        - $ref: '#/components/parameters/CollectionIdParam'
-        - name: cursor
-          in: query
-          description: Pagination cursor for the next page of results.
-          schema:
-            type: string
-        - name: limit
-          in: query
-          description: Maximum number of results to return.
-          schema:
-            type: integer
-            default: 10
-            maximum: 100
-        - name: status
-          in: query
-          description: Filter by run status.
-          schema:
-            type: string
-            enum: [queued, running, finished, failed]
-        - name: source
-          in: query
-          description: Filter by run source.
-          schema:
-            type: string
-            enum: [collection_runner, monitor, webhook, schedule, api, newman]
+      - $ref: '#/components/parameters/CollectionIdParam'
+      - name: cursor
+        in: query
+        description: Pagination cursor for the next page of results.
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of results to return.
+        schema:
+          type: integer
+          default: 10
+          maximum: 100
+      - name: status
+        in: query
+        description: Filter by run status.
+        schema:
+          type: string
+          enum:
+          - queued
+          - running
+          - finished
+          - failed
+      - name: source
+        in: query
+        description: Filter by run source.
+        schema:
+          type: string
+          enum:
+          - collection_runner
+          - monitor
+          - webhook
+          - schedule
+          - api
+          - newman
       responses:
         '200':
           description: Successful response with collection runs
@@ -93,20 +108,18 @@ paths:
   /collections/{collectionId}/runs/{runId}:
     get:
       tags:
-        - Collection Runs
+      - Collection Runs
       summary: Postman Get a collection run
       operationId: getCollectionRun
-      description: >-
-        Gets detailed information about a specific collection run, including
-        individual request results, test assertions, and response data.
+      description: Gets detailed information about a specific collection run, including individual request results, test assertions, and response data.
       parameters:
-        - $ref: '#/components/parameters/CollectionIdParam'
-        - name: runId
-          in: path
-          required: true
-          description: The run's unique ID.
-          schema:
-            type: string
+      - $ref: '#/components/parameters/CollectionIdParam'
+      - name: runId
+        in: path
+        required: true
+        description: The run's unique ID.
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with run details
@@ -124,12 +137,46 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimitError'
 components:
-  securitySchemes:
-    apiKeyAuth:
-      type: apiKey
-      name: x-api-key
-      in: header
-      description: Postman API key for authentication.
+  responses:
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
   parameters:
     CollectionIdParam:
       name: collectionId
@@ -148,11 +195,21 @@ components:
           description: The run's unique ID
         status:
           type: string
-          enum: [queued, running, finished, failed]
+          enum:
+          - queued
+          - running
+          - finished
+          - failed
           description: The run status
         source:
           type: string
-          enum: [collection_runner, monitor, webhook, schedule, api, newman]
+          enum:
+          - collection_runner
+          - monitor
+          - webhook
+          - schedule
+          - api
+          - newman
           description: How the run was triggered
         startedAt:
           type: string
@@ -191,7 +248,11 @@ components:
           type: string
         status:
           type: string
-          enum: [queued, running, finished, failed]
+          enum:
+          - queued
+          - running
+          - finished
+          - failed
         source:
           type: string
         startedAt:
@@ -265,43 +326,9 @@ components:
           type: string
         createdBy:
           type: string
-  responses:
-    UnauthorizedError:
-      description: Authentication credentials are missing or invalid
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-    NotFoundError:
-      description: The requested resource was not found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-    RateLimitError:
-      description: Too many requests - rate limit exceeded
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-              message:
-                type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.

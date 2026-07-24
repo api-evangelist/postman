@@ -1,18 +1,26 @@
 openapi: 3.1.0
 info:
-  title: Postman Environments API
-  description: |
-    The Postman Environments API enables you to manage your Postman environments
-    programmatically. Environments store variable key-value pairs that can be used
-    across requests and collections, enabling you to scope your work to different
-    contexts such as development, staging, and production.
+  title: Postman APIs API Comments Environments API
+  description: 'The Postman APIs API enables you to manage your API definitions in Postman''s
+
+    API Builder. You can create APIs, manage versions, add schemas (OpenAPI,
+
+    GraphQL, etc.), and link collections, environments, mock servers, monitors,
+
+    and documentation to your API definitions.
+
 
     ## Authentication
+
     All requests require an API key passed in the `x-api-key` header.
 
+
     ## Rate Limits
-    The Postman API has rate limits that vary by plan.
-  version: '1.0.0'
+
+    Standard Postman API rate limits apply.
+
+    '
+  version: 1.0.0
   contact:
     name: Postman Developer Support
     url: https://learning.postman.com/docs/developer/postman-api/intro-api/
@@ -21,31 +29,28 @@ info:
     name: Postman Terms of Service
     url: https://www.postman.com/legal/terms/
 servers:
-  - url: https://api.getpostman.com
-    description: Postman Production API Server
-tags:
-  - name: Environments
-    description: Operations for managing Postman environments and their variables.
+- url: https://api.getpostman.com
+  description: Postman Production API Server
 security:
-  - apiKeyAuth: []
+- apiKeyAuth: []
+tags:
+- name: Environments
+  description: Operations for managing Postman environments and their variables.
 paths:
   /environments:
     get:
       tags:
-        - Environments
+      - Environments
       summary: Postman Get all environments
       operationId: getAllEnvironments
-      description: >-
-        Gets all environments for the authenticated user. The response includes
-        basic metadata for each environment. To get the full environment with
-        variables, use the single environment endpoint.
+      description: Gets all environments for the authenticated user. The response includes basic metadata for each environment. To get the full environment with variables, use the single environment endpoint.
       parameters:
-        - name: workspace
-          in: query
-          description: Filter environments by workspace ID.
-          required: false
-          schema:
-            type: string
+      - name: workspace
+        in: query
+        description: Filter environments by workspace ID.
+        required: false
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with list of environments
@@ -66,19 +71,17 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     post:
       tags:
-        - Environments
+      - Environments
       summary: Postman Create an environment
       operationId: createEnvironment
-      description: >-
-        Creates a new environment with the specified name and variables. You
-        can optionally specify a workspace to create the environment in.
+      description: Creates a new environment with the specified name and variables. You can optionally specify a workspace to create the environment in.
       parameters:
-        - name: workspace
-          in: query
-          description: The workspace ID to create the environment in.
-          required: false
-          schema:
-            type: string
+      - name: workspace
+        in: query
+        description: The workspace ID to create the environment in.
+        required: false
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -86,7 +89,7 @@ paths:
             schema:
               type: object
               required:
-                - environment
+              - environment
               properties:
                 environment:
                   $ref: '#/components/schemas/EnvironmentInput'
@@ -118,14 +121,12 @@ paths:
   /environments/{environmentId}:
     get:
       tags:
-        - Environments
+      - Environments
       summary: Postman Get an environment
       operationId: getEnvironment
-      description: >-
-        Gets information about a single environment, including its variables.
-        Variable values that are marked as secret will be masked in the response.
+      description: Gets information about a single environment, including its variables. Variable values that are marked as secret will be masked in the response.
       parameters:
-        - $ref: '#/components/parameters/EnvironmentIdParam'
+      - $ref: '#/components/parameters/EnvironmentIdParam'
       responses:
         '200':
           description: Successful response with environment details
@@ -146,14 +147,12 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     put:
       tags:
-        - Environments
+      - Environments
       summary: Postman Update an environment
       operationId: updateEnvironment
-      description: >-
-        Updates an existing environment. You can update the name and variables.
-        This replaces the entire set of variables with the values provided.
+      description: Updates an existing environment. You can update the name and variables. This replaces the entire set of variables with the values provided.
       parameters:
-        - $ref: '#/components/parameters/EnvironmentIdParam'
+      - $ref: '#/components/parameters/EnvironmentIdParam'
       requestBody:
         required: true
         content:
@@ -161,7 +160,7 @@ paths:
             schema:
               type: object
               required:
-                - environment
+              - environment
               properties:
                 environment:
                   $ref: '#/components/schemas/EnvironmentInput'
@@ -194,13 +193,12 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     delete:
       tags:
-        - Environments
+      - Environments
       summary: Postman Delete an environment
       operationId: deleteEnvironment
-      description: >-
-        Deletes an existing environment. This action is irreversible.
+      description: Deletes an existing environment. This action is irreversible.
       parameters:
-        - $ref: '#/components/parameters/EnvironmentIdParam'
+      - $ref: '#/components/parameters/EnvironmentIdParam'
       responses:
         '200':
           description: Successfully deleted environment
@@ -225,20 +223,75 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
-  securitySchemes:
-    apiKeyAuth:
-      type: apiKey
-      name: x-api-key
-      in: header
-      description: Postman API key for authentication.
-  parameters:
-    EnvironmentIdParam:
-      name: environmentId
-      in: path
-      required: true
-      description: The environment's unique ID or UID.
-      schema:
-        type: string
+  responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: authenticationError
+                  message:
+                    type: string
+    InternalServerError:
+      description: An unexpected error occurred on the server
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
   schemas:
     EnvironmentListItem:
       type: object
@@ -298,7 +351,7 @@ components:
       type: object
       description: Input format for creating or updating an environment.
       required:
-        - name
+      - name
       properties:
         name:
           type: string
@@ -320,78 +373,25 @@ components:
           description: The variable value
         type:
           type: string
-          enum: [default, secret]
+          enum:
+          - default
+          - secret
           description: The variable type. Secret variables are masked in responses.
         enabled:
           type: boolean
           description: Whether the variable is enabled
           default: true
-  responses:
-    BadRequestError:
-      description: Bad request - invalid input
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-    UnauthorizedError:
-      description: Authentication credentials are missing or invalid
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    example: authenticationError
-                  message:
-                    type: string
-    NotFoundError:
-      description: The requested resource was not found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-    RateLimitError:
-      description: Too many requests - rate limit exceeded
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-              message:
-                type: string
-    InternalServerError:
-      description: An unexpected error occurred on the server
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
+  parameters:
+    EnvironmentIdParam:
+      name: environmentId
+      in: path
+      required: true
+      description: The environment's unique ID or UID.
+      schema:
+        type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.

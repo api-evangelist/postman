@@ -1,19 +1,26 @@
 openapi: 3.1.0
 info:
-  title: Postman Webhooks API
-  description: |
-    The Postman Webhooks API enables you to create webhooks that trigger
-    collection runs with custom payloads. Webhooks provide a way to integrate
-    Postman with external systems and automate workflows based on incoming
-    events. When a webhook URL receives a POST request, it triggers a
-    collection run with the incoming payload available as variables.
+  title: Postman APIs API Comments Webhooks API
+  description: 'The Postman APIs API enables you to manage your API definitions in Postman''s
+
+    API Builder. You can create APIs, manage versions, add schemas (OpenAPI,
+
+    GraphQL, etc.), and link collections, environments, mock servers, monitors,
+
+    and documentation to your API definitions.
+
 
     ## Authentication
+
     All requests require an API key passed in the `x-api-key` header.
 
+
     ## Rate Limits
+
     Standard Postman API rate limits apply.
-  version: '1.0.0'
+
+    '
+  version: 1.0.0
   contact:
     name: Postman Developer Support
     url: https://learning.postman.com/docs/developer/postman-api/intro-api/
@@ -22,31 +29,28 @@ info:
     name: Postman Terms of Service
     url: https://www.postman.com/legal/terms/
 servers:
-  - url: https://api.getpostman.com
-    description: Postman Production API Server
-tags:
-  - name: Webhooks
-    description: Operations for creating and managing Postman webhooks.
+- url: https://api.getpostman.com
+  description: Postman Production API Server
 security:
-  - apiKeyAuth: []
+- apiKeyAuth: []
+tags:
+- name: Webhooks
+  description: Operations for creating and managing Postman webhooks.
 paths:
   /webhooks:
     post:
       tags:
-        - Webhooks
+      - Webhooks
       summary: Postman Create a webhook
       operationId: createWebhook
-      description: >-
-        Creates a webhook that triggers a collection run when its generated
-        URL receives a POST request. The incoming request body is available
-        as variables during the collection run.
+      description: Creates a webhook that triggers a collection run when its generated URL receives a POST request. The incoming request body is available as variables during the collection run.
       parameters:
-        - name: workspace
-          in: query
-          description: The workspace ID to create the webhook in.
-          required: false
-          schema:
-            type: string
+      - name: workspace
+        in: query
+        description: The workspace ID to create the webhook in.
+        required: false
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -54,13 +58,13 @@ paths:
             schema:
               type: object
               required:
-                - webhook
+              - webhook
               properties:
                 webhook:
                   type: object
                   required:
-                    - name
-                    - collection
+                  - name
+                  - collection
                   properties:
                     name:
                       type: string
@@ -87,12 +91,6 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
-  securitySchemes:
-    apiKeyAuth:
-      type: apiKey
-      name: x-api-key
-      in: header
-      description: Postman API key for authentication.
   schemas:
     Webhook:
       type: object
@@ -118,20 +116,6 @@ components:
           type: string
           format: date-time
   responses:
-    BadRequestError:
-      description: Bad request - invalid input
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
     UnauthorizedError:
       description: Authentication credentials are missing or invalid
       content:
@@ -171,3 +155,23 @@ components:
                     type: string
                   message:
                     type: string
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.

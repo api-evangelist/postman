@@ -1,0 +1,281 @@
+openapi: 3.1.0
+info:
+  title: Postman APIs API Comments Server Responses API
+  description: 'The Postman APIs API enables you to manage your API definitions in Postman''s
+
+    API Builder. You can create APIs, manage versions, add schemas (OpenAPI,
+
+    GraphQL, etc.), and link collections, environments, mock servers, monitors,
+
+    and documentation to your API definitions.
+
+
+    ## Authentication
+
+    All requests require an API key passed in the `x-api-key` header.
+
+
+    ## Rate Limits
+
+    Standard Postman API rate limits apply.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Postman Developer Support
+    url: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    email: help@postman.com
+  license:
+    name: Postman Terms of Service
+    url: https://www.postman.com/legal/terms/
+servers:
+- url: https://api.getpostman.com
+  description: Postman Production API Server
+security:
+- apiKeyAuth: []
+tags:
+- name: Server Responses
+  description: Operations for managing mock server responses and examples.
+paths:
+  /mocks/{mockId}/serverResponses:
+    get:
+      tags:
+      - Server Responses
+      summary: Postman Get mock server responses
+      operationId: getMockServerResponses
+      description: Gets all server responses configured for a mock server. Server responses are custom responses that override the default collection-based responses.
+      parameters:
+      - $ref: '#/components/parameters/MockIdParam'
+      responses:
+        '200':
+          description: Successful response with list of server responses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServerResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+    post:
+      tags:
+      - Server Responses
+      summary: Postman Create a server response
+      operationId: createServerResponse
+      description: Creates a new server response for a mock server. Server responses allow you to define custom responses for specific request patterns.
+      parameters:
+      - $ref: '#/components/parameters/MockIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServerResponseInput'
+      responses:
+        '200':
+          description: Successfully created server response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /mocks/{mockId}/serverResponses/{serverResponseId}:
+    put:
+      tags:
+      - Server Responses
+      summary: Postman Update a server response
+      operationId: updateServerResponse
+      description: Updates an existing server response for a mock server.
+      parameters:
+      - $ref: '#/components/parameters/MockIdParam'
+      - name: serverResponseId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServerResponseInput'
+      responses:
+        '200':
+          description: Successfully updated server response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+    delete:
+      tags:
+      - Server Responses
+      summary: Postman Delete a server response
+      operationId: deleteServerResponse
+      description: Deletes a server response from a mock server.
+      parameters:
+      - $ref: '#/components/parameters/MockIdParam'
+      - name: serverResponseId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully deleted server response
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+components:
+  responses:
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+  schemas:
+    ServerResponseInput:
+      type: object
+      required:
+      - name
+      - statusCode
+      properties:
+        name:
+          type: string
+        statusCode:
+          type: integer
+        headers:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+              value:
+                type: string
+        body:
+          type: string
+        language:
+          type: string
+          enum:
+          - text
+          - json
+          - xml
+          - html
+          - javascript
+    ServerResponse:
+      type: object
+      description: A custom server response configured on a mock server.
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        statusCode:
+          type: integer
+        headers:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+              value:
+                type: string
+        body:
+          type: string
+        language:
+          type: string
+          enum:
+          - text
+          - json
+          - xml
+          - html
+          - javascript
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+  parameters:
+    MockIdParam:
+      name: mockId
+      in: path
+      required: true
+      description: The mock server's unique ID or UID.
+      schema:
+        type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.

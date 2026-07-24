@@ -1,0 +1,305 @@
+openapi: 3.1.0
+info:
+  title: Postman APIs API Comments API Versions API
+  description: 'The Postman APIs API enables you to manage your API definitions in Postman''s
+
+    API Builder. You can create APIs, manage versions, add schemas (OpenAPI,
+
+    GraphQL, etc.), and link collections, environments, mock servers, monitors,
+
+    and documentation to your API definitions.
+
+
+    ## Authentication
+
+    All requests require an API key passed in the `x-api-key` header.
+
+
+    ## Rate Limits
+
+    Standard Postman API rate limits apply.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Postman Developer Support
+    url: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    email: help@postman.com
+  license:
+    name: Postman Terms of Service
+    url: https://www.postman.com/legal/terms/
+servers:
+- url: https://api.getpostman.com
+  description: Postman Production API Server
+security:
+- apiKeyAuth: []
+tags:
+- name: API Versions
+  description: Operations for managing API versions.
+paths:
+  /apis/{apiId}/versions:
+    get:
+      tags:
+      - API Versions
+      summary: Postman Get all API versions
+      operationId: getApiVersions
+      description: Gets all versions of an API. Each version can have its own schema and linked resources.
+      parameters:
+      - $ref: '#/components/parameters/ApiIdParam'
+      - name: cursor
+        in: query
+        schema:
+          type: string
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 10
+      responses:
+        '200':
+          description: Successful response with API versions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  versions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ApiVersion'
+                  meta:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      nextCursor:
+                        type: string
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+    post:
+      tags:
+      - API Versions
+      summary: Postman Create an API version
+      operationId: createApiVersion
+      description: Creates a new version of an API. You can optionally create the version from an existing version to copy its schema and relations.
+      parameters:
+      - $ref: '#/components/parameters/ApiIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - version
+              properties:
+                version:
+                  type: object
+                  required:
+                  - name
+                  properties:
+                    name:
+                      type: string
+                      description: The version name (e.g., "1.0.0", "v2")
+                    source:
+                      type: object
+                      description: Copy from an existing version
+                      properties:
+                        id:
+                          type: string
+                          description: The source version ID to copy from
+      responses:
+        '200':
+          description: Successfully created API version
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiVersion'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /apis/{apiId}/versions/{versionId}:
+    get:
+      tags:
+      - API Versions
+      summary: Postman Get an API version
+      operationId: getApiVersion
+      description: Gets information about a specific version of an API.
+      parameters:
+      - $ref: '#/components/parameters/ApiIdParam'
+      - $ref: '#/components/parameters/VersionIdParam'
+      responses:
+        '200':
+          description: Successful response with API version details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiVersion'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+    put:
+      tags:
+      - API Versions
+      summary: Postman Update an API version
+      operationId: updateApiVersion
+      description: Updates the name of an API version.
+      parameters:
+      - $ref: '#/components/parameters/ApiIdParam'
+      - $ref: '#/components/parameters/VersionIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - version
+              properties:
+                version:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+      responses:
+        '200':
+          description: Successfully updated API version
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiVersion'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+    delete:
+      tags:
+      - API Versions
+      summary: Postman Delete an API version
+      operationId: deleteApiVersion
+      description: Deletes an API version and its schema.
+      parameters:
+      - $ref: '#/components/parameters/ApiIdParam'
+      - $ref: '#/components/parameters/VersionIdParam'
+      responses:
+        '200':
+          description: Successfully deleted API version
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+components:
+  responses:
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+  parameters:
+    VersionIdParam:
+      name: versionId
+      in: path
+      required: true
+      description: The API version's unique ID.
+      schema:
+        type: string
+    ApiIdParam:
+      name: apiId
+      in: path
+      required: true
+      description: The API's unique ID.
+      schema:
+        type: string
+  schemas:
+    ApiVersion:
+      type: object
+      description: A version of an API definition.
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        schemas:
+          type: array
+          items:
+            type: string
+        collections:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.

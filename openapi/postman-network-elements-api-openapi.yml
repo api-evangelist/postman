@@ -1,0 +1,270 @@
+openapi: 3.1.0
+info:
+  title: Postman APIs API Comments Network Elements API
+  description: 'The Postman APIs API enables you to manage your API definitions in Postman''s
+
+    API Builder. You can create APIs, manage versions, add schemas (OpenAPI,
+
+    GraphQL, etc.), and link collections, environments, mock servers, monitors,
+
+    and documentation to your API definitions.
+
+
+    ## Authentication
+
+    All requests require an API key passed in the `x-api-key` header.
+
+
+    ## Rate Limits
+
+    Standard Postman API rate limits apply.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Postman Developer Support
+    url: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    email: help@postman.com
+  license:
+    name: Postman Terms of Service
+    url: https://www.postman.com/legal/terms/
+servers:
+- url: https://api.getpostman.com
+  description: Postman Production API Server
+security:
+- apiKeyAuth: []
+tags:
+- name: Network Elements
+  description: Operations for managing elements (APIs, collections, workspaces) in the network.
+paths:
+  /network/private:
+    post:
+      tags:
+      - Network Elements
+      summary: Postman Add an element to the private API network
+      operationId: addNetworkElement
+      description: Publishes an element (API, collection, or workspace) to the private API network. The element becomes discoverable by all team members.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - type
+              - id
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - api
+                  - collection
+                  - workspace
+                  description: The type of element to add
+                id:
+                  type: string
+                  description: The element's unique ID
+                parentFolderId:
+                  type: integer
+                  description: The parent folder ID in the network
+                summary:
+                  type: string
+                  description: A custom summary for the element in the network
+      responses:
+        '200':
+          description: Successfully added element to network
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkElement'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /network/private/{elementType}/{elementId}:
+    put:
+      tags:
+      - Network Elements
+      summary: Postman Update a network element
+      operationId: updateNetworkElement
+      description: Updates an element's metadata in the private API network.
+      parameters:
+      - name: elementType
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - api
+          - collection
+          - workspace
+      - name: elementId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                summary:
+                  type: string
+                parentFolderId:
+                  type: integer
+      responses:
+        '200':
+          description: Successfully updated network element
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+    delete:
+      tags:
+      - Network Elements
+      summary: Postman Remove an element from the private API network
+      operationId: removeNetworkElement
+      description: Removes an element from the private API network. This only removes it from the network catalog; it does not delete the underlying resource.
+      parameters:
+      - name: elementType
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - api
+          - collection
+          - workspace
+      - name: elementId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully removed element from network
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+components:
+  responses:
+    ForbiddenError:
+      description: Insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+  schemas:
+    NetworkElement:
+      type: object
+      description: An element published to the private API network.
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - api
+          - collection
+          - workspace
+        name:
+          type: string
+        summary:
+          type: string
+        description:
+          type: string
+        addedBy:
+          type: integer
+        addedAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        parentFolderId:
+          type: integer
+        href:
+          type: string
+          format: uri
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.

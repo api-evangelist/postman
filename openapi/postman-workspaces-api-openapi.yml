@@ -1,18 +1,26 @@
 openapi: 3.1.0
 info:
-  title: Postman Workspaces API
-  description: |
-    The Postman Workspaces API enables you to manage your Postman workspaces
-    programmatically. Workspaces let you organize your API work and collaborate
-    with your team. You can create personal, team, partner, and public workspaces.
+  title: Postman APIs API Comments Workspaces API
+  description: 'The Postman APIs API enables you to manage your API definitions in Postman''s
+
+    API Builder. You can create APIs, manage versions, add schemas (OpenAPI,
+
+    GraphQL, etc.), and link collections, environments, mock servers, monitors,
+
+    and documentation to your API definitions.
+
 
     ## Authentication
+
     All requests require an API key passed in the `x-api-key` header.
 
+
     ## Rate Limits
-    The Postman API has rate limits that vary by plan. See Postman documentation
-    for current limits.
-  version: '1.0.0'
+
+    Standard Postman API rate limits apply.
+
+    '
+  version: 1.0.0
   contact:
     name: Postman Developer Support
     url: https://learning.postman.com/docs/developer/postman-api/intro-api/
@@ -21,48 +29,45 @@ info:
     name: Postman Terms of Service
     url: https://www.postman.com/legal/terms/
 servers:
-  - url: https://api.getpostman.com
-    description: Postman Production API Server
-tags:
-  - name: Workspaces
-    description: Operations for managing Postman workspaces including creating, updating, and deleting workspaces.
+- url: https://api.getpostman.com
+  description: Postman Production API Server
 security:
-  - apiKeyAuth: []
+- apiKeyAuth: []
+tags:
+- name: Workspaces
+  description: Operations for managing Postman workspaces including creating, updating, and deleting workspaces.
 paths:
   /workspaces:
     get:
       tags:
-        - Workspaces
+      - Workspaces
       summary: Postman Get all workspaces
       operationId: getAllWorkspaces
-      description: >-
-        Gets all workspaces accessible to the authenticated user. This includes
-        personal, team, partner, and public workspaces. The response contains
-        metadata about each workspace.
+      description: Gets all workspaces accessible to the authenticated user. This includes personal, team, partner, and public workspaces. The response contains metadata about each workspace.
       parameters:
-        - name: type
-          in: query
-          description: Filter workspaces by type.
-          required: false
-          schema:
-            type: string
-            enum:
-              - personal
-              - team
-              - private
-              - public
-              - partner
-        - name: include
-          in: query
-          description: Additional information to include in the response.
-          required: false
-          schema:
-            type: string
-            enum:
-              - mocks
-              - monitors
-              - environments
-              - collections
+      - name: type
+        in: query
+        description: Filter workspaces by type.
+        required: false
+        schema:
+          type: string
+          enum:
+          - personal
+          - team
+          - private
+          - public
+          - partner
+      - name: include
+        in: query
+        description: Additional information to include in the response.
+        required: false
+        schema:
+          type: string
+          enum:
+          - mocks
+          - monitors
+          - environments
+          - collections
       responses:
         '200':
           description: Successful response with list of workspaces
@@ -83,12 +88,10 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     post:
       tags:
-        - Workspaces
+      - Workspaces
       summary: Postman Create a workspace
       operationId: createWorkspace
-      description: >-
-        Creates a new workspace. You can specify the workspace name, type,
-        description, and visibility settings.
+      description: Creates a new workspace. You can specify the workspace name, type, description, and visibility settings.
       requestBody:
         required: true
         content:
@@ -96,7 +99,7 @@ paths:
             schema:
               type: object
               required:
-                - workspace
+              - workspace
               properties:
                 workspace:
                   $ref: '#/components/schemas/WorkspaceInput'
@@ -128,15 +131,12 @@ paths:
   /workspaces/{workspaceId}:
     get:
       tags:
-        - Workspaces
+      - Workspaces
       summary: Postman Get a workspace
       operationId: getWorkspace
-      description: >-
-        Gets information about a single workspace, including its name, type,
-        description, and associated collections, environments, mocks, and
-        monitors.
+      description: Gets information about a single workspace, including its name, type, description, and associated collections, environments, mocks, and monitors.
       parameters:
-        - $ref: '#/components/parameters/WorkspaceIdParam'
+      - $ref: '#/components/parameters/WorkspaceIdParam'
       responses:
         '200':
           description: Successful response with workspace details
@@ -157,14 +157,12 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     put:
       tags:
-        - Workspaces
+      - Workspaces
       summary: Postman Update a workspace
       operationId: updateWorkspace
-      description: >-
-        Updates an existing workspace's name, description, or type. Only
-        the fields provided in the request body will be updated.
+      description: Updates an existing workspace's name, description, or type. Only the fields provided in the request body will be updated.
       parameters:
-        - $ref: '#/components/parameters/WorkspaceIdParam'
+      - $ref: '#/components/parameters/WorkspaceIdParam'
       requestBody:
         required: true
         content:
@@ -172,7 +170,7 @@ paths:
             schema:
               type: object
               required:
-                - workspace
+              - workspace
               properties:
                 workspace:
                   $ref: '#/components/schemas/WorkspaceInput'
@@ -203,14 +201,12 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     delete:
       tags:
-        - Workspaces
+      - Workspaces
       summary: Postman Delete a workspace
       operationId: deleteWorkspace
-      description: >-
-        Deletes an existing workspace and all of its associated data. This
-        action is irreversible.
+      description: Deletes an existing workspace and all of its associated data. This action is irreversible.
       parameters:
-        - $ref: '#/components/parameters/WorkspaceIdParam'
+      - $ref: '#/components/parameters/WorkspaceIdParam'
       responses:
         '200':
           description: Successfully deleted workspace
@@ -235,14 +231,12 @@ paths:
   /workspaces/{workspaceId}/global-variables:
     get:
       tags:
-        - Workspaces
+      - Workspaces
       summary: Postman Get workspace global variables
       operationId: getWorkspaceGlobalVariables
-      description: >-
-        Gets all global variables for the specified workspace. Global variables
-        are available across all collections in the workspace.
+      description: Gets all global variables for the specified workspace. Global variables are available across all collections in the workspace.
       parameters:
-        - $ref: '#/components/parameters/WorkspaceIdParam'
+      - $ref: '#/components/parameters/WorkspaceIdParam'
       responses:
         '200':
           description: Successful response with global variables
@@ -263,14 +257,12 @@ paths:
           $ref: '#/components/responses/RateLimitError'
     put:
       tags:
-        - Workspaces
+      - Workspaces
       summary: Postman Update workspace global variables
       operationId: updateWorkspaceGlobalVariables
-      description: >-
-        Updates the global variables for the specified workspace. This replaces
-        the entire set of global variables.
+      description: Updates the global variables for the specified workspace. This replaces the entire set of global variables.
       parameters:
-        - $ref: '#/components/parameters/WorkspaceIdParam'
+      - $ref: '#/components/parameters/WorkspaceIdParam'
       requestBody:
         required: true
         content:
@@ -292,20 +284,76 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimitError'
 components:
-  securitySchemes:
-    apiKeyAuth:
-      type: apiKey
-      name: x-api-key
-      in: header
-      description: Postman API key for authentication.
-  parameters:
-    WorkspaceIdParam:
-      name: workspaceId
-      in: path
-      required: true
-      description: The workspace's unique ID.
-      schema:
-        type: string
+  responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: instanceNotFoundError
+                  message:
+                    type: string
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: authenticationError
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+    InternalServerError:
+      description: An unexpected error occurred on the server
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
   schemas:
     WorkspaceListItem:
       type: object
@@ -319,15 +367,61 @@ components:
           description: The workspace name
         type:
           type: string
-          enum: [personal, team, private, public, partner]
+          enum:
+          - personal
+          - team
+          - private
+          - public
+          - partner
           description: The workspace type
         visibility:
           type: string
-          enum: [personal, team, private, public, partner]
+          enum:
+          - personal
+          - team
+          - private
+          - public
+          - partner
           description: The workspace visibility setting
         createdBy:
           type: string
           description: The user ID of the workspace creator
+    Variable:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        type:
+          type: string
+          enum:
+          - default
+          - secret
+        enabled:
+          type: boolean
+    WorkspaceInput:
+      type: object
+      description: Input format for creating or updating a workspace.
+      required:
+      - name
+      - type
+      properties:
+        name:
+          type: string
+          description: The workspace name
+        type:
+          type: string
+          enum:
+          - personal
+          - team
+          - private
+          - public
+          - partner
+          description: The workspace type
+        description:
+          type: string
+          description: The workspace description
     Workspace:
       type: object
       description: Full workspace details including associated resources.
@@ -340,13 +434,23 @@ components:
           description: The workspace name
         type:
           type: string
-          enum: [personal, team, private, public, partner]
+          enum:
+          - personal
+          - team
+          - private
+          - public
+          - partner
         description:
           type: string
           description: The workspace description
         visibility:
           type: string
-          enum: [personal, team, private, public, partner]
+          enum:
+          - personal
+          - team
+          - private
+          - public
+          - partner
         createdBy:
           type: string
           description: The user ID of the workspace creator
@@ -417,102 +521,17 @@ components:
                 type: string
               name:
                 type: string
-    WorkspaceInput:
-      type: object
-      description: Input format for creating or updating a workspace.
-      required:
-        - name
-        - type
-      properties:
-        name:
-          type: string
-          description: The workspace name
-        type:
-          type: string
-          enum: [personal, team, private, public, partner]
-          description: The workspace type
-        description:
-          type: string
-          description: The workspace description
-    Variable:
-      type: object
-      properties:
-        key:
-          type: string
-        value:
-          type: string
-        type:
-          type: string
-          enum: [default, secret]
-        enabled:
-          type: boolean
-  responses:
-    BadRequestError:
-      description: Bad request - invalid input
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-    UnauthorizedError:
-      description: Authentication credentials are missing or invalid
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    example: authenticationError
-                  message:
-                    type: string
-    NotFoundError:
-      description: The requested resource was not found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    example: instanceNotFoundError
-                  message:
-                    type: string
-    RateLimitError:
-      description: Too many requests - rate limit exceeded
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-              message:
-                type: string
-    InternalServerError:
-      description: An unexpected error occurred on the server
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
+  parameters:
+    WorkspaceIdParam:
+      name: workspaceId
+      in: path
+      required: true
+      description: The workspace's unique ID.
+      schema:
+        type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.
