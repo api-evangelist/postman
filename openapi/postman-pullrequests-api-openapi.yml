@@ -1,0 +1,546 @@
+openapi: 3.1.0
+info:
+  title: Postman Pull Requests API
+  version: 1.0.0
+  description: 'Operations tagged pullRequests across 2 of this provider''s published API definitions: postman-api-openapi.yml, postman-pullrequests-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.postman.com
+  description: https://api.postman.com
+- url: https://api.eu.postman.com
+  description: https://api.eu.postman.com
+tags:
+- name: pullRequests
+paths:
+  /pull-requests/{pullRequestId}:
+    get:
+      operationId: getPullRequest
+      summary: Get a pull request
+      description: Gets information about a pull request, such as the source and destination details, who reviewed the pull request, the merge's current status, and whether the element is accessible.
+      tags:
+      - pullRequests
+      parameters:
+      - name: pullRequestId
+        in: path
+        description: The pull request's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/pullRequestId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pullRequestGet'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPullRequestRequestInternalServerError'
+    put:
+      operationId: updatePullRequest
+      summary: Update a pull request
+      description: Updates an open pull request.
+      tags:
+      - pullRequests
+      parameters:
+      - name: pullRequestId
+        in: path
+        description: The pull request's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/pullRequestId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pullRequestUpdated'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatePullRequestRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pullRequestUpdate'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /pull-requests/{pullRequestId}/tasks:
+    post:
+      operationId: reviewPullRequest
+      summary: Review a pull request
+      description: Updates the [review](https://learning.postman.com/docs/collaborating-in-postman/using-version-control/reviewing-pull-requests/) status of a pull request.
+      tags:
+      - pullRequests
+      parameters:
+      - name: pullRequestId
+        in: path
+        description: The pull request's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/pullRequestId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pullRequestReviewReponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewPullRequestRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pullRequestReview'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+components:
+  schemas:
+    PullRequestReviewReponseReviewedBy:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+          description: The user's ID.
+        name:
+          type: string
+          description: The user's name.
+        username:
+          type: string
+          description: The user's username.
+      description: Information about the user who reviewed the pull request review.
+      title: PullRequestReviewReponseReviewedBy
+    UpdatePullRequestRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdatePullRequestRequestInternalServerError
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    PullRequestReviewAction:
+      type: string
+      enum:
+      - approve
+      - decline
+      - merge
+      - unapprove
+      description: 'The action to perform on the pull request:
+
+        - `approve` — Approve the pull request for merge.
+
+        - `decline` — Decline the pull request.
+
+        - `merge` — Merge the pull request into its parent element.
+
+        - `unapprove` — Revokes a pull request''s `approve` status. This action does not decline the pull request.
+
+        '
+      title: PullRequestReviewAction
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    pullRequestUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          description: The pull request's updated title.
+        description:
+          type: string
+          description: The updated pull request description.
+        reviewers:
+          type: array
+          items:
+            type: string
+          description: An updated list of the pull request's assigned reviewers. This replaces all existing users assigned to the pull request with those you pass in the request body.
+      required:
+      - title
+      - reviewers
+      title: pullRequestUpdate
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    GetPullRequestRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetPullRequestRequestInternalServerError
+    ReviewPullRequestRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: ReviewPullRequestRequestInternalServerError
+    PullRequestGetSource:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The pull request's source ID.
+        name:
+          type: string
+          description: The source element's name.
+        forkName:
+          type: string
+          description: The name of the fork created from the source element.
+        exists:
+          type: boolean
+          description: If true, whether the element is present and not deleted.
+      description: Information about the pull request's source (parent) element.
+      title: PullRequestGetSource
+    PullRequestGetDestination:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The destination element's ID.
+        name:
+          type: string
+          description: The destination element's name.
+        exists:
+          type: boolean
+          description: If true, whether the element is present and not deleted.
+      description: Information about the pull request destination element.
+      title: PullRequestGetDestination
+    pullRequestReviewReponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The pull request's ID.
+        reviewedBy:
+          $ref: '#/components/schemas/PullRequestReviewReponseReviewedBy'
+          description: Information about the user who reviewed the pull request review.
+        status:
+          type: string
+          description: 'The pull request''s current review status:
+
+            - `open` — The pull request is still open.
+
+            - `approved` — The pull request was approved by its reviewers.
+
+            - `declined` — The pull request was not approved by its reviewers.
+
+            - `merged` — The pull request was merged.
+
+            '
+        updatedAt:
+          type: string
+          description: The date and time at which the pull request was updated.
+      title: pullRequestReviewReponse
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    pullRequestGet:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: The date and time at which the pull request was created.
+        updatedAt:
+          type: string
+          description: The date and time at which the pull request was updated.
+        id:
+          type: string
+          description: The pull request's ID.
+        title:
+          type: string
+          description: The pull request's title.
+        description:
+          type: string
+          description: The pull request's description.
+        createdBy:
+          type: string
+          description: The ID of the user who created the pull request.
+        updatedBy:
+          type: string
+          description: The ID of the user who last updated the pull request.
+        comment:
+          type: string
+          description: If the pull request is a `decline` status, an optional comment about why the pull request was declined.
+        fortkType:
+          type: string
+          description: The type of element the pull request was forked from.
+        source:
+          $ref: '#/components/schemas/PullRequestGetSource'
+          description: Information about the pull request's source (parent) element.
+        destination:
+          $ref: '#/components/schemas/PullRequestGetDestination'
+          description: Information about the pull request destination element.
+        status:
+          type: string
+          description: 'The pull request''s current review status:
+
+            - `open` — The pull request is still open.
+
+            - `approved` — The pull request was approved by its reviewers.
+
+            - `declined` — The pull request was not approved by its reviewers.
+
+            '
+        merge:
+          $ref: '#/components/schemas/PullRequestGetMerge'
+          description: Information about the current progress of the pull request's merge.
+        reviewers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PullRequestGetReviewersItems'
+          description: Information about the reviewers assigned to the pull request.
+      title: pullRequestGet
+    PullRequestGetMerge:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/PullRequestGetMergeStatus'
+          description: 'The pull request''s current merge status:
+
+            - `inactive` — There is no merge in progress.
+
+            - `inprogress` — The pull request is currently merging.
+
+            - `failed` — The pull request''s merge failed.
+
+            '
+      description: Information about the current progress of the pull request's merge.
+      title: PullRequestGetMerge
+    PullRequestUpdatedStatus:
+      type: string
+      enum:
+      - open
+      - approved
+      - declined
+      - merged
+      description: The pull request's status.
+      title: PullRequestUpdatedStatus
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    PullRequestGetMergeStatus:
+      type: string
+      enum:
+      - inactive
+      - inprogress
+      - failed
+      description: 'The pull request''s current merge status:
+
+        - `inactive` — There is no merge in progress.
+
+        - `inprogress` — The pull request is currently merging.
+
+        - `failed` — The pull request''s merge failed.
+
+        '
+      title: PullRequestGetMergeStatus
+    pullRequestId:
+      type: string
+      title: pullRequestId
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    PullRequestGetReviewersItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The reviewer's user ID.
+        status:
+          type: string
+          description: 'The reviewer''s review status response. One of:
+
+            - `approved`
+
+            - `declined`
+
+            '
+      title: PullRequestGetReviewersItems
+    pullRequestReview:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/PullRequestReviewAction'
+          description: 'The action to perform on the pull request:
+
+            - `approve` — Approve the pull request for merge.
+
+            - `decline` — Decline the pull request.
+
+            - `merge` — Merge the pull request into its parent element.
+
+            - `unapprove` — Revokes a pull request''s `approve` status. This action does not decline the pull request.
+
+            '
+        comment:
+          type: string
+          description: If the pull request is a `decline` status, an optoinal comment about why the pull request was declined.
+      required:
+      - action
+      title: pullRequestReview
+    pullRequestUpdated:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the pull request was created.
+        createdBy:
+          type: string
+          description: The ID of the user who created the pull request.
+        description:
+          type: string
+          description: The pull request's description.
+        destinationId:
+          type: string
+          format: uid
+          description: The pull request's merge destination ID.
+        forkType:
+          type: string
+          description: The type of forked element.
+        id:
+          type: string
+          description: The pull request's ID.
+        sourceId:
+          type: string
+          format: uid
+          description: The unique ID of the source element.
+        status:
+          $ref: '#/components/schemas/PullRequestUpdatedStatus'
+          description: The pull request's status.
+        title:
+          type: string
+          description: The pull request's title.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the pull request was updated.
+      title: pullRequestUpdated
+  securitySchemes:
+    PostmanApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+    basicAuth:
+      type: http
+      scheme: basic
+    scimApiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+x-refined-from:
+- postman-api-openapi.yml
+- postman-pullrequests-api-openapi.yml
+x-provenance:
+  first_party: true
+  method: harvested
+  provider_published: true
+  source: https://learning.postman.com/api-docs/openapi.json
+  harvested: '2026-08-05'
+  note: Postman's own OpenAPI 3.1 definition for the Postman API, served by its Fern-hosted API reference. 162 paths, 256 operations, servers api.postman.com and api.eu.postman.com.

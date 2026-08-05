@@ -1,0 +1,365 @@
+openapi: 3.1.0
+info:
+  title: Postman Billing API
+  version: 1.0.0
+  description: 'Operations tagged billing across 2 of this provider''s published API definitions: postman-api-openapi.yml, postman-billing-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.postman.com
+  description: https://api.postman.com
+- url: https://api.eu.postman.com
+  description: https://api.eu.postman.com
+tags:
+- name: billing
+paths:
+  /accounts:
+    get:
+      operationId: getAccounts
+      summary: Get accounts
+      description: Gets Postman billing account details for the given team.
+      tags:
+      - billing
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/invoicesAccountInfo'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountsRequestUnauthorizedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountsRequestInternalServerError'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /accounts/{accountId}/invoices:
+    get:
+      operationId: getAccountInvoices
+      summary: List account invoices
+      description: Gets all invoices for a Postman billing account filtered by the status of the invoice.
+      tags:
+      - billing
+      parameters:
+      - name: accountId
+        in: path
+        description: The account's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/billingAccountId'
+      - name: status
+        in: query
+        description: The account's status.
+        required: true
+        schema:
+          $ref: '#/components/schemas/billingAccountStatus'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAccountInvoices'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountInvoicesRequestUnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountInvoicesRequestInternalServerError'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+components:
+  schemas:
+    GetAccountInvoicesRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAccountInvoicesRequestInternalServerError
+    InvoicesLinksWeb:
+      type: object
+      properties:
+        href:
+          type: string
+          format: url
+          description: A URL where you can download the invoice in PDF and view details.
+      description: An object containing web-based account references.
+      title: InvoicesLinksWeb
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    invoicesSlots:
+      type: object
+      properties:
+        available:
+          type: integer
+          description: The number of the team's available slots.
+        consumed:
+          type: integer
+          description: The number of currently-billed team members.
+        total:
+          type: integer
+          description: The total number of slots available to the team.
+        unbilled:
+          type: integer
+          description: The number of unbilled slots if [auto-flex billing](https://learning.postman.com/auto-flex-policy/) is available.
+      description: Information about the team's slots.
+      title: invoicesSlots
+    GetAccountsRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAccountsRequestUnauthorizedError
+    invoicesAccountInfo:
+      type: object
+      properties:
+        billingEmail:
+          type: string
+          format: email
+          description: The email address to which invoices are sent.
+        id:
+          type: integer
+          description: The account's ID.
+        state:
+          type: string
+          description: 'The account''s current state:
+
+            - `FREE`
+
+            - `PAID`
+
+            - `EXPIRED_TRIAL`
+
+            - `OVERDUE`
+
+            - `SUSPENDED`
+
+            - `BLOCKED`
+
+            - `PAYMENT_DISPUTED`
+
+            '
+        teamId:
+          type: integer
+          description: The team's ID associated with the account.
+        salesChannel:
+          $ref: '#/components/schemas/InvoicesAccountInfoSalesChannel'
+          description: 'The sales channel from which the account was created:
+
+            - `SELF_SERVE` — The user purchased the account plan.
+
+            - `SALES_SERVE` — The account was purchased through the Postman sales team process.
+
+            '
+        slots:
+          $ref: '#/components/schemas/invoicesSlots'
+      description: Information about the account.
+      title: invoicesAccountInfo
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    invoicesTotal:
+      type: object
+      properties:
+        value:
+          type: integer
+          description: The amount billed.
+        currency:
+          type: string
+          description: The currency of the billed amount. Currently only supports the `USD` value.
+      description: Information about the invoice's total billed amount.
+      title: invoicesTotal
+    invoicesLinks:
+      type: object
+      properties:
+        web:
+          $ref: '#/components/schemas/InvoicesLinksWeb'
+          description: An object containing web-based account references.
+      description: A [JSON API spec](https://jsonapi.org/format/#document-links) object containing hypermedia links.
+      title: invoicesLinks
+    invoiceData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The invoice's ID.
+        status:
+          type: string
+          description: The invoice's status.
+        issuedAt:
+          type: string
+          format: date
+          description: The date on which the invoice was issued.
+        totalAmount:
+          $ref: '#/components/schemas/invoicesTotal'
+        links:
+          $ref: '#/components/schemas/invoicesLinks'
+      description: Information about the invoice.
+      title: invoiceData
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    billingAccountStatus:
+      type: string
+      enum:
+      - PAID
+      title: billingAccountStatus
+    GetAccountInvoicesRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAccountInvoicesRequestUnauthorizedError
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    getAccountInvoices:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/invoiceData'
+          description: A list of account invoices.
+      required:
+      - data
+      title: getAccountInvoices
+    billingAccountId:
+      type: string
+      title: billingAccountId
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    InvoicesAccountInfoSalesChannel:
+      type: string
+      enum:
+      - SELF_SERVE
+      - SALES_SERVE
+      description: 'The sales channel from which the account was created:
+
+        - `SELF_SERVE` — The user purchased the account plan.
+
+        - `SALES_SERVE` — The account was purchased through the Postman sales team process.
+
+        '
+      title: InvoicesAccountInfoSalesChannel
+    GetAccountsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAccountsRequestInternalServerError
+  securitySchemes:
+    PostmanApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+    basicAuth:
+      type: http
+      scheme: basic
+    scimApiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+x-refined-from:
+- postman-api-openapi.yml
+- postman-billing-api-openapi.yml
+x-provenance:
+  first_party: true
+  method: harvested
+  provider_published: true
+  source: https://learning.postman.com/api-docs/openapi.json
+  harvested: '2026-08-05'
+  note: Postman's own OpenAPI 3.1 definition for the Postman API, served by its Fern-hosted API reference. 162 paths, 256 operations, servers api.postman.com and api.eu.postman.com.

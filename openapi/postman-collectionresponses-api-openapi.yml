@@ -1,0 +1,478 @@
+openapi: 3.1.0
+info:
+  title: Postman Collection Responses API
+  version: 1.0.0
+  description: 'Operations tagged collectionResponses across 2 of this provider''s published API definitions: postman-api-openapi.yml, postman-collectionresponses-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.postman.com
+  description: https://api.postman.com
+- url: https://api.eu.postman.com
+  description: https://api.eu.postman.com
+tags:
+- name: collectionResponses
+paths:
+  /collections/{collectionId}/responses/{responseId}/comments:
+    get:
+      operationId: getResponseComments
+      summary: Get a response's comments
+      description: Gets all comments left by users in a response.
+      tags:
+      - collectionResponses
+      parameters:
+      - name: collectionId
+        in: path
+        description: The collection's unique ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionUid'
+      - name: responseId
+        in: path
+        description: The response's unique ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionResponseUid'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commentResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+    post:
+      operationId: createResponseComment
+      summary: Create a response comment
+      description: 'Creates a comment on a response. To create a reply on an existing comment, include the `threadId` property in the request body.
+
+
+        **Note:**
+
+
+        This endpoint accepts a max of 10,000 characters.
+
+        '
+      tags:
+      - collectionResponses
+      parameters:
+      - name: collectionId
+        in: path
+        description: The collection's unique ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionUid'
+      - name: responseId
+        in: path
+        description: The response's unique ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionResponseUid'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commentCreatedUpdated'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/commentCreate'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /collections/{collectionId}/responses/{responseId}/comments/{commentId}:
+    put:
+      operationId: updateResponseComment
+      summary: Update a response's comment
+      description: 'Updates a comment on a response.
+
+
+        **Note:**
+
+
+        This endpoint accepts a max of 10,000 characters.
+
+        '
+      tags:
+      - collectionResponses
+      parameters:
+      - name: collectionId
+        in: path
+        description: The collection's unique ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionUid'
+      - name: responseId
+        in: path
+        description: The response's unique ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionResponseUid'
+      - name: commentId
+        in: path
+        description: The comment's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/commentId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commentCreatedUpdated'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/commentUpdate'
+    delete:
+      operationId: deleteResponseComment
+      summary: Delete a response's comment
+      description: 'Deletes a comment from a response. On success, this returns an HTTP `204 No Content` response.
+
+
+        **Note:**
+
+
+        Deleting the first comment of a thread deletes all the comments in the thread.
+
+        '
+      tags:
+      - collectionResponses
+      parameters:
+      - name: collectionId
+        in: path
+        description: The collection's unique ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionUid'
+      - name: responseId
+        in: path
+        description: The response's unique ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionResponseUid'
+      - name: commentId
+        in: path
+        description: The comment's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/commentId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+components:
+  schemas:
+    CommentTaggedUsersUserNameType:
+      type: string
+      enum:
+      - user
+      description: The `user` value.
+      title: CommentTaggedUsersUserNameType
+    CommentCreatedUpdatedData:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The comment's ID.
+        threadId:
+          type: integer
+          description: The comment's thread ID.
+        createdBy:
+          type: integer
+          description: The user ID of the user who created the comment.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the comment was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time when the comment was last updated.
+        body:
+          type: string
+          description: The contents of the comment.
+      title: CommentCreatedUpdatedData
+    commentUpdate:
+      type: object
+      properties:
+        body:
+          type: string
+          description: The contents of the comment.
+        tags:
+          $ref: '#/components/schemas/commentTaggedUsers'
+      required:
+      - body
+      description: Information about the comment.
+      title: commentUpdate
+    CommentTaggedUsersUserName:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommentTaggedUsersUserNameType'
+          description: The `user` value.
+        id:
+          type: string
+          description: The user's ID.
+      required:
+      - type
+      - id
+      description: An object that contains information about the tagged user. The object's name is the user's Postman username. For example, `@user-postman`.
+      title: CommentTaggedUsersUserName
+    collectionResponseUid:
+      type: string
+      format: uid
+      title: collectionResponseUid
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    commentId:
+      type: integer
+      title: commentId
+    commentTaggedUsers:
+      type: object
+      properties:
+        '{{userName}}':
+          $ref: '#/components/schemas/CommentTaggedUsersUserName'
+          description: An object that contains information about the tagged user. The object's name is the user's Postman username. For example, `@user-postman`.
+      description: Information about users tagged in the `body` comment.
+      title: commentTaggedUsers
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    collectionUid:
+      type: string
+      format: uid
+      title: collectionUid
+    CommentDataStatus:
+      type: string
+      enum:
+      - Open
+      - Resolved
+      description: The comment's current status.
+      title: CommentDataStatus
+    commentData:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The comment's ID.
+        threadId:
+          type: integer
+          description: The comment's thread ID.
+        status:
+          $ref: '#/components/schemas/CommentDataStatus'
+          description: The comment's current status.
+        createdBy:
+          type: integer
+          description: The user ID of the user who created the comment.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the comment was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time when the comment was last updated.
+        body:
+          type: string
+          description: The contents of the comment.
+      description: Information about the comment.
+      title: commentData
+    commentResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/commentData'
+          description: A list of comments.
+      title: commentResponse
+    commentCreatedUpdated:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CommentCreatedUpdatedData'
+      title: commentCreatedUpdated
+    commentCreate:
+      type: object
+      properties:
+        body:
+          type: string
+          description: The contents of the comment.
+        threadId:
+          type: integer
+          description: The comment's thread ID. To create a reply on an existing comment, include this property.
+        tags:
+          $ref: '#/components/schemas/commentTaggedUsers'
+      required:
+      - body
+      description: Information about the comment.
+      title: commentCreate
+  securitySchemes:
+    PostmanApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+    basicAuth:
+      type: http
+      scheme: basic
+    scimApiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+x-refined-from:
+- postman-api-openapi.yml
+- postman-collectionresponses-api-openapi.yml
+x-provenance:
+  first_party: true
+  method: harvested
+  provider_published: true
+  source: https://learning.postman.com/api-docs/openapi.json
+  harvested: '2026-08-05'
+  note: Postman's own OpenAPI 3.1 definition for the Postman API, served by its Fern-hosted API reference. 162 paths, 256 operations, servers api.postman.com and api.eu.postman.com.

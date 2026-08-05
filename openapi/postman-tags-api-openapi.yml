@@ -1,227 +1,704 @@
 openapi: 3.1.0
 info:
-  title: Postman APIs API Comments Tags API
-  description: 'The Postman APIs API enables you to manage your API definitions in Postman''s
-
-    API Builder. You can create APIs, manage versions, add schemas (OpenAPI,
-
-    GraphQL, etc.), and link collections, environments, mock servers, monitors,
-
-    and documentation to your API definitions.
-
-
-    ## Authentication
-
-    All requests require an API key passed in the `x-api-key` header.
-
-
-    ## Rate Limits
-
-    Standard Postman API rate limits apply.
-
-    '
+  title: Postman Tags API
   version: 1.0.0
-  contact:
-    name: Postman Developer Support
-    url: https://learning.postman.com/docs/developer/postman-api/intro-api/
-    email: help@postman.com
-  license:
-    name: Postman Terms of Service
-    url: https://www.postman.com/legal/terms/
+  description: 'Operations tagged tags across 2 of this provider''s published API definitions: postman-api-openapi.yml, postman-tags-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
-- url: https://api.getpostman.com
-  description: Postman Production API Server
-security:
-- apiKeyAuth: []
+- url: https://api.postman.com
+  description: https://api.postman.com
+- url: https://api.eu.postman.com
+  description: https://api.eu.postman.com
 tags:
-- name: Tags
-  description: Operations for managing tags on Postman entities.
+- name: tags
 paths:
-  /tags/{entityType}/{entityId}:
+  /apis/{apiId}/tags:
     get:
+      operationId: getApiTags
+      summary: Get an API's tags
+      description: Gets all the tags associated with an API.
       tags:
-      - Tags
-      summary: Postman Get tags for an entity
-      operationId: getEntityTags
-      description: Gets all tags associated with a specific entity (API, collection, or workspace).
+      - tags
       parameters:
-      - $ref: '#/components/parameters/EntityTypeParam'
-      - $ref: '#/components/parameters/EntityIdParam'
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
       responses:
         '200':
-          description: Successful response with tags
+          description: Success Response
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  tags:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Tag'
+                $ref: '#/components/schemas/tagGetPut'
+        '400':
+          description: Missing v10 Accept Header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiErrorNameMessage'
         '401':
-          $ref: '#/components/responses/UnauthorizedError'
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
         '403':
-          $ref: '#/components/responses/ForbiddenError'
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
         '404':
-          $ref: '#/components/responses/NotFoundError'
-        '429':
-          $ref: '#/components/responses/RateLimitError'
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '500':
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
     put:
+      operationId: updateApiTags
+      summary: Update an API's tags
+      description: Updates an API's associated tags. This endpoint replaces all existing tags with those you pass in the request body.
       tags:
-      - Tags
-      summary: Postman Update tags for an entity
-      operationId: updateEntityTags
-      description: Updates (replaces) the tags associated with a specific entity. This replaces all existing tags with the provided list. To add tags without removing existing ones, first GET the current tags and include them in the update.
+      - tags
       parameters:
-      - $ref: '#/components/parameters/EntityTypeParam'
-      - $ref: '#/components/parameters/EntityIdParam'
-      requestBody:
+      - name: apiId
+        in: path
+        description: The API's ID.
         required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '200':
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tagGetPut'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateApiTagsRequestBadRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '500':
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      requestBody:
         content:
           application/json:
             schema:
-              type: object
-              required:
-              - tags
-              properties:
-                tags:
-                  type: array
-                  items:
-                    type: object
-                    required:
-                    - slug
-                    properties:
-                      slug:
-                        type: string
-                        description: The tag identifier (lowercase, hyphenated)
-                        example: production-ready
-                        pattern: ^[a-z0-9]+(-[a-z0-9]+)*$
+              $ref: '#/components/schemas/tagUpdateTags'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /collections/{collectionId}/tags:
+    get:
+      operationId: getCollectionTags
+      summary: Get a collection's tags
+      description: Gets all the tags associated with a collection.
+      tags:
+      - tags
+      parameters:
+      - name: collectionId
+        in: path
+        description: The collection's unique ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionUid'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
       responses:
         '200':
-          description: Successfully updated tags
+          description: Success Response
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  tags:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Tag'
-        '400':
-          $ref: '#/components/responses/BadRequestError'
+                $ref: '#/components/schemas/tagGetPut'
         '401':
-          $ref: '#/components/responses/UnauthorizedError'
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
         '403':
-          $ref: '#/components/responses/ForbiddenError'
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+    put:
+      operationId: updateCollectionTags
+      summary: Update a collection's tags
+      description: Updates a collection's associated tags. This endpoint replaces all existing tags with those you pass in the request body.
+      tags:
+      - tags
+      parameters:
+      - name: collectionId
+        in: path
+        description: The collection's unique ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionUid'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tagGetPut'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tag400Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
         '404':
-          $ref: '#/components/responses/NotFoundError'
-        '429':
-          $ref: '#/components/responses/RateLimitError'
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '500':
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tagUpdateTags'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /tags/{slug}/entities:
+    get:
+      operationId: getTaggedEntities
+      summary: Get elements by tag
+      description: 'Gets Postman elements (entities) by a given tag. Tags enable you to organize and search [workspaces](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/managing-workspaces/#tagging-a-workspace), [APIs](https://learning.postman.com/docs/designing-and-developing-your-api/managing-apis/#tagging-apis), and [collections](https://learning.postman.com/docs/collections/using-collections/#tagging-a-collection) that contain shared tags.
+
+
+        **Note:**
+
+
+        Tagging is available on Postman [**Solo**, **Team**, and **Enterprise** plans](https://www.postman.com/pricing/).
+
+        '
+      tags:
+      - tags
+      parameters:
+      - name: slug
+        in: path
+        description: The tag's ID within a team or individual (non-team) user scope.
+        required: true
+        schema:
+          $ref: '#/components/schemas/tagsSlug'
+      - name: limit
+        in: query
+        description: The maximum number of tagged elements to return in a single call.
+        required: false
+        schema:
+          $ref: '#/components/schemas/tagsEntitiesLimit'
+          default: 10
+      - name: direction
+        in: query
+        description: The ascending (`asc`) or descending (`desc`) order to sort the results by, based on the time of the entity's tagging.
+        required: false
+        schema:
+          $ref: '#/components/schemas/ascDescDefaultDesc'
+          default: desc
+      - name: cursor
+        in: query
+        description: The cursor to get the next set of results in the paginated response. If you pass an invalid value, the API only returns the first set of results.
+        required: false
+        schema:
+          $ref: '#/components/schemas/tagsCursor'
+      - name: entityType
+        in: query
+        description: Filter results for the given entity type.
+        required: false
+        schema:
+          $ref: '#/components/schemas/tagsEntityType'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getTaggedEntities'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tagElement400Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '500':
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /workspaces/{workspaceId}/tags:
+    get:
+      operationId: getWorkspaceTags
+      summary: Get a workspace's tags
+      description: Gets all the tags associated with a workspace.
+      tags:
+      - tags
+      parameters:
+      - name: workspaceId
+        in: path
+        description: The workspace's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/workspaceId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tagGetPut'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '500':
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+    put:
+      operationId: updateWorkspaceTags
+      summary: Update a workspace's tags
+      description: Updates a workspace's associated tags. This endpoint replaces all existing tags with those you pass in the request body.
+      tags:
+      - tags
+      parameters:
+      - name: workspaceId
+        in: path
+        description: The workspace's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/workspaceId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tagGetPut'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tag400Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '500':
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tagUpdateTags'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
 components:
-  responses:
-    ForbiddenError:
-      description: Insufficient permissions
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-    NotFoundError:
-      description: The requested resource was not found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-    UnauthorizedError:
-      description: Authentication credentials are missing or invalid
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-    RateLimitError:
-      description: Too many requests - rate limit exceeded
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-              message:
-                type: string
-    BadRequestError:
-      description: Bad request - invalid input
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-  parameters:
-    EntityTypeParam:
-      name: entityType
-      in: path
-      required: true
-      description: The type of entity to manage tags for.
-      schema:
-        type: string
-        enum:
-        - apis
-        - collections
-        - workspaces
-    EntityIdParam:
-      name: entityId
-      in: path
-      required: true
-      description: The entity's unique ID.
-      schema:
-        type: string
   schemas:
-    Tag:
+    tagsEntityType:
+      type: string
+      enum:
+      - api
+      - collection
+      - workspace
+      title: tagsEntityType
+    GetTaggedEntitiesDataEntitiesItems:
       type: object
-      description: A tag attached to a Postman entity for categorization and governance.
+      properties:
+        entityId:
+          type: string
+          format: uid
+          description: The element's unique ID.
+        entityType:
+          $ref: '#/components/schemas/GetTaggedEntitiesDataEntitiesItemsEntityType'
+          description: The type of Postman element.
+      title: GetTaggedEntitiesDataEntitiesItems
+    TagUpdateTagsTagsItems:
+      type: object
       properties:
         slug:
           type: string
-          description: The tag identifier (lowercase, hyphenated)
-          example: production-ready
+          description: The tag's ID within a team or individual (non-team) user scope.
+      required:
+      - slug
+      description: Information about the tag.
+      title: TagUpdateTagsTagsItems
+    TagGetPutTagsItems:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: The tag's ID within a team or individual (non-team) user scope.
+      description: Information about the tag.
+      title: TagGetPutTagsItems
+    apiErrorNameMessage:
+      type: object
+      properties:
         name:
           type: string
-          description: The display name of the tag
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      title: apiErrorNameMessage
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    tagUpdateTags:
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagUpdateTagsTagsItems'
+          description: A list of the associated tags as slugs.
+      required:
+      - tags
+      title: tagUpdateTags
+    GetTaggedEntitiesDataEntitiesItemsEntityType:
+      type: string
+      enum:
+      - collection
+      - workspace
+      description: The type of Postman element.
+      title: GetTaggedEntitiesDataEntitiesItemsEntityType
+    tagsEntitiesLimit:
+      type: integer
+      default: 10
+      title: tagsEntitiesLimit
+    workspaceId:
+      type: string
+      title: workspaceId
+    tagElement400Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: A short summary of the problem.
+        message:
+          type: string
+          description: The error message.
+        statusCode:
+          type: integer
+          description: The error's HTTP status code.
+      title: tagElement400Error
+    tagGetPut:
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagGetPutTagsItems'
+          description: A list of associated tags.
+      title: tagGetPut
+    v10Accept:
+      type: string
+      enum:
+      - application/vnd.api.v10+json
+      title: v10Accept
+    ascDescDefaultDesc:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: ascDescDefaultDesc
+    collectionUid:
+      type: string
+      format: uid
+      title: collectionUid
+    GetTaggedEntitiesData:
+      type: object
+      properties:
+        entities:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetTaggedEntitiesDataEntitiesItems'
+          description: A list of the Postman elements that contain the given tag.
+      required:
+      - entities
+      description: An object containing the paginated elements.
+      title: GetTaggedEntitiesData
+    UpdateApiTagsRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/tag400Error'
+      - $ref: '#/components/schemas/apiErrorNameMessage'
+      title: UpdateApiTagsRequestBadRequestError
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    getTaggedEntities:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/GetTaggedEntitiesData'
+          description: An object containing the paginated elements.
+        meta:
+          $ref: '#/components/schemas/GetTaggedEntitiesMeta'
+          description: The response's pagination information.
+      title: getTaggedEntities
+    GetTaggedEntitiesMeta:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: The number of tagged elements returned in the response.
+        nextCursor:
+          type: string
+          format: base64
+          description: The pagination cursor that points to the next record in the results set.
+      required:
+      - count
+      description: The response's pagination information.
+      title: GetTaggedEntitiesMeta
+    commonErrorTypeTitleDetailStatusInstance:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri-reference
+          description: The [URI reference](https://www.rfc-editor.org/rfc/rfc3986) that identifies the type of problem.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: An explanation about the problem.
+        status:
+          type: integer
+          description: The HTTP status code generated by the origin server.
+        instance:
+          type: string
+          description: The URI reference that identifies the specific occurrence of the problem.
+      title: commonErrorTypeTitleDetailStatusInstance
+    tagsSlug:
+      type: string
+      title: tagsSlug
+    tag400Error:
+      type: object
+      properties:
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: tag400Error
+    apiId:
+      type: string
+      title: apiId
+    tagsCursor:
+      type: string
+      format: base64
+      title: tagsCursor
   securitySchemes:
-    apiKeyAuth:
+    PostmanApiKey:
       type: apiKey
-      name: x-api-key
       in: header
-      description: Postman API key for authentication.
+      name: x-api-key
+    basicAuth:
+      type: http
+      scheme: basic
+    scimApiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+x-refined-from:
+- postman-api-openapi.yml
+- postman-tags-api-openapi.yml
+x-provenance:
+  first_party: true
+  method: harvested
+  provider_published: true
+  source: https://learning.postman.com/api-docs/openapi.json
+  harvested: '2026-08-05'
+  note: Postman's own OpenAPI 3.1 definition for the Postman API, served by its Fern-hosted API reference. 162 paths, 256 operations, servers api.postman.com and api.eu.postman.com.

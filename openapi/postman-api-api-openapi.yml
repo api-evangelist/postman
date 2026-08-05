@@ -1,0 +1,4226 @@
+openapi: 3.1.0
+info:
+  title: Postman API
+  version: 1.0.0
+  description: 'Operations tagged api across 2 of this provider''s published API definitions: postman-api-api-openapi.yml, postman-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.postman.com
+  description: https://api.postman.com
+- url: https://api.eu.postman.com
+  description: https://api.eu.postman.com
+tags:
+- name: api
+paths:
+  /apis:
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+    get:
+      operationId: getApis
+      summary: Get all APIs
+      description: Gets information about all APIs in a workspace.
+      tags:
+      - api
+      parameters:
+      - name: workspaceId
+        in: query
+        description: The workspace's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/workspaceId'
+      - name: createdBy
+        in: query
+        description: Return only results created by the given user ID.
+        required: false
+        schema:
+          $ref: '#/components/schemas/createdBy'
+      - name: cursor
+        in: query
+        description: The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter.
+        required: false
+        schema:
+          $ref: '#/components/schemas/cursor'
+      - name: description
+        in: query
+        description: Return only APIs whose description includes the given value. Matching is not case-sensitive.
+        required: false
+        schema:
+          $ref: '#/components/schemas/apiDescription'
+      - name: limit
+        in: query
+        description: The maximum number of rows to return in the response.
+        required: false
+        schema:
+          $ref: '#/components/schemas/limit'
+          default: 10
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApis'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApisRequestUnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApisRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApisRequestNotFoundError'
+        '422':
+          description: v9 Unsupported
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApisRequestInternalServerError'
+    post:
+      operationId: createApi
+      summary: Create an API
+      description: Creates an API.
+      tags:
+      - api
+      parameters:
+      - name: workspaceId
+        in: query
+        description: The workspace's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/workspaceId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createApiResponse'
+        '400':
+          description: Missing Workspace ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateApiRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateApiRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createUpdateApi'
+  /apis/{apiId}:
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+    get:
+      operationId: getApi
+      summary: Get an API
+      description: 'Gets information about an API.
+
+
+        **Note:**
+
+
+        - Git-connected APIs will only return the `versions` and `gitInfo` query responses. This is because schema and collection information is stored in the connected Git repository. The `gitInfo` object only lists the repository and folder locations of the files.
+
+        - API viewers can only use the `versions` option in the `include` query parameter.
+
+        '
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: include
+        in: query
+        description: 'An array that contains additional resources to include in the response. Use this parameter to query for element links to the API, such as collections and schemas:
+
+          - `collections` — Query for linked Postman collections.
+
+          - `versions` — Query for linked versions.
+
+          - `schemas` — Query for linked schemas.
+
+          - `gitInfo` — Query for information about the API''s git-linked repository. This query only returns the linked repository and folder locations of the files. It does not return `collections` or `schemas` information.
+
+
+          **Note:**
+
+
+          API viewers can only use the `versions` option.
+
+          '
+        required: false
+        schema:
+          $ref: '#/components/schemas/apiInclude'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApi'
+        '400':
+          description: Missing v10 Accept Header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiErrorNameMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiRequestNotFoundError'
+        '422':
+          description: v9 Unsupported
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiRequestInternalServerError'
+    put:
+      operationId: updateApi
+      summary: Update an API
+      description: Updates an API.
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateApiResponse'
+        '400':
+          description: Missing v10 Accept Header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiErrorNameMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateApiRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateApiRequestNotFoundError'
+        '422':
+          description: v9 Unsupported
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateApiRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createUpdateApi'
+    delete:
+      operationId: deleteApi
+      summary: Delete an API
+      description: Deletes an API. On success, this returns an HTTP `204 No Content` response.
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Missing v10 Accept Header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiErrorNameMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteApiRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteApiRequestNotFoundError'
+        '422':
+          description: v9 Unsupported
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteApiRequestInternalServerError'
+  /apis/{apiId}/collections:
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+    post:
+      operationId: addApiCollection
+      summary: Add a collection
+      description: "Adds a collection to an API. To do this, use the following `operationType` values:\n\n- `COPY_COLLECTION` — Copies a collection from the workspace and adds it to an API.\n- `CREATE_NEW` — Creates a new collection by providing the new collection's content.\n- `GENERATE_FROM_SCHEMA` — Generates the collection from an API schema.\n    - `options` — An object that contains advanced creation options and their values. You can find a complete list of properties and their values in Postman's [OpenAPI to Postman Collection Converter OPTIONS documentation](https://github.com/postmanlabs/openapi-to-postman/blob/develop/OPTIONS.md). These properties are case-sensitive.\n"
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '200':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/addApiCollectionResponse'
+        '400':
+          description: Missing v10 Accept Header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiErrorNameMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddApiCollectionRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddApiCollectionRequestNotFoundError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddApiCollectionRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/API_addApiCollection_Request'
+  /apis/{apiId}/collections/{collectionId}:
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+    get:
+      operationId: getApiCollection
+      summary: Get a collection
+      description: 'Gets a collection attached to an API. You can use the `versionId` query parameter to get a collection published in a version.
+
+
+        **Note:**
+
+
+        - You cannot use this endpoint to get a Git-linked API collection. Collections in a Git-linked API are stored in the linked Git repository, not in the Postman cloud. This endpoint only has access to Postman servers.
+
+        - You can get a collection published in an API version with the `versionId` query parameter.
+
+        - The `versionId` query parameter is a required parameter for API viewers.
+
+        '
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: collectionId
+        in: path
+        description: The collection's unique ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionIdApi'
+      - name: versionId
+        in: query
+        description: The API's version ID. This is a required parameter for API viewers.
+        required: false
+        schema:
+          $ref: '#/components/schemas/apiVersionId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApiCollection'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiCollectionRequestBadRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiCollectionRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiCollectionRequestNotFoundError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiCollectionRequestInternalServerError'
+  /apis/{apiId}/collections/{collectionId}/comments:
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+    get:
+      operationId: getApiCollectionComments
+      summary: Get a collection's comments
+      description: Gets all comments left by users in an API's collection.
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: collectionId
+        in: path
+        description: The collection's unique ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionIdApi'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commentResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+    post:
+      operationId: createApiCollectionComment
+      summary: Create a collection comment
+      description: 'Creates a comment on an API''s collection. To create a reply on an existing comment, include the `threadId` property in the request body.
+
+
+        **Note:**
+
+
+        This endpoint accepts a max of 10,000 characters.
+
+        '
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: collectionId
+        in: path
+        description: The collection's unique ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionIdApi'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commentCreatedUpdated'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/commentCreate'
+  /apis/{apiId}/collections/{collectionId}/comments/{commentId}:
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+    put:
+      operationId: updateApiCollectionComment
+      summary: Update a collection's comment
+      description: 'Updates a comment on an API''s collection.
+
+
+        **Note:**
+
+
+        This endpoint accepts a max of 10,000 characters.
+
+        '
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: collectionId
+        in: path
+        description: The collection's unique ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionIdApi'
+      - name: commentId
+        in: path
+        description: The comment's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/commentId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commentCreatedUpdated'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/commentUpdate'
+    delete:
+      operationId: deleteApiCollectionComment
+      summary: Delete a collection's comment
+      description: 'Deletes a comment from an API''s collection. On success, this returns an HTTP `204 No Content` response.
+
+
+        **Note:**
+
+
+        Deleting the first comment of a thread deletes all the comments in the thread.
+
+        '
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: collectionId
+        in: path
+        description: The collection's unique ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionIdApi'
+      - name: commentId
+        in: path
+        description: The comment's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/commentId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+  /apis/{apiId}/collections/{collectionId}/sync-with-schema-tasks:
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+    put:
+      operationId: syncCollectionWithSchema
+      summary: Sync collection with schema
+      description: 'Syncs a collection attached to an API with the API schema.
+
+
+        This is an asynchronous endpoint that returns an HTTP `202 Accepted` response. The response contains a polling link to the `/apis/{apiId}/tasks/{taskId}` endpoint in the `Location` header.
+
+
+        **Note:**
+
+
+        This endpoint only supports the OpenAPI 3 schema type.
+
+        '
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: collectionId
+        in: path
+        description: The collection's unique ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionIdApi'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/syncCollectionWithSchemaResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SyncCollectionWithSchemaRequestBadRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SyncCollectionWithSchemaRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SyncCollectionWithSchemaRequestNotFoundError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SyncCollectionWithSchemaRequestInternalServerError'
+  /apis/{apiId}/comments:
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+    get:
+      operationId: getApiComments
+      summary: Get an API's comments
+      description: Gets all comments left by users in an API.
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commentResponse'
+        '400':
+          description: Missing v10 Accept Header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiErrorNameMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+    post:
+      operationId: createApiComment
+      summary: Create an API comment
+      description: 'Creates a comment on an API. To create a reply on an existing comment, include the `threadId` property in the request body.
+
+
+        **Note:**
+
+
+        This endpoint accepts a max of 10,000 characters.
+
+        '
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commentCreatedUpdated'
+        '400':
+          description: Missing v10 Accept Header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiErrorNameMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/commentCreate'
+  /apis/{apiId}/comments/{commentId}:
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+    put:
+      operationId: updateApiComment
+      summary: Update an API's comment
+      description: 'Updates a comment on an API.
+
+
+        **Note:**
+
+
+        This endpoint accepts a max of 10,000 characters.
+
+        '
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: commentId
+        in: path
+        description: The comment's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/commentId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commentCreatedUpdated'
+        '400':
+          description: Missing v10 Accept Header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiErrorNameMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/commentUpdate'
+    delete:
+      operationId: deleteApiComment
+      summary: Delete an API's comment
+      description: 'Deletes a comment from an API. On success, this returns an HTTP `204 No Content` response.
+
+
+        **Note:**
+
+
+        Deleting the first comment of a thread deletes all the comments in the thread.
+
+        '
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: commentId
+        in: path
+        description: The comment's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/commentId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Missing v10 Accept Header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiErrorNameMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+  /apis/{apiId}/schemas:
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+    post:
+      operationId: createApiSchema
+      summary: Create a schema
+      description: Creates a schema for an API.
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '200':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createApiSchemaResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateApiSchemaRequestBadRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateApiSchemaRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateApiSchemaRequestNotFoundError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateApiSchemaRequestInternalServerError'
+      requestBody:
+        description: The request body to create an API schema.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createApiSchema'
+  /apis/{apiId}/schemas/{schemaId}:
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+    get:
+      operationId: getApiSchema
+      summary: Get a schema
+      description: 'Gets information about API schema. You can use the `versionId` query parameter to get a schema published in an API version.
+
+
+        You can use this API to do the following:
+
+
+        - Get a schema''s metadata.
+
+        - Get all the files in a schema. This only returns the first file in the schema. The endpoint response contains a link to the next set of response results.
+
+        - Get a schema''s contents in multi-file or bundled format.
+
+
+        **Note:**
+
+
+        The `versionId` query parameter is a required parameter for API viewers.
+
+        '
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: schemaId
+        in: path
+        description: The API schema's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiSchemaId'
+      - name: versionId
+        in: query
+        description: The API's version ID. This is a required parameter for API viewers.
+        required: false
+        schema:
+          $ref: '#/components/schemas/apiVersionId'
+      - name: bundled
+        in: query
+        description: If true, return the schema in a bundled format.
+        required: false
+        schema:
+          $ref: '#/components/schemas/apiSchemaOutput'
+          default: false
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApiSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiSchemaRequestBadRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiSchemaRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiSchemaRequestNotFoundError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiSchemaRequestInternalServerError'
+  /apis/{apiId}/schemas/{schemaId}/files:
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+    get:
+      operationId: getApiSchemaFiles
+      summary: Get schema files
+      description: 'Gets the files in an API schema. You can use the `versionId` query parameter to get schema files published in an API version.
+
+
+        **Note:**
+
+
+        The `versionId` query parameter is a required parameter for API viewers.
+
+        '
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: schemaId
+        in: path
+        description: The API schema's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiSchemaId'
+      - name: versionId
+        in: query
+        description: The API's version ID. This is a required parameter for API viewers.
+        required: false
+        schema:
+          $ref: '#/components/schemas/apiVersionId'
+      - name: limit
+        in: query
+        description: The maximum number of rows to return in the response.
+        required: false
+        schema:
+          $ref: '#/components/schemas/limit'
+          default: 10
+      - name: cursor
+        in: query
+        description: The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter.
+        required: false
+        schema:
+          $ref: '#/components/schemas/cursor'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApiSchemaFiles'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiSchemaFilesRequestBadRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiSchemaFilesRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiSchemaFilesRequestNotFoundError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiSchemaFilesRequestInternalServerError'
+  /apis/{apiId}/schemas/{schemaId}/files/{file-path}:
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+    get:
+      operationId: getApiSchemaFileContents
+      summary: Get schema file contents
+      description: 'Gets an API schema file contents at the defined path. You can use the `versionId` query parameter to get schema file contents published in an API version.
+
+
+        **Note:**
+
+
+        The `versionId` query parameter is a required parameter for API viewers.
+
+        '
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: schemaId
+        in: path
+        description: The API schema's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiSchemaId'
+      - name: file-path
+        in: path
+        description: The path to the schema file.
+        required: true
+        schema:
+          $ref: '#/components/schemas/file-path'
+      - name: versionId
+        in: query
+        description: The API's version ID. This is a required parameter for API viewers.
+        required: false
+        schema:
+          $ref: '#/components/schemas/apiVersionId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApiSchemaFileContents'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiSchemaFileContentsRequestBadRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiSchemaFileContentsRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiSchemaFileContentsRequestNotFoundError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiSchemaFileContentsRequestInternalServerError'
+    put:
+      operationId: createUpdateApiSchemaFile
+      summary: Create or update a schema file
+      description: 'Creates or updates an API schema file.
+
+
+        **Note:**
+
+
+        - If the provided file path exists, the file is updated with the new contents.
+
+        - If the provided file path does not exist, then a new schema file is created.
+
+        - If the file path contains a `/` (forward slash) character, then a folder is created. For example, if the file path is the `dir/schema.json` value, then a `dir` folder is created with the `schema.json` file inside.
+
+        - You can only update the `root` tag for protobuf specifications.
+
+        '
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: schemaId
+        in: path
+        description: The API schema's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiSchemaId'
+      - name: file-path
+        in: path
+        description: The path to the schema file.
+        required: true
+        schema:
+          $ref: '#/components/schemas/file-path'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createUpdateApiSchemaFileResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUpdateApiSchemaFileRequestBadRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUpdateApiSchemaFileRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUpdateApiSchemaFileRequestNotFoundError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUpdateApiSchemaFileRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createUpdateApiSchemaFile'
+    delete:
+      operationId: deleteApiSchemaFile
+      summary: Delete a schema file
+      description: Deletes a file in an API schema. On success, this returns an HTTP `204 No Content` response.
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: schemaId
+        in: path
+        description: The API schema's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiSchemaId'
+      - name: file-path
+        in: path
+        description: The path to the schema file.
+        required: true
+        schema:
+          $ref: '#/components/schemas/file-path'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '204':
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteApiSchemaFileRequestBadRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteApiSchemaFileRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteApiSchemaFileRequestNotFoundError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteApiSchemaFileRequestInternalServerError'
+  /apis/{apiId}/tasks/{taskId}:
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+    get:
+      operationId: getStatusOfAnAsyncApiTask
+      summary: Get status of an asynchronous task
+      description: Gets the status of an asynchronous task.
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: taskId
+        in: path
+        description: The task's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiTaskId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getStatusOfAnAsyncApiTask'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskRequestBadRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskRequestForbiddenError'
+        '404':
+          description: Task Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskRequestInternalServerError'
+  /apis/{apiId}/versions:
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+    get:
+      operationId: getApiVersions
+      summary: Get all versions
+      description: Gets all the published versions of an API.
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: cursor
+        in: query
+        description: The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter.
+        required: false
+        schema:
+          $ref: '#/components/schemas/cursor'
+      - name: limit
+        in: query
+        description: The maximum number of rows to return in the response.
+        required: false
+        schema:
+          $ref: '#/components/schemas/limit'
+          default: 10
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApiVersions'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiVersionsRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiVersionsRequestNotFoundError'
+        '422':
+          description: v9 Unsupported
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiVersionsRequestInternalServerError'
+    post:
+      operationId: createApiVersion
+      summary: Create a version
+      description: 'Creates a new API version asynchronously and immediately returns an HTTP `202 Accepted` response. The response contains a polling link to the task status API in the `Location` header.
+
+
+        This endpoint is equivalent to publishing a version in Postman app, which is the snapshot of API collections and schema at a given point in time.
+
+        '
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createApiVersionResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateApiVersionRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateApiVersionRequestNotFoundError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateApiVersionRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/API_createApiVersion_Request'
+  /apis/{apiId}/versions/{versionId}:
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+    get:
+      operationId: getApiVersion
+      summary: Get a version
+      description: 'Gets information about an API version.
+
+
+        **Note:**
+
+
+        - For API editors, this endpoint returns an HTTP `302 Found` status code when the version status is pending. It also returns the `/apis/{apiId}/tasks/{taskId}` task status response header.
+
+        - For API viewers, this endpoint returns an HTTP `404 Not Found` when the version status is pending.
+
+        '
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: versionId
+        in: path
+        description: The API's version ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiVersionId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApiVersion'
+        '400':
+          description: Missing v10 Accept Header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiErrorNameMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiVersionRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiVersionRequestNotFoundError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiVersionRequestInternalServerError'
+    put:
+      operationId: updateApiVersion
+      summary: Update a version
+      description: 'Updates an API version.
+
+
+        **Note:**
+
+
+        This endpoint returns an HTTP `404 Not Found` response when an API version is pending publication.
+
+        '
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: versionId
+        in: path
+        description: The API's version ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiVersionId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateApiVersionResponse'
+        '400':
+          description: Missing v10 Accept Header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiErrorNameMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateApiVersionRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateApiVersionRequestNotFoundError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateApiVersionRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateApiVersion'
+    delete:
+      operationId: deleteApiVersion
+      summary: Delete a version
+      description: 'Deletes an API version. On success, this returns an HTTP `204 No Content` response.
+
+
+        **Note:**
+
+
+        This endpoint returns an HTTP `404 Not Found` response when an API version is pending publication.
+
+        '
+      tags:
+      - api
+      parameters:
+      - name: apiId
+        in: path
+        description: The API's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiId'
+      - name: versionId
+        in: path
+        description: The API's version ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/apiVersionId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: The `application/vnd.api.v10+json` request header required to use the endpoint.
+        required: true
+        schema:
+          $ref: '#/components/schemas/v10Accept'
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteApiVersionRequestBadRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteApiVersionRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteApiVersionRequestNotFoundError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteApiVersionRequestInternalServerError'
+components:
+  schemas:
+    GetApiVersionVersionSchemasItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The schema's ID.
+        type:
+          type: string
+          description: The schema type.
+      description: Information about the schema.
+      title: GetApiVersionVersionSchemasItems
+    GetStatusOfAnAsyncApiTaskDetails0:
+      type: object
+      properties:
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskDetailsOneOf0ResourcesItems'
+      description: Information about the task's resources.
+      title: GetStatusOfAnAsyncApiTaskDetails0
+    copyCollectionToApi:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CopyCollectionToApiData'
+        operationType:
+          $ref: '#/components/schemas/CopyCollectionToApiOperationType'
+          description: The `COPY_COLLECTION` method.
+      title: copyCollectionToApi
+    UpdateApiVersionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateApiVersionRequestInternalServerError
+    CreateApiSchemaFilesItems:
+      type: object
+      properties:
+        path:
+          type: string
+          description: The schema's file path.
+        root:
+          $ref: '#/components/schemas/CreateApiSchemaFilesItemsRoot'
+          description: Information about the schema's root file.
+        content:
+          type: string
+          description: The schema file's stringified contents.
+      title: CreateApiSchemaFilesItems
+    apiVersionId:
+      type: string
+      title: apiVersionId
+    GetApiCollectionRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/apiErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiCollectionRequestBadRequestError
+    AddApiCollectionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: AddApiCollectionRequestInternalServerError
+    GetStatusOfAnAsyncApiTaskDetailsOneOf0ResourcesItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the assigned resource.
+        url:
+          type: string
+          description: The task's assigned resource URL.
+      title: GetStatusOfAnAsyncApiTaskDetailsOneOf0ResourcesItems
+    createApiSchemaResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The schema's ID.
+        type:
+          $ref: '#/components/schemas/CreateApiSchemaResponseType'
+          description: The schema's type.
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateApiSchemaResponseFilesItems'
+          description: A list of the schema's files.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the schema was created.
+        createdBy:
+          type: string
+          description: The user ID of the user that created the schema.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the schema was last updated.
+        updatedBy:
+          type: string
+          description: The user ID of the user that updated the schema.
+      description: Information about the API schema.
+      title: createApiSchemaResponse
+    ApiIncludeItems:
+      type: string
+      enum:
+      - collections
+      - versions
+      - schemas
+      - gitInfo
+      title: ApiIncludeItems
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    GetApiSchemaFileContentsRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/apiErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiSchemaFileContentsRequestBadRequestError
+    UpdateApiRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateApiRequestInternalServerError
+    GetApiSchemaFilesRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiSchemaFilesRequestInternalServerError
+    GetStatusOfAnAsyncApiTaskMetaAction:
+      type: string
+      enum:
+      - update
+      - create
+      description: The task's action.
+      title: GetStatusOfAnAsyncApiTaskMetaAction
+    CreateApiCollectionData:
+      type: object
+      properties:
+        info:
+          $ref: '#/components/schemas/CreateApiCollectionDataInfo'
+          description: Information about the collection.
+        item:
+          type: array
+          items:
+            description: Any type
+          description: Information about the requests and responses in the collection. For a complete list of values, refer to the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+      description: Information about the collection's contents, such as requests and responses. For a complete list of values, refer to the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+      title: CreateApiCollectionData
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    GetApiSchema1:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The schema's ID.
+        type:
+          type: string
+          description: The schema's type.
+        createdBy:
+          type: string
+          description: The user ID of the user that created the schema.
+        updatedBy:
+          type: string
+          description: The user ID of the user that last updated the schema.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the schema was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the schema was last updated.
+        content:
+          type: string
+          description: The schema file, in a bundled format.
+      description: Information about the schema.
+      title: GetApiSchema1
+    CreateUpdateApiSchemaFileResponseRoot:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: If true, the file is the schema's the root file.
+      description: Information about the schema's root file.
+      title: CreateUpdateApiSchemaFileResponseRoot
+    GetApiCollectionRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: GetApiCollectionRequestNotFoundError
+    apiDescription:
+      type: string
+      title: apiDescription
+    GetApiVersionVersionCollectionsItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The collection's ID.
+        type:
+          type: string
+          description: The collection's name.
+      description: Information about the collection.
+      title: GetApiVersionVersionCollectionsItems
+    GetApisRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApisRequestInternalServerError
+    SyncCollectionWithSchemaRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: SyncCollectionWithSchemaRequestForbiddenError
+    updateApiVersionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The version's ID.
+        name:
+          type: string
+          description: The version's name.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the version was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the version was last updated.
+        releaseNotes:
+          type: string
+          description: The version's release notes.
+      description: Information about the API version.
+      title: updateApiVersionResponse
+    DeleteApiSchemaFileRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: DeleteApiSchemaFileRequestForbiddenError
+    apiSchemaOutput:
+      type: boolean
+      default: false
+      title: apiSchemaOutput
+    GetApiSchemaOneOf0Files:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetApiSchemaOneOf0FilesDataItems'
+          description: A list of the schema files.
+        meta:
+          $ref: '#/components/schemas/GetApiSchemaOneOf0FilesMeta'
+          description: The response's non-standard meta information.
+      description: Information about the schema's files. The response is paginated and limited to one page.
+      title: GetApiSchemaOneOf0Files
+    CreateApiSchemaRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/apiErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateApiSchemaRequestBadRequestError
+    GetApisMeta:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: The maximum number of records in the paginated response.
+        total:
+          type: integer
+          description: The number of records that match the defined criteria.
+        nextCursor:
+          type: string
+          format: base64
+          description: The pagination cursor that points to the next record in the results set.
+      description: The response's meta information for paginated results.
+      title: GetApisMeta
+    GetApiVersionRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiVersionRequestForbiddenError
+    GetApiRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: GetApiRequestNotFoundError
+    GetStatusOfAnAsyncApiTaskRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetStatusOfAnAsyncApiTaskRequestInternalServerError
+    DeleteApiRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteApiRequestInternalServerError
+    GetApisRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: GetApisRequestNotFoundError
+    updateApiResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The API's ID.
+        name:
+          type: string
+          description: The API's name.
+        summary:
+          type: string
+          description: The API's summary.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the API was created.
+        createdBy:
+          type: string
+          description: The user ID of the user that created the API.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the API was last updated.
+        updatedBy:
+          type: string
+          description: The user ID of the user that updated the API.
+        description:
+          type: string
+          description: The API's description. This supports Markdown formatting.
+      required:
+      - name
+      title: updateApiResponse
+    limit:
+      type: integer
+      default: 10
+      title: limit
+    GetStatusOfAnAsyncApiTaskDetails1:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskDetailsOneOf1Error'
+      description: Information about the error that occurred during the task's processing.
+      title: GetStatusOfAnAsyncApiTaskDetails1
+    commentTaggedUsers:
+      type: object
+      properties:
+        '{{userName}}':
+          $ref: '#/components/schemas/CommentTaggedUsersUserName'
+          description: An object that contains information about the tagged user. The object's name is the user's Postman username. For example, `@user-postman`.
+      description: Information about users tagged in the `body` comment.
+      title: commentTaggedUsers
+    createGitLinkedVersionRootFile:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The version's name.
+        branch:
+          type: string
+          description: The branch ID.
+        schemas:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateGitLinkedVersionRootFileSchemasItems'
+          description: A list of the version's schemas.
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateGitLinkedVersionRootFileCollectionsItems'
+          description: A list of the version's collections.
+        releaseNotes:
+          type: string
+          description: Information about the API version release. For example, changelog notes.
+      required:
+      - name
+      - branch
+      - schemas
+      - collections
+      description: Information about the API version.
+      title: createGitLinkedVersionRootFile
+    commentData:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The comment's ID.
+        threadId:
+          type: integer
+          description: The comment's thread ID.
+        status:
+          $ref: '#/components/schemas/CommentDataStatus'
+          description: The comment's current status.
+        createdBy:
+          type: integer
+          description: The user ID of the user who created the comment.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the comment was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time when the comment was last updated.
+        body:
+          type: string
+          description: The contents of the comment.
+      description: Information about the comment.
+      title: commentData
+    createApiSchema:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CreateApiSchemaType'
+          description: The schema's type.
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateApiSchemaFilesItems'
+          description: The list of files that are part of the schema.
+      required:
+      - type
+      - files
+      description: Information about the API schema.
+      title: createApiSchema
+    createApiResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The API's ID.
+        name:
+          type: string
+          description: The API's name.
+        summary:
+          type: string
+          description: The API's short summary.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the API was created.
+        createdBy:
+          type: integer
+          description: The Postman ID of the user that created the API.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the API was updated.
+        updatedBy:
+          type: integer
+          description: The Postman ID of the user that updated the API.
+        description:
+          type: string
+          description: The API's description.
+      title: createApiResponse
+    addApiCollectionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The collection's ID.
+      title: addApiCollectionResponse
+    GetStatusOfAnAsyncApiTaskMeta:
+      type: object
+      properties:
+        url:
+          type: string
+          format: url
+          description: The endpoint URL that created the task.
+        model:
+          $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskMetaModel'
+          description: The model for which the task is performing the operation.
+        action:
+          $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskMetaAction'
+          description: The task's action.
+      description: The response's non-standard meta information.
+      title: GetStatusOfAnAsyncApiTaskMeta
+    CreateApiSchemaType:
+      type: string
+      enum:
+      - proto:2
+      - proto:3
+      - graphql
+      - openapi:3_1
+      - openapi:3
+      - openapi:2
+      - openapi:1
+      - raml:1
+      - raml:0_8
+      - wsdl:2
+      - wsdl:1
+      - asyncapi:2
+      description: The schema's type.
+      title: CreateApiSchemaType
+    DeleteApiVersionRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: DeleteApiVersionRequestNotFoundError
+    API_addApiCollection_Request:
+      oneOf:
+      - $ref: '#/components/schemas/copyCollectionToApi'
+      - $ref: '#/components/schemas/createApiCollection'
+      - $ref: '#/components/schemas/generateApiFromSchema'
+      title: API_addApiCollection_Request
+    CreateApiSchemaRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: CreateApiSchemaRequestNotFoundError
+    GetApiRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiRequestInternalServerError
+    GetStatusOfAnAsyncApiTaskStatus:
+      type: string
+      enum:
+      - pending
+      - failed
+      - completed
+      description: The task's current status.
+      title: GetStatusOfAnAsyncApiTaskStatus
+    getApis:
+      type: object
+      properties:
+        apis:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetApisApisItems'
+        meta:
+          $ref: '#/components/schemas/GetApisMeta'
+          description: The response's meta information for paginated results.
+      description: Information about the API schema.
+      title: getApis
+    CommentTaggedUsersUserName:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommentTaggedUsersUserNameType'
+          description: The `user` value.
+        id:
+          type: string
+          description: The user's ID.
+      required:
+      - type
+      - id
+      description: An object that contains information about the tagged user. The object's name is the user's Postman username. For example, `@user-postman`.
+      title: CommentTaggedUsersUserName
+    UpdateApiVersionRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: UpdateApiVersionRequestForbiddenError
+    DeleteApiSchemaFileRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/apiErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteApiSchemaFileRequestBadRequestError
+    CreateGitLinkedVersionRootFileCollectionsItems:
+      type: object
+      properties:
+        filePath:
+          type: string
+          description: Path to a collection in the Git repository.
+      description: Information about the collection.
+      title: CreateGitLinkedVersionRootFileCollectionsItems
+    GetApiSchemaRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiSchemaRequestInternalServerError
+    GetApiVersionsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiVersionsRequestInternalServerError
+    getApiSchema:
+      oneOf:
+      - $ref: '#/components/schemas/GetApiSchema0'
+      - $ref: '#/components/schemas/GetApiSchema1'
+      title: getApiSchema
+    CreateApiCollectionOperationType:
+      type: string
+      enum:
+      - CREATE_NEW
+      description: The `CREATE_NEW` method.
+      title: CreateApiCollectionOperationType
+    CreateGitLinkedVersionSchemasItems:
+      type: object
+      properties:
+        directoryPath:
+          type: string
+          description: The path to the root directory where schemas are stored in the Git repository.
+      description: Information about the schema.
+      title: CreateGitLinkedVersionSchemasItems
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    GetApiVersionsRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: GetApiVersionsRequestNotFoundError
+    CreateApiRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: CreateApiRequestForbiddenError
+    GetApisApisItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The API's ID.
+        name:
+          type: string
+          description: The API's name.
+        summary:
+          type: string
+          description: The API's short summary.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the API was created.
+        createdBy:
+          type: integer
+          description: The Postman ID of the user that created the API.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the API was updated.
+        updatedBy:
+          type: integer
+          description: The Postman ID of the user that updated the API.
+        description:
+          type: string
+          description: The API's description.
+      description: The API's base data schema.
+      title: GetApisApisItems
+    CreateApiCollectionDataInfoSchema:
+      type: string
+      enum:
+      - https://schema.postman.com/json/collection/v2.1.0/collection.json
+      description: The collection's schema format.
+      title: CreateApiCollectionDataInfoSchema
+    GetApiCollectionInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The collection's name.
+        schema:
+          type: string
+          format: url
+          description: A URL to the collection's schema.
+        _postman_id:
+          type: string
+          description: The collection's Postman ID.
+        description:
+          type: string
+          description: The collection's description.
+      description: Information about the collection.
+      title: GetApiCollectionInfo
+    GetStatusOfAnAsyncApiTaskMetaModel:
+      type: string
+      enum:
+      - collection
+      - api-version
+      description: The model for which the task is performing the operation.
+      title: GetStatusOfAnAsyncApiTaskMetaModel
+    GetApiOneOf1GitInfo:
+      type: object
+      properties:
+        domain:
+          type:
+          - string
+          - 'null'
+          description: The domain at which the Git repository is hosted.
+        repository:
+          type: string
+          description: The repository's name.
+        organization:
+          type: string
+          description: The organization that owns the repository.
+        schemaFolder:
+          type: string
+          description: The API definition's repository folder location.
+        collectionFolder:
+          type: string
+          description: The API definition's collection repository folder location.
+      description: Information about the API's Git repository integration.
+      title: GetApiOneOf1GitInfo
+    GetApiSchemaFilesMeta:
+      type: object
+      properties:
+        nextCursor:
+          type: string
+          description: The pointer to the next record in the set of paginated results.
+      description: The schema's non-standard meta information.
+      title: GetApiSchemaFilesMeta
+    GetApiSchemaFileContentsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiSchemaFileContentsRequestInternalServerError
+    CreateUpdateApiSchemaFileRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: CreateUpdateApiSchemaFileRequestNotFoundError
+    createdBy:
+      type: integer
+      title: createdBy
+    getApiSchemaFileContents:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The schema file's ID.
+        name:
+          type: string
+          description: The schema file's name.
+        path:
+          type: string
+          description: The file system path to the schema file.
+        content:
+          type: string
+          description: The schema file's stringified contents.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was created.
+        createdBy:
+          type: string
+          description: The user Id of the user that created the file.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was last updated.
+        updatedBy:
+          type: string
+          description: The user ID of the user that last updated the file.
+      title: getApiSchemaFileContents
+    GetApi0:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The API's ID.
+        name:
+          type: string
+          description: The API's name.
+        summary:
+          type: string
+          description: The API's short summary.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the API was created.
+        createdBy:
+          type: integer
+          format: int64
+          description: The Postman ID of the user that created the API.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the API was updated.
+        updatedBy:
+          type: integer
+          format: int64
+          description: The Postman ID of the user that updated the API.
+        description:
+          type: string
+          description: The API's description.
+      title: GetApi0
+    GetStatusOfAnAsyncApiTaskRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/apiErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetStatusOfAnAsyncApiTaskRequestBadRequestError
+    GetApiVersionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiVersionRequestInternalServerError
+    CreateApiSchemaFilesItemsRoot:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          default: true
+          description: If true, tag the file as the root file. You can only update the root tag for protobuf specifications.
+      description: Information about the schema's root file.
+      title: CreateApiSchemaFilesItemsRoot
+    commonErrorTypeTitleDetailStatusInstance:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri-reference
+          description: The [URI reference](https://www.rfc-editor.org/rfc/rfc3986) that identifies the type of problem.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: An explanation about the problem.
+        status:
+          type: integer
+          description: The HTTP status code generated by the origin server.
+        instance:
+          type: string
+          description: The URI reference that identifies the specific occurrence of the problem.
+      title: commonErrorTypeTitleDetailStatusInstance
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    CommentTaggedUsersUserNameType:
+      type: string
+      enum:
+      - user
+      description: The `user` value.
+      title: CommentTaggedUsersUserNameType
+    getApiSchemaFiles:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/GetApiSchemaFilesMeta'
+          description: The schema's non-standard meta information.
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetApiSchemaFilesFilesItems'
+          description: A list of the schema's files.
+      title: getApiSchemaFiles
+    commentUpdate:
+      type: object
+      properties:
+        body:
+          type: string
+          description: The contents of the comment.
+        tags:
+          $ref: '#/components/schemas/commentTaggedUsers'
+      required:
+      - body
+      description: Information about the comment.
+      title: commentUpdate
+    createUpdateApi:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The API's name.
+        summary:
+          type: string
+          description: The API's short summary.
+        description:
+          type: string
+          description: The API's description. This supports Markdown formatting.
+      required:
+      - name
+      description: Information about the API.
+      title: createUpdateApi
+    GetApiSchemaRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: GetApiSchemaRequestNotFoundError
+    GetStatusOfAnAsyncApiTaskRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: GetStatusOfAnAsyncApiTaskRequestForbiddenError
+    GetApiSchemaRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: GetApiSchemaRequestForbiddenError
+    DeleteApiSchemaFileRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: DeleteApiSchemaFileRequestNotFoundError
+    CreateUpdateApiSchemaFileRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/apiErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateUpdateApiSchemaFileRequestBadRequestError
+    CreateApiSchemaResponseFilesItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The schema file's ID.
+        name:
+          type: string
+          description: The schema file's name.
+        path:
+          type: string
+          description: The file system path to the schema file.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was created.
+        root:
+          $ref: '#/components/schemas/CreateApiSchemaResponseFilesItemsRoot'
+          description: An object that contains root file information.
+        createdBy:
+          type: string
+          description: The user ID of the user that created the file.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was last updated.
+        updatedBy:
+          type: string
+          description: The user ID of the user that last updated the file.
+      description: Information about the schema file.
+      title: CreateApiSchemaResponseFilesItems
+    GetApiVersionsVersionsItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The version's ID.
+        name:
+          type: string
+          description: The version's name.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the version was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the version was last updated.
+        releaseNotes:
+          type: string
+          description: The version's release notes.
+      description: Information about the API version.
+      title: GetApiVersionsVersionsItems
+    apiInclude:
+      type: array
+      items:
+        $ref: '#/components/schemas/ApiIncludeItems'
+      title: apiInclude
+    GetApiSchema0:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The schema's ID.
+        type:
+          type: string
+          description: The schema's type.
+        files:
+          $ref: '#/components/schemas/GetApiSchemaOneOf0Files'
+          description: Information about the schema's files. The response is paginated and limited to one page.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the schema was created.
+        createdBy:
+          type: string
+          description: The user ID of the user that created the schema.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the schema was last updated.
+        updatedBy:
+          type: string
+          description: The user ID of the user that last updated the schema.
+      description: Information about the schema.
+      title: GetApiSchema0
+    GetApiOneOf1SchemasItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The schema's ID.
+      description: Information about the schema.
+      title: GetApiOneOf1SchemasItems
+    DeleteApiVersionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteApiVersionRequestInternalServerError
+    file-path:
+      type: string
+      title: file-path
+    commentId:
+      type: integer
+      title: commentId
+    DeleteApiRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: DeleteApiRequestNotFoundError
+    DeleteApiVersionRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: DeleteApiVersionRequestForbiddenError
+    GetApiSchemaFileContentsRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: GetApiSchemaFileContentsRequestNotFoundError
+    AddApiCollectionRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: AddApiCollectionRequestForbiddenError
+    CreateUpdateApiSchemaFileRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: CreateUpdateApiSchemaFileRequestForbiddenError
+    createUpdateApiSchemaFileResponse:
+      type: object
+      properties:
+        createdBy:
+          type: string
+          description: The user ID of the user that created the file.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was created.
+        root:
+          $ref: '#/components/schemas/CreateUpdateApiSchemaFileResponseRoot'
+          description: Information about the schema's root file.
+        name:
+          type: string
+          description: The schema file's name.
+        path:
+          type: string
+          description: The file system path to the schema file.
+        updatedBy:
+          type: string
+          description: The user ID of the user that last updated the file.
+        id:
+          type: string
+          description: The schema file's ID.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was last updated.
+      description: Information about the schema file.
+      title: createUpdateApiSchemaFileResponse
+    GetApiSchemaRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/apiErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiSchemaRequestBadRequestError
+    createUpdateApiSchemaFile:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The schema file's name.
+        root:
+          $ref: '#/components/schemas/CreateUpdateApiSchemaFileRoot'
+          description: Information about the schema's root file.
+        content:
+          type: string
+          description: The schema file's stringified contents.
+      description: Information about schema file.
+      title: createUpdateApiSchemaFile
+    CreateApiSchemaRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateApiSchemaRequestInternalServerError
+    generateApiFromSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The collection's name.
+        operationType:
+          $ref: '#/components/schemas/GenerateApiFromSchemaOperationType'
+          description: The `GENERATE_FROM_SCHEMA` method.
+        options:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: The advanced creation options for collections and their values. For a complete list of properties and their values, see Postman's [OpenAPI to Postman Collection Converter OPTIONS documentation](https://github.com/postmanlabs/openapi-to-postman/blob/develop/OPTIONS.md). These properties are case-sensitive.
+      title: generateApiFromSchema
+    GetStatusOfAnAsyncApiTaskDetails:
+      oneOf:
+      - $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskDetails0'
+      - $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskDetails1'
+      title: GetStatusOfAnAsyncApiTaskDetails
+    workspaceId:
+      type: string
+      title: workspaceId
+    CreateUpdateApiSchemaFileRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateUpdateApiSchemaFileRequestInternalServerError
+    createGitUnlinkedVersionSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The version's name.
+        schemas:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateGitUnlinkedVersionSchemaSchemasItems'
+          description: A list of the version's schemas.
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateGitUnlinkedVersionSchemaCollectionsItems'
+          description: A list of the version's collections.
+        releaseNotes:
+          type: string
+          description: Information about the API version release. For example, changelog notes.
+      required:
+      - name
+      - schemas
+      - collections
+      description: Information about the API version.
+      title: createGitUnlinkedVersionSchema
+    GetApiSchemaOneOf0FilesMeta:
+      type: object
+      properties:
+        nextPath:
+          type: string
+          description: The URL path to the next file.
+      description: The response's non-standard meta information.
+      title: GetApiSchemaOneOf0FilesMeta
+    GetApisRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApisRequestUnauthorizedError
+    GetApiSchemaFilesFilesItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The schema file's ID.
+        name:
+          type: string
+          description: The schema file's name.
+        path:
+          type: string
+          description: The file system path to the schema file.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was created.
+        createdBy:
+          type: integer
+          format: int64
+          description: The user ID of the user that created the file.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was last updated.
+        updatedBy:
+          type: integer
+          description: The user ID of the user that last updated the file.
+      description: Information about the schema file.
+      title: GetApiSchemaFilesFilesItems
+    CreateGitUnlinkedVersionSchemaCollectionsItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The collection's ID.
+      description: Information about the collection.
+      title: CreateGitUnlinkedVersionSchemaCollectionsItems
+    commentResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/commentData'
+          description: A list of comments.
+      title: commentResponse
+    commonErrorErrorObjTypeTitleDetail:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorErrorObjTypeTitleDetailError'
+          description: Information about the error.
+      title: commonErrorErrorObjTypeTitleDetail
+    CreateApiVersionRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: CreateApiVersionRequestNotFoundError
+    GetApiSchemaFileContentsRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiSchemaFileContentsRequestForbiddenError
+    cursor:
+      type: string
+      title: cursor
+    AddApiCollectionRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: AddApiCollectionRequestNotFoundError
+    CommonErrorErrorObjTypeTitleDetailError:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Details about the error.
+      description: Information about the error.
+      title: CommonErrorErrorObjTypeTitleDetailError
+    createApiCollection:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CreateApiCollectionData'
+          description: Information about the collection's contents, such as requests and responses. For a complete list of values, refer to the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+        operationType:
+          $ref: '#/components/schemas/CreateApiCollectionOperationType'
+          description: The `CREATE_NEW` method.
+      title: createApiCollection
+    GetApiOneOf1CollectionsItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The collection's ID.
+      description: Information about the collection.
+      title: GetApiOneOf1CollectionsItems
+    GetApisRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApisRequestForbiddenError
+    CopyCollectionToApiData:
+      type: object
+      properties:
+        collectionId:
+          type: string
+          description: The collection ID to copy to the API.
+      title: CopyCollectionToApiData
+    apiSchemaId:
+      type: string
+      title: apiSchemaId
+    UpdateApiVersionRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: UpdateApiVersionRequestNotFoundError
+    getApi:
+      oneOf:
+      - $ref: '#/components/schemas/GetApi0'
+      - $ref: '#/components/schemas/GetApi1'
+      title: getApi
+    CreateUpdateApiSchemaFileRoot:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: If true, tag the file as the root file. You can only update the root tag for protobuf specifications.
+      description: Information about the schema's root file.
+      title: CreateUpdateApiSchemaFileRoot
+    apiId:
+      type: string
+      title: apiId
+    getApiVersion:
+      type: object
+      properties:
+        version:
+          $ref: '#/components/schemas/GetApiVersionVersion'
+          description: Information about the API version.
+      title: getApiVersion
+    CreateApiSchemaRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: CreateApiSchemaRequestForbiddenError
+    API_createApiVersion_Request:
+      oneOf:
+      - $ref: '#/components/schemas/createGitUnlinkedVersionSchema'
+      - $ref: '#/components/schemas/createGitLinkedVersion'
+      - $ref: '#/components/schemas/createGitLinkedVersionRootFile'
+      title: API_createApiVersion_Request
+    createGitLinkedVersion:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The version's name.
+        branch:
+          type: string
+          description: The branch ID.
+        schemas:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateGitLinkedVersionSchemasItems'
+          description: A list of the version's schemas.
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateGitLinkedVersionCollectionsItems'
+          description: A list of the version's collections.
+        releaseNotes:
+          type: string
+          description: Information about the API version release. For example, changelog notes.
+      required:
+      - name
+      - branch
+      - schemas
+      - collections
+      description: Information about the API version.
+      title: createGitLinkedVersion
+    commonErrorTypeTitleMessageDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        message:
+          type: string
+          description: The error message.
+        detail:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Information about the error.
+      title: commonErrorTypeTitleMessageDetail
+    GetApiRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiRequestForbiddenError
+    GetApiVersionsMeta:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: The maximum number of records in the paginated response.
+        total:
+          type: integer
+          description: The number of records that match the defined criteria.
+        nextCursor:
+          type: string
+          format: base64
+          description: The pagination cursor that points to the next record in the results set.
+      description: The response's meta information for paginated results.
+      title: GetApiVersionsMeta
+    GetApiOneOf1VersionsItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The version's ID.
+        name:
+          type: string
+          description: The version's name.
+      description: Information about the version.
+      title: GetApiOneOf1VersionsItems
+    collectionIdApi:
+      type: string
+      format: uid
+      title: collectionIdApi
+    commentCreatedUpdated:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CommentCreatedUpdatedData'
+      title: commentCreatedUpdated
+    CommentDataStatus:
+      type: string
+      enum:
+      - Open
+      - Resolved
+      description: The comment's current status.
+      title: CommentDataStatus
+    syncCollectionWithSchemaResponse:
+      type: object
+      properties:
+        taskId:
+          type: string
+          description: The created task ID. You can use this ID to track the status of syncing an API collection with an API schema.
+      title: syncCollectionWithSchemaResponse
+    CommentCreatedUpdatedData:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The comment's ID.
+        threadId:
+          type: integer
+          description: The comment's thread ID.
+        createdBy:
+          type: integer
+          description: The user ID of the user who created the comment.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the comment was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time when the comment was last updated.
+        body:
+          type: string
+          description: The contents of the comment.
+      title: CommentCreatedUpdatedData
+    GetApiCollectionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiCollectionRequestInternalServerError
+    CreateGitLinkedVersionRootFileSchemasItems:
+      type: object
+      properties:
+        filePath:
+          type: string
+          description: The path to the schema root file in the Git repository.
+      description: Information about the schema.
+      title: CreateGitLinkedVersionRootFileSchemasItems
+    CreateApiCollectionDataInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The collection's name.
+        schema:
+          $ref: '#/components/schemas/CreateApiCollectionDataInfoSchema'
+          description: The collection's schema format.
+      description: Information about the collection.
+      title: CreateApiCollectionDataInfo
+    GetApiVersionRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: GetApiVersionRequestNotFoundError
+    createApiVersionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The version's ID.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the version was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the version was last updated.
+        name:
+          type: string
+          description: The version's name.
+        releaseNotes:
+          type: string
+          description: Information about the API version release. For example, changelog notes.
+      title: createApiVersionResponse
+    GetApiSchemaFilesRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/apiErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiSchemaFilesRequestBadRequestError
+    apiErrorNameMessage:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      title: apiErrorNameMessage
+    SyncCollectionWithSchemaRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/apiErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: SyncCollectionWithSchemaRequestBadRequestError
+    DeleteApiRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: DeleteApiRequestForbiddenError
+    GetApiCollectionRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: GetApiCollectionRequestForbiddenError
+    UpdateApiRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: UpdateApiRequestForbiddenError
+    getApiVersions:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/GetApiVersionsMeta'
+          description: The response's meta information for paginated results.
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetApiVersionsVersionsItems'
+          description: A list of the API's versions.
+      title: getApiVersions
+    getStatusOfAnAsyncApiTask:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The task's ID.
+        meta:
+          $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskMeta'
+          description: The response's non-standard meta information.
+        status:
+          $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskStatus'
+          description: The task's current status.
+        details:
+          $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskDetails'
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the task was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the task was last updated.
+      title: getStatusOfAnAsyncApiTask
+    commentCreate:
+      type: object
+      properties:
+        body:
+          type: string
+          description: The contents of the comment.
+        threadId:
+          type: integer
+          description: The comment's thread ID. To create a reply on an existing comment, include this property.
+        tags:
+          $ref: '#/components/schemas/commentTaggedUsers'
+      required:
+      - body
+      description: Information about the comment.
+      title: commentCreate
+    CreateApiVersionRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: CreateApiVersionRequestForbiddenError
+    UpdateApiRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: UpdateApiRequestNotFoundError
+    v10Accept:
+      type: string
+      enum:
+      - application/vnd.api.v10+json
+      title: v10Accept
+    apiTaskId:
+      type: string
+      title: apiTaskId
+    CopyCollectionToApiOperationType:
+      type: string
+      enum:
+      - COPY_COLLECTION
+      description: The `COPY_COLLECTION` method.
+      title: CopyCollectionToApiOperationType
+    GetApiSchemaFilesRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: GetApiSchemaFilesRequestNotFoundError
+    GetApiVersionsRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiVersionsRequestForbiddenError
+    CreateGitUnlinkedVersionSchemaSchemasItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The schema's ID.
+      description: Information about the schema.
+      title: CreateGitUnlinkedVersionSchemaSchemasItems
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    SyncCollectionWithSchemaRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: SyncCollectionWithSchemaRequestNotFoundError
+    GetApi1:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The API's ID.
+        name:
+          type: string
+          description: The API's name.
+        summary:
+          type: string
+          description: The API's short summary.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the API was created.
+        createdBy:
+          type: integer
+          format: int64
+          description: The Postman ID of the user that created the API.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the API was updated.
+        updatedBy:
+          type: integer
+          format: int64
+          description: The Postman ID of the user that updated the API.
+        description:
+          type: string
+          description: The API's description.
+        gitInfo:
+          $ref: '#/components/schemas/GetApiOneOf1GitInfo'
+          description: Information about the API's Git repository integration.
+        schemas:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetApiOneOf1SchemasItems'
+          description: The API's schemas.
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetApiOneOf1VersionsItems'
+          description: The API's versions.
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetApiOneOf1CollectionsItems'
+          description: The API's collections.
+      description: 'The API''s extended data schema.
+
+
+        **Note:**
+
+
+        Git-connected APIs will only return the `versions` and `gitInfo` query responses. This is because schema and collection information is stored in the connected Git repository. The `gitInfo` object only lists the repository and folder locations of the files.
+
+        '
+      title: GetApi1
+    GetApiSchemaFilesRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiSchemaFilesRequestForbiddenError
+    SyncCollectionWithSchemaRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: SyncCollectionWithSchemaRequestInternalServerError
+    CreateApiSchemaResponseType:
+      type: string
+      enum:
+      - proto:2
+      - proto:3
+      - graphql
+      - openapi:3_1
+      - openapi:3
+      - openapi:2
+      - openapi:1
+      - raml:1
+      - raml:0_8
+      - wsdl:2
+      - wsdl:1
+      - asyncapi:2
+      description: The schema's type.
+      title: CreateApiSchemaResponseType
+    GenerateApiFromSchemaOperationType:
+      type: string
+      enum:
+      - GENERATE_FROM_SCHEMA
+      description: The `GENERATE_FROM_SCHEMA` method.
+      title: GenerateApiFromSchemaOperationType
+    CreateApiSchemaResponseFilesItemsRoot:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: If true, the file is tagged as the schema's root file. The root tag is only allowed for protobuf specifications.
+      description: An object that contains root file information.
+      title: CreateApiSchemaResponseFilesItemsRoot
+    getApiCollection:
+      type: object
+      properties:
+        item:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              description: Any type
+          description: A list of the collection's contents.
+        info:
+          $ref: '#/components/schemas/GetApiCollectionInfo'
+          description: Information about the collection.
+        auth:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: The collection's auth information. For a complete list of values, refer to the **Auth** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+        variable:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              description: Any type
+          description: A list of the collection's variables.
+      title: getApiCollection
+    DeleteApiSchemaFileRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteApiSchemaFileRequestInternalServerError
+    GetApiSchemaOneOf0FilesDataItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The schema file's ID.
+        name:
+          type: string
+          description: The schema file's name.
+        path:
+          type: string
+          description: The file system path to the schema file.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was created.
+        createdBy:
+          type: string
+          description: The user ID of the user that created the file.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was last updated.
+        updatedBy:
+          type: string
+          description: The user ID of the user that last updated the file.
+      description: Information about the schema file.
+      title: GetApiSchemaOneOf0FilesDataItems
+    CreateApiRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateApiRequestInternalServerError
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    GetStatusOfAnAsyncApiTaskDetailsOneOf1Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The task's error message.
+      title: GetStatusOfAnAsyncApiTaskDetailsOneOf1Error
+    CreateGitLinkedVersionCollectionsItems:
+      type: object
+      properties:
+        filePath:
+          type: string
+          description: The path to the collection in the Git repository.
+      description: Information about the collection.
+      title: CreateGitLinkedVersionCollectionsItems
+    GetApiVersionVersion:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The version's ID.
+        name:
+          type: string
+          description: The version's name.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the version was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the version was last updated.
+        releaseNotes:
+          type: string
+          description: The version's release notes.
+        schemas:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetApiVersionVersionSchemasItems'
+          description: A list of the API's schemas.
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetApiVersionVersionCollectionsItems'
+          description: A list of the API's collections.
+      description: Information about the API version.
+      title: GetApiVersionVersion
+    DeleteApiVersionRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/apiErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteApiVersionRequestBadRequestError
+    CreateApiVersionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateApiVersionRequestInternalServerError
+    updateApiVersion:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The version's name.
+        releaseNotes:
+          type: string
+          description: The version's Markdown-supported release notes.
+      required:
+      - name
+      description: Information about the API version.
+      title: updateApiVersion
+  securitySchemes:
+    PostmanApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+    basicAuth:
+      type: http
+      scheme: basic
+    scimApiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+x-refined-from:
+- postman-api-api-openapi.yml
+- postman-api-openapi.yml
+x-provenance:
+  first_party: true
+  method: harvested
+  provider_published: true
+  source: https://learning.postman.com/api-docs/openapi.json
+  harvested: '2026-08-05'
+  note: Postman's own OpenAPI 3.1 definition for the Postman API, served by its Fern-hosted API reference. 162 paths, 256 operations, servers api.postman.com and api.eu.postman.com.

@@ -1,0 +1,2232 @@
+openapi: 3.1.0
+info:
+  title: Postman Collection Items API
+  version: 1.0.0
+  description: 'Operations tagged collectionItems across 2 of this provider''s published API definitions: postman-api-openapi.yml, postman-collectionitems-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.postman.com
+  description: https://api.postman.com
+- url: https://api.eu.postman.com
+  description: https://api.eu.postman.com
+tags:
+- name: collectionItems
+paths:
+  /collections/{collectionId}/folders:
+    post:
+      operationId: createCollectionFolder
+      summary: Create a folder
+      description: 'Creates a folder in a collection. For a complete list of properties, refer to the **Folder** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+
+
+        You can use this endpoint to to import requests and responses into a newly-created folder. To do this, include the `requests` field and the list of request objects in the request body. For more information, see the provided example.
+
+
+        **Note:**
+
+
+        It is recommended that you pass the `name` property in the request body. If you do not, the system uses a null value. As a result, this creates a folder with a blank name.
+
+        '
+      tags:
+      - collectionItems
+      parameters:
+      - name: collectionId
+        in: path
+        description: The collection's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createCollectionFolderResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCollectionFolderRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createCollectionFolder'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /collections/{collectionId}/requests:
+    post:
+      operationId: createCollectionRequest
+      summary: Create a request
+      description: 'Creates a request in a collection. For a complete list of properties, refer to the **Request** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+
+
+        **Note:**
+
+
+        It is recommended that you pass the `name` property in the request body. If you do not, the system uses a null value. As a result, this creates a request with a blank name.
+
+        '
+      tags:
+      - collectionItems
+      parameters:
+      - name: collectionId
+        in: path
+        description: The collection's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionId'
+      - name: folderId
+        in: query
+        description: The folder ID in which to create the request. By default, the system will create the request at the collection level.
+        required: false
+        schema:
+          $ref: '#/components/schemas/collectionFolderId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createCollectionRequestResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCollectionRequestRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createCollectionRequest'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /collections/{collectionId}/responses:
+    post:
+      operationId: createCollectionResponse
+      summary: Create a response
+      description: 'Creates a request response in a collection. For a complete list of request body properties, refer to the **Response** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+
+
+        **Note:**
+
+
+        It is recommended that you pass the `name` property in the request body. If you do not, the system uses a null value. As a result, this creates a response with a blank name.
+
+        '
+      tags:
+      - collectionItems
+      parameters:
+      - name: collectionId
+        in: path
+        description: The collection's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionId'
+      - name: request
+        in: query
+        description: The parent request's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionRequestId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createCollectionResponseResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCollectionResponseRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createCollectionResponse'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /collections/{collectionId}/folders/{folderId}:
+    get:
+      operationId: getCollectionFolder
+      summary: Get a folder
+      description: Gets information about a folder in a collection.
+      tags:
+      - collectionItems
+      parameters:
+      - name: folderId
+        in: path
+        description: The folder's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionFolderId'
+      - name: collectionId
+        in: path
+        description: The collection's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionId'
+      - name: ids
+        in: query
+        description: If true, returns only properties that contain ID values in the response.
+        required: false
+        schema:
+          $ref: '#/components/schemas/booleanQuery'
+      - name: uid
+        in: query
+        description: If true, returns all IDs in UID format (`userId`-`id`).
+        required: false
+        schema:
+          $ref: '#/components/schemas/booleanQuery'
+      - name: populate
+        in: query
+        description: If true, returns all of the collection item's contents.
+        required: false
+        schema:
+          $ref: '#/components/schemas/booleanQuery'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getCollectionFolder'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCollectionFolderRequestInternalServerError'
+    put:
+      operationId: updateCollectionFolder
+      summary: Update a folder
+      description: 'Updates a folder in a collection. For a complete list of properties, refer to the **Folder** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+
+
+        **Note:**
+
+
+        This endpoint acts like a PATCH method. It only updates the values that you pass in the request body (for example, the `name` property). The endpoint does not update the entire resource.
+
+        '
+      tags:
+      - collectionItems
+      parameters:
+      - name: folderId
+        in: path
+        description: The folder's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionFolderId'
+      - name: collectionId
+        in: path
+        description: The collection's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateCollectionFolderResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCollectionFolderRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateCollectionFolder'
+    delete:
+      operationId: deleteCollectionFolder
+      summary: Delete a folder
+      description: Deletes a folder in a collection.
+      tags:
+      - collectionItems
+      parameters:
+      - name: folderId
+        in: path
+        description: The folder's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionFolderId'
+      - name: collectionId
+        in: path
+        description: The collection's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteCollectionFolder'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteCollectionFolderRequestInternalServerError'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /collections/{collectionId}/requests/{requestId}:
+    get:
+      operationId: getCollectionRequest
+      summary: Get a request
+      description: Gets information about a request in a collection.
+      tags:
+      - collectionItems
+      parameters:
+      - name: requestId
+        in: path
+        description: The request's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionRequestId'
+      - name: collectionId
+        in: path
+        description: The collection's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionId'
+      - name: ids
+        in: query
+        description: If true, returns only properties that contain ID values in the response.
+        required: false
+        schema:
+          $ref: '#/components/schemas/booleanQuery'
+      - name: uid
+        in: query
+        description: If true, returns all IDs in UID format (`userId`-`id`).
+        required: false
+        schema:
+          $ref: '#/components/schemas/booleanQuery'
+      - name: populate
+        in: query
+        description: If true, returns all of the collection item's contents.
+        required: false
+        schema:
+          $ref: '#/components/schemas/booleanQuery'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getCollectionRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCollectionRequestRequestInternalServerError'
+    put:
+      operationId: updateCollectionRequest
+      summary: Update a request
+      description: 'Updates a request in a collection. For a complete list of properties, refer to the **Request** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+
+
+        **Note:**
+
+
+        - You must pass a collection ID (`12ece9e1-2abf-4edc-8e34-de66e74114d2`), not a collection(`12345678-12ece9e1-2abf-4edc-8e34-de66e74114d2`), in this endpoint.
+
+        - This endpoint does not support changing the folder of a request.
+
+        '
+      tags:
+      - collectionItems
+      parameters:
+      - name: requestId
+        in: path
+        description: The request's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionRequestId'
+      - name: collectionId
+        in: path
+        description: The collection's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateCollectionRequestResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCollectionRequestRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateCollectionRequest'
+    delete:
+      operationId: deleteCollectionRequest
+      summary: Delete a request
+      description: Deletes a request in a collection.
+      tags:
+      - collectionItems
+      parameters:
+      - name: requestId
+        in: path
+        description: The request's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionRequestId'
+      - name: collectionId
+        in: path
+        description: The collection's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteCollectionRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteCollectionRequestRequestInternalServerError'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /collections/{collectionId}/responses/{responseId}:
+    get:
+      operationId: getCollectionResponse
+      summary: Get a response
+      description: Gets information about a response in a collection.
+      tags:
+      - collectionItems
+      parameters:
+      - name: responseId
+        in: path
+        description: The response's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionResponseId'
+      - name: collectionId
+        in: path
+        description: The collection's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionId'
+      - name: ids
+        in: query
+        description: If true, returns only properties that contain ID values in the response.
+        required: false
+        schema:
+          $ref: '#/components/schemas/booleanQuery'
+      - name: uid
+        in: query
+        description: If true, returns all IDs in UID format (`userId`-`id`).
+        required: false
+        schema:
+          $ref: '#/components/schemas/booleanQuery'
+      - name: populate
+        in: query
+        description: If true, returns all of the collection item's contents.
+        required: false
+        schema:
+          $ref: '#/components/schemas/booleanQuery'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getCollectionResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCollectionResponseRequestInternalServerError'
+    put:
+      operationId: updateCollectionResponse
+      summary: Update a response
+      description: 'Updates a response in a collection. For a complete list of properties, see the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+
+
+        **Note:**
+
+
+        - You must pass a collection ID (`12ece9e1-2abf-4edc-8e34-de66e74114d2`), not a collection UID (`12345678-12ece9e1-2abf-4edc-8e34-de66e74114d2`), in this endpoint.
+
+        - This endpoint acts like a PATCH method. It only updates the values that you pass in the request body (for example, the `name` property). The endpoint does not update the entire resource.
+
+        '
+      tags:
+      - collectionItems
+      parameters:
+      - name: responseId
+        in: path
+        description: The response's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionResponseId'
+      - name: collectionId
+        in: path
+        description: The collection's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateCollectionResponseResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCollectionResponseRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateCollectionResponse'
+    delete:
+      operationId: deleteCollectionResponse
+      summary: Delete a response
+      description: Deletes a response in a collection.
+      tags:
+      - collectionItems
+      parameters:
+      - name: responseId
+        in: path
+        description: The response's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionResponseId'
+      - name: collectionId
+        in: path
+        description: The collection's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteCollectionResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessageDetails'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteCollectionResponseRequestInternalServerError'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+components:
+  schemas:
+    collectionResponseId:
+      type: string
+      title: collectionResponseId
+    updateCollectionResponseResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/UpdateCollectionResponseResponseData'
+          description: Information about the updated response. For a complete list of response properties, refer to the **Response** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: A Postman-specific response that contains information about the internal performed operation.
+        model_id:
+          type: string
+          description: The response's ID.
+      title: updateCollectionResponseResponse
+    commonErrorNameMessageDetails:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsError'
+      title: commonErrorNameMessageDetails
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    CreateCollectionResponseDataMode:
+      type: string
+      enum:
+      - raw
+      - urlencoded
+      - formdata
+      - binary
+      - graphql
+      description: The associated request body's data mode.
+      title: CreateCollectionResponseDataMode
+    updateCollectionFolderResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/UpdateCollectionFolderResponseData'
+          description: The folder's updated information, including the updated properties. For a complete list of properties, refer to the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v1.0.0/draft-07/collection.json).
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: A Postman-specific response that contains information about the internal performed operation.
+        model_id:
+          type: string
+          description: The folder's ID.
+        revision:
+          type: number
+          format: double
+          description: An internal revision ID. Its value increments each time the resource changes. You can use this ID to track whether there were changes since the last time you fetched the resource.
+      title: updateCollectionFolderResponse
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    RequestDataOptionsParams:
+      type: object
+      properties: {}
+      description: Options for the `params` data mode.
+      title: RequestDataOptionsParams
+    RequestAuthType:
+      type: string
+      enum:
+      - basic
+      - bearer
+      - apikey
+      - digest
+      - oauth1
+      - oauth2
+      - hawk
+      - awsv4
+      - ntlm
+      - edgegrid
+      - jwt
+      - asap
+      - noauth
+      description: The authorization type.
+      title: RequestAuthType
+    UpdateCollectionResponseDataMode:
+      type: string
+      enum:
+      - raw
+      - urlencoded
+      - formdata
+      - binary
+      - graphql
+      description: The associated request body's data mode.
+      title: UpdateCollectionResponseDataMode
+    booleanQuery:
+      type: boolean
+      title: booleanQuery
+    RequestDataItemsType:
+      type: string
+      enum:
+      - text
+      - file
+      description: The form data's type.
+      title: RequestDataItemsType
+    CreateCollectionRequestDataMode:
+      type: string
+      enum:
+      - raw
+      - urlencoded
+      - formdata
+      - binary
+      - graphql
+      description: The request body's data mode.
+      title: CreateCollectionRequestDataMode
+    updateCollectionRequestResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/UpdateCollectionRequestResponseData'
+          description: Information about the updated request. For a complete list of properties, refer to the **Request** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: A Postman-specific response that contains information about the internal performed operation.
+        model_id:
+          type: string
+          description: The request's ID.
+        revision:
+          type: number
+          format: double
+          description: An internal revision ID. Its value increments each time the resource changes. You can use this ID to track whether there were changes since the last time you fetched the resource.
+      title: updateCollectionRequestResponse
+    RequestDataOptionsBinary:
+      type: object
+      properties: {}
+      description: Options for the `binary` data mode.
+      title: RequestDataOptionsBinary
+    RequestEventsItemsListen:
+      type: string
+      enum:
+      - test
+      - prerequest
+      description: The event type.
+      title: RequestEventsItemsListen
+    GetCollectionResponseData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The response's ID.
+        request:
+          type: string
+          description: The ID of the request that the response belongs to.
+        name:
+          type: string
+          description: The response's name.
+        owner:
+          type: string
+          description: The user ID of the response's owner.
+        createdAt:
+          type: string
+          format: date-time
+          description: The response's creation date and time.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the response was last updated.
+        lastRevision:
+          type: integer
+          format: int64
+          description: An internal revision ID. Its value increments each time the resource changes. You can use this ID to track whether there were changes since the last time you fetched the resource.
+        lastUpdatedBy:
+          type: string
+          description: The user ID of the user that last updated the response.
+      description: Information about the response. For a complete list of properties, refer to the **Response** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+      title: GetCollectionResponseData
+    createCollectionRequestResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CreateCollectionRequestResponseData'
+          description: Information about the created request. For a complete list of properties, refer to the **Request** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: A Postman-specific response that contains information about the internal performed operation.
+        model_id:
+          type: string
+          description: The request's ID.
+        revision:
+          type: number
+          format: double
+          description: An internal revision ID. Its value increments each time the resource changes. You can use this ID to track whether there were changes since the last time you fetched the resource.
+      title: createCollectionRequestResponse
+    UpdateCollectionRequestDataMode:
+      type: string
+      enum:
+      - raw
+      - urlencoded
+      - formdata
+      - binary
+      - graphql
+      description: The request body's data mode.
+      title: UpdateCollectionRequestDataMode
+    updateCollectionResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The response's name.
+        description:
+          type:
+          - string
+          - 'null'
+          description: The response's description.
+        url:
+          type:
+          - string
+          - 'null'
+          description: The associated request's URL.
+        method:
+          $ref: '#/components/schemas/request-method'
+        headers:
+          $ref: '#/components/schemas/header-list-2'
+        dataMode:
+          $ref: '#/components/schemas/UpdateCollectionResponseDataMode'
+          description: The associated request body's data mode.
+        rawModeData:
+          type:
+          - string
+          - 'null'
+          description: The associated request body's raw mode data.
+        dataOptions:
+          $ref: '#/components/schemas/request-data-options'
+        responseCode:
+          $ref: '#/components/schemas/UpdateCollectionResponseResponseCode'
+          description: The response's HTTP response code information.
+        status:
+          type:
+          - string
+          - 'null'
+          description: The response's HTTP status text.
+        time:
+          type: string
+          description: The time taken by the request to complete, in milliseconds.
+        cookies:
+          type:
+          - string
+          - 'null'
+          description: The response's cookie data.
+        mime:
+          type:
+          - string
+          - 'null'
+          description: The response's MIME type.
+        text:
+          type: string
+          description: The raw text of the response body.
+        language:
+          type: string
+          description: The response body's language type.
+        rawDataType:
+          type:
+          - string
+          - 'null'
+          description: The response's raw data type.
+        requestObject:
+          type: string
+          description: A JSON-stringified representation of the associated request.
+      description: The response properties to update. For a complete list of properties, refer to the **Response** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v1.0.0/draft-07/collection.json).
+      title: updateCollectionResponse
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    UpdateCollectionResponseResponseCode:
+      type: object
+      properties:
+        code:
+          type: number
+          format: double
+          description: The response's HTTP response status code.
+        name:
+          type: string
+          description: The name of the status code.
+      description: The response's HTTP response code information.
+      title: UpdateCollectionResponseResponseCode
+    createCollectionRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The request's name. It is recommended that you pass the `name` property in the request body. If you do not, the system uses a null value. As a result, this creates a request with a blank name.
+        description:
+          type:
+          - string
+          - 'null'
+          description: The request's description.
+        method:
+          $ref: '#/components/schemas/request-method'
+        url:
+          type:
+          - string
+          - 'null'
+          description: The request's URL.
+        headerData:
+          $ref: '#/components/schemas/request-header-data'
+        queryParams:
+          $ref: '#/components/schemas/request-query-params'
+        dataMode:
+          $ref: '#/components/schemas/CreateCollectionRequestDataMode'
+          description: The request body's data mode.
+        data:
+          $ref: '#/components/schemas/request-data'
+        rawModeData:
+          type:
+          - string
+          - 'null'
+          description: The request body's raw mode data.
+        graphqlModeData:
+          $ref: '#/components/schemas/request-graphql-mode-data'
+        dataOptions:
+          $ref: '#/components/schemas/request-data-options'
+        auth:
+          $ref: '#/components/schemas/request-auth'
+        events:
+          $ref: '#/components/schemas/request-events'
+      description: 'Information about the request. For a complete list of properties, refer to the **Request** property in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v1.0.0/draft-07/collection.json).
+
+
+        **Note:**
+
+
+        It is recommended that you pass the `name` property in the request body. If you do not, the system uses a null value. As a result, this creates a request with a blank name.
+
+        '
+      title: createCollectionRequest
+    CreateCollectionRequestRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateCollectionRequestRequestInternalServerError
+    UpdateCollectionResponseResponseData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The response's ID.
+        name:
+          type: string
+          description: The response's name.
+        owner:
+          type: string
+          description: The user ID of the response's owner.
+        createdAt:
+          type: string
+          format: date-time
+          description: The response's creation date and time.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the response was last updated.
+        lastRevision:
+          type: integer
+          format: int64
+          description: An internal revision ID. Its value increments each time the resource changes. You can use this ID to track whether there were changes since the last time you fetched the resource.
+        lastUpdatedBy:
+          type: string
+          description: The user ID of the user that last updated the response.
+      description: Information about the updated response. For a complete list of response properties, refer to the **Response** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+      title: UpdateCollectionResponseResponseData
+    DeleteCollectionRequestRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteCollectionRequestRequestInternalServerError
+    CreateCollectionResponseRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateCollectionResponseRequestInternalServerError
+    getCollectionResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/GetCollectionResponseData'
+          description: Information about the response. For a complete list of properties, refer to the **Response** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: A Postman-specific response that contains information about the internal performed operation.
+        model_id:
+          type: string
+          description: The response's ID.
+      title: getCollectionResponse
+    getCollectionFolder:
+      type: object
+      properties:
+        model_id:
+          type: string
+          description: The folder's ID.
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: A Postman-specific response that contains information about the internal performed operation.
+        data:
+          $ref: '#/components/schemas/GetCollectionFolderData'
+          description: Information about the folder. For a complete list of properties, refer to the **Folders** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+      title: getCollectionFolder
+    createCollectionResponseResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CreateCollectionResponseResponseData'
+          description: Information about the response. For a complete list of properties, refer to the **Response** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: A Postman-specific response that contains information about the internal performed operation.
+        model_id:
+          type: string
+          description: The response's ID.
+        revision:
+          type: number
+          format: double
+          description: An internal revision ID. Its value increments each time the resource changes. You can use this ID to track whether there were changes since the last time you fetched the resource.
+      title: createCollectionResponseResponse
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    GetCollectionResponseRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetCollectionResponseRequestInternalServerError
+    createCollectionResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The response's name. It is recommended that you pass the `name` property in the request body. If you do not, the system uses a null value. As a result, this creates a response with a blank name.
+        description:
+          type:
+          - string
+          - 'null'
+          description: The response's description.
+        url:
+          type:
+          - string
+          - 'null'
+          description: The associated request's URL.
+        method:
+          $ref: '#/components/schemas/request-method'
+        headers:
+          $ref: '#/components/schemas/header-list-2'
+        dataMode:
+          $ref: '#/components/schemas/CreateCollectionResponseDataMode'
+          description: The associated request body's data mode.
+        rawModeData:
+          type:
+          - string
+          - 'null'
+          description: The associated request body's raw mode data.
+        dataOptions:
+          $ref: '#/components/schemas/request-data-options'
+        responseCode:
+          $ref: '#/components/schemas/CreateCollectionResponseResponseCode'
+          description: The response's HTTP response code information.
+        status:
+          type:
+          - string
+          - 'null'
+          description: The response's HTTP status text.
+        time:
+          type: string
+          description: The time taken by the request to complete, in milliseconds.
+        cookies:
+          type:
+          - string
+          - 'null'
+          description: The response's cookie data.
+        mime:
+          type:
+          - string
+          - 'null'
+          description: The response's MIME type.
+        text:
+          type: string
+          description: The raw text of the response body.
+        language:
+          type: string
+          description: The response body's language type.
+        rawDataType:
+          type:
+          - string
+          - 'null'
+          description: The response's raw data type.
+        requestObject:
+          type: string
+          description: A JSON-stringified representation of the associated request.
+      description: 'Information about the response. For a complete list of properties, refer to the **Response** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+
+
+        **Note:**
+
+
+        It is recommended that you pass the `name` property in the request body. If you do not, the system uses a null value. As a result, this creates a response with a blank name.
+
+        '
+      title: createCollectionResponse
+    RequestDataOptionsRaw:
+      type: object
+      properties:
+        language:
+          type: string
+          description: The raw mode data's language type.
+      description: Options for the `raw` data mode.
+      title: RequestDataOptionsRaw
+    DeleteCollectionResponseRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteCollectionResponseRequestInternalServerError
+    request-graphql-mode-data:
+      type: object
+      properties:
+        query:
+          type: string
+          description: The GraphQL query.
+        variables:
+          type: string
+          description: The GraphQL query variables, in JSON format.
+      description: The request body's GraphQL mode data.
+      title: request-graphql-mode-data
+    collectionId:
+      type: string
+      title: collectionId
+    deleteCollectionFolder:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/DeleteCollectionFolderData'
+          description: The folder's information.
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: A Postman-specific response that contains information about the internal performed operation.
+        model_id:
+          type: string
+          description: The folder's ID.
+        revision:
+          type: number
+          format: double
+          description: An internal revision ID. Its value increments each time the resource changes. You can use this ID to track whether there were changes since the last time you fetched the resource.
+      title: deleteCollectionFolder
+    GetCollectionRequestData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The request's ID.
+        name:
+          type: string
+          description: The request's name.
+        owner:
+          type: string
+          description: The user ID of the request's owner.
+        lastRevision:
+          type: integer
+          format: int64
+          description: An internal revision ID. Its value increments each time the resource changes. You can use this ID to track whether there were changes since the last time you fetched the resource.
+        lastUpdatedBy:
+          type: string
+          description: The user ID of the user that last updated the request.
+        createdAt:
+          type: string
+          format: date-time
+          description: The request's creation date and time.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the request was last updated.
+      description: Information about the request. For a complete list of properties, refer to the **Request** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+      title: GetCollectionRequestData
+    createCollectionFolder:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The folder's name. It is recommended that you pass the `name` property in the request body. If you do not, the system uses a null value. As a result, this creates a folder with a blank name.
+        folder:
+          type: string
+          format: uid
+          description: The ID of a folder in which to create the folder.
+      description: 'Information about the collection folder. For a complete list of properties, refer to the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v1.0.0/draft-07/collection.json).
+
+
+        **Note:**
+
+
+        It is recommended that you pass the `name` property in the request body. If you do not, the system uses a null value. As a result, this creates a folder with a blank name.
+
+        '
+      title: createCollectionFolder
+    getCollectionRequest:
+      type: object
+      properties:
+        model_id:
+          type: string
+          description: The request's ID.
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: A Postman-specific response that contains information about the internal performed operation.
+        data:
+          $ref: '#/components/schemas/GetCollectionRequestData'
+          description: Information about the request. For a complete list of properties, refer to the **Request** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+      title: getCollectionRequest
+    header-2:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The header's key, such as `Content-Type` or `X-Custom-Header`.
+        value:
+          type: string
+          description: The header key's value.
+        description:
+          type:
+          - string
+          - 'null'
+          description: The header's description.
+      required:
+      - key
+      - value
+      description: Information about the header.
+      title: header-2
+    DeleteCollectionRequestData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The request's ID.
+        owner:
+          type: string
+          description: The user ID of the request's owner.
+      description: The request's information.
+      title: DeleteCollectionRequestData
+    script-2:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The script's ID.
+        type:
+          type: string
+          description: The type of script. For example, `text/javascript`.
+        exec:
+          type: array
+          items:
+            type: string
+          description: A list of script strings, where each line represents a line of code. Separate lines makes it easy to track script changes.
+      description: Information about the Javascript code that can be used to to perform setup or teardown operations in a response.
+      title: script-2
+    request-header-data:
+      type: array
+      items:
+        $ref: '#/components/schemas/RequestHeaderDataItems'
+      description: The request's headers.
+      title: request-header-data
+    deleteCollectionRequest:
+      type: object
+      properties:
+        model_id:
+          type: string
+          description: The request's ID.
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: A Postman-specific response that contains information about the internal performed operation.
+        data:
+          $ref: '#/components/schemas/DeleteCollectionRequestData'
+          description: The request's information.
+        revision:
+          type: number
+          format: double
+          description: An internal revision ID. Its value increments each time the resource changes. You can use this ID to track whether there were changes since the last time you fetched the resource.
+      title: deleteCollectionRequest
+    CommonErrorNameMessageDetailsErrorDetails:
+      oneOf:
+      - type: object
+        additionalProperties:
+          description: Any type
+      - type: array
+        items:
+          type: string
+      description: Information about the error.
+      title: CommonErrorNameMessageDetailsErrorDetails
+    GetCollectionRequestRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetCollectionRequestRequestInternalServerError
+    AuthAttributeValueOneOf1Items:
+      type: object
+      properties: {}
+      title: AuthAttributeValueOneOf1Items
+    RequestEventsItems:
+      type: object
+      properties:
+        listen:
+          $ref: '#/components/schemas/RequestEventsItemsListen'
+          description: The event type.
+        script:
+          $ref: '#/components/schemas/script-2'
+      title: RequestEventsItems
+    deleteCollectionResponse:
+      type: object
+      properties:
+        model_id:
+          type: string
+          description: The response's ID.
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: A Postman-specific response that contains information about the internal performed operation.
+        data:
+          $ref: '#/components/schemas/DeleteCollectionResponseData'
+          description: The response's information.
+        revision:
+          type: number
+          format: double
+          description: An internal revision ID. Its value increments each time the resource changes. You can use this ID to track whether there were changes since the last time you fetched the resource.
+      title: deleteCollectionResponse
+    DeleteCollectionResponseData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The response's ID.
+        owner:
+          type: string
+          description: The user ID of the request's owner.
+      description: The response's information.
+      title: DeleteCollectionResponseData
+    collectionFolderId:
+      type: string
+      title: collectionFolderId
+    GetCollectionFolderRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetCollectionFolderRequestInternalServerError
+    CreateCollectionRequestResponseData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The request's ID.
+        name:
+          type: string
+          description: The request's name.
+        owner:
+          type: string
+          description: The user ID of the request's owner.
+        folder:
+          type:
+          - string
+          - 'null'
+          description: Information about the request's parent folder.
+        responses:
+          type: array
+          items:
+            type: string
+          description: A list of the request's responses.
+        collection:
+          type: string
+          description: The collection ID that the request belongs to.
+        responses_order:
+          type: array
+          items:
+            type: string
+          description: A list of response IDs and their order in the folder.
+        createdAt:
+          type: string
+          format: date-time
+          description: The requeset's creation date and time.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the request was last updated.
+        lastUpdatedBy:
+          type: string
+          description: The user ID of the user that last updated the folder.
+      description: Information about the created request. For a complete list of properties, refer to the **Request** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+      title: CreateCollectionRequestResponseData
+    CreateCollectionResponseResponseData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The response's ID.
+        owner:
+          type: string
+          description: The user ID of the response's owner.
+        request:
+          type: string
+          description: The request ID of the response's associated request.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the response was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the response was last updated.
+        lastUpdatedBy:
+          type: string
+          description: The user ID of the user who last updated the response.
+      description: Information about the response. For a complete list of properties, refer to the **Response** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+      title: CreateCollectionResponseResponseData
+    UpdateCollectionFolderResponseData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The folder's ID.
+        name:
+          type: string
+          description: The folder's name.
+        description:
+          type: string
+          description: The folder's description.
+        createdAt:
+          type: string
+          format: date-time
+          description: The folder's creation date and time.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the folder was last updated.
+        owner:
+          type: string
+          description: The user ID of the folder's owner.
+        lastUpdatedBy:
+          type: string
+          description: The user ID of the user that last updated the folder.
+        lastRevision:
+          type: integer
+          format: int64
+          description: An internal revision ID. Its value increments each time the resource changes. You can use this ID to track whether there were changes since the last time you fetched the resource.
+        collection:
+          type: string
+          description: The collection ID that the folder belongs to.
+        folder:
+          type:
+          - string
+          - 'null'
+          description: Information about the folder.
+      description: The folder's updated information, including the updated properties. For a complete list of properties, refer to the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v1.0.0/draft-07/collection.json).
+      title: UpdateCollectionFolderResponseData
+    CreateCollectionFolderResponseData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The folder's ID.
+        name:
+          type: string
+          description: The folder's name.
+        order:
+          type: array
+          items:
+            type: string
+          description: A list of request IDs and their order in the created folder.
+        owner:
+          type: string
+          description: The user ID of the folder's owner.
+        folder:
+          type:
+          - string
+          - 'null'
+          description: Information about the folder.
+        folders:
+          type: array
+          items:
+            type: string
+          description: A list of folders.
+        requests:
+          type: array
+          items:
+            type: string
+          description: A list of requests.
+        createdAt:
+          type: string
+          format: date-time
+          description: The folder's creation date and time.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the folder was last updated.
+        collection:
+          type: string
+          description: The collection ID that the folder belongs to.
+        description:
+          type: string
+          description: The folder's description.
+        folders_order:
+          type: array
+          items:
+            type: string
+          description: A list of folder IDs and their order in the collection.
+        lastUpdatedBy:
+          type: string
+          description: The user ID of the user that last updated the folder.
+      description: Information about the collection folder. For a complete list of properties, refer to the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+      title: CreateCollectionFolderResponseData
+    updateCollectionFolder:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The folder's name.
+        description:
+          type: string
+          description: The folder's description.
+      description: The folder properties to update. For a complete list of properties, refer to the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v1.0.0/draft-07/collection.json).
+      title: updateCollectionFolder
+    CreateCollectionResponseResponseCode:
+      type: object
+      properties:
+        code:
+          type: number
+          format: double
+          description: The response's HTTP response status code.
+        name:
+          type: string
+          description: The name of the status code.
+      description: The response's HTTP response code information.
+      title: CreateCollectionResponseResponseCode
+    CreateCollectionFolderRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateCollectionFolderRequestInternalServerError
+    request-data:
+      type: array
+      items:
+        $ref: '#/components/schemas/RequestDataItems'
+      description: The request body's form data.
+      title: request-data
+    RequestHeaderDataItems:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The header's key.
+        value:
+          type: string
+          description: The header's value.
+        description:
+          type: string
+          description: The header's description.
+      title: RequestHeaderDataItems
+    DeleteCollectionFolderRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteCollectionFolderRequestInternalServerError
+    AuthAttributeValue1:
+      type: array
+      items:
+        $ref: '#/components/schemas/AuthAttributeValueOneOf1Items'
+      title: AuthAttributeValue1
+    UpdateCollectionResponseRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateCollectionResponseRequestInternalServerError
+    RequestDataItems:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The form data's key.
+        value:
+          type: string
+          description: The form data's value.
+        description:
+          type: string
+          description: The form data's description.
+        enabled:
+          type: boolean
+          description: If true, the form data entry is enabled.
+        type:
+          $ref: '#/components/schemas/RequestDataItemsType'
+          description: The form data's type.
+        uuid:
+          type: string
+          description: The form data entry's unique identifier.
+      title: RequestDataItems
+    request-data-options:
+      type: object
+      properties:
+        raw:
+          $ref: '#/components/schemas/RequestDataOptionsRaw'
+          description: Options for the `raw` data mode.
+        urlencoded:
+          $ref: '#/components/schemas/RequestDataOptionsUrlencoded'
+          description: Options for the `urlencoded` data mode.
+        params:
+          $ref: '#/components/schemas/RequestDataOptionsParams'
+          description: Options for the `params` data mode.
+        binary:
+          $ref: '#/components/schemas/RequestDataOptionsBinary'
+          description: Options for the `binary` data mode.
+        graphql:
+          $ref: '#/components/schemas/RequestDataOptionsGraphql'
+          description: Options for the `graphql` data mode.
+      description: Additional configurations and options set for the request body's various data modes.
+      title: request-data-options
+    auth-attribute:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The auth method's key value.
+        value:
+          $ref: '#/components/schemas/AuthAttributeValue'
+          description: The key's value.
+        type:
+          $ref: '#/components/schemas/AuthAttributeType'
+          description: The value's type.
+      required:
+      - key
+      description: Information about the supported Postman [authorization type](https://learning.postman.com/docs/sending-requests/authorization/authorization-types/).
+      title: auth-attribute
+    request-events:
+      type: array
+      items:
+        $ref: '#/components/schemas/RequestEventsItems'
+      description: A list of scripts configured to run when specific events occur.
+      title: request-events
+    UpdateCollectionRequestRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateCollectionRequestRequestInternalServerError
+    DeleteCollectionFolderData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The folder's ID.
+        owner:
+          type: string
+          description: The user ID of the folder's owner.
+      description: The folder's information.
+      title: DeleteCollectionFolderData
+    AuthAttributeValue:
+      oneOf:
+      - type: string
+      - $ref: '#/components/schemas/AuthAttributeValue1'
+      description: The key's value.
+      title: AuthAttributeValue
+    RequestDataOptionsGraphql:
+      type: object
+      properties: {}
+      description: Options for the `graphql` data mode.
+      title: RequestDataOptionsGraphql
+    request-auth:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/RequestAuthType'
+          description: The authorization type.
+        apikey:
+          type: array
+          items:
+            $ref: '#/components/schemas/auth-attribute'
+          description: The API key's authentication information.
+        awsv4:
+          type: array
+          items:
+            $ref: '#/components/schemas/auth-attribute'
+          description: The attributes for AWS Signature authentication.
+        basic:
+          type: array
+          items:
+            $ref: '#/components/schemas/auth-attribute'
+          description: The attributes for Basic Auth.
+        bearer:
+          type: array
+          items:
+            $ref: '#/components/schemas/auth-attribute'
+          description: The attributes for Bearer Token authentication.
+        digest:
+          type: array
+          items:
+            $ref: '#/components/schemas/auth-attribute'
+          description: The attributes for Digest access authentication.
+        edgegrid:
+          type: array
+          items:
+            $ref: '#/components/schemas/auth-attribute'
+          description: The attributes for Akamai Edgegrid authentication.
+        hawk:
+          type: array
+          items:
+            $ref: '#/components/schemas/auth-attribute'
+          description: The attributes for Hawk authentication.
+        ntlm:
+          type: array
+          items:
+            $ref: '#/components/schemas/auth-attribute'
+          description: The attributes for NTLM authentication.
+        oauth1:
+          type: array
+          items:
+            $ref: '#/components/schemas/auth-attribute'
+          description: The attributes for OAuth1 authentication.
+        oauth2:
+          type: array
+          items:
+            $ref: '#/components/schemas/auth-attribute'
+          description: The attributes for OAuth2 authentication.
+        jwt:
+          type: array
+          items:
+            $ref: '#/components/schemas/auth-attribute'
+          description: The attributes for JWT authentication.
+        asap:
+          type: array
+          items:
+            $ref: '#/components/schemas/auth-attribute'
+          description: The attributes for ASAP authentication.
+      required:
+      - type
+      description: The request's authentication information.
+      title: request-auth
+    updateCollectionRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The request's name.
+        description:
+          type:
+          - string
+          - 'null'
+          description: The request's description.
+        method:
+          $ref: '#/components/schemas/request-method'
+        url:
+          type:
+          - string
+          - 'null'
+          description: The request's URL.
+        headerData:
+          $ref: '#/components/schemas/request-header-data'
+        queryParams:
+          $ref: '#/components/schemas/request-query-params'
+        dataMode:
+          $ref: '#/components/schemas/UpdateCollectionRequestDataMode'
+          description: The request body's data mode.
+        data:
+          $ref: '#/components/schemas/request-data'
+        rawModeData:
+          type:
+          - string
+          - 'null'
+          description: The request body's raw mode data.
+        graphqlModeData:
+          $ref: '#/components/schemas/request-graphql-mode-data'
+        dataOptions:
+          $ref: '#/components/schemas/request-data-options'
+        auth:
+          $ref: '#/components/schemas/request-auth'
+        events:
+          $ref: '#/components/schemas/request-events'
+      description: The request properties to update. For a complete list of properties, refer to the **Request** property in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v1.0.0/draft-07/collection.json).
+      title: updateCollectionRequest
+    collectionRequestId:
+      type: string
+      title: collectionRequestId
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    UpdateCollectionFolderRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateCollectionFolderRequestInternalServerError
+    RequestDataOptionsUrlencoded:
+      type: object
+      properties: {}
+      description: Options for the `urlencoded` data mode.
+      title: RequestDataOptionsUrlencoded
+    request-method:
+      type: string
+      enum:
+      - GET
+      - PUT
+      - POST
+      - PATCH
+      - DELETE
+      - COPY
+      - HEAD
+      - OPTIONS
+      - LINK
+      - UNLINK
+      - PURGE
+      - LOCK
+      - UNLOCK
+      - PROPFIND
+      - VIEW
+      description: The request's HTTP method.
+      title: request-method
+    AuthAttributeType:
+      type: string
+      enum:
+      - string
+      - boolean
+      - number
+      - array
+      - object
+      - any
+      description: The value's type.
+      title: AuthAttributeType
+    header-list-2:
+      type: array
+      items:
+        $ref: '#/components/schemas/header-2'
+      description: A list of headers.
+      title: header-list-2
+    request-query-params:
+      type: array
+      items:
+        $ref: '#/components/schemas/RequestQueryParamsItems'
+      description: The request's query parameters.
+      title: request-query-params
+    GetCollectionFolderData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The folder's ID.
+        name:
+          type: string
+          description: The folder's name.
+        description:
+          type: string
+          description: The folder's description.
+        createdAt:
+          type: string
+          format: date-time
+          description: The folder's creation date and time.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the folder was last updated.
+        owner:
+          type: string
+          description: The user ID of the folder's owner.
+        lastUpdatedBy:
+          type: string
+          description: The user ID of the user that last updated the folder.
+        lastRevision:
+          type: integer
+          format: int64
+          description: An internal revision ID. Its value increments each time the resource changes. You can use this ID to track whether there were changes since the last time you fetched the resource.
+        collection:
+          type: string
+          description: The collection ID that the folder belongs to.
+      description: Information about the folder. For a complete list of properties, refer to the **Folders** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+      title: GetCollectionFolderData
+    createCollectionFolderResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CreateCollectionFolderResponseData'
+          description: Information about the collection folder. For a complete list of properties, refer to the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+        meta:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: A Postman-specific response that contains information about the internal performed operation.
+        model_id:
+          type: string
+          description: The folder's ID.
+        revision:
+          type: number
+          format: double
+          description: An internal revision ID. Its value increments each time the resource changes. You can use this ID to track whether there were changes since the last time you fetched the resource.
+      title: createCollectionFolderResponse
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    UpdateCollectionRequestResponseData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The request's ID.
+        name:
+          type: string
+          description: The request's name.
+        description:
+          type: string
+          description: The request's description.
+        createdAt:
+          type: string
+          format: date-time
+          description: The request's creation date and time.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the request was last updated.
+        owner:
+          type: string
+          description: The user ID of the request's owner.
+        lastUpdatedBy:
+          type: string
+          description: The user ID of the user that last updated the request.
+        lastRevision:
+          type: integer
+          format: int64
+          description: An internal revision ID. Its value increments each time the resource changes. You can use this ID to track whether there were changes since the last time you fetched the resource.
+      description: Information about the updated request. For a complete list of properties, refer to the **Request** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+      title: UpdateCollectionRequestResponseData
+    CommonErrorNameMessageDetailsError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+        details:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsErrorDetails'
+          description: Information about the error.
+      title: CommonErrorNameMessageDetailsError
+    RequestQueryParamsItems:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The query parameter's key.
+        value:
+          type: string
+          description: The query parameter's value.
+        description:
+          type: string
+          description: The query parameter's description.
+        enabled:
+          type: boolean
+          description: If true, the query parameter is enabled.
+      title: RequestQueryParamsItems
+  securitySchemes:
+    PostmanApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+    basicAuth:
+      type: http
+      scheme: basic
+    scimApiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+x-refined-from:
+- postman-api-openapi.yml
+- postman-collectionitems-api-openapi.yml
+x-provenance:
+  first_party: true
+  method: harvested
+  provider_published: true
+  source: https://learning.postman.com/api-docs/openapi.json
+  harvested: '2026-08-05'
+  note: Postman's own OpenAPI 3.1 definition for the Postman API, served by its Fern-hosted API reference. 162 paths, 256 operations, servers api.postman.com and api.eu.postman.com.

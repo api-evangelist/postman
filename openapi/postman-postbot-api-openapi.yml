@@ -1,0 +1,249 @@
+openapi: 3.1.0
+info:
+  title: Postman Postbot API
+  version: 1.0.0
+  description: 'Operations tagged postbot across 2 of this provider''s published API definitions: postman-api-openapi.yml, postman-postbot-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.postman.com
+  description: https://api.postman.com
+- url: https://api.eu.postman.com
+  description: https://api.eu.postman.com
+tags:
+- name: postbot
+paths:
+  /postbot/generations/tool:
+    post:
+      operationId: generateTool
+      summary: Generate a tool
+      description: '**This endpoint is deprecated**
+
+
+        Generates code for an AI agent tool using a collection and request from the Public API Network. For more information, see [**Tool Generation Demo**](http://postman.com/explore/toolgen) in Postman''s Public API Network.
+
+
+        ### Important
+
+
+        - This endpoint has a rate limit of **300 calls every 3 hours**. This does not accrue Postbot usage.
+
+        - This endpoint only supports public Postman Collections and requests.
+
+        '
+      tags:
+      - postbot
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generateToolResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postbot400Error'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateToolRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/generateTool'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+components:
+  schemas:
+    GenerateToolConfigLanguage:
+      type: string
+      enum:
+      - javascript
+      - typescript
+      - python
+      description: The programming language to use.
+      title: GenerateToolConfigLanguage
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    GenerateToolRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GenerateToolRequestInternalServerError
+    GenerateToolConfigAgentFramework:
+      type: string
+      enum:
+      - openai
+      - mistral
+      - gemini
+      - anthropic
+      - langchain
+      - autogen
+      description: The AI agent framework to use. Note that the `autogen` framework only supports the `python` language.
+      title: GenerateToolConfigAgentFramework
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    postbot400Error:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Details about the occurrence of the error.
+        status:
+          type: number
+          format: double
+          description: The error's HTTP status code.
+        title:
+          type: string
+          description: A short summary of the error.
+        type:
+          type: string
+          format: uri
+          description: The error type.
+      title: postbot400Error
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    generateTool:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: The public collection's request ID.
+        collectionId:
+          type: string
+          format: uid
+          description: The Public API Network collection's ID.
+        config:
+          $ref: '#/components/schemas/GenerateToolConfig'
+          description: Information about the request.
+      required:
+      - requestId
+      - collectionId
+      - config
+      title: generateTool
+    generateToolResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/GenerateToolResponseData'
+          description: The generated response data.
+      title: generateToolResponse
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    GenerateToolConfig:
+      type: object
+      properties:
+        language:
+          $ref: '#/components/schemas/GenerateToolConfigLanguage'
+          description: The programming language to use.
+        agentFramework:
+          $ref: '#/components/schemas/GenerateToolConfigAgentFramework'
+          description: The AI agent framework to use. Note that the `autogen` framework only supports the `python` language.
+      required:
+      - language
+      - agentFramework
+      description: Information about the request.
+      title: GenerateToolConfig
+    GenerateToolResponseData:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The generated tool code.
+      description: The generated response data.
+      title: GenerateToolResponseData
+  securitySchemes:
+    PostmanApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+    basicAuth:
+      type: http
+      scheme: basic
+    scimApiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+x-refined-from:
+- postman-api-openapi.yml
+- postman-postbot-api-openapi.yml
+x-provenance:
+  first_party: true
+  method: harvested
+  provider_published: true
+  source: https://learning.postman.com/api-docs/openapi.json
+  harvested: '2026-08-05'
+  note: Postman's own OpenAPI 3.1 definition for the Postman API, served by its Fern-hosted API reference. 162 paths, 256 operations, servers api.postman.com and api.eu.postman.com.

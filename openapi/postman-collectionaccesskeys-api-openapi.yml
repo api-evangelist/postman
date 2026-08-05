@@ -1,0 +1,399 @@
+openapi: 3.1.0
+info:
+  title: Postman Collection Access Keys API
+  version: 1.0.0
+  description: 'Operations tagged collectionAccessKeys across 2 of this provider''s published API definitions: postman-api-openapi.yml, postman-collectionaccesskeys-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.postman.com
+  description: https://api.postman.com
+- url: https://api.eu.postman.com
+  description: https://api.eu.postman.com
+tags:
+- name: collectionAccessKeys
+paths:
+  /collection-access-keys:
+    get:
+      operationId: getCollectionAccessKeys
+      summary: Get collection access keys
+      description: 'Gets the authenticated user''s personal and team [collection access keys](https://learning.postman.com/docs/developer/postman-api/authentication/#generate-a-collection-access-key).
+
+
+        **Note:**
+
+
+        - The `expiresAfter` property in the response represents the date and time at which the access key expires. Collection access keys are valid for 60 days. If unused, the access key expires after 60 days. If someone uses the access key, then its expiration date increases by another 60 days.
+
+        - If the collection key is unused, the `lastUsedAt` property in the response returns an empty string.
+
+        '
+      tags:
+      - collectionAccessKeys
+      parameters:
+      - name: collectionId
+        in: query
+        description: Filter the results by a collection's unique ID.
+        required: false
+        schema:
+          $ref: '#/components/schemas/collectionUidQuery'
+      - name: cursor
+        in: query
+        description: The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter.
+        required: false
+        schema:
+          $ref: '#/components/schemas/cursor'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getCollectionAccessKeys'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCollectionAccessKeysRequestBadRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCollectionAccessKeysRequestUnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCollectionAccessKeysRequestForbiddenError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCollectionAccessKeysRequestInternalServerError'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /collection-access-keys/{keyId}:
+    delete:
+      operationId: deleteCollectionAccessKey
+      summary: Delete a collection access key
+      description: 'Deletes a collection access key. To get a collection access key''s ID, use the GET `/collection-access-key` endpoint.
+
+
+        On success, this returns an HTTP `204 No Content` response.
+
+        '
+      tags:
+      - collectionAccessKeys
+      parameters:
+      - name: keyId
+        in: path
+        description: The collection access key's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/collectionAccessKeyId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteCollectionAccessKeyRequestUnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteCollectionAccessKeyRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/common404Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteCollectionAccessKeyRequestInternalServerError'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+components:
+  schemas:
+    common404Error:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri-reference
+          description: The [URI reference](https://www.rfc-editor.org/rfc/rfc3986) that identifies the type of problem.
+        title:
+          type: string
+          description: A short summary of the problem.
+        status:
+          type: integer
+          description: The HTTP status code generated by the origin server.
+        detail:
+          type: string
+          description: An explanation about the problem.
+      title: common404Error
+    commonErrorNameMessageDetails:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsError'
+      title: commonErrorNameMessageDetails
+    GetCollectionAccessKeysRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetCollectionAccessKeysRequestForbiddenError
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    collectionUidQuery:
+      type: string
+      format: uid
+      title: collectionUidQuery
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    CommonErrorNameMessageDetailsErrorDetails:
+      oneOf:
+      - type: object
+        additionalProperties:
+          description: Any type
+      - type: array
+        items:
+          type: string
+      description: Information about the error.
+      title: CommonErrorNameMessageDetailsErrorDetails
+    GetCollectionAccessKeysDataItemsStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+      description: The token's active status.
+      title: GetCollectionAccessKeysDataItemsStatus
+    GetCollectionAccessKeysMeta:
+      type: object
+      properties:
+        nextCursor:
+          type: string
+          description: The pagination cursor that points to the next record in the results set.
+        prevCursor:
+          type: string
+          description: The pagination cursor to previous set of response data.
+      description: The response's non-standard metadata information.
+      title: GetCollectionAccessKeysMeta
+    cursor:
+      type: string
+      title: cursor
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    collectionAccessKeyId:
+      type: string
+      title: collectionAccessKeyId
+    getCollectionAccessKeys:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetCollectionAccessKeysDataItems'
+          description: A list of collection access keys.
+        meta:
+          $ref: '#/components/schemas/GetCollectionAccessKeysMeta'
+          description: The response's non-standard metadata information.
+      title: getCollectionAccessKeys
+    GetCollectionAccessKeysRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetCollectionAccessKeysRequestUnauthorizedError
+    DeleteCollectionAccessKeyRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteCollectionAccessKeyRequestForbiddenError
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    GetCollectionAccessKeysDataItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The collection access key's ID.
+        token:
+          type: string
+          description: The masked collection access key.
+        status:
+          $ref: '#/components/schemas/GetCollectionAccessKeysDataItemsStatus'
+          description: The token's active status.
+        teamId:
+          type: integer
+          description: The team ID of the collection access key's owner.
+        userId:
+          type: integer
+          description: The user ID of the collection access key's owner.
+        collectionId:
+          type: string
+          format: uid
+          description: The collection access key's associated collection ID.
+        expiresAfter:
+          type: string
+          format: date-time
+          description: The date and time at which the collection access key expires. Collection access keys are valid for 60 days. If unused, the access key expires after 60 days. If someone uses the access key, then its expiration date increases by another 60 days.
+        lastUsedAt:
+          type: string
+          description: The date and time at which the collection access key was used. If the collection key is unused, this returns an empty string value.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the collection access key was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the collection access key was updated.
+        deletedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The date and time at which the collection access key was revoked.
+      description: Information about the collection access key.
+      title: GetCollectionAccessKeysDataItems
+    DeleteCollectionAccessKeyRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteCollectionAccessKeyRequestInternalServerError
+    GetCollectionAccessKeysRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
+      title: GetCollectionAccessKeysRequestBadRequestError
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    CommonErrorNameMessageDetailsError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+        details:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsErrorDetails'
+          description: Information about the error.
+      title: CommonErrorNameMessageDetailsError
+    GetCollectionAccessKeysRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetCollectionAccessKeysRequestInternalServerError
+    DeleteCollectionAccessKeyRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteCollectionAccessKeyRequestUnauthorizedError
+  securitySchemes:
+    PostmanApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+    basicAuth:
+      type: http
+      scheme: basic
+    scimApiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+x-refined-from:
+- postman-api-openapi.yml
+- postman-collectionaccesskeys-api-openapi.yml
+x-provenance:
+  first_party: true
+  method: harvested
+  provider_published: true
+  source: https://learning.postman.com/api-docs/openapi.json
+  harvested: '2026-08-05'
+  note: Postman's own OpenAPI 3.1 definition for the Postman API, served by its Fern-hosted API reference. 162 paths, 256 operations, servers api.postman.com and api.eu.postman.com.

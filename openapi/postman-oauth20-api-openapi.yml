@@ -1,0 +1,275 @@
+openapi: 3.1.0
+info:
+  title: Postman O Auth20 API
+  version: 1.0.0
+  description: 'Operations tagged oAuth20 across 2 of this provider''s published API definitions: postman-api-openapi.yml, postman-oauth20-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.postman.com
+  description: https://api.postman.com
+- url: https://api.eu.postman.com
+  description: https://api.eu.postman.com
+tags:
+- name: oAuth20
+paths:
+  /oauth2/token:
+    post:
+      operationId: generateOauthToken
+      summary: Generate an OAuth Token
+      description: 'Generates an OAuth 2.0 access token for a client application using the `client_credentials` grant type. Use this endpoint with backend services or bots to authenticate and authorize API requests without user interaction.
+
+
+        **Note:**
+
+
+        This endpoint uses Basic Auth. You must pass a valid client ID and client secret for the username and password, respectively.
+
+        '
+      tags:
+      - oAuth20
+      parameters:
+      - name: Authorization
+        in: header
+        description: Basic authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generateOauthTokenResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/oauthTokenError'
+        '404':
+          description: Token Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/oauthTokenError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateOauthTokenRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/generateOauthToken'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /oauth2/token/revoke:
+    post:
+      operationId: revokeOauthToken
+      summary: Revoke an OAuth Token
+      description: 'Revokes an active OAuth 2.0 access token and prevents further use of it for authentication. Once revoked, the token can''t be used for any API requests.
+
+
+        **Note:**
+
+
+        - Revocation of an OAuth token is immediate and can''t be undone.
+
+        - This request does not use any authorization.
+
+        '
+      tags:
+      - oAuth20
+      responses:
+        '200':
+          description: Token Revoked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/revokeOauthTokenResponse'
+        '404':
+          description: Token Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/oauthTokenError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RevokeOauthTokenRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/revokeOauthToken'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+components:
+  schemas:
+    revokeOauthToken:
+      type: object
+      properties:
+        token:
+          type: string
+          description: The Postman OAuth 2.0 access token to revoke.
+      required:
+      - token
+      title: revokeOauthToken
+    generateOauthTokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: A Postman OAuth 2.0 access token.
+        expires_in:
+          type: integer
+          description: The time the token expires, in milliseconds.
+        token_type:
+          $ref: '#/components/schemas/GenerateOauthTokenResponseTokenType'
+          description: The `Bearer` token type.
+      title: generateOauthTokenResponse
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    GenerateOauthTokenRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GenerateOauthTokenRequestInternalServerError
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    revokeOauthTokenResponse:
+      type: object
+      properties:
+        success:
+          type: string
+          description: The `true` value.
+      title: revokeOauthTokenResponse
+    generateOauthToken:
+      type: object
+      properties:
+        grant_type:
+          type: string
+          description: The `client_credentials` OAuth grant type.
+        installationAuthId:
+          type: string
+          description: The client's installation authentication ID.
+        jwt:
+          type: string
+          description: A signed JWT token. The token must include `iss` (issuer), `aud` (audience), `iat` (issued at), `exp` (expiration timestamp), and `jti` (JWT ID).
+      required:
+      - grant_type
+      - installationAuthId
+      - jwt
+      title: generateOauthToken
+    GenerateOauthTokenResponseTokenType:
+      type: string
+      enum:
+      - Bearer
+      description: The `Bearer` token type.
+      title: GenerateOauthTokenResponseTokenType
+    RevokeOauthTokenRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: RevokeOauthTokenRequestInternalServerError
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    oauthTokenError:
+      type: object
+      properties:
+        error:
+          type: string
+          description: The type of error.
+        error_description:
+          type: string
+          description: Information about the error.
+      title: oauthTokenError
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+  securitySchemes:
+    PostmanApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+    basicAuth:
+      type: http
+      scheme: basic
+    scimApiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+x-refined-from:
+- postman-api-openapi.yml
+- postman-oauth20-api-openapi.yml
+x-provenance:
+  first_party: true
+  method: harvested
+  provider_published: true
+  source: https://learning.postman.com/api-docs/openapi.json
+  harvested: '2026-08-05'
+  note: Postman's own OpenAPI 3.1 definition for the Postman API, served by its Fern-hosted API reference. 162 paths, 256 operations, servers api.postman.com and api.eu.postman.com.

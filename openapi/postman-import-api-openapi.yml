@@ -1,0 +1,377 @@
+openapi: 3.1.0
+info:
+  title: Postman Import API
+  version: 1.0.0
+  description: 'Operations tagged import across 2 of this provider''s published API definitions: postman-api-openapi.yml, postman-import-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.postman.com
+  description: https://api.postman.com
+- url: https://api.eu.postman.com
+  description: https://api.eu.postman.com
+tags:
+- name: import
+paths:
+  /import/openapi:
+    post:
+      operationId: openApiDefinition
+      summary: Import an OpenAPI definition
+      description: 'Imports an OpenAPI definition into Postman as a new [Postman Collection](https://learning.postman.com/docs/getting-started/creating-the-first-collection/).
+
+
+        **Note:**
+
+
+        - This endpoint has a rate limit of **10 requests per 10 seconds**.
+
+        - The Postman web app does not support the `file` input method type.
+
+        - If you do not include the `workspace` query parameter, the system imports the definition into the oldest personal Internal workspace you own.
+
+        - For an example of importing a file, see the [Postman API collection](https://www.postman.com/postman/postman-public-workspace/example/12959542-08d74ce2-8150-4f72-99a7-11e60492eb47).
+
+        '
+      tags:
+      - import
+      parameters:
+      - name: workspace
+        in: query
+        description: The workspace's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/workspaceId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/importOpenApiDefinition'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/import400Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportOpenApiDefinitionRequestUnauthorizedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportOpenApiDefinitionRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Import_openApiDefinition_Request'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+components:
+  schemas:
+    ImportOpenApiDefinitionRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: ImportOpenApiDefinitionRequestUnauthorizedError
+    GenerateCollectionOptionsFolderStrategy:
+      type: string
+      enum:
+      - Paths
+      - Tags
+      default: Paths
+      description: Whether to create folders based on the specification's `paths` or `tags` properties.
+      title: GenerateCollectionOptionsFolderStrategy
+    GenerateCollectionOptionsIndentCharacter:
+      type: string
+      enum:
+      - Tab
+      - Space
+      default: Space
+      description: The option for setting the indentation character type.
+      title: GenerateCollectionOptionsIndentCharacter
+    Import_openApiDefinition_Request:
+      oneOf:
+      - $ref: '#/components/schemas/jsonSchema'
+      - $ref: '#/components/schemas/jsonStringified'
+      title: Import_openApiDefinition_Request
+    commonErrorNameMessageDetails:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsError'
+      title: commonErrorNameMessageDetails
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    jsonSchema:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/JsonSchemaType'
+          description: The `json` type value.
+        input:
+          $ref: '#/components/schemas/JsonSchemaInput'
+          description: An object that contains a valid JSON OpenAPI definition. For more information, read the [OpenAPI documentation](https://swagger.io/docs/specification/basic-structure/).
+        options:
+          $ref: '#/components/schemas/generateCollectionOptions'
+      required:
+      - type
+      - input
+      title: jsonSchema
+    JsonSchemaType:
+      type: string
+      enum:
+      - json
+      description: The `json` type value.
+      title: JsonSchemaType
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    importOpenApiDefinition:
+      type: object
+      properties:
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImportOpenApiDefinitionCollectionsItems'
+      title: importOpenApiDefinition
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    CommonErrorNameMessageDetailsErrorDetails:
+      oneOf:
+      - type: object
+        additionalProperties:
+          description: Any type
+      - type: array
+        items:
+          type: string
+      description: Information about the error.
+      title: CommonErrorNameMessageDetailsErrorDetails
+    workspaceId:
+      type: string
+      title: workspaceId
+    import400Error:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
+      title: import400Error
+    JsonSchemaInput:
+      type: object
+      properties: {}
+      description: An object that contains a valid JSON OpenAPI definition. For more information, read the [OpenAPI documentation](https://swagger.io/docs/specification/basic-structure/).
+      title: JsonSchemaInput
+    ImportOpenApiDefinitionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: ImportOpenApiDefinitionRequestInternalServerError
+    jsonStringified:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/JsonStringifiedType'
+          description: The `string` type value.
+        input:
+          type: string
+          description: The stringified OpenAPI definition.
+        options:
+          $ref: '#/components/schemas/generateCollectionOptions'
+      required:
+      - type
+      - input
+      title: jsonStringified
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    generateCollectionOptions:
+      type: object
+      properties:
+        requestNameSource:
+          $ref: '#/components/schemas/GenerateCollectionOptionsRequestNameSource'
+          default: Fallback
+          description: 'Determines how the generated collection''s requests are named. If the `Fallback` value is passed, then the request is named after one of the following values in the schema:
+
+            - `summary`
+
+            - `operationId`
+
+            - `description`
+
+            - `url`
+
+            '
+        indentCharacter:
+          $ref: '#/components/schemas/GenerateCollectionOptionsIndentCharacter'
+          default: Space
+          description: The option for setting the indentation character type.
+        parametersResolution:
+          type: string
+          default: Schema
+          description: Generated collections use examples for parameter generation by default. Any existing collections generated using the schema parameter generation will continue to sync using their existing strategy.
+        folderStrategy:
+          $ref: '#/components/schemas/GenerateCollectionOptionsFolderStrategy'
+          default: Paths
+          description: Whether to create folders based on the specification's `paths` or `tags` properties.
+        includeAuthInfoInExample:
+          type: boolean
+          default: true
+          description: If true, include the authentication parameters in the example request.
+        enableOptionalParameters:
+          type: boolean
+          default: true
+          description: If true, enables optional parameters in the collection and its requests.
+        keepImplicitHeaders:
+          type: boolean
+          default: false
+          description: If true, keep the implicit headers from the OpenAPI specification, which are removed by default.
+        includeDeprecated:
+          type: boolean
+          default: true
+          description: If true, includes all deprecated operations, parameters, and properties in generated collection.
+        alwaysInheritAuthentication:
+          type: boolean
+          default: false
+          description: Whether authentication details should be included in all requests, or always inherited from the collection.
+        nestedFolderHierarchy:
+          type: boolean
+          default: false
+          description: If true, creates subfolders in the generated collection based on the order of the endpoints' tags.
+      description: The advanced creation options and their values. For more details, see Postman's [OpenAPI to Postman Collection Converter OPTIONS documentation](https://github.com/postmanlabs/openapi-to-postman/blob/develop/OPTIONS.md). These properties are case-sensitive.
+      title: generateCollectionOptions
+    GenerateCollectionOptionsRequestNameSource:
+      type: string
+      enum:
+      - Fallback
+      - URL
+      default: Fallback
+      description: 'Determines how the generated collection''s requests are named. If the `Fallback` value is passed, then the request is named after one of the following values in the schema:
+
+        - `summary`
+
+        - `operationId`
+
+        - `description`
+
+        - `url`
+
+        '
+      title: GenerateCollectionOptionsRequestNameSource
+    JsonStringifiedType:
+      type: string
+      enum:
+      - string
+      description: The `string` type value.
+      title: JsonStringifiedType
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    ImportOpenApiDefinitionCollectionsItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The collection's ID.
+        name:
+          type: string
+          description: The collection's name.
+        uid:
+          type: string
+          format: uid
+          description: The collection's unique ID.
+      title: ImportOpenApiDefinitionCollectionsItems
+    CommonErrorNameMessageDetailsError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+        details:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsErrorDetails'
+          description: Information about the error.
+      title: CommonErrorNameMessageDetailsError
+  securitySchemes:
+    PostmanApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+    basicAuth:
+      type: http
+      scheme: basic
+    scimApiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+x-refined-from:
+- postman-api-openapi.yml
+- postman-import-api-openapi.yml
+x-provenance:
+  first_party: true
+  method: harvested
+  provider_published: true
+  source: https://learning.postman.com/api-docs/openapi.json
+  harvested: '2026-08-05'
+  note: Postman's own OpenAPI 3.1 definition for the Postman API, served by its Fern-hosted API reference. 162 paths, 256 operations, servers api.postman.com and api.eu.postman.com.

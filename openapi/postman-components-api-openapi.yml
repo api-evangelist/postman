@@ -1,0 +1,1117 @@
+openapi: 3.1.0
+info:
+  title: Postman Components API
+  version: 1.0.0
+  description: 'Operations tagged components across 2 of this provider''s published API definitions: postman-api-openapi.yml, postman-components-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.postman.com
+  description: https://api.postman.com
+- url: https://api.eu.postman.com
+  description: https://api.eu.postman.com
+tags:
+- name: components
+paths:
+  /components:
+    get:
+      operationId: getAllComponents
+      summary: Get all components
+      description: Gets a list of all components in the team's component library.
+      tags:
+      - components
+      parameters:
+      - name: type
+        in: query
+        description: Filter results by component type.
+        required: false
+        schema:
+          $ref: '#/components/schemas/componentType'
+      - name: status
+        in: query
+        description: Filter results by the component's status.
+        required: false
+        schema:
+          $ref: '#/components/schemas/componentStatus'
+      - name: hasVersions
+        in: query
+        description: If true, return only components with published versions.
+        required: false
+        schema:
+          $ref: '#/components/schemas/componentHasVersions'
+      - name: include
+        in: query
+        description: A comma-separated list of additional fields to include. Accepts the `hasVersions`, `latestVersion`, `latestVersion.content` values.
+        required: false
+        schema:
+          $ref: '#/components/schemas/componentIncludeFields'
+      - name: expand
+        in: query
+        description: A comma-separated list of fields to expand. Accepts the `latestVersion` value.
+        required: false
+        schema:
+          $ref: '#/components/schemas/componentExpandLatestVersion'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAllComponents'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllComponentsRequestUnauthorizedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllComponentsRequestInternalServerError'
+    post:
+      operationId: createComponent
+      summary: Create a component
+      description: Creates a new component. The component is created in an active state with an initial draft. Use the POST `/components/{componentId}/versions` endpoint to publish a version.
+      tags:
+      - components
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Component Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createComponentResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateComponentRequestUnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateComponentRequestForbiddenError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateComponentRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createComponent'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /components/{componentId}:
+    get:
+      operationId: getComponent
+      summary: Get a component
+      description: Gets information about a component. Use the `include` and `expand` query parameters to return additional information, such as `hasVersions` and the latest published version.
+      tags:
+      - components
+      parameters:
+      - name: componentId
+        in: path
+        description: The component's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/componentId'
+      - name: include
+        in: query
+        description: A comma-separated list of additional fields to include. Accepts the `hasVersions`, `latestVersion`, `latestVersion.content` values.
+        required: false
+        schema:
+          $ref: '#/components/schemas/componentIncludeFields'
+      - name: expand
+        in: query
+        description: A comma-separated list of fields to expand. Accepts the `latestVersion` value.
+        required: false
+        schema:
+          $ref: '#/components/schemas/componentExpandLatestVersion'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getComponent'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetComponentRequestUnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetComponentRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetComponentRequestInternalServerError'
+    patch:
+      operationId: updateComponent
+      summary: Update a component
+      description: "Updates a component:\n  - `name` — Rename the component. The new name must be unique within the team. Archived components can't be renamed.\n  - `status` — Changes the component's lifecycle state:\n    - `archive` — Marks the component as read-only. Archived components aren't deleted and can't be edited or published, but their existing versions remain accessible.\n    - `active` — Restores the component. Only active components can be edited and published.\n\n**Note:**\n\nYou can't update a name and archived state in a single call. To change both properties, make separate calls to update the name and status.\n"
+      tags:
+      - components
+      parameters:
+      - name: componentId
+        in: path
+        description: The component's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/componentId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Component Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateComponentResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateComponentRequestUnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateComponentRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateComponentRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateComponent'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /components/{componentId}/drafts:
+    get:
+      operationId: getComponentDraft
+      summary: Get a component draft
+      description: Gets information about the current working draft of a component, including its content and format. Drafts represent the latest unpublished edits of a component, which may be different from the most recently published version.
+      tags:
+      - components
+      parameters:
+      - name: componentId
+        in: path
+        description: The component's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/componentId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getComponentDraft'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetComponentDraftRequestUnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetComponentDraftRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetComponentDraftRequestInternalServerError'
+    patch:
+      operationId: updateComponentDraft
+      summary: Update a component draft
+      description: 'Updates a component''s draft. Component drafts contain unpublished edits to a component, which may be different from a recently published version.
+
+
+        **Note:**
+
+
+        You can''t update archived components.
+
+        '
+      tags:
+      - components
+      parameters:
+      - name: componentId
+        in: path
+        description: The component's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/componentId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateComponentDraftResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateComponentDraftRequestUnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateComponentDraftRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateComponentDraftRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateComponentDraft'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /components/{componentId}/versions:
+    get:
+      operationId: getComponentVersions
+      summary: Get all component versions
+      description: Gets a list of a component's published versions.
+      tags:
+      - components
+      parameters:
+      - name: componentId
+        in: path
+        description: The component's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/componentId'
+      - name: include
+        in: query
+        description: A comma-separated list of additional fields to include. Accepts the `content` value.
+        required: false
+        schema:
+          $ref: '#/components/schemas/componentLibraryInclude'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getComponentVersions'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetComponentVersionsRequestUnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetComponentVersionsRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetComponentVersionsRequestInternalServerError'
+    post:
+      operationId: createComponentVersion
+      summary: Create a component version
+      description: 'Publishes a new version of a component from the current draft.
+
+
+        **Note:**
+
+
+        You can''t publish a new version of an archived component. Reactivate the component before publishing a new version.
+
+        '
+      tags:
+      - components
+      parameters:
+      - name: componentId
+        in: path
+        description: The component's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/componentId'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Version Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createComponentVersionResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateComponentVersionRequestUnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateComponentVersionRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateComponentVersionRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createComponentVersion'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /components/{componentId}/versions/{versionId}:
+    get:
+      operationId: getComponentVersion
+      summary: Get a component version
+      description: Gets a published version of a component.
+      tags:
+      - components
+      parameters:
+      - name: componentId
+        in: path
+        description: The component's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/componentId'
+      - name: versionId
+        in: path
+        description: The component version's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/componentVersionId'
+      - name: include
+        in: query
+        description: A comma-separated list of additional fields to include. Accepts the `content` value.
+        required: false
+        schema:
+          $ref: '#/components/schemas/componentLibraryInclude'
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/componentVersionData'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetComponentVersionRequestUnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetComponentVersionRequestForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetComponentVersionRequestInternalServerError'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+components:
+  schemas:
+    GetComponentRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentRequestInternalServerError
+    GetComponentVersionRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentVersionRequestForbiddenError
+    componentExpandLatestVersion:
+      type: string
+      title: componentExpandLatestVersion
+    CreateComponentVersionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateComponentVersionRequestInternalServerError
+    componentStatus:
+      type: string
+      enum:
+      - active
+      - archived
+      description: 'The component''s lifecycle state:
+
+        - `active` — The component is active and can be edited and published.
+
+        - `archived` — The component is archived and read-only. Archived components can''t be edited or published, but their existing versions remain accessible.
+
+        '
+      title: componentStatus
+    GetComponentVersionsRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentVersionsRequestUnauthorizedError
+    updateComponent:
+      oneOf:
+      - description: Any type
+      - description: Any type
+      title: updateComponent
+    CreateComponentVersionRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateComponentVersionRequestForbiddenError
+    GetAllComponentsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAllComponentsRequestInternalServerError
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    UpdateComponentRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateComponentRequestInternalServerError
+    createComponent:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The component's name. This must be unique within the team and can only contain letters, digits, hyphens, underscores, and periods and can't exceed 60 characters.
+        type:
+          $ref: '#/components/schemas/componentType'
+        content:
+          type: string
+          description: The component's content, up to a maximum of 500 KB (UTF-8).
+        format:
+          $ref: '#/components/schemas/componentContentFormatData'
+          default: YAML
+          description: The component's content format. Defaults to YAML.
+      required:
+      - name
+      - type
+      - content
+      title: createComponent
+    UpdateComponentDraftRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateComponentDraftRequestInternalServerError
+    componentType:
+      type: string
+      enum:
+      - OAS2
+      - OAS3
+      - OAS3_1
+      description: The component's type. Corresponds to the specification that the component's content adheres to.
+      title: componentType
+    CreateComponentVersionSourceType:
+      type: string
+      enum:
+      - draft
+      description: The `draft` value.
+      title: CreateComponentVersionSourceType
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    updateComponentDraftResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The component draft's ID.
+      description: Information about the component draft.
+      title: updateComponentDraftResponse
+    CreateComponentRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateComponentRequestUnauthorizedError
+    getAllComponents:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/componentData'
+          description: A list of components.
+      title: getAllComponents
+    componentId:
+      type: string
+      description: The component's ID.
+      title: componentId
+    GetComponentVersionRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentVersionRequestUnauthorizedError
+    GetComponentDraftRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentDraftRequestForbiddenError
+    UpdateComponentRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateComponentRequestUnauthorizedError
+    CreateComponentVersionRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateComponentVersionRequestUnauthorizedError
+    meta:
+      type: object
+      properties:
+        nextCursor:
+          type:
+          - string
+          - 'null'
+          description: The pagination cursor that points to the next record in the results set.
+      title: meta
+    componentLibraryInclude:
+      type: string
+      title: componentLibraryInclude
+    ComponentDataLatestVersion:
+      oneOf:
+      - type: string
+      - $ref: '#/components/schemas/componentVersionData'
+      description: 'Information about the component''s latest version. This property only returns only when you pass the `latestVersion` value for the `include` parameter.
+
+
+        To return detailed information about the component''s latest version, pass the `latestVersion` value for the `expand` parameter.
+
+        '
+      title: ComponentDataLatestVersion
+    componentVersionId:
+      type: string
+      description: The component version's ID.
+      title: componentVersionId
+    componentIncludeFields:
+      type: string
+      title: componentIncludeFields
+    GetComponentVersionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentVersionRequestInternalServerError
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    updateComponentResponse:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/componentId'
+        name:
+          type: string
+          description: The component's name.
+        status:
+          $ref: '#/components/schemas/componentStatus'
+      description: Information about the component.
+      title: updateComponentResponse
+    UpdateComponentDraftRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateComponentDraftRequestUnauthorizedError
+    componentData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The component's ID.
+        name:
+          type: string
+          description: The component's name.
+        type:
+          $ref: '#/components/schemas/componentType'
+        status:
+          $ref: '#/components/schemas/componentStatus'
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the component was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the component was last updated.
+        createdBy:
+          type: string
+          description: The ID of the user who created the component.
+        updatedBy:
+          type: string
+          description: The ID of the user who last updated the component.
+        hasVersions:
+          type: boolean
+          description: Whether the component has versions. Returns only when you pass the `hasVersions` value for the `include` parameter.
+        latestVersion:
+          $ref: '#/components/schemas/ComponentDataLatestVersion'
+          description: 'Information about the component''s latest version. This property only returns only when you pass the `latestVersion` value for the `include` parameter.
+
+
+            To return detailed information about the component''s latest version, pass the `latestVersion` value for the `expand` parameter.
+
+            '
+      description: Information about the component.
+      title: componentData
+    GetComponentRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentRequestForbiddenError
+    componentVersionData:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/componentVersionId'
+        label:
+          type: string
+          description: The component version's label.
+        url:
+          type: string
+          format: uri
+          description: The URL where the component version can be accessed.
+        format:
+          type: string
+          description: The component version's content format.
+        publishedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the component version was published.
+        content:
+          type: string
+          description: The version's content. This returns when you include the `include` parameter.
+      description: Information about a component's version.
+      title: componentVersionData
+    GetComponentDraftRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentDraftRequestInternalServerError
+    getComponentDraft:
+      type: object
+      properties:
+        content:
+          type: string
+          description: The component's draft content.
+        format:
+          type: string
+          description: The component draft's content format.
+      title: getComponentDraft
+    UpdateComponentDraftRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateComponentDraftRequestForbiddenError
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    getComponent:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/componentData'
+      title: getComponent
+    componentHasVersions:
+      type: boolean
+      title: componentHasVersions
+    GetComponentVersionsRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentVersionsRequestForbiddenError
+    createComponentVersionResponse:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/componentVersionId'
+      description: Information about the component version.
+      title: createComponentVersionResponse
+    createComponentResponse:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/componentId'
+      description: Information about the component.
+      title: createComponentResponse
+    UpdateComponentRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateComponentRequestForbiddenError
+    GetAllComponentsRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAllComponentsRequestUnauthorizedError
+    CreateComponentRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateComponentRequestForbiddenError
+    CreateComponentRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateComponentRequestInternalServerError
+    updateComponentDraft:
+      type: object
+      properties:
+        content:
+          type: string
+          description: The component's contents, up to a maximum of 500 KB (UTF-8).
+        format:
+          $ref: '#/components/schemas/componentContentFormatData'
+      description: Information about the component draft.
+      title: updateComponentDraft
+    componentContentFormatData:
+      type: string
+      enum:
+      - JSON
+      - YAML
+      description: The component's content format.
+      title: componentContentFormatData
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    GetComponentRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentRequestUnauthorizedError
+    getComponentVersions:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/componentVersionData'
+          description: A list of the component's versions.
+      title: getComponentVersions
+    CreateComponentVersionSource:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CreateComponentVersionSourceType'
+          description: The `draft` value.
+      description: The source to publish the version from. Defaults to the component's current draft.
+      title: CreateComponentVersionSource
+    GetComponentDraftRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentDraftRequestUnauthorizedError
+    GetComponentVersionsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentVersionsRequestInternalServerError
+    createComponentVersion:
+      type: object
+      properties:
+        label:
+          type: string
+          description: The component version's label. This must begin and end with an alphanumeric character and may only contain letters, digits, dots, underscores, plus signs, and hyphens and cannot exceed 60 characters.
+        source:
+          $ref: '#/components/schemas/CreateComponentVersionSource'
+          description: The source to publish the version from. Defaults to the component's current draft.
+      required:
+      - label
+      title: createComponentVersion
+  securitySchemes:
+    PostmanApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+    basicAuth:
+      type: http
+      scheme: basic
+    scimApiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+x-refined-from:
+- postman-api-openapi.yml
+- postman-components-api-openapi.yml
+x-provenance:
+  first_party: true
+  method: harvested
+  provider_published: true
+  source: https://learning.postman.com/api-docs/openapi.json
+  harvested: '2026-08-05'
+  note: Postman's own OpenAPI 3.1 definition for the Postman API, served by its Fern-hosted API reference. 162 paths, 256 operations, servers api.postman.com and api.eu.postman.com.

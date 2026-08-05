@@ -1,0 +1,255 @@
+openapi: 3.1.0
+info:
+  title: Postman API Security API
+  version: 1.0.0
+  description: 'Operations tagged apiSecurity across 2 of this provider''s published API definitions: postman-api-openapi.yml, postman-apisecurity-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.postman.com
+  description: https://api.postman.com
+- url: https://api.eu.postman.com
+  description: https://api.eu.postman.com
+tags:
+- name: apiSecurity
+paths:
+  /security/api-validation:
+    post:
+      operationId: schemaSecurityValidation
+      summary: API definition security validation
+      description: 'Performs an analysis on the given definition and returns any issues based on your [predefined rulesets](https://learning.postman.com/docs/api-governance/configurable-rules/configurable-rules-overview/). This endpoint can help you understand the violations'' impact and offers solutions to help you resolve any errors. You can include this endpoint to your CI/CD process to automate schema validation.
+
+
+        **Note:**
+
+
+        - The maximum allowed size of the definition is 10 MB.
+
+        - You must [import and enable](https://learning.postman.com/docs/api-governance/configurable-rules/configuring-api-governance-rules/) Postman''s [OWASP security rules](https://postman.postman.co/api-governance/libraries/postman_owasp/view) for this endpoint to return any security rule violations.
+
+        '
+      tags:
+      - apiSecurity
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/schemaSecurityValidationResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameObjectNameMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchemaSecurityValidationRequestUnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchemaSecurityValidationRequestForbiddenError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchemaSecurityValidationRequestInternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaSecurityValidationRequest'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+components:
+  schemas:
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    SchemaSecurityValidationRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: SchemaSecurityValidationRequestForbiddenError
+    SchemaSecurityValidationRequestSchemaType:
+      type: string
+      enum:
+      - openapi3
+      - openapi2
+      description: The definition type.
+      title: SchemaSecurityValidationRequestSchemaType
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    SchemaSecurityValidationRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: SchemaSecurityValidationRequestUnauthorizedError
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    CommonErrorNameObjectNameMessageErrorName:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      title: CommonErrorNameObjectNameMessageErrorName
+    SchemaSecurityValidationRequestSchemaLanguage:
+      type: string
+      enum:
+      - json
+      - yaml
+      description: The definition format.
+      title: SchemaSecurityValidationRequestSchemaLanguage
+    SchemaSecurityValidationRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: SchemaSecurityValidationRequestInternalServerError
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    schemaSecurityValidationRequest:
+      type: object
+      properties:
+        schema:
+          $ref: '#/components/schemas/SchemaSecurityValidationRequestSchema'
+      title: schemaSecurityValidationRequest
+    SchemaSecurityValidationRequestSchema:
+      type: object
+      properties:
+        language:
+          $ref: '#/components/schemas/SchemaSecurityValidationRequestSchemaLanguage'
+          description: The definition format.
+        schema:
+          type: string
+          description: The stringified API definition.
+        type:
+          $ref: '#/components/schemas/SchemaSecurityValidationRequestSchemaType'
+          description: The definition type.
+      required:
+      - language
+      - schema
+      - type
+      title: SchemaSecurityValidationRequestSchema
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    CommonErrorNameObjectNameMessageError:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/CommonErrorNameObjectNameMessageErrorName'
+      description: Information about the error.
+      title: CommonErrorNameObjectNameMessageError
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    commonErrorNameObjectNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameObjectNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameObjectNameMessage
+    schemaSecurityValidationResponse:
+      type: object
+      properties:
+        warnings:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              description: Any type
+          description: 'Information about each issue discovered in the analysis. Each object includes the violation''s severity and category, the location of the issue, data paths, and other information. This returns an empty object if there are no issues present in the schema.
+
+
+            If there are issues, this returns the `possibleFixUrl` response in each warning object. This provides a link to documentation you can use to resolve the warning.
+
+            '
+      title: schemaSecurityValidationResponse
+  securitySchemes:
+    PostmanApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+    basicAuth:
+      type: http
+      scheme: basic
+    scimApiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+x-refined-from:
+- postman-api-openapi.yml
+- postman-apisecurity-api-openapi.yml
+x-provenance:
+  first_party: true
+  method: harvested
+  provider_published: true
+  source: https://learning.postman.com/api-docs/openapi.json
+  harvested: '2026-08-05'
+  note: Postman's own OpenAPI 3.1 definition for the Postman API, served by its Fern-hosted API reference. 162 paths, 256 operations, servers api.postman.com and api.eu.postman.com.

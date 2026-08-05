@@ -1,0 +1,1733 @@
+openapi: 3.1.0
+info:
+  title: Postman SCIM API
+  version: 1.0.0
+  description: 'Operations tagged scim across 2 of this provider''s published API definitions: postman-api-openapi.yml, postman-scim-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.postman.com
+  description: https://api.postman.com
+- url: https://api.eu.postman.com
+  description: https://api.eu.postman.com
+tags:
+- name: scim
+paths:
+  /scim/v2/Groups:
+    get:
+      operationId: getScimGroupResources
+      summary: Get all groups
+      description: Gets information about all Postman team members.
+      tags:
+      - scim
+      parameters:
+      - name: startIndex
+        in: query
+        description: The index entry by which to begin the list of returned results. Must be a value of `1` or greater.
+        required: false
+        schema:
+          $ref: '#/components/schemas/startIndex'
+          default: 1
+      - name: count
+        in: query
+        description: Limit the number of results returned in a single response.
+        required: false
+        schema:
+          $ref: '#/components/schemas/count'
+          default: 100
+      - name: filter
+        in: query
+        description: 'Filter results by a specific word or phrase. This query parameter only supports the `displayName` filter and has the following requirements:
+
+          - Filter values are case-sensitive.
+
+          - Special characters and spaces must be URL encoded.
+
+          '
+        required: false
+        schema:
+          $ref: '#/components/schemas/scimGroupFilter'
+      - name: Authorization
+        in: header
+        description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getScimGroupResources'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+    post:
+      operationId: createScimGroup
+      summary: Create a group
+      description: 'Creates a new user group in Postman and creates a new account for each group member.
+
+
+        Each account is added to your Postman team and authentication is activated for each user. If an existing Postman account uses an email that matches a group member''s email ID, an [email invite](https://postman.postman.co/docs/administration/managing-your-team/managing-your-team/#invites) to join your Postman team is sent to that user. Once the user accepts the invite, they''ll be added to your team.
+
+
+        By default, the system assigns new users the developer role. You can [update user roles in Postman](https://learning.postman.com/docs/administration/managing-your-team/managing-your-team/#managing-team-roles).
+
+        '
+      tags:
+      - scim
+      parameters:
+      - name: Authorization
+        in: header
+        description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createScimGroupResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimErrorScimType'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimErrorScimType'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createScimGroup'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /scim/v2/Groups/{groupId}:
+    get:
+      operationId: getScimGroupResource
+      summary: Get a group
+      description: Gets information about a Postman group within the team.
+      tags:
+      - scim
+      parameters:
+      - name: groupId
+        in: path
+        description: The group's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/scimId'
+      - name: Authorization
+        in: header
+        description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getScimGroupResource'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+    delete:
+      operationId: deleteScimGroup
+      summary: Delete a group
+      description: 'Deletes a group in Postman. On success, this returns an HTTP `204 No Content` response.
+
+
+        User accounts that were in the deleted group are deactivated in Postman if the app is assigned to the user only with the deleted group.
+
+
+        User accounts and the data corresponding to them are not deleted. To permanently delete user accounts and their data, [contact Postman support](https://www.postman.com/support/).
+
+        '
+      tags:
+      - scim
+      parameters:
+      - name: groupId
+        in: path
+        description: The group's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/scimId'
+      - name: Authorization
+        in: header
+        description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Group Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+    patch:
+      operationId: updateGroup
+      summary: Update a group
+      description: 'Updates a group''s information. Using this endpoint you can:
+
+
+        - Update a group''s name.
+
+        - Add or remove members from a Postman group.
+
+        '
+      tags:
+      - scim
+      parameters:
+      - name: groupId
+        in: path
+        description: The group's ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/scimId'
+      - name: Authorization
+        in: header
+        description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimUpdateGroupResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimErrorScimType'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/scimUpdateGroup'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /scim/v2/ResourceTypes:
+    get:
+      operationId: getScimResourceTypes
+      summary: Get resource types
+      description: Gets all the resource types supported by Postman's SCIM API.
+      tags:
+      - scim
+      parameters:
+      - name: Authorization
+        in: header
+        description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getScimResourceTypes'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetScimResourceTypesRequestUnauthorizedError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /scim/v2/ServiceProviderConfig:
+    get:
+      operationId: getScimServiceProviderConfig
+      summary: Get service provider configuration
+      description: Gets the Postman SCIM API configuration information. This includes a list of supported operations.
+      tags:
+      - scim
+      parameters:
+      - name: Authorization
+        in: header
+        description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getScimServiceProviderConfig'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /scim/v2/Users:
+    get:
+      operationId: getScimUserResources
+      summary: Get all users
+      description: Gets information about all Postman team members.
+      tags:
+      - scim
+      parameters:
+      - name: startIndex
+        in: query
+        description: The index entry by which to begin the list of returned results. Must be a value of `1` or greater.
+        required: false
+        schema:
+          $ref: '#/components/schemas/startIndex'
+          default: 1
+      - name: count
+        in: query
+        description: Limit the number of results returned in a single response.
+        required: false
+        schema:
+          $ref: '#/components/schemas/count'
+          default: 100
+      - name: filter
+        in: query
+        description: 'Filter results by a specific word or phrase. This query parameter accepts the following:
+
+          - `userName` — Filter values are case-sensitive, and special characters and spaces must be URL encoded.
+
+          - `active` — Return only users who are active (`true`) or inactive (`false`).
+
+          '
+        required: false
+        schema:
+          $ref: '#/components/schemas/scimUserFilter'
+      - name: Authorization
+        in: header
+        description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimUserResources'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+    post:
+      operationId: createScimUser
+      summary: Create a user
+      description: 'Creates a new user account in Postman and adds the user to your organization''s Postman team.
+
+        - If the account does not exist, this also activates the user so they can authenticate in to your Postman team.
+
+        - If an account matching the email ID exists, the user receives [email invite](https://learning.postman.com/docs/administration/managing-your-team/manage-team-members/#manage-invites) to join the Postman team. The user joins the team when they accept the invite.
+
+        - If the user''s email domain matches your team''s verified domains, the user is immediately added to the team.
+
+
+        By default, the system assigns new users the developer role. You can [update user roles in Postman](https://learning.postman.com/docs/administration/managing-your-team/manage-team-members/#manage-team-roles).
+
+
+        **Note:**
+
+
+        - Users must join the team before you can assign them to any groups.
+
+        - If the user is a member of a different team during SCIM provisioning and their email domain is **not** verified with your Postman team, then the user is **not** provisioned. The endpoint returns an HTTP `409 Conflict` response.
+
+        '
+      tags:
+      - scim
+      parameters:
+      - name: Authorization
+        in: header
+        description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createScimUserResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimErrorScimType'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimErrorScimType'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createScimUser'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+  /scim/v2/Users/{userId}:
+    get:
+      operationId: getScimUserResource
+      summary: Get a user
+      description: Gets information about a Postman team member.
+      tags:
+      - scim
+      parameters:
+      - name: userId
+        in: path
+        description: The user's SCIM ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/scimId'
+      - name: Authorization
+        in: header
+        description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimUserResourceResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+    put:
+      operationId: updateScimUser
+      summary: Update a user
+      description: 'Updates a user in Postman.
+
+
+        **Reactivating a user**
+
+
+        By setting the `active` property from `false` to `true`, this reactivates an account. This allows the account to authenticate in to Postman and adds the account back on to your Postman team.
+
+        '
+      tags:
+      - scim
+      parameters:
+      - name: userId
+        in: path
+        description: The user's SCIM ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/scimId'
+      - name: Authorization
+        in: header
+        description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimUserResourceResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateScimUserRequestBadRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateScimUser'
+    patch:
+      operationId: updateScimUserPatch
+      summary: Update a user
+      description: 'Updates a user in Postman.
+
+
+        **Reactivating a user**
+
+
+        By setting the `active` property from `false` to `true`, this reactivates an account. This allows the account to authenticate in to Postman and adds the account back on to your Postman team.
+
+        '
+      tags:
+      - scim
+      parameters:
+      - name: userId
+        in: path
+        description: The user's SCIM ID.
+        required: true
+        schema:
+          $ref: '#/components/schemas/scimId'
+      - name: Authorization
+        in: header
+        description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimUserResourceResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateScimUserPatchRequestBadRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scimError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateScimUserPatch'
+    servers:
+    - url: https://api.postman.com
+      description: https://api.postman.com
+    - url: https://api.eu.postman.com
+      description: https://api.eu.postman.com
+components:
+  schemas:
+    scimErrorScimType:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        scimType:
+          type: string
+          description: The SCIM error type.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: string
+          format: http-status-code
+          description: The HTTP status code.
+      title: scimErrorScimType
+    scimUserResources:
+      type: object
+      properties:
+        Resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/scimUserResource'
+          description: A list of user resources.
+        itemsPerPage:
+          type: number
+          format: double
+          description: The number of items per response page.
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        startIndex:
+          type: number
+          format: double
+          description: The index entry by which the returned results begin.
+        totalResults:
+          type: number
+          format: double
+          description: The total number of results found.
+      title: scimUserResources
+    GetScimServiceProviderConfigSort:
+      type: object
+      properties:
+        supported:
+          type: boolean
+          description: If true, the feature is supported.
+      description: Information about the sort configuration.
+      title: GetScimServiceProviderConfigSort
+    createScimUserResponse:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        id:
+          type: string
+          description: The user's SCIM ID.
+        userName:
+          type: string
+          format: email
+          description: The user's username.
+        name:
+          $ref: '#/components/schemas/CreateScimUserResponseName'
+        externalId:
+          type: string
+          description: The user's external ID.
+        active:
+          type: boolean
+          description: If true, the user is active.
+        meta:
+          $ref: '#/components/schemas/CreateScimUserResponseMeta'
+          description: The response's non-standard meta information.
+      title: createScimUserResponse
+    ScimUserResourceResponseMeta:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          description: The resource type.
+        created:
+          type: string
+          format: date-time
+          description: The date and time at which the team member was created.
+        lastModified:
+          type: string
+          format: date-time
+          description: The date and time at which the team member was last modified.
+      description: The response's non-standard meta information.
+      title: ScimUserResourceResponseMeta
+    UpdateScimUserPatchOneOf0OperationsItemsOp:
+      type: string
+      enum:
+      - replace
+      description: The operation to perform.
+      title: UpdateScimUserPatchOneOf0OperationsItemsOp
+    GetScimServiceProviderConfigBulk:
+      type: object
+      properties:
+        maxOperations:
+          type: number
+          format: double
+          description: The total number of maximum operations allowed for bulk operations.
+        maxPayloadSize:
+          type: number
+          format: double
+          description: The maximum payload allowed for bulk operations.
+        supported:
+          type: boolean
+          description: If true, the feature is supported.
+      description: Information about bulk configuration.
+      title: GetScimServiceProviderConfigBulk
+    CreateScimUserName:
+      type: object
+      properties:
+        givenName:
+          type: string
+          description: The user's first name.
+        familyName:
+          type: string
+          description: The user's last name.
+      description: Information about the user's name.
+      title: CreateScimUserName
+    GetScimGroupResourceMembersItems:
+      type: object
+      properties:
+        value:
+          type: string
+          description: The member's SCIM ID.
+        display:
+          type: string
+          description: The member's display name.
+      description: Information about the group's members.
+      title: GetScimGroupResourceMembersItems
+    scimUserFilter:
+      type: string
+      title: scimUserFilter
+    UpdateScimUserPatchOneOf0OperationsItems:
+      type: object
+      properties:
+        op:
+          $ref: '#/components/schemas/UpdateScimUserPatchOneOf0OperationsItemsOp'
+          description: The operation to perform.
+        value:
+          $ref: '#/components/schemas/UpdateScimUserPatchOneOf0OperationsItemsValue'
+          description: The performed operation's value.
+      title: UpdateScimUserPatchOneOf0OperationsItems
+    createScimUser:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        userName:
+          type: string
+          description: The user's username.
+        active:
+          type: boolean
+          description: If true, activates the user. This lets them authenticate in to your Postman team.
+        externalId:
+          type: string
+          description: The user's external ID.
+        groups:
+          type: array
+          items:
+            type: string
+          description: A list of groups to assign the user to.
+        locale:
+          type: string
+          description: The user's [IETF language tag](https://datatracker.ietf.org/doc/html/rfc5646).
+        name:
+          $ref: '#/components/schemas/CreateScimUserName'
+          description: Information about the user's name.
+      title: createScimUser
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    UpdateScimUserPatchOneOf1OperationsItemsOp:
+      type: string
+      enum:
+      - replace
+      description: The operation to perform. Accepts the `replace` value.
+      title: UpdateScimUserPatchOneOf1OperationsItemsOp
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    ScimUpdateGroupOperationsItemsOp:
+      type: string
+      enum:
+      - replace
+      - remove
+      - add
+      description: The operation to perform.
+      title: ScimUpdateGroupOperationsItemsOp
+    UpdateScimUserPatch0:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        Operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateScimUserPatchOneOf0OperationsItems'
+          description: Information about the user update operation.
+      title: UpdateScimUserPatch0
+    CreateScimGroupResponseMeta:
+      type: object
+      properties:
+        created:
+          type: string
+          format: date-time
+          description: The date and time at which the group was created.
+        lastModified:
+          type: string
+          format: date-time
+          description: The date and time at which the group was last modified.
+        resourceType:
+          type: string
+          description: The SCIM resource type.
+      description: The response's non-standard meta information.
+      title: CreateScimGroupResponseMeta
+    ScimGroupResourceMembersItems:
+      type: object
+      properties:
+        value:
+          type: string
+          description: The resource value.
+        display:
+          type: string
+          description: The resource's display name.
+      description: Information about the group's members.
+      title: ScimGroupResourceMembersItems
+    UpdateScimUserRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/scimError'
+      - $ref: '#/components/schemas/scimErrorScimType'
+      title: UpdateScimUserRequestBadRequestError
+    GetScimServiceProviderConfigPatch:
+      type: object
+      properties:
+        supported:
+          type: boolean
+          description: If true, the feature is supported.
+      description: Information about patch configuration.
+      title: GetScimServiceProviderConfigPatch
+    scimGroupFilter:
+      type: string
+      title: scimGroupFilter
+    scimUserResourceResponse:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        id:
+          type: string
+          description: The team member's SCIM ID.
+        userName:
+          type: string
+          description: The team member's SCIM username.
+        name:
+          $ref: '#/components/schemas/ScimUserResourceResponseName'
+          description: Information about the Postman team member.
+        externalId:
+          type: string
+          description: The team member's external ID.
+        active:
+          type: boolean
+          description: If true, the team member is active.
+        meta:
+          $ref: '#/components/schemas/ScimUserResourceResponseMeta'
+          description: The response's non-standard meta information.
+      title: scimUserResourceResponse
+    CreateScimUserResponseName:
+      type: object
+      properties:
+        givenName:
+          type: string
+          description: The user's first name.
+        familyName:
+          type: string
+          description: The user's last name.
+      title: CreateScimUserResponseName
+    getScimGroupResources:
+      type: object
+      properties:
+        Resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/scimGroupResource'
+          description: A list of group resources.
+        itemsPerPage:
+          type: number
+          format: double
+          description: The number of items per response page.
+        schemas:
+          type: array
+          items:
+            type: string
+        startIndex:
+          type: number
+          format: double
+          description: The index entry by which the returned results begin.
+        totalResults:
+          type: number
+          format: double
+          description: The total number of results found.
+      title: getScimGroupResources
+    CreateScimUserResponseMetaResourceType:
+      type: string
+      enum:
+      - User
+      description: The SCIM resource type.
+      title: CreateScimUserResponseMetaResourceType
+    GetScimServiceProviderConfigAuthenticationSchemesItems:
+      type: object
+      properties:
+        description:
+          type: string
+          description: The scheme's description.
+        name:
+          type: string
+          description: The scheme's friendly name.
+        specUri:
+          type: string
+          format: url
+          description: A link to the scheme's specification documentation.
+        type:
+          type: string
+          description: The scheme's type.
+      description: Information about the scheme.
+      title: GetScimServiceProviderConfigAuthenticationSchemesItems
+    UpdateScimUserPatchOneOf1OperationsItemsPath:
+      type: string
+      enum:
+      - userName
+      description: The operation's path. Accepts the `userName` value.
+      title: UpdateScimUserPatchOneOf1OperationsItemsPath
+    UpdateScimUserPatchOneOf0OperationsItemsValue:
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: 'Sets the user''s `active` state:
+
+            - `true` — Activates the user. This lets them authenticate in to your Postman team.
+
+            - `false` — Removes the user from your Postman team and deactivates the account. This blocks the user from authenticating in to Postman.
+
+            '
+      description: The performed operation's value.
+      title: UpdateScimUserPatchOneOf0OperationsItemsValue
+    ScimUpdateGroupResponseMeta:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          description: The resource type.
+        created:
+          type: string
+          format: date-time
+          description: The date and time at which the group was created.
+        lastModified:
+          type: string
+          format: date-time
+          description: The date and time at which the group was last modified.
+      description: The response's non-standard meta information.
+      title: ScimUpdateGroupResponseMeta
+    scimId:
+      type: string
+      title: scimId
+    updateScimUser:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        userName:
+          type: string
+          format: email
+          description: The user's email address.
+        name:
+          $ref: '#/components/schemas/UpdateScimUserName'
+          description: Information about the user's name.
+        active:
+          type: boolean
+          description: 'Sets the user''s `active` state:
+
+            - `true` — Activates the user. This lets them authenticate in to your Postman team.
+
+            - `false` — Removes the user from your Postman team and deactivates the account. This blocks the user from authenticating in to Postman.
+
+            '
+      title: updateScimUser
+    startIndex:
+      type: number
+      format: double
+      default: 1
+      title: startIndex
+    ScimUserResourceResponseName:
+      type: object
+      properties:
+        givenName:
+          type: string
+          description: The team member's first name.
+        familyName:
+          type: string
+          description: The team member's last name.
+      description: Information about the Postman team member.
+      title: ScimUserResourceResponseName
+    scimError:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: string
+          format: http-status-code
+          description: The HTTP status code.
+      title: scimError
+    GetScimGroupResourceMeta:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          description: The resource type.
+        created:
+          type: string
+          format: date-time
+          description: The date and time at which the group was created.
+        lastModified:
+          type: string
+          format: date-time
+          description: The date and time at which the group was last modified.
+      description: The response's non-standard meta information.
+      title: GetScimGroupResourceMeta
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    UpdateScimUserPatchOneOf1OperationsItems:
+      type: object
+      properties:
+        op:
+          $ref: '#/components/schemas/UpdateScimUserPatchOneOf1OperationsItemsOp'
+          description: The operation to perform. Accepts the `replace` value.
+        path:
+          $ref: '#/components/schemas/UpdateScimUserPatchOneOf1OperationsItemsPath'
+          description: The operation's path. Accepts the `userName` value.
+        value:
+          type: string
+          format: email
+          description: The user's email address.
+      title: UpdateScimUserPatchOneOf1OperationsItems
+    getScimServiceProviderConfig:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        documentationUri:
+          type: string
+          format: url
+          description: A link to the URI's documentation.
+        patch:
+          $ref: '#/components/schemas/GetScimServiceProviderConfigPatch'
+          description: Information about patch configuration.
+        bulk:
+          $ref: '#/components/schemas/GetScimServiceProviderConfigBulk'
+          description: Information about bulk configuration.
+        filter:
+          $ref: '#/components/schemas/GetScimServiceProviderConfigFilter'
+          description: Information about the filter configuration.
+        changePassword:
+          $ref: '#/components/schemas/GetScimServiceProviderConfigChangePassword'
+          description: Information about the change password configuration.
+        sort:
+          $ref: '#/components/schemas/GetScimServiceProviderConfigSort'
+          description: Information about the sort configuration.
+        authenticationSchemes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetScimServiceProviderConfigAuthenticationSchemesItems'
+          description: A list of authentication schemes.
+        etag:
+          $ref: '#/components/schemas/GetScimServiceProviderConfigEtag'
+          description: Information about the [entity tag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) (Etag) HTTP response header configuration.
+        meta:
+          $ref: '#/components/schemas/GetScimServiceProviderConfigMeta'
+          description: The response's non-standard meta information.
+      description: Information about Postman's SCIM API configurations and supported operations.
+      title: getScimServiceProviderConfig
+    CreateScimUserResponseMeta:
+      type: object
+      properties:
+        created:
+          type: string
+          format: date-time
+          description: The date and time at which the user was created.
+        lastModified:
+          type: string
+          format: date-time
+          description: The date and time at which the user was last modified.
+        resourceType:
+          $ref: '#/components/schemas/CreateScimUserResponseMetaResourceType'
+          description: The SCIM resource type.
+      description: The response's non-standard meta information.
+      title: CreateScimUserResponseMeta
+    ScimUserResourceMeta:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          description: The resource type.
+        created:
+          type: string
+          format: date-time
+          description: The date and time at which the team member was created.
+        lastModified:
+          type: string
+          format: date-time
+          description: The date and time at which the team member was last modified.
+      description: The response's non-standard meta information.
+      title: ScimUserResourceMeta
+    scimGroupResource:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        id:
+          type: string
+          description: The group's SCIM ID.
+        displayName:
+          type: string
+          description: The group's display name.
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScimGroupResourceMembersItems'
+          description: A list of the group's members.
+        externalId:
+          type: string
+          description: The group's external ID.
+        meta:
+          $ref: '#/components/schemas/ScimGroupResourceMeta'
+          description: The response's non-standard meta information.
+      description: The SCIM group resource object.
+      title: scimGroupResource
+    updateScimUserPatch:
+      oneOf:
+      - $ref: '#/components/schemas/UpdateScimUserPatch0'
+      - $ref: '#/components/schemas/UpdateScimUserPatch1'
+      title: updateScimUserPatch
+    scimUpdateGroup:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        Operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScimUpdateGroupOperationsItems'
+          description: Information about the group update operation.
+      title: scimUpdateGroup
+    UpdateScimUserPatch1:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        Operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateScimUserPatchOneOf1OperationsItems'
+          description: Information about the user update operation.
+      title: UpdateScimUserPatch1
+    ScimGroupResourceMeta:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          description: The resource type.
+        created:
+          type: string
+          format: date-time
+          description: The date and time at which the group was created.
+        lastModified:
+          type: string
+          format: date-time
+          description: The date and time at which the group was last modified.
+      description: The response's non-standard meta information.
+      title: ScimGroupResourceMeta
+    GetScimResourceTypesRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetScimResourceTypesRequestUnauthorizedError
+    scimUpdateGroupResponse:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        id:
+          type: string
+          description: The group's ID.
+        displayName:
+          type: string
+          description: The group's name.
+        externalId:
+          type: string
+          description: The group's external ID.
+        meta:
+          $ref: '#/components/schemas/ScimUpdateGroupResponseMeta'
+          description: The response's non-standard meta information.
+      title: scimUpdateGroupResponse
+    UpdateScimUserName:
+      type: object
+      properties:
+        givenName:
+          type: string
+          description: The user's first name.
+        familyName:
+          type: string
+          description: The user's last name.
+      description: Information about the user's name.
+      title: UpdateScimUserName
+    GetScimServiceProviderConfigFilter:
+      type: object
+      properties:
+        maxResults:
+          type: number
+          format: double
+          description: The total number of maximum results allowed for filter operations.
+        supported:
+          type: boolean
+          description: If true, the feature is supported.
+      description: Information about the filter configuration.
+      title: GetScimServiceProviderConfigFilter
+    GetScimServiceProviderConfigEtag:
+      type: object
+      properties:
+        supported:
+          type: boolean
+          description: If true, the feature is supported.
+      description: Information about the [entity tag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) (Etag) HTTP response header configuration.
+      title: GetScimServiceProviderConfigEtag
+    GetScimServiceProviderConfigChangePassword:
+      type: object
+      properties:
+        supported:
+          type: boolean
+          description: If true, the feature is supported.
+      description: Information about the change password configuration.
+      title: GetScimServiceProviderConfigChangePassword
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    GetScimResourceTypesItemsSchemaExtensionsItems:
+      type: object
+      properties:
+        schema:
+          type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        required:
+          type: boolean
+          description: If true, the resource must include this schema extension.
+      title: GetScimResourceTypesItemsSchemaExtensionsItems
+    ScimUpdateGroupOperationsItems:
+      type: object
+      properties:
+        op:
+          $ref: '#/components/schemas/ScimUpdateGroupOperationsItemsOp'
+          description: The operation to perform.
+        path:
+          type: string
+          description: The operation's path. Include this value when you update a group's members.
+        value:
+          $ref: '#/components/schemas/ScimUpdateGroupOperationsItemsValue'
+          description: The performed operation's value.
+      title: ScimUpdateGroupOperationsItems
+    GetScimServiceProviderConfigMeta:
+      type: object
+      properties:
+        resourceType:
+          type: string
+        location:
+          type: string
+          format: url
+      description: The response's non-standard meta information.
+      title: GetScimServiceProviderConfigMeta
+    ScimUserResourceName:
+      type: object
+      properties:
+        givenName:
+          type: string
+          description: The team member's first name.
+        familyName:
+          type: string
+          description: The team member's last name.
+      description: Information about the Postman team member.
+      title: ScimUserResourceName
+    createScimGroupResponse:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        id:
+          type: string
+          description: The group's SCIM ID.
+        displayName:
+          type: string
+          description: The group's display name.
+        externalId:
+          type: string
+          description: The group's external ID.
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateScimGroupResponseMembersItems'
+          description: A list of the group's members.
+        meta:
+          $ref: '#/components/schemas/CreateScimGroupResponseMeta'
+          description: The response's non-standard meta information.
+      title: createScimGroupResponse
+    GetScimResourceTypesItems:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        id:
+          type: string
+          description: The resource's ID.
+        name:
+          type: string
+          description: The resource's friendly name.
+        endpoint:
+          type: string
+          description: The resource's endpoint.
+        description:
+          type: string
+          description: The resource's description.
+        schema:
+          type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        schemaExtensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetScimResourceTypesItemsSchemaExtensionsItems'
+          description: Information about the resource's schema extensions.
+      title: GetScimResourceTypesItems
+    count:
+      type: number
+      format: double
+      default: 100
+      title: count
+    getScimGroupResource:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        id:
+          type: string
+          description: The group's SCIM ID.
+        displayName:
+          type: string
+          description: The group's display name.
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetScimGroupResourceMembersItems'
+          description: A list of the group's members.
+        externalId:
+          type: string
+          description: The group's external ID.
+        meta:
+          $ref: '#/components/schemas/GetScimGroupResourceMeta'
+          description: The response's non-standard meta information.
+      title: getScimGroupResource
+    scimUserResource:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        id:
+          type: string
+          description: The team member's SCIM ID.
+        userName:
+          type: string
+          description: The team member's SCIM username.
+        name:
+          $ref: '#/components/schemas/ScimUserResourceName'
+          description: Information about the Postman team member.
+        externalId:
+          type: string
+          description: The team member's external ID.
+        active:
+          type: boolean
+          description: If true, the team member is active.
+        meta:
+          $ref: '#/components/schemas/ScimUserResourceMeta'
+          description: The response's non-standard meta information.
+      description: The SCIM user resource object.
+      title: scimUserResource
+    CreateScimGroupResponseMembersItems:
+      type: object
+      properties:
+        value:
+          type: string
+          description: The user's SCIM ID.
+        display:
+          type: string
+          description: The user's display name.
+      description: Information about the group's members.
+      title: CreateScimGroupResponseMembersItems
+    ScimUpdateGroupOperationsItemsValue:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The group's ID.
+        displayName:
+          type: string
+          description: The group's name.
+      description: The performed operation's value.
+      title: ScimUpdateGroupOperationsItemsValue
+    UpdateScimUserPatchRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/scimError'
+      - $ref: '#/components/schemas/scimErrorScimType'
+      title: UpdateScimUserPatchRequestBadRequestError
+    getScimResourceTypes:
+      type: array
+      items:
+        $ref: '#/components/schemas/GetScimResourceTypesItems'
+      title: getScimResourceTypes
+    createScimGroup:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        displayName:
+          type: string
+          description: The group's display name.
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateScimGroupMembersItems'
+          description: A list of the group's members.
+      title: createScimGroup
+    CreateScimGroupMembersItems:
+      type: object
+      properties:
+        value:
+          type: string
+          description: The user's SCIM ID.
+        display:
+          type: string
+          description: The user's display name.
+      description: Information about the group's members.
+      title: CreateScimGroupMembersItems
+  securitySchemes:
+    PostmanApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+    basicAuth:
+      type: http
+      scheme: basic
+    scimApiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+x-refined-from:
+- postman-api-openapi.yml
+- postman-scim-api-openapi.yml
+x-provenance:
+  first_party: true
+  method: harvested
+  provider_published: true
+  source: https://learning.postman.com/api-docs/openapi.json
+  harvested: '2026-08-05'
+  note: Postman's own OpenAPI 3.1 definition for the Postman API, served by its Fern-hosted API reference. 162 paths, 256 operations, servers api.postman.com and api.eu.postman.com.
