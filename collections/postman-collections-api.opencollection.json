@@ -4,60 +4,122 @@
     "name": "Postman Collections API",
     "version": "1.0.0"
   },
-  "request": {
-    "auth": {
-      "type": "apikey",
-      "key": "x-api-key",
-      "value": "{{x-api-key}}",
-      "placement": "header"
-    }
-  },
   "items": [
     {
       "info": {
-        "name": "Collections",
+        "name": "collections",
         "type": "folder"
       },
       "items": [
         {
           "info": {
-            "name": "Postman Get all collections",
+            "name": "Merge or pull changes into a collection fork",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.postman.com/collection-merges",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "[Merges](https://learning.postman.com/docs/collaborating-in-postman/using-version-control/forking-elements/#merge-changes-from-a-fork) a forked (source) collection and its parent (destination) collection asynchronously. To pull changes into a fork, pass the forked collection's ID as the `destination` value and the parent collection ID as the `source` value.\n\nThe response returns a task `id` value, which you can use to track the merge's status with the GET `/collection-merges-tasks/{taskId}` endp"
+        },
+        {
+          "info": {
+            "name": "Get merge or pull task status",
             "type": "http"
           },
           "http": {
             "method": "GET",
-            "url": "https://api.getpostman.com/collections",
+            "url": "https://api.postman.com/collection-merges-tasks/:taskId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "taskId",
+                "value": "",
+                "type": "path",
+                "description": "The task's ID."
+              }
+            ]
+          },
+          "docs": "Gets the status of a collection's merge or a pull changes task.\n\n**Note:**\n\nAfter a merge's success or failure, the task's status is only available for a period of 24 hours. Afterwards, this endpoint returns an HTTP `404 Not Found` response.\n"
+        },
+        {
+          "info": {
+            "name": "Get all collections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/collections",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "workspace",
                 "value": "",
                 "type": "query",
-                "description": "Filter results to a specific workspace by providing the workspace ID."
+                "description": "The workspace's ID."
               },
               {
                 "name": "name",
                 "value": "",
                 "type": "query",
-                "description": "Filter results by collection name (case-insensitive partial match)."
+                "description": "Filter results by collections whose name exactly matches the given value. Partial or substring matches are not supported."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The zero-based offset of the first item to return."
               }
             ]
           },
-          "docs": "Gets all of your Postman collections. The response includes all of your subscribed collections. By default, the response returns abbreviated collection data. To get full collection details, use the collection UID."
+          "docs": "Gets all of your [collections](https://www.postman.com/docs/collections). The response includes all of your subscribed collections.\n\n**Note:**\n\n- It's recommended that you use pagination with this endpoint. Pagination improves endpoint performance. Unpaginated calls are considered deprecated and are subject to change.\n- Filtering with the `name` parameter when you also pass the `limit` and `offset` parameters is not supported.\n- If you pass an invalid workspace ID for the `workspace` query param"
         },
         {
           "info": {
-            "name": "Postman Create a collection",
+            "name": "Create a collection",
             "type": "http"
           },
           "http": {
             "method": "POST",
-            "url": "https://api.getpostman.com/collections",
+            "url": "https://api.postman.com/collections",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "workspace",
                 "value": "",
                 "type": "query",
-                "description": "The workspace ID to create the collection in. If not specified, the collection is created in your personal workspace."
+                "description": "The workspace's ID."
               }
             ],
             "body": {
@@ -65,47 +127,162 @@
               "data": "{}"
             }
           },
-          "docs": "Creates a new collection in your Postman account. You can include the collection content in the request body, including requests, folders, and scripts."
+          "docs": "Creates a collection using the [Postman Collection v2.1.0 schema format](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).\n\n**Note:**\n\nIf you do not include the `workspace` query parameter, the system creates the collection in the oldest personal Internal workspace you own.\n"
         },
         {
           "info": {
-            "name": "Postman Get a collection",
+            "name": "Get all forked collections",
             "type": "http"
           },
           "http": {
             "method": "GET",
-            "url": "https://api.getpostman.com/collections/:collectionId",
+            "url": "https://api.postman.com/collections/collection-forks",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response."
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results by creation date in ascending (`asc`) or descending (`desc`) order."
+              }
+            ]
+          },
+          "docs": "Gets a list of all the authenticated user's forked collections."
+        },
+        {
+          "info": {
+            "name": "Create a fork",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/collections/fork/:collectionId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "collectionId",
                 "value": "",
                 "type": "path",
-                "description": "The collection's unique ID or UID."
+                "description": "The collection's ID."
+              },
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "query",
+                "description": "The workspace ID in which to create the fork."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a [fork](https://learning.postman.com/docs/collaborating-in-postman/version-control/#creating-a-fork) from an existing collection into a workspace."
+        },
+        {
+          "info": {
+            "name": "Merge a fork",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/collections/merge",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**This endpoint is deprecated.**\n\nMerges a forked collection back into its parent collection. You must have the [Editor role](https://learning.postman.com/docs/collaborating-in-postman/roles-and-permissions/#collection-roles) for the collection to merge a fork.\n"
+        },
+        {
+          "info": {
+            "name": "Get a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/collections/:collectionId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's ID."
               },
               {
                 "name": "access_key",
                 "value": "",
                 "type": "query",
-                "description": "A collection's read-only access key. Using this parameter does not require an API key."
+                "description": "A collection's read-only access key. Using this query parameter does not require an API key to call the endpoint."
+              },
+              {
+                "name": "model",
+                "value": "",
+                "type": "query",
+                "description": "Return a list of only the collection's root-level request (`rootLevelRequests`) and folder (`rootLevelFolders`) IDs instead of the full collection element data."
               }
             ]
           },
-          "docs": "Gets information about a single collection. The response includes the full collection definition including requests, folders, scripts, variables, and other metadata."
+          "docs": "Gets information about a collection. For a complete list of this endpoint's possible values, refer to the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html)."
         },
         {
           "info": {
-            "name": "Postman Update a collection",
+            "name": "Replace a collection's data",
             "type": "http"
           },
           "http": {
             "method": "PUT",
-            "url": "https://api.getpostman.com/collections/:collectionId",
+            "url": "https://api.postman.com/collections/:collectionId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Prefer",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "collectionId",
                 "value": "",
                 "type": "path",
-                "description": "The collection's unique ID or UID."
+                "description": "The collection's ID."
               }
             ],
             "body": {
@@ -113,104 +290,107 @@
               "data": "{}"
             }
           },
-          "docs": "Updates an existing collection. This replaces the entire collection definition with the data provided in the request body. Acts as a complete replacement, not a partial update."
+          "docs": "Replaces the contents of a collection using the [Postman Collection v2.1.0 schema format](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html). Include the collection's ID values in the request body. If you do not, the endpoint removes the existing items and creates new items.\n\n- To perform an update asynchronously, use the `Prefer` header with the `respond-async` value. When performing an async update, this endpoint returns a HTTP `202 Accepted` response.\n- For a complete"
         },
         {
           "info": {
-            "name": "Postman Delete a collection",
+            "name": "Update part of a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.postman.com/collections/:collectionId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates specific collection information, such as its name, events, or its variables. For more information, see the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).\n"
+        },
+        {
+          "info": {
+            "name": "Delete a collection",
             "type": "http"
           },
           "http": {
             "method": "DELETE",
-            "url": "https://api.getpostman.com/collections/:collectionId",
+            "url": "https://api.postman.com/collections/:collectionId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "collectionId",
                 "value": "",
                 "type": "path",
-                "description": "The collection's unique ID or UID."
+                "description": "The collection's ID."
               }
             ]
           },
-          "docs": "Deletes a collection from your Postman account. This action is irreversible."
+          "docs": "Deletes a collection."
         },
         {
           "info": {
-            "name": "Postman Get all requests in a collection",
+            "name": "Get a collection's comments",
             "type": "http"
           },
           "http": {
             "method": "GET",
-            "url": "https://api.getpostman.com/collections/:collectionId/requests",
+            "url": "https://api.postman.com/collections/:collectionId/comments",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "collectionId",
                 "value": "",
                 "type": "path",
-                "description": "The collection's unique ID or UID."
+                "description": "The collection's unique ID."
               }
             ]
           },
-          "docs": "Gets all the requests in a collection. Returns request metadata including name, method, URL, and folder hierarchy."
+          "docs": "Gets all comments left by users in a collection."
         },
         {
           "info": {
-            "name": "Postman Get all folders in a collection",
-            "type": "http"
-          },
-          "http": {
-            "method": "GET",
-            "url": "https://api.getpostman.com/collections/:collectionId/folders",
-            "params": [
-              {
-                "name": "collectionId",
-                "value": "",
-                "type": "path",
-                "description": "The collection's unique ID or UID."
-              }
-            ]
-          },
-          "docs": "Gets all the folders in a collection. Returns folder metadata and hierarchy structure."
-        },
-        {
-          "info": {
-            "name": "Postman Get all responses in a collection",
-            "type": "http"
-          },
-          "http": {
-            "method": "GET",
-            "url": "https://api.getpostman.com/collections/:collectionId/responses",
-            "params": [
-              {
-                "name": "collectionId",
-                "value": "",
-                "type": "path",
-                "description": "The collection's unique ID or UID."
-              }
-            ]
-          },
-          "docs": "Gets all saved example responses in a collection. Includes response body, headers, and status codes."
-        },
-        {
-          "info": {
-            "name": "Postman Fork a collection",
+            "name": "Create a collection comment",
             "type": "http"
           },
           "http": {
             "method": "POST",
-            "url": "https://api.getpostman.com/collections/fork/:collectionId",
+            "url": "https://api.postman.com/collections/:collectionId/comments",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "collectionId",
                 "value": "",
                 "type": "path",
-                "description": "The collection's unique ID or UID."
-              },
-              {
-                "name": "workspace",
-                "value": "",
-                "type": "query",
-                "description": "The workspace ID to fork the collection into."
+                "description": "The collection's unique ID."
               }
             ],
             "body": {
@@ -218,22 +398,501 @@
               "data": "{}"
             }
           },
-          "docs": "Creates a fork of an existing collection into a specified workspace. Forking creates a copy that maintains a link to the source collection for future merges."
+          "docs": "Creates a comment on a collection. To create a reply on an existing comment, include the `threadId` property in the request body.\n\n**Note:**\n\nThis endpoint accepts a max of 10,000 characters.\n"
         },
         {
           "info": {
-            "name": "Postman Merge a fork",
+            "name": "Update a collection's comment",
             "type": "http"
           },
           "http": {
-            "method": "POST",
-            "url": "https://api.getpostman.com/collections/merge",
+            "method": "PUT",
+            "url": "https://api.postman.com/collections/:collectionId/comments/:commentId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID."
+              },
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "The comment's ID."
+              }
+            ],
             "body": {
               "type": "json",
               "data": "{}"
             }
           },
-          "docs": "Merges a forked collection back into its source collection. You can choose the merge strategy to resolve conflicts."
+          "docs": "Updates a comment on a collection.\n\n**Note:**\n\nThis endpoint accepts a max of 10,000 characters.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a collection's comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.postman.com/collections/:collectionId/comments/:commentId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID."
+              },
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "The comment's ID."
+              }
+            ]
+          },
+          "docs": "Deletes a comment from a collection. On success, this returns an HTTP `204 No Content` response.\n\n**Note:**\n\nDeleting the first comment of a thread deletes all the comments in the thread.\n"
+        },
+        {
+          "info": {
+            "name": "Duplicate a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/collections/:collectionId/duplicates",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a duplicate of the given collection in another workspace.\n\nUse the GET `/collection-duplicate-tasks/{taskId}` endpoint to get the duplication task's current status.\n"
+        },
+        {
+          "info": {
+            "name": "Get a collection's forks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/collections/:collectionId/forks",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's ID."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response."
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results by creation date in ascending (`asc`) or descending (`desc`) order."
+              }
+            ]
+          },
+          "docs": "Gets a collection's forked collections. The response returns data for each fork, such as the fork's ID, the user who forked it, and the fork's creation date."
+        },
+        {
+          "info": {
+            "name": "Publish documentation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.postman.com/collections/:collectionId/public-documentations",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Publishes a collection's documentation. This makes it publicly available to anyone with the link to the documentation.\n\n**Note:**\n\n- Your [Postman plan](https://www.postman.com/pricing/) impacts your use of these endpoints:\n  - For **Free** and **Solo** users, you must have permissions to edit the collection.\n  - If [API Governance and Security](https://learning.postman.com/docs/api-governance/configurable-rules/configurable-rules-overview/) is enabled for your [**Enterprise**](https://www.postm"
+        },
+        {
+          "info": {
+            "name": "Unpublish documentation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.postman.com/collections/:collectionId/public-documentations",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID."
+              }
+            ]
+          },
+          "docs": "Unpublishes a collection's documentation. On success, this returns an HTTP `204 No Content` response."
+        },
+        {
+          "info": {
+            "name": "Pull source changes",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.postman.com/collections/:collectionId/pulls",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The forked collection's ID."
+              }
+            ]
+          },
+          "docs": "Pulls the changes from a parent (source) collection into the forked collection. In the endpoint's response:\n\n- The `destinationId` is the ID of the forked collection.\n- The `sourceId` is the ID of the source collection.\n"
+        },
+        {
+          "info": {
+            "name": "Get a collection's pull requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/collections/:collectionId/pull-requests",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID."
+              }
+            ]
+          },
+          "docs": "Gets information about a collection's pull requests, such as the source and destination IDs, status of the pull requests, and a URL link to the pull requests."
+        },
+        {
+          "info": {
+            "name": "Create a pull request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/collections/:collectionId/pull-requests",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a pull request for a forked collection into its parent collection."
+        },
+        {
+          "info": {
+            "name": "Get a collection's roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/collections/:collectionId/roles",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's ID."
+              }
+            ]
+          },
+          "docs": "Gets information about all roles in a collection. The response returns the IDs of all users, teams, and groups with access to view or edit the collection."
+        },
+        {
+          "info": {
+            "name": "Update a collection's roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.postman.com/collections/:collectionId/roles",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the roles of users, groups, or teams in a collection. On success, this returns an HTTP `204 No Content` response.\n\n**Note:**\n\n- Only users assigned the Editor [role](https://learning.postman.com/docs/collaborating-in-postman/roles-and-permissions/#collection-roles) in the collection can use this endpoint.\n- This endpoint does not support the external [Partner or Guest roles](https://learning.postman.com/docs/collaborating-in-postman/roles-and-permissions/#team-roles).\n"
+        },
+        {
+          "info": {
+            "name": "Get source collection's status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/collections/:collectionId/source-status",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's ID."
+              }
+            ]
+          },
+          "docs": "Checks whether there is a change between the forked collection and its parent (source) collection.\n\nIf the value of the `isSourceAhead` property is `true` in the response, then there is a difference between the forked collection and its source collection.\n\n**Note:**\n\nThis endpoint may take a few minutes to return an updated `isSourceAhead` status.\n"
+        },
+        {
+          "info": {
+            "name": "Transform collection to OpenAPI",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/collections/:collectionId/transformations",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's ID."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Return the OpenAPI definition in the given format."
+              }
+            ]
+          },
+          "docs": "Transforms an existing Postman Collection into a stringified OpenAPI definition.\n\n**Note:**\n\nThis does not create an API.\n"
+        },
+        {
+          "info": {
+            "name": "Transfer folders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/collection-folders-transfers",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Copies or moves folders into a collection or folder."
+        },
+        {
+          "info": {
+            "name": "Transfer requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/collection-requests-transfers",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Copies or moves requests into a collection or folder."
+        },
+        {
+          "info": {
+            "name": "Transfer responses",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/collection-responses-transfers",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Copies or moves responses into a request."
+        },
+        {
+          "info": {
+            "name": "Get duplication task status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/collection-duplicate-tasks/:taskId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "taskId",
+                "value": "",
+                "type": "path",
+                "description": "The task's unique ID."
+              }
+            ]
+          },
+          "docs": "Gets the status of a collection duplication task."
+        },
+        {
+          "info": {
+            "name": "Get async collection update status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/collection-updates-tasks/:taskId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "taskId",
+                "value": "",
+                "type": "path",
+                "description": "The task's ID."
+              }
+            ]
+          },
+          "docs": "Gets the status of an asynchronous collection update task."
         }
       ]
     }

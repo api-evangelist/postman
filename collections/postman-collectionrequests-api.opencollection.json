@@ -1,0 +1,162 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Postman Collection Requests API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "collectionRequests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a request's comments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/collections/:collectionId/requests/:requestId/comments",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID."
+              },
+              {
+                "name": "requestId",
+                "value": "",
+                "type": "path",
+                "description": "The request's unique ID."
+              }
+            ]
+          },
+          "docs": "Gets all comments left by users in a request."
+        },
+        {
+          "info": {
+            "name": "Create a request comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/collections/:collectionId/requests/:requestId/comments",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID."
+              },
+              {
+                "name": "requestId",
+                "value": "",
+                "type": "path",
+                "description": "The request's unique ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a comment on a request. To create a reply on an existing comment, include the `threadId` property in the request body.\n\n**Note:**\n\nThis endpoint accepts a max of 10,000 characters.\n"
+        },
+        {
+          "info": {
+            "name": "Update a request's comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.postman.com/collections/:collectionId/requests/:requestId/comments/:commentId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID."
+              },
+              {
+                "name": "requestId",
+                "value": "",
+                "type": "path",
+                "description": "The request's unique ID."
+              },
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "The comment's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a comment on a request.\n\n**Note:**\n\nThis endpoint accepts a max of 10,000 characters.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a request's comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.postman.com/collections/:collectionId/requests/:requestId/comments/:commentId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID."
+              },
+              {
+                "name": "requestId",
+                "value": "",
+                "type": "path",
+                "description": "The request's unique ID."
+              },
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "The comment's ID."
+              }
+            ]
+          },
+          "docs": "Deletes a comment from a request. On success, this returns an HTTP `204 No Content` response.\n\n**Note:**\n\nDeleting the first comment of a thread deletes all the comments in the thread.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

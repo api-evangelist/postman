@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Postman Billing API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "billing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/accounts",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Gets Postman billing account details for the given team."
+        },
+        {
+          "info": {
+            "name": "List account invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/accounts/:accountId/invoices",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account's ID."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "The account's status."
+              }
+            ]
+          },
+          "docs": "Gets all invoices for a Postman billing account filtered by the status of the invoice."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

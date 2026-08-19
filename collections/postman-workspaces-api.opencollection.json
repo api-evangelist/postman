@@ -4,94 +4,107 @@
     "name": "Postman Workspaces API",
     "version": "1.0.0"
   },
-  "request": {
-    "auth": {
-      "type": "apikey",
-      "key": "x-api-key",
-      "value": "{{x-api-key}}",
-      "placement": "header"
-    }
-  },
   "items": [
     {
       "info": {
-        "name": "Workspaces",
+        "name": "workspaces",
         "type": "folder"
       },
       "items": [
         {
           "info": {
-            "name": "Postman Get all workspaces",
+            "name": "Manage Partner Workspace invites",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/invitations",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Manages invitations and access to your team's [Partner Workspaces](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/partner-workspaces/manage/). You can use this endpoint to:\n\n- Send Partner Workspace invitations to the given email addresses. Users who already exist in the partnership are added directly, while new users receive an invitation email.\n- Remove partners from a workspace.\n- Remove partners from a partnership and all of its workspaces.\n\n**Note:**\n\n- Partner "
+        },
+        {
+          "info": {
+            "name": "Get all workspaces",
             "type": "http"
           },
           "http": {
             "method": "GET",
-            "url": "https://api.getpostman.com/workspaces",
+            "url": "https://api.postman.com/workspaces",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "type",
                 "value": "",
                 "type": "query",
-                "description": "Filter workspaces by type."
+                "description": "The type of workspace to filter the response by."
+              },
+              {
+                "name": "createdBy",
+                "value": "",
+                "type": "query",
+                "description": "Return only workspaces created by a specific user ID. For multiple users, pass this value as a comma-separated list of user IDs. The response only returns workspaces that you have access to."
               },
               {
                 "name": "include",
                 "value": "",
                 "type": "query",
-                "description": "Additional information to include in the response."
+                "description": "Include the following information in the endpoint's response:\n- `mocks:deactivated` — Include all deactivated mock servers in the response.\n- `scim` — Return the SCIM user IDs of the workspace creator and who last modified it.\n"
+              },
+              {
+                "name": "elementType",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to return the workspace where the given element type is located. If you pass this query parameter, you must also pass the `elementId` query parameter."
+              },
+              {
+                "name": "elementId",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to return the workspace where the given element's ID is located. When filtering by collection, you must use the collection's unique ID (`userId`-`collection`). If you pass this query parameter, you must also pass the `elementType` query parameter."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response, up to a maximum value of 100. Any value greater than 100 returns a 400 Bad Request response."
               }
             ]
           },
-          "docs": "Gets all workspaces accessible to the authenticated user. This includes personal, team, partner, and public workspaces. The response contains metadata about each workspace."
+          "docs": "Gets all [workspaces](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/creating-workspaces/). The response includes your workspaces and any workspaces that you have access to.\n\n**Note:**\n\nThis endpoint's response contains the visibility field. Visibility determines who can access the workspace:\n- `personal` — Only you can access the workspace.\n- `team` — All team members can access the workspace.\n- `private` — Only invited team members can access the workspace ([**Team"
         },
         {
           "info": {
-            "name": "Postman Create a workspace",
+            "name": "Create a workspace",
             "type": "http"
           },
           "http": {
             "method": "POST",
-            "url": "https://api.getpostman.com/workspaces",
-            "body": {
-              "type": "json",
-              "data": "{}"
-            }
-          },
-          "docs": "Creates a new workspace. You can specify the workspace name, type, description, and visibility settings."
-        },
-        {
-          "info": {
-            "name": "Postman Get a workspace",
-            "type": "http"
-          },
-          "http": {
-            "method": "GET",
-            "url": "https://api.getpostman.com/workspaces/:workspaceId",
-            "params": [
+            "url": "https://api.postman.com/workspaces",
+            "headers": [
               {
-                "name": "workspaceId",
-                "value": "",
-                "type": "path",
-                "description": "The workspace's unique ID."
-              }
-            ]
-          },
-          "docs": "Gets information about a single workspace, including its name, type, description, and associated collections, environments, mocks, and monitors."
-        },
-        {
-          "info": {
-            "name": "Postman Update a workspace",
-            "type": "http"
-          },
-          "http": {
-            "method": "PUT",
-            "url": "https://api.getpostman.com/workspaces/:workspaceId",
-            "params": [
-              {
-                "name": "workspaceId",
-                "value": "",
-                "type": "path",
-                "description": "The workspace's unique ID."
+                "name": "x-api-key",
+                "value": ""
               }
             ],
             "body": {
@@ -99,60 +112,179 @@
               "data": "{}"
             }
           },
-          "docs": "Updates an existing workspace's name, description, or type. Only the fields provided in the request body will be updated."
+          "docs": "Creates a new [workspace](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/creating-workspaces/).\n\n**Note:**\n\n- This endpoint returns a 403 `Forbidden` response if the user does not have permission to create workspaces. [Admins and Super Admins](https://learning.postman.com/docs/collaborating-in-postman/roles-and-permissions/#team-roles) can configure workspace permissions to restrict users and/or user groups from creating workspaces or require approvals for the creati"
         },
         {
           "info": {
-            "name": "Postman Delete a workspace",
+            "name": "Get all roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/workspaces-roles",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Gets information about all roles in a workspace, based on the team's [plan](https://www.postman.com/pricing/)."
+        },
+        {
+          "info": {
+            "name": "Get a workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/workspaces/:workspaceId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "The workspace's ID."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Include the following information in the endpoint's response:\n- `mocks:deactivated` — Include all deactivated mock servers in the response.\n- `scim` — Return the SCIM user IDs of the workspace creator and who last modified it.\n"
+              }
+            ]
+          },
+          "docs": "Gets information about a workspace.\n\n**Note:**\n\nThis endpoint's response contains the `visibility` field. [Visibility](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/managing-workspaces/#changing-workspace-visibility) determines who can access the workspace:\n- `personal` — Only you can access the workspace.\n- `team` — All team members can access the workspace.\n- `private` — Only invited team members can access the workspace ([**Team** and **Enterprise** plans only](h"
+        },
+        {
+          "info": {
+            "name": "Update a workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.postman.com/workspaces/:workspaceId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "The workspace's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a workspace's property, such as its name or visibility.\n\n**Note:**\n\n- This endpoint does not support the following visibility changes:\n  - `private` to `public`, `public` to `private`, and `private` to `personal` for **Free** and **Solo** [plans](https://www.postman.com/pricing/).\n  - `public` to `personal` for team users only.\n- There are rate limits when publishing public workspaces.\n- Public team workspace names must be unique.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a workspace",
             "type": "http"
           },
           "http": {
             "method": "DELETE",
-            "url": "https://api.getpostman.com/workspaces/:workspaceId",
+            "url": "https://api.postman.com/workspaces/:workspaceId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "workspaceId",
                 "value": "",
                 "type": "path",
-                "description": "The workspace's unique ID."
+                "description": "The workspace's ID."
               }
             ]
           },
-          "docs": "Deletes an existing workspace and all of its associated data. This action is irreversible."
+          "docs": "Deletes an existing workspace."
         },
         {
           "info": {
-            "name": "Postman Get workspace global variables",
+            "name": "Get a workspace's activity feed",
             "type": "http"
           },
           "http": {
             "method": "GET",
-            "url": "https://api.getpostman.com/workspaces/:workspaceId/global-variables",
+            "url": "https://api.postman.com/workspaces/:workspaceId/activities",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "workspaceId",
                 "value": "",
                 "type": "path",
-                "description": "The workspace's unique ID."
+                "description": "The workspace's ID."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by the given user ID."
+              },
+              {
+                "name": "elementType",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of elements to filter the results by."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
               }
             ]
           },
-          "docs": "Gets all global variables for the specified workspace. Global variables are available across all collections in the workspace."
+          "docs": "Gets a workspace's [activity feed](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/changelog-and-restoring-collections/#view-workspace-activity). Activity feeds return information about who added or removed collections, environments, or elements from a workspace, and users that join or leave a workspace."
         },
         {
           "info": {
-            "name": "Postman Update workspace global variables",
+            "name": "Transfer element to a workspace",
             "type": "http"
           },
           "http": {
-            "method": "PUT",
-            "url": "https://api.getpostman.com/workspaces/:workspaceId/global-variables",
+            "method": "POST",
+            "url": "https://api.postman.com/workspaces/:workspaceId/element-transfers",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "workspaceId",
                 "value": "",
                 "type": "path",
-                "description": "The workspace's unique ID."
+                "description": "The workspace's ID."
               }
             ],
             "body": {
@@ -160,7 +292,317 @@
               "data": "{}"
             }
           },
-          "docs": "Updates the global variables for the specified workspace. This replaces the entire set of global variables."
+          "docs": "Transfers a [Postman element](https://learning.postman.com/docs/getting-started/basics/postman-elements/) from one workspace to another workspace. Supported elements include collections, environments, mocks, monitors, and Flows modules and actions.\n\nWhen copying an element between workspaces, the [activity feed](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/workspace-activity/) for both workspaces update to reflect the change.\n\n**Note:**\n\nThis endpoint does not supp"
+        },
+        {
+          "info": {
+            "name": "Get global variables",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/workspaces/:workspaceId/global-variables",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "The workspace's ID."
+              }
+            ]
+          },
+          "docs": "Gets a workspace's global [variables](https://learning.postman.com/docs/sending-requests/variables/#variable-scopes). Global variables enable you to access data between collections, requests, scripts, and environments and are available throughout a workspace."
+        },
+        {
+          "info": {
+            "name": "Update global variables",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.postman.com/workspaces/:workspaceId/global-variables",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "The workspace's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates and replaces a workspace's global [variables](https://learning.postman.com/docs/sending-requests/variables/#variable-scopes). This endpoint replaces all existing global variables with the variables you pass in the request body."
+        },
+        {
+          "info": {
+            "name": "Get a workspace's roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/workspaces/:workspaceId/roles",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "The workspace's ID."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Include the following information in the endpoint's response:\n- `scim` — Return IDs as SCIM user and group IDs.\n"
+              }
+            ]
+          },
+          "docs": "Gets the roles of users, user groups, and partners in a workspace.\n\n**Note:**\n\nPartner roles don't support SCIM IDs.\n"
+        },
+        {
+          "info": {
+            "name": "Update workspace roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.postman.com/workspaces/:workspaceId/roles",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "identifierType",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "The workspace's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the roles of users, [user groups](https://learning.postman.com/docs/collaborating-in-postman/user-groups/), or partners in a workspace. To get a list of roles, use the GET `/workspace-roles` endpoint. To get a group ID, use the GET `/groups` endpoint.\n\n**Note:**\n\n- User groups are available on Postman [**Enterprise** plans](https://www.postman.com/pricing).\n- To use SCIM IDs for users and user groups, include the `identifierType=scim` header when you call this endpoint. To get SCIM user "
+        },
+        {
+          "info": {
+            "name": "Transfer workspace to a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.postman.com/workspaces/:workspaceId/transfers",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "The workspace's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Transfers a workspace from one team (`source`) to another team (`destination`).\n\n**Note:**\n\n- These endpoints are only available with [Postman **Enterprise** plans](https://www.postman.com/pricing/) with [Postman Organizations](https://learning.postman.com/docs/administration/onboarding-checklist) enabled.\n- Team user roles are modified when workspaces are transferred. For example, if a user has the Admin role in the `source` team but not the `destination` team, then their role is removed from t"
+        },
+        {
+          "info": {
+            "name": "Get all workspace updates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/workspaces/:workspaceId/updates",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "The workspace's ID."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of categories to filter the results by. Accepts `improvement`, `bug_fix`, `new_feature`, `breaking_change`, `announcement`."
+              }
+            ]
+          },
+          "docs": "Gets a list of workspace updates for the given workspace."
+        },
+        {
+          "info": {
+            "name": "Create a workspace update",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/workspaces/:workspaceId/updates",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "The workspace's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a [workspace update](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/internal-workspaces/workspace-updates) in the given workspace. Workspace updates keep workspace watchers informed about changes, such as new features, bug fixes, breaking changes, and announcements."
+        },
+        {
+          "info": {
+            "name": "Get a workspace update",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/workspaces/:workspaceId/updates/:updateId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "The workspace's ID."
+              },
+              {
+                "name": "updateId",
+                "value": "",
+                "type": "path",
+                "description": "The workspace update's ID."
+              }
+            ]
+          },
+          "docs": "Gets information about a workspace update."
+        },
+        {
+          "info": {
+            "name": "Update a workspace update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.postman.com/workspaces/:workspaceId/updates/:updateId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "The workspace's ID."
+              },
+              {
+                "name": "updateId",
+                "value": "",
+                "type": "path",
+                "description": "The workspace update's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a workspace update.\n\n**Note:**\n\nThis endpoint requires the `application/merge-patch+json` Content-Type header.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a workspace update",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.postman.com/workspaces/:workspaceId/updates/:updateId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "The workspace's ID."
+              },
+              {
+                "name": "updateId",
+                "value": "",
+                "type": "path",
+                "description": "The workspace update's ID."
+              }
+            ]
+          },
+          "docs": "Deletes a workspace update. On success, this returns an HTTP `204 No Content` response."
         }
       ]
     }

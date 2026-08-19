@@ -4,54 +4,94 @@
     "name": "Postman Monitors API",
     "version": "1.0.0"
   },
-  "request": {
-    "auth": {
-      "type": "apikey",
-      "key": "x-api-key",
-      "value": "{{x-api-key}}",
-      "placement": "header"
-    }
-  },
   "items": [
     {
       "info": {
-        "name": "Monitors",
+        "name": "monitors",
         "type": "folder"
       },
       "items": [
         {
           "info": {
-            "name": "Postman Get all monitors",
+            "name": "Get all monitors",
             "type": "http"
           },
           "http": {
             "method": "GET",
-            "url": "https://api.getpostman.com/monitors",
+            "url": "https://api.postman.com/monitors",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "workspace",
                 "value": "",
                 "type": "query",
-                "description": "Filter monitors by workspace ID."
+                "description": "Return only results found in the given workspace ID."
+              },
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "If true, return only active monitors."
+              },
+              {
+                "name": "owner",
+                "value": "",
+                "type": "query",
+                "description": "Return only results that belong to the given user ID."
+              },
+              {
+                "name": "collectionUid",
+                "value": "",
+                "type": "query",
+                "description": "Filter the results by a collection's unique ID."
+              },
+              {
+                "name": "environmentUid",
+                "value": "",
+                "type": "query",
+                "description": "Filter the results by an environment's unique ID."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response, up to a maximum value of 25. Any value greater than 25 returns a 400 Bad Request response."
               }
             ]
           },
-          "docs": "Gets all monitors accessible to the authenticated user. Returns metadata about each monitor including schedule, last run status, and associated collection."
+          "docs": "Gets all monitors."
         },
         {
           "info": {
-            "name": "Postman Create a monitor",
+            "name": "Create a monitor",
             "type": "http"
           },
           "http": {
             "method": "POST",
-            "url": "https://api.getpostman.com/monitors",
+            "url": "https://api.postman.com/monitors",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "workspace",
                 "value": "",
                 "type": "query",
-                "description": "The workspace ID to create the monitor in."
+                "description": "The workspace's ID."
               }
             ],
             "body": {
@@ -59,41 +99,53 @@
               "data": "{}"
             }
           },
-          "docs": "Creates a new monitor that runs a collection on a specified schedule. You must specify the collection to run, the environment to use, and the schedule (cron expression or interval)."
+          "docs": "Creates a monitor.\n\n**Note:**\n\n- You cannot create monitors for collections added to an API definition.\n- If you do not pass the `workspace` query parameter, the system creates the monitor in the oldest personal Internal workspace you own.\n"
         },
         {
           "info": {
-            "name": "Postman Get a monitor",
+            "name": "Get a monitor",
             "type": "http"
           },
           "http": {
             "method": "GET",
-            "url": "https://api.getpostman.com/monitors/:monitorId",
+            "url": "https://api.postman.com/monitors/:monitorId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "monitorId",
                 "value": "",
                 "type": "path",
-                "description": "The monitor's unique ID or UID."
+                "description": "The monitor's ID."
               }
             ]
           },
-          "docs": "Gets information about a single monitor, including its configuration, schedule, last run details, and notification settings."
+          "docs": "Gets information about a monitor."
         },
         {
           "info": {
-            "name": "Postman Update a monitor",
+            "name": "Update a monitor",
             "type": "http"
           },
           "http": {
             "method": "PUT",
-            "url": "https://api.getpostman.com/monitors/:monitorId",
+            "url": "https://api.postman.com/monitors/:monitorId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "monitorId",
                 "value": "",
                 "type": "path",
-                "description": "The monitor's unique ID or UID."
+                "description": "The monitor's ID."
               }
             ],
             "body": {
@@ -101,45 +153,125 @@
               "data": "{}"
             }
           },
-          "docs": "Updates an existing monitor's name, schedule, collection, or environment configuration."
+          "docs": "Updates a monitor's [configurations](https://learning.postman.com/docs/monitoring-your-api/setting-up-monitor/#configure-a-monitor)."
         },
         {
           "info": {
-            "name": "Postman Delete a monitor",
+            "name": "Delete a monitor",
             "type": "http"
           },
           "http": {
             "method": "DELETE",
-            "url": "https://api.getpostman.com/monitors/:monitorId",
+            "url": "https://api.postman.com/monitors/:monitorId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "monitorId",
                 "value": "",
                 "type": "path",
-                "description": "The monitor's unique ID or UID."
+                "description": "The monitor's ID."
               }
             ]
           },
-          "docs": "Deletes a monitor. This stops all scheduled runs and is irreversible."
+          "docs": "Deletes a monitor."
         },
         {
           "info": {
-            "name": "Postman Run a monitor",
+            "name": "Run a monitor",
             "type": "http"
           },
           "http": {
             "method": "POST",
-            "url": "https://api.getpostman.com/monitors/:monitorId/run",
+            "url": "https://api.postman.com/monitors/:monitorId/run",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "monitorId",
                 "value": "",
                 "type": "path",
-                "description": "The monitor's unique ID or UID."
+                "description": "The monitor's ID."
+              },
+              {
+                "name": "async",
+                "value": "",
+                "type": "query",
+                "description": "If true, runs the monitor asynchronously from the created monitor run task. By default, the server will not respond until the task finishes (`false`)."
               }
             ]
           },
-          "docs": "Manually triggers a monitor run. The response includes the run results with test pass/fail status, response times, and any errors."
+          "docs": "Runs a monitor and returns its run results.\n\n**Note:**\n\n- If you pass the `async=true` query parameter, the response does not return the `stats`, `executions`, and `failures` responses. To get this information for an asynchronous run, call the GET `/monitors/{id}` endpoint.\n- If the call exceeds 300 seconds, the endpoint returns an HTTP `202 Accepted` response. Use the GET `/monitors/{id}` endpoint to check the run's status in the response's `lastRun` property. To avoid this, it is recommended t"
+        },
+        {
+          "info": {
+            "name": "Get all runner instances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/runners/:runnerId/instances",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "runnerId",
+                "value": "",
+                "type": "path",
+                "description": "The runner's ID."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response, up to a maximum value of 25. Any value greater than 25 returns a 400 Bad Request response."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              }
+            ]
+          },
+          "docs": "Gets all instances of the runner polling Postman for upcoming monitor runs. Instances are runner executions that share the same runner ID and key.\n\n**Note:**\n\nYou can get a runner's ID in the Postman UI if you have an Admin or Super Admin role. To do this, click **Team > Team Settings** in Postman, then click **Runners**. Click the runner you want to get the ID of, then copy its ID from the URL.\n"
+        },
+        {
+          "info": {
+            "name": "Get runner metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/runners/:runnerId/metrics",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "runnerId",
+                "value": "",
+                "type": "path",
+                "description": "The runner's ID."
+              }
+            ]
+          },
+          "docs": "Gets the Postman server-side metrics for a runner instance. Metrics include information such as monitor run queues and last polling date.\n\n**Note:**\n\nYou can get a runner's ID in the Postman UI if you have a Team Admin or Super Admin role. To do this, click **Team > Team Settings** in Postman, then click **Runners**. Click the runner you want to get the ID of, then copy its ID from the URL.\n"
         }
       ]
     }

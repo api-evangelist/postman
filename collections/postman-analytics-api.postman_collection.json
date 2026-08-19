@@ -1,0 +1,934 @@
+{
+  "item": [
+    {
+      "id": "1b3e4254-9ed6-4a96-a5ef-6a8619c418a3",
+      "name": "analytics",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "52c1a9be-ca5b-47eb-a19e-ca343c449ce9",
+          "name": "Get analytics data",
+          "request": {
+            "name": "Get analytics data",
+            "description": {
+              "content": "Gets analytics data based on the specified resource, metrics, and given filters for team, internal, and public workspaces, as well as Partner Workspaces.\n\n**Note:**\n\nThis endpoint only accepts the following resource:metric query parameter combinations:\n- `user` — `workspace_active_users`, `active_users`\n- `workspace` — `elements_in_workspace`, `active_workspaces`, `api_calls`, `active_collections`, `response_status`, `pending_invites`, `needs_attention`, `success_rate`, `user_requests`, `collection_error_aggregate`\n- `team` — `user_api_journey`, `workspace_distribution`, `internal_workspace_distribution`, `license_consumption`, `members`, `last_autoflex_cycle`, `partner_engagement_funnel` `members_overtime` , `member_invites`, `invites_sent` , `invites_accepted`\n- `ai` — `top_agent_models_by_usage`, `activity_distribution`, `peak_activity`, `usage_leaderboard`, `credit_usage_by_model`, `messages_sent`, `credit_usage`, `agent_mode_sessions`, `new_vs_returning_users`, `agent_mode_users`\n- `api_development` — `active_workspaces`, `entity_activity`, `top_entities`\n- `api_testing` — `runs`, `functional_test_runs`, `performance_test_runs`\n- `api_production` — `monitor_runs`, `flow_executions`\n- `api_distribution` — `active_workspaces`, `pvt_network`, `partner`, `public`\n- `api_management` — `workspace_activity`\n\nThe `view` query parameter only accepts the following values when called with the following resource:metric pairs:\n`detailed` or `summary` — `user:active_users`, `workspace:active_workspaces`, `workspace:pending_invites`, `workspace:needs_attention`, `workspace:success_rate`, `team:partner_engagement_funnel`, `api_distribution:pvt_network`, `api_distribution:partner`, `api_distribution:public`\n- `detailed`, `summary`, or `trends` — `api_development:entity_activity`, `api_testing:functional_test_runs` , `api_testing:performance_test_runs`, `api_production:monitor_runs`, `api_production:flow_executions`\n- `summary` or `trend` — `api_development:active_workspaces`, `api_testing:runs`, `api_distribution:active_workspaces`, `api_management:workspace_activity`\n- `summary` only — `workspace:elements_in_workspace`, `workspace:workspace_active_users`, `workspace:api_calls`, `workspace:response_status`, `team:user_api_journey`, `team:workspace_distribution`, `team:internal_workspace_distribution`, `team:license_consumption`\n- `detailed` only — `workspace:active_collections`, `workspace:user_requests`, `api_development:top_entities`, `api_management:popular_workspaces` , `team:invites_sent` , `team:invites_accepted`\n- `trend` only — `team:members_overtime`, `team:member_invites`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "analytics"
+              ],
+              "host": [
+                "{{analytics-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "resource",
+                  "value": "<string>",
+                  "description": "(Required) Returns metrics and insights for API usage, success, and workspace/team trends in Postman:\n\n- `user` — Data related to individual user activities and engagement within Postman workspaces.\n- `team` — Team-level analytics, license consumption, and organizational trends.\n- `workspace` — Workspace-level activities, elements, and collaboration patterns.\n- `ai` — Analytics related to Agent Mode usage across workspaces, covering user activity, model usage, and credit consumption patterns.\n- `api_development` — API development activity metrics that include workspace counts, entity activity by type (collection, flow, mock, specification, sdk), and top entities.\n- `api_testing` — API testing metrics such as total test runs, functional test runs (Collection Runner), and performance test runs.\n- `api_production` — API production metrics, including monitor run activity and production flow execution activity.\n- `api_distribution` — API distribution metrics, such as active workspace counts across distribution channels.\n- `api_management` — API management metrics, such as workspace activity, active counts, trends, and top workspaces.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "metrics",
+                  "value": "<string>",
+                  "description": "(Required) Filters the response by only the given metrics. The metric must match the given `resource` value.\n\nFor a list of metrics and their related `resource` value, call the GET `/analytics-metadata` endpoint.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "view",
+                  "value": "<string>",
+                  "description": "The view type for the analytics data:\n  - `detailed` — Return extensive information.\n  - `summary` — Return aggregated information.\n  - `trend` — Return trend information over a duration.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "workspaceType",
+                  "value": "<string>",
+                  "description": "A comma-separated list of `internal`, `public`, and `partner` workspace types to filter the results by."
+                },
+                {
+                  "disabled": false,
+                  "key": "userId",
+                  "value": "<string>",
+                  "description": "A comma-separated list of user IDs to filter the results by. Only pass this parameter when calling the `user_requests` metric for the `workspace` resource."
+                },
+                {
+                  "disabled": false,
+                  "key": "duration",
+                  "value": "<string>",
+                  "description": "Filters the response by the given duration."
+                },
+                {
+                  "disabled": false,
+                  "key": "requestId",
+                  "value": "<string>",
+                  "description": "A comma-separated list of unique request IDs (`userId`-`requestId`) to filter the response by. Only pass this parameter when using the `user_requests` metric."
+                },
+                {
+                  "disabled": false,
+                  "key": "responseStatus",
+                  "value": "<string>",
+                  "description": "A comma-separated list of HTTP response status codes to filter the results by. Accepts values `100` through `600`. Only pass this parameter when using the `user_requests` metric."
+                },
+                {
+                  "disabled": false,
+                  "key": "attentionType",
+                  "value": "<string>",
+                  "description": "A comma-separated list of issues types to filter the results by. Attention types provide details about issues users or partners are facing. Accepts the `high_non_200OK_rate_for_partner` and `no_success_on_tried_request` values. Only pass this parameter when using the `needs_attention` metric."
+                },
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "<string>",
+                  "description": "Filters results for a given period of time (as opposed to a range) for supported views. Use a YEAR-MONTH value for month filtering or YEAR-MONTH-DAY day filtering."
+                },
+                {
+                  "disabled": false,
+                  "key": "userType",
+                  "value": "<string>",
+                  "description": "Filters results by a specific user type for supported views."
+                },
+                {
+                  "disabled": false,
+                  "key": "entityType",
+                  "value": "<string>",
+                  "description": "The type of Postman entity to filter results by."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "The maximum number of rows to return in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "The zero-based offset of the first item to return."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "84e8af96-9736-483f-a927-034e1d43c19c",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics"
+                  ],
+                  "host": [
+                    "{{analytics-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "resource",
+                      "value": "api_distribution"
+                    },
+                    {
+                      "key": "metrics",
+                      "value": "elements_in_workspace"
+                    },
+                    {
+                      "key": "view",
+                      "value": "summary"
+                    },
+                    {
+                      "key": "workspaceType",
+                      "value": "string"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "string"
+                    },
+                    {
+                      "key": "duration",
+                      "value": "last_180_days"
+                    },
+                    {
+                      "key": "requestId",
+                      "value": "string"
+                    },
+                    {
+                      "key": "responseStatus",
+                      "value": "string"
+                    },
+                    {
+                      "key": "attentionType",
+                      "value": "string"
+                    },
+                    {
+                      "key": "period",
+                      "value": "string"
+                    },
+                    {
+                      "key": "userType",
+                      "value": "new"
+                    },
+                    {
+                      "key": "entityType",
+                      "value": "sdk-specification"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"summary\": {\n      \"schema\": {\n        \"columns\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"rows\": [\n        [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      ],\n      \"pagination\": {\n        \"total\": 3888,\n        \"limit\": 8147,\n        \"offset\": 656,\n        \"has_more\": true\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97f581ab-ce9f-4842-bcb8-abc7d3f66a82",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics"
+                  ],
+                  "host": [
+                    "{{analytics-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "resource",
+                      "value": "api_distribution"
+                    },
+                    {
+                      "key": "metrics",
+                      "value": "elements_in_workspace"
+                    },
+                    {
+                      "key": "view",
+                      "value": "summary"
+                    },
+                    {
+                      "key": "workspaceType",
+                      "value": "string"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "string"
+                    },
+                    {
+                      "key": "duration",
+                      "value": "last_180_days"
+                    },
+                    {
+                      "key": "requestId",
+                      "value": "string"
+                    },
+                    {
+                      "key": "responseStatus",
+                      "value": "string"
+                    },
+                    {
+                      "key": "attentionType",
+                      "value": "string"
+                    },
+                    {
+                      "key": "period",
+                      "value": "string"
+                    },
+                    {
+                      "key": "userType",
+                      "value": "new"
+                    },
+                    {
+                      "key": "entityType",
+                      "value": "sdk-specification"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://UCmbNtvFCePPvtIinjDmaSsphBfnpbzn.bxpIyKSEkummm+QbNf5K+0nyUxH947YLGYBiVozZgwok9BkITwTmkD1h4bvi566u\",\n  \"title\": \"string\",\n  \"detail\": \"string\",\n  \"status\": 4624\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee35b332-9bcf-4a21-85d4-fd8d619ef360",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics"
+                  ],
+                  "host": [
+                    "{{analytics-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "resource",
+                      "value": "api_distribution"
+                    },
+                    {
+                      "key": "metrics",
+                      "value": "elements_in_workspace"
+                    },
+                    {
+                      "key": "view",
+                      "value": "summary"
+                    },
+                    {
+                      "key": "workspaceType",
+                      "value": "string"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "string"
+                    },
+                    {
+                      "key": "duration",
+                      "value": "last_180_days"
+                    },
+                    {
+                      "key": "requestId",
+                      "value": "string"
+                    },
+                    {
+                      "key": "responseStatus",
+                      "value": "string"
+                    },
+                    {
+                      "key": "attentionType",
+                      "value": "string"
+                    },
+                    {
+                      "key": "period",
+                      "value": "string"
+                    },
+                    {
+                      "key": "userType",
+                      "value": "new"
+                    },
+                    {
+                      "key": "entityType",
+                      "value": "sdk-specification"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://dRdyO.pakT6Gl3XnpfUNtg2L9MsBaAvPw5O1LhWMeItAY?\",\n  \"title\": \"string\",\n  \"detail\": \"string\",\n  \"status\": 3449,\n  \"instance\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30e20f87-d7af-43e5-9e15-4509cd0ceff3",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics"
+                  ],
+                  "host": [
+                    "{{analytics-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "resource",
+                      "value": "api_distribution"
+                    },
+                    {
+                      "key": "metrics",
+                      "value": "elements_in_workspace"
+                    },
+                    {
+                      "key": "view",
+                      "value": "summary"
+                    },
+                    {
+                      "key": "workspaceType",
+                      "value": "string"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "string"
+                    },
+                    {
+                      "key": "duration",
+                      "value": "last_180_days"
+                    },
+                    {
+                      "key": "requestId",
+                      "value": "string"
+                    },
+                    {
+                      "key": "responseStatus",
+                      "value": "string"
+                    },
+                    {
+                      "key": "attentionType",
+                      "value": "string"
+                    },
+                    {
+                      "key": "period",
+                      "value": "string"
+                    },
+                    {
+                      "key": "userType",
+                      "value": "new"
+                    },
+                    {
+                      "key": "entityType",
+                      "value": "sdk-specification"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://dRdyO.pakT6Gl3XnpfUNtg2L9MsBaAvPw5O1LhWMeItAY?\",\n  \"title\": \"string\",\n  \"detail\": \"string\",\n  \"status\": 3449,\n  \"instance\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8ddf870a-bebb-42b4-a651-eff51cef8515",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics"
+                  ],
+                  "host": [
+                    "{{analytics-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "resource",
+                      "value": "api_distribution"
+                    },
+                    {
+                      "key": "metrics",
+                      "value": "elements_in_workspace"
+                    },
+                    {
+                      "key": "view",
+                      "value": "summary"
+                    },
+                    {
+                      "key": "workspaceType",
+                      "value": "string"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "string"
+                    },
+                    {
+                      "key": "duration",
+                      "value": "last_180_days"
+                    },
+                    {
+                      "key": "requestId",
+                      "value": "string"
+                    },
+                    {
+                      "key": "responseStatus",
+                      "value": "string"
+                    },
+                    {
+                      "key": "attentionType",
+                      "value": "string"
+                    },
+                    {
+                      "key": "period",
+                      "value": "string"
+                    },
+                    {
+                      "key": "userType",
+                      "value": "new"
+                    },
+                    {
+                      "key": "entityType",
+                      "value": "sdk-specification"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "55241ce3-5bbb-455e-95ca-8419173c7b37",
+          "name": "Get analytics metadata",
+          "request": {
+            "name": "Get analytics metadata",
+            "description": {
+              "content": "Returns a catalog of analytics resources and their corresponding metrics for use with the GET /analytics endpoint. These metrics provide insights on API usage, success, workspace, and team trends in Postman.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "analytics-metadata"
+              ],
+              "host": [
+                "{{analytics-metadata-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "A comma-separated list of the additional information to include in the response. Accepts the `parameters` and `response` values.\n\nWhen you pass this query parameter and its values, the response provides detailed information, including parameters and response schemas for the given metrics.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "resources",
+                  "value": "<string>",
+                  "description": "A comma-separated list of resource types to filter the metrics by. Accepts the `user`, `workspace`, `team`, and `ai` values."
+                },
+                {
+                  "disabled": false,
+                  "key": "metrics",
+                  "value": "<string>",
+                  "description": "A comma-separated list of metrics values to use to filter the response.\n\nIf you don't pass this query parameter, then the response returns all metadata for all available metrics.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d8ba2fe9-739b-477d-afea-b8267c56ba84",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics-metadata"
+                  ],
+                  "host": [
+                    "{{analytics-metadata-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "string"
+                    },
+                    {
+                      "key": "resources",
+                      "value": "string"
+                    },
+                    {
+                      "key": "metrics",
+                      "value": "elements_in_workspace"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"description\": \"string\",\n    \"resources\": [\n      {\n        \"resource\": \"string\",\n        \"description\": \"string\",\n        \"metrics\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      {\n        \"resource\": \"string\",\n        \"description\": \"string\",\n        \"metrics\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a5f46a39-04c7-4da0-b3c9-3e57b1b69dfa",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics-metadata"
+                  ],
+                  "host": [
+                    "{{analytics-metadata-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "string"
+                    },
+                    {
+                      "key": "resources",
+                      "value": "string"
+                    },
+                    {
+                      "key": "metrics",
+                      "value": "elements_in_workspace"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://dRdyO.pakT6Gl3XnpfUNtg2L9MsBaAvPw5O1LhWMeItAY?\",\n  \"title\": \"string\",\n  \"detail\": \"string\",\n  \"status\": 3449,\n  \"instance\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8845363-638a-47f3-b84a-1cce652a64d4",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics-metadata"
+                  ],
+                  "host": [
+                    "{{analytics-metadata-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "string"
+                    },
+                    {
+                      "key": "resources",
+                      "value": "string"
+                    },
+                    {
+                      "key": "metrics",
+                      "value": "elements_in_workspace"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://dRdyO.pakT6Gl3XnpfUNtg2L9MsBaAvPw5O1LhWMeItAY?\",\n  \"title\": \"string\",\n  \"detail\": \"string\",\n  \"status\": 3449,\n  \"instance\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2ec6029-4212-4130-804d-8313dfadb48d",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics-metadata"
+                  ],
+                  "host": [
+                    "{{analytics-metadata-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "string"
+                    },
+                    {
+                      "key": "resources",
+                      "value": "string"
+                    },
+                    {
+                      "key": "metrics",
+                      "value": "elements_in_workspace"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.postman.com",
+      "key": "baseUrl"
+    },
+    {
+      "type": "string",
+      "value": "https://api.postman.com",
+      "key": "analytics-Url"
+    },
+    {
+      "type": "string",
+      "value": "https://api.postman.com",
+      "key": "analytics-metadata-Url"
+    }
+  ],
+  "info": {
+    "_postman_id": "9dac93cf-03f1-46e0-aaef-65a8d91cefeb",
+    "name": "Postman Analytics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Operations tagged analytics across 2 of this provider's published API definitions: postman-analytics-api-openapi.yml, postman-api-openapi.yml. Each path carries the servers of the definition it was published in.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,20 +1,20 @@
 {
   "item": [
     {
-      "id": "3b65d35f-2afb-4f32-8095-c3cd4967886b",
-      "name": "Webhooks",
+      "id": "31fea2b7-1f9a-4c10-bf9f-082dd693fe09",
+      "name": "webhooks",
       "description": {
-        "content": "Operations for creating and managing Postman webhooks.",
+        "content": "",
         "type": "text/plain"
       },
       "item": [
         {
-          "id": "ccccf103-45dd-4151-a26d-e69645a9ca13",
-          "name": "Postman Create a webhook",
+          "id": "7b821622-185e-43d2-b6dc-43ae8070595e",
+          "name": "Create a webhook",
           "request": {
-            "name": "Postman Create a webhook",
+            "name": "Create a webhook",
             "description": {
-              "content": "Creates a webhook that triggers a collection run when its generated URL receives a POST request. The incoming request body is available as variables during the collection run.",
+              "content": "Creates a webhook that triggers a collection with a custom payload. You can get the webhook's URL from the `webhookUrl` property in the endpoint's response.\n\n**Note:**\n\nIf you do not include the `workspace` query parameter, the system creates the webhook in the oldest personal Internal workspace you own.\n",
               "type": "text/plain"
             },
             "url": {
@@ -22,19 +22,25 @@
                 "webhooks"
               ],
               "host": [
-                "{{baseUrl}}"
+                "{{webhooks-Url}}"
               ],
               "query": [
                 {
                   "disabled": false,
                   "key": "workspace",
                   "value": "<string>",
-                  "description": "The workspace ID to create the webhook in."
+                  "description": "(Required) The workspace's ID."
                 }
               ],
               "variable": []
             },
             "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
               {
                 "key": "Content-Type",
                 "value": "application/json"
@@ -48,7 +54,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"webhook\": {\n    \"name\": \"<string>\",\n    \"collection\": \"<string>\"\n  }\n}",
+              "raw": "{\n  \"webhook\": {\n    \"collection\": \"<uid>\",\n    \"name\": \"<string>\",\n    \"environment\": \"<uid>\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -58,32 +64,30 @@
           },
           "response": [
             {
-              "id": "5757c007-df21-4c8f-bcbd-6a7486ea80e6",
-              "name": "Successfully created webhook",
+              "id": "ac6026d9-816a-4118-9318-bc4cbc6c117a",
+              "name": "Successful Response",
               "originalRequest": {
                 "url": {
                   "path": [
                     "webhooks"
                   ],
                   "host": [
-                    "{{baseUrl}}"
+                    "{{webhooks-Url}}"
                   ],
                   "query": [
                     {
                       "key": "workspace",
-                      "value": "<string>"
+                      "value": "string"
                     }
                   ],
                   "variable": []
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) ",
                     "key": "x-api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
@@ -93,7 +97,7 @@
                 "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"webhook\": {\n    \"name\": \"<string>\",\n    \"collection\": \"<string>\"\n  }\n}",
+                  "raw": "{\n  \"webhook\": {\n    \"collection\": \"string\",\n    \"name\": \"string\",\n    \"environment\": \"string\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -109,37 +113,35 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"webhook\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"collection\": \"string\",\n    \"webhookUrl\": \"https://ZgtHByBJZpdPzrug.ggDUvR3HPnL5ihYoQoG5vU+XJbLmRPAvhx-GFSziFTbyt-wZFrtNkm+07Gazqj6f,naM1wqsx\",\n    \"uid\": \"string\",\n    \"createdAt\": \"1951-07-18T13:26:18.548Z\"\n  }\n}",
+              "body": "{\n  \"webhook\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"collection\": \"string\",\n    \"webhookUrl\": \"string\",\n    \"uid\": \"string\"\n  }\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "6063027a-c370-462f-965f-4dc33da89afb",
-              "name": "Bad request - invalid input",
+              "id": "b1c7f91a-f712-4151-8d7e-de96e047eba5",
+              "name": "Missing Parameter",
               "originalRequest": {
                 "url": {
                   "path": [
                     "webhooks"
                   ],
                   "host": [
-                    "{{baseUrl}}"
+                    "{{webhooks-Url}}"
                   ],
                   "query": [
                     {
                       "key": "workspace",
-                      "value": "<string>"
+                      "value": "string"
                     }
                   ],
                   "variable": []
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) ",
                     "key": "x-api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
@@ -149,7 +151,7 @@
                 "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"webhook\": {\n    \"name\": \"<string>\",\n    \"collection\": \"<string>\"\n  }\n}",
+                  "raw": "{\n  \"webhook\": {\n    \"collection\": \"string\",\n    \"name\": \"string\",\n    \"environment\": \"string\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -165,37 +167,35 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"error\": {\n    \"name\": \"string\",\n    \"message\": \"string\"\n  }\n}",
+              "body": "{\n  \"error\": {\n    \"name\": \"string\",\n    \"message\": \"string\",\n    \"details\": {\n      \"key_0\": {}\n    }\n  }\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "01ab6954-bb6e-4c2c-b02f-6c30e7d14560",
-              "name": "Authentication credentials are missing or invalid",
+              "id": "94c71a40-58df-4a86-90b7-812f907f8bc7",
+              "name": "Unauthorized",
               "originalRequest": {
                 "url": {
                   "path": [
                     "webhooks"
                   ],
                   "host": [
-                    "{{baseUrl}}"
+                    "{{webhooks-Url}}"
                   ],
                   "query": [
                     {
                       "key": "workspace",
-                      "value": "<string>"
+                      "value": "string"
                     }
                   ],
                   "variable": []
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) ",
                     "key": "x-api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
@@ -205,7 +205,7 @@
                 "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"webhook\": {\n    \"name\": \"<string>\",\n    \"collection\": \"<string>\"\n  }\n}",
+                  "raw": "{\n  \"webhook\": {\n    \"collection\": \"string\",\n    \"name\": \"string\",\n    \"environment\": \"string\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -221,37 +221,35 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"error\": {\n    \"name\": \"string\",\n    \"message\": \"string\"\n  }\n}",
+              "body": "{\n  \"type\": \"http://tYYkvTooWqfTMSBfvInrkJKQxgCCWdS.lgwbE6NCdkuAlJaApd7ay13XzeylO14z6Vy9JoJuXHH73mCdZ\",\n  \"title\": \"string\",\n  \"detail\": \"string\",\n  \"status\": 7261\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "1761f45d-8b4b-4236-b8e0-0f8e9b3243d8",
-              "name": "Too many requests - rate limit exceeded",
+              "id": "5bb4e150-af9f-49fb-a1ce-24b6617dff34",
+              "name": "Internal Server Error",
               "originalRequest": {
                 "url": {
                   "path": [
                     "webhooks"
                   ],
                   "host": [
-                    "{{baseUrl}}"
+                    "{{webhooks-Url}}"
                   ],
                   "query": [
                     {
                       "key": "workspace",
-                      "value": "<string>"
+                      "value": "string"
                     }
                   ],
                   "variable": []
                 },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "disabled": false,
+                    "description": "(Required) ",
                     "key": "x-api-key",
-                    "value": "<API Key>"
+                    "value": "<string>"
                   },
                   {
                     "key": "Accept",
@@ -261,63 +259,7 @@
                 "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"webhook\": {\n    \"name\": \"<string>\",\n    \"collection\": \"<string>\"\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "ae21f03c-cdee-463c-87d5-86b9c85421ce",
-              "name": "An unexpected error occurred on the server",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "webhooks"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "workspace",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "x-api-key",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"webhook\": {\n    \"name\": \"<string>\",\n    \"collection\": \"<string>\"\n  }\n}",
+                  "raw": "{\n  \"webhook\": {\n    \"collection\": \"string\",\n    \"name\": \"string\",\n    \"environment\": \"string\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -333,7 +275,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"error\": {\n    \"name\": \"string\",\n    \"message\": \"string\"\n  }\n}",
+              "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"detail\": \"string\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             }
@@ -351,33 +293,21 @@
   "variable": [
     {
       "type": "string",
-      "value": "https://api.getpostman.com",
+      "value": "https://api.postman.com",
       "key": "baseUrl"
+    },
+    {
+      "type": "string",
+      "value": "https://api.postman.com",
+      "key": "webhooks-Url"
     }
   ],
-  "auth": {
-    "type": "apikey",
-    "apikey": [
-      {
-        "key": "key",
-        "value": "x-api-key"
-      },
-      {
-        "key": "value",
-        "value": "{{apiKey}}"
-      },
-      {
-        "key": "in",
-        "value": "header"
-      }
-    ]
-  },
   "info": {
-    "_postman_id": "ecd451fd-594c-4401-8eda-3d594415a751",
+    "_postman_id": "fce78540-1e04-4fc3-bdcb-65d05038657d",
     "name": "Postman Webhooks API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": {
-      "content": "The Postman Webhooks API enables you to create webhooks that trigger\ncollection runs with custom payloads. Webhooks provide a way to integrate\nPostman with external systems and automate workflows based on incoming\nevents. When a webhook URL receives a POST request, it triggers a\ncollection run with the incoming payload available as variables.\n\n## Authentication\nAll requests require an API key passed in the `x-api-key` header.\n\n## Rate Limits\nStandard Postman API rate limits apply.\n\n\nContact Support:\n Name: Postman Developer Support\n Email: help@postman.com",
+      "content": "Operations tagged webhooks across 2 of this provider's published API definitions: postman-api-openapi.yml, postman-webhooks-api-openapi.yml. Each path carries the servers of the definition it was published in.",
       "type": "text/plain"
     }
   }

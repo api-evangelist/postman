@@ -4,35 +4,33 @@
     "name": "Postman Webhooks API",
     "version": "1.0.0"
   },
-  "request": {
-    "auth": {
-      "type": "apikey",
-      "key": "x-api-key",
-      "value": "{{x-api-key}}",
-      "placement": "header"
-    }
-  },
   "items": [
     {
       "info": {
-        "name": "Webhooks",
+        "name": "webhooks",
         "type": "folder"
       },
       "items": [
         {
           "info": {
-            "name": "Postman Create a webhook",
+            "name": "Create a webhook",
             "type": "http"
           },
           "http": {
             "method": "POST",
-            "url": "https://api.getpostman.com/webhooks",
+            "url": "https://api.postman.com/webhooks",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "workspace",
                 "value": "",
                 "type": "query",
-                "description": "The workspace ID to create the webhook in."
+                "description": "The workspace's ID."
               }
             ],
             "body": {
@@ -40,7 +38,7 @@
               "data": "{}"
             }
           },
-          "docs": "Creates a webhook that triggers a collection run when its generated URL receives a POST request. The incoming request body is available as variables during the collection run."
+          "docs": "Creates a webhook that triggers a collection with a custom payload. You can get the webhook's URL from the `webhookUrl` property in the endpoint's response.\n\n**Note:**\n\nIf you do not include the `workspace` query parameter, the system creates the webhook in the oldest personal Internal workspace you own.\n"
         }
       ]
     }

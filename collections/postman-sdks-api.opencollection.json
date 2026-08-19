@@ -1,0 +1,354 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Postman Sd Ks API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "sdKs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all SDKs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/sdks",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the workspace that contains the SDK."
+              },
+              {
+                "name": "sdkIds",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of SDK IDs to return in the response. If you pass this query parameter with other filters, the other filters are ignored."
+              },
+              {
+                "name": "buildStatus",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by build status."
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by SDK language."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by the originating Postman Collection or specification ID."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response, up to a maximum value of 25. Any value greater than 25 returns a 400 Bad Request response."
+              }
+            ]
+          },
+          "docs": "Lists all SDKs the authenticated user has access to.\n\n**Note:**\n\n- Use the `sdkIds` parameter to get the generation build status of multiple SDKs in a single call.\n- When you pass the `sdkIds` value, other filters are ignored and the response contains only the accessible SDKs from this list.\n"
+        },
+        {
+          "info": {
+            "name": "Generate an SDK",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/sdks",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an asynchronous generation job for a single SDK (in one language) from a collection or specification.\n\nTo get the status of an SDK's generation, use the GET `/sdks/{sdkId}` endpoint and track its `buildStatus`. When the status is the `succeeded` value, the SDK is ready to download. You can also use the URL in the POST response's `Location` header.\n\n**Note:**\n\nThe request body is determined by the given `language` value, so only provide the properties relevant to that language's SDK.\n"
+        },
+        {
+          "info": {
+            "name": "Get an SDK",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/sdks/:sdkId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sdkId",
+                "value": "",
+                "type": "path",
+                "description": "The SDK's ID."
+              }
+            ]
+          },
+          "docs": "Returns information about the SDK, including the current build job status."
+        },
+        {
+          "info": {
+            "name": "Delete an SDK",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.postman.com/sdks/:sdkId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sdkId",
+                "value": "",
+                "type": "path",
+                "description": "The SDK's ID."
+              }
+            ]
+          },
+          "docs": "Deletes an SDK record and its stored archive. On success, this returns a `204 No Content` response.\n\n**Note:**\n\nYou can't use this endpoint to cancel a generation job that's still in progress.\n"
+        },
+        {
+          "info": {
+            "name": "Get an SDK's download URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/sdks/:sdkId/downloads",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sdkId",
+                "value": "",
+                "type": "path",
+                "description": "The SDK's ID."
+              }
+            ]
+          },
+          "docs": "Gets a short-lived signed URL for the generated SDK archive (zip). The generated URL is created on demand and expires within a few minutes.\n\n**Note:**\n\nThe API doesn't stream the archive directly to keep responses small and predictable. Use the returned URL to download the SDK zip file.\n"
+        },
+        {
+          "info": {
+            "name": "Get all SDK Git connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/sdk-git-connections",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the workspace that owns the source entities."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by the originating Postman Collection or specification ID."
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by SDK language."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by connection status."
+              },
+              {
+                "name": "repositoryUrl",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by the canonical URL of the target Git repository."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response, up to a maximum value of 25. Any value greater than 25 returns a 400 Bad Request response."
+              }
+            ]
+          },
+          "docs": "Gets all Git repository connections the authenticated user has access to in the given workspace. Each connection links one Postman Collection or specification and one SDK language to a target Git repository."
+        },
+        {
+          "info": {
+            "name": "Connect a Git repository to an SDK",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/sdk-git-connections",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Connects a Postman source element (collection or specification) to a Git repository for one SDK language. This creates a new connection in the\n`active` state.\n\n**Note:**\n- Each source and language pair maps to a single connection. If a connection already exists for the pair, this returns `409 Conflict` response.\n- To update an existing connection, use the PUT `/sdk-git-connections/{sdkGitConnectionId}` endpoint.\n- The `autoUpdatePullRequestsEnabled` property is only available to **Enterprise** p"
+        },
+        {
+          "info": {
+            "name": "Get an SDK Git connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/sdk-git-connections/:sdkGitConnectionId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sdkGitConnectionId",
+                "value": "",
+                "type": "path",
+                "description": "The Git connection's ID."
+              }
+            ]
+          },
+          "docs": "Gets information about an SDK's Git connection. The response includes the SDK currently sent to the targetBranch and the most recent SDK-update pull request."
+        },
+        {
+          "info": {
+            "name": "Update an SDK Git connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.postman.com/sdk-git-connections/:sdkGitConnectionId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sdkGitConnectionId",
+                "value": "",
+                "type": "path",
+                "description": "The Git connection's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the Git connection's lifecycle status:\n\n- `active` — Connects or reconnects the repository. All auto-update pull requests resume.\n- `disconnected` — Disconnects the repository, and no further auto-update pull requests are opened. The historical pull request record is preserved and remains queryable.\n\n**Note:**\n\n- The `autoUpdatePullRequestsEnabled` property is only available to **Enterprise** plan users and defaults to `true`. If the user is on a **Team** plan, this value is always `fals"
+        },
+        {
+          "info": {
+            "name": "Get an SDK Git connection's pull requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/sdk-git-connections/:sdkGitConnectionId/pull-requests",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sdkGitConnectionId",
+                "value": "",
+                "type": "path",
+                "description": "The Git connection's ID."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by pull request status."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response, up to a maximum value of 25. Any value greater than 25 returns a 400 Bad Request response."
+              }
+            ]
+          },
+          "docs": "Lists all SDK update pull requests for the Git connection, in order of newest first by its `updatedAt` property.\n\n**Note:**\n\nDirect push requests to the base branch are not returned in the response if a Git connection is configured to push only some changes directly to a base branch.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

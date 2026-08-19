@@ -1,0 +1,646 @@
+{
+  "item": [
+    {
+      "id": "8c05a476-64ba-4196-b30f-57bd33e8a569",
+      "name": "collectionAccessKeys",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f8e87eb5-1fec-442f-b6df-46548ef56e81",
+          "name": "Get collection access keys",
+          "request": {
+            "name": "Get collection access keys",
+            "description": {
+              "content": "Gets the authenticated user's personal and team [collection access keys](https://learning.postman.com/docs/developer/postman-api/authentication/#generate-a-collection-access-key).\n\n**Note:**\n\n- The `expiresAfter` property in the response represents the date and time at which the access key expires. Collection access keys are valid for 60 days. If unused, the access key expires after 60 days. If someone uses the access key, then its expiration date increases by another 60 days.\n- If the collection key is unused, the `lastUsedAt` property in the response returns an empty string.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collection-access-keys"
+              ],
+              "host": [
+                "{{collection-access-keys-Url}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "collectionId",
+                  "value": "<uid>",
+                  "description": "Filter the results by a collection's unique ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "031b76c7-f7fa-486a-a354-4b6e9bda1373",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collection-access-keys"
+                  ],
+                  "host": [
+                    "{{collection-access-keys-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "collectionId",
+                      "value": "string"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"token\": \"string\",\n      \"status\": \"ACTIVE\",\n      \"teamId\": 6385,\n      \"userId\": 6437,\n      \"collectionId\": \"string\",\n      \"expiresAfter\": \"2003-12-19T16:03:21.050Z\",\n      \"lastUsedAt\": \"string\",\n      \"createdAt\": \"1952-11-08T22:23:14.270Z\",\n      \"updatedAt\": \"1967-08-26T16:26:11.370Z\",\n      \"deletedAt\": \"2017-12-21T08:16:46.312Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"token\": \"string\",\n      \"status\": \"INACTIVE\",\n      \"teamId\": 2228,\n      \"userId\": 4027,\n      \"collectionId\": \"string\",\n      \"expiresAfter\": \"2010-01-27T07:22:10.327Z\",\n      \"lastUsedAt\": \"string\",\n      \"createdAt\": \"2022-02-12T04:20:51.087Z\",\n      \"updatedAt\": \"2000-12-22T08:50:56.074Z\",\n      \"deletedAt\": \"1969-02-01T05:11:08.683Z\"\n    }\n  ],\n  \"meta\": {\n    \"nextCursor\": \"string\",\n    \"prevCursor\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd1ba6a9-fcda-4a4a-93f0-46f438c0069e",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collection-access-keys"
+                  ],
+                  "host": [
+                    "{{collection-access-keys-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "collectionId",
+                      "value": "string"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ccfb8482-bc74-4cc0-8334-ee7d7bdb616d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collection-access-keys"
+                  ],
+                  "host": [
+                    "{{collection-access-keys-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "collectionId",
+                      "value": "string"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://glHODxsSSvZRBxLDHhMBKPkK.urxamIUbxrW?i=EdNc&\",\n  \"title\": \"string\",\n  \"detail\": \"string\",\n  \"status\": 6782\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "915098d7-0aee-4414-a71f-9ccf4f5b399b",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collection-access-keys"
+                  ],
+                  "host": [
+                    "{{collection-access-keys-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "collectionId",
+                      "value": "string"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://glHODxsSSvZRBxLDHhMBKPkK.urxamIUbxrW?i=EdNc&\",\n  \"title\": \"string\",\n  \"detail\": \"string\",\n  \"status\": 6782\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "66449b03-2dcf-4e41-af35-6b0eda015579",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collection-access-keys"
+                  ],
+                  "host": [
+                    "{{collection-access-keys-Url}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "collectionId",
+                      "value": "string"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2353f0e2-8023-4fbb-a529-7bfa36423d6e",
+          "name": "Delete a collection access key",
+          "request": {
+            "name": "Delete a collection access key",
+            "description": {
+              "content": "Deletes a collection access key. To get a collection access key's ID, use the GET `/collection-access-key` endpoint.\n\nOn success, this returns an HTTP `204 No Content` response.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collection-access-keys",
+                ":keyId"
+              ],
+              "host": [
+                "{{collection-access-keys-keyId-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "keyId",
+                  "description": "(Required) The collection access key's ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "56201700-1728-4d46-ae56-e064a8e3b28c",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collection-access-keys",
+                    ":keyId"
+                  ],
+                  "host": [
+                    "{{collection-access-keys-keyId-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keyId",
+                      "description": "(Required) The collection access key's ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fdb08657-04bb-48e7-9b4f-19c47160d1c7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collection-access-keys",
+                    ":keyId"
+                  ],
+                  "host": [
+                    "{{collection-access-keys-keyId-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keyId",
+                      "description": "(Required) The collection access key's ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://glHODxsSSvZRBxLDHhMBKPkK.urxamIUbxrW?i=EdNc&\",\n  \"title\": \"string\",\n  \"detail\": \"string\",\n  \"status\": 6782\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e866f39-8b87-43d8-b688-8bf13ebe2e1a",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collection-access-keys",
+                    ":keyId"
+                  ],
+                  "host": [
+                    "{{collection-access-keys-keyId-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keyId",
+                      "description": "(Required) The collection access key's ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://glHODxsSSvZRBxLDHhMBKPkK.urxamIUbxrW?i=EdNc&\",\n  \"title\": \"string\",\n  \"detail\": \"string\",\n  \"status\": 6782\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "080c776b-7741-44df-8939-02c18dddba80",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collection-access-keys",
+                    ":keyId"
+                  ],
+                  "host": [
+                    "{{collection-access-keys-keyId-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keyId",
+                      "description": "(Required) The collection access key's ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://XqiNmstjQElsctjbSazPBub.tgzyU.NPmtC3VtV7ezMHuhRsANkU8HEDnVsWMB77FMu+6pRXh\",\n  \"title\": \"string\",\n  \"status\": 833,\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d9c3bf8-1cba-46ca-87bc-bd06f306968f",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collection-access-keys",
+                    ":keyId"
+                  ],
+                  "host": [
+                    "{{collection-access-keys-keyId-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keyId",
+                      "description": "(Required) The collection access key's ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.postman.com",
+      "key": "baseUrl"
+    },
+    {
+      "type": "string",
+      "value": "https://api.postman.com",
+      "key": "collection-access-keys-Url"
+    },
+    {
+      "type": "string",
+      "value": "https://api.postman.com",
+      "key": "collection-access-keys-keyId-Url"
+    }
+  ],
+  "info": {
+    "_postman_id": "9ebccf1b-6db4-4fd1-91d2-3bd2af9d6069",
+    "name": "Postman Collection Access Keys API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Operations tagged collectionAccessKeys across 2 of this provider's published API definitions: postman-api-openapi.yml, postman-collectionaccesskeys-api-openapi.yml. Each path carries the servers of the definition it was published in.",
+      "type": "text/plain"
+    }
+  }
+}

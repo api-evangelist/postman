@@ -1,0 +1,358 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Postman Teams API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "teams",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all teams",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/teams",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "identifierType",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response."
+              },
+              {
+                "name": "settings",
+                "value": "",
+                "type": "query",
+                "description": "If true, returns team settings in the response."
+              },
+              {
+                "name": "userRoles",
+                "value": "",
+                "type": "query",
+                "description": "If true, returns the team's assigned user roles in the response."
+              }
+            ]
+          },
+          "docs": "Gets all Postman teams in your organization."
+        },
+        {
+          "info": {
+            "name": "Create a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/teams",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "identifierType",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "[Creates](https://learning.postman.com/docs/administration/managing-your-team/create-teams/) a Postman team in your organization.\n"
+        },
+        {
+          "info": {
+            "name": "Get a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/teams/:teamId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "identifierType",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "path",
+                "description": "The team's ID."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Include additional information in the request's response:\n- `members` — Include all users and groups, including groups that represent other teams or the entire organization, with access to the team's entities. This includes team managers, members, and persons invited to collaborate as guests.\n- `userRoles` — Include all the team's user roles in the response.\n"
+              }
+            ]
+          },
+          "docs": "Gets information about a Postman team."
+        },
+        {
+          "info": {
+            "name": "Get a team's access requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/teams/:teamId/access-requests",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "identifierType",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "path",
+                "description": "The team's ID."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response."
+              }
+            ]
+          },
+          "docs": "Gets a team's pending access requests."
+        },
+        {
+          "info": {
+            "name": "Create an access request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/teams/:teamId/access-requests",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "identifierType",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "path",
+                "description": "The team's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an access request for a team. Access requests include actions such as request to join a team, upgrading a user's role, adding members, and requesting team role access to another team.\n\n**Note:**\n\nIf a team discovery is enabled, the team's access request is automatically approved.\n"
+        },
+        {
+          "info": {
+            "name": "Approve or deny an access request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/teams/:teamId/access-requests/:requestId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "identifierType",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "path",
+                "description": "The team's ID."
+              },
+              {
+                "name": "requestId",
+                "value": "",
+                "type": "path",
+                "description": "The access request's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Approve or deny a team's access request."
+        },
+        {
+          "info": {
+            "name": "Manage team member roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/teams/:teamId/bulk-members",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "identifierType",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "path",
+                "description": "The team's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds or removes member roles in groups, teams, organizations, as well as individual users' roles.\n\n**Note:**\n\nIf you remove a role from a group or team, then all members lose the that role's permissions.\n"
+        },
+        {
+          "info": {
+            "name": "Remove team members",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.postman.com/teams/:teamId/bulk-members",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "identifierType",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "path",
+                "description": "The team's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Removes entities, such as users or organizations, from your Postman team. On success, this returns an HTTP `204 No Content` response."
+        },
+        {
+          "info": {
+            "name": "Get a team's settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/teams/:teamId/settings",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "path",
+                "description": "The team's ID."
+              }
+            ]
+          },
+          "docs": "Gets a team's settings."
+        },
+        {
+          "info": {
+            "name": "Update team settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.postman.com/teams/:teamId/settings",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "path",
+                "description": "The team's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a team's settings."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

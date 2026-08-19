@@ -1,0 +1,305 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Postman Components API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "components",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all components",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/components",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by component type."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by the component's status."
+              },
+              {
+                "name": "hasVersions",
+                "value": "",
+                "type": "query",
+                "description": "If true, return only components with published versions."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of additional fields to include. Accepts the `hasVersions`, `latestVersion`, `latestVersion.content` values."
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of fields to expand. Accepts the `latestVersion` value."
+              }
+            ]
+          },
+          "docs": "Gets a list of all components in the team's component library."
+        },
+        {
+          "info": {
+            "name": "Create a component",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/components",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new component. The component is created in an active state with an initial draft. Use the POST `/components/{componentId}/versions` endpoint to publish a version."
+        },
+        {
+          "info": {
+            "name": "Get a component",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/components/:componentId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path",
+                "description": "The component's ID."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of additional fields to include. Accepts the `hasVersions`, `latestVersion`, `latestVersion.content` values."
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of fields to expand. Accepts the `latestVersion` value."
+              }
+            ]
+          },
+          "docs": "Gets information about a component. Use the `include` and `expand` query parameters to return additional information, such as `hasVersions` and the latest published version."
+        },
+        {
+          "info": {
+            "name": "Update a component",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.postman.com/components/:componentId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path",
+                "description": "The component's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a component:\n  - `name` — Rename the component. The new name must be unique within the team. Archived components can't be renamed.\n  - `status` — Changes the component's lifecycle state:\n    - `archive` — Marks the component as read-only. Archived components aren't deleted and can't be edited or published, but their existing versions remain accessible.\n    - `active` — Restores the component. Only active components can be edited and published.\n\n**Note:**\n\nYou can't update a name and arch"
+        },
+        {
+          "info": {
+            "name": "Get a component draft",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/components/:componentId/drafts",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path",
+                "description": "The component's ID."
+              }
+            ]
+          },
+          "docs": "Gets information about the current working draft of a component, including its content and format. Drafts represent the latest unpublished edits of a component, which may be different from the most recently published version."
+        },
+        {
+          "info": {
+            "name": "Update a component draft",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.postman.com/components/:componentId/drafts",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path",
+                "description": "The component's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a component's draft. Component drafts contain unpublished edits to a component, which may be different from a recently published version.\n\n**Note:**\n\nYou can't update archived components.\n"
+        },
+        {
+          "info": {
+            "name": "Get all component versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/components/:componentId/versions",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path",
+                "description": "The component's ID."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of additional fields to include. Accepts the `content` value."
+              }
+            ]
+          },
+          "docs": "Gets a list of a component's published versions."
+        },
+        {
+          "info": {
+            "name": "Create a component version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/components/:componentId/versions",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path",
+                "description": "The component's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Publishes a new version of a component from the current draft.\n\n**Note:**\n\nYou can't publish a new version of an archived component. Reactivate the component before publishing a new version.\n"
+        },
+        {
+          "info": {
+            "name": "Get a component version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/components/:componentId/versions/:versionId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path",
+                "description": "The component's ID."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "The component version's ID."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of additional fields to include. Accepts the `content` value."
+              }
+            ]
+          },
+          "docs": "Gets a published version of a component."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

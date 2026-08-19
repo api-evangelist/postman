@@ -4,54 +4,58 @@
     "name": "Postman Environments API",
     "version": "1.0.0"
   },
-  "request": {
-    "auth": {
-      "type": "apikey",
-      "key": "x-api-key",
-      "value": "{{x-api-key}}",
-      "placement": "header"
-    }
-  },
   "items": [
     {
       "info": {
-        "name": "Environments",
+        "name": "environments",
         "type": "folder"
       },
       "items": [
         {
           "info": {
-            "name": "Postman Get all environments",
+            "name": "Get all environments",
             "type": "http"
           },
           "http": {
             "method": "GET",
-            "url": "https://api.getpostman.com/environments",
+            "url": "https://api.postman.com/environments",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "workspace",
                 "value": "",
                 "type": "query",
-                "description": "Filter environments by workspace ID."
+                "description": "The workspace's ID."
               }
             ]
           },
-          "docs": "Gets all environments for the authenticated user. The response includes basic metadata for each environment. To get the full environment with variables, use the single environment endpoint."
+          "docs": "Gets information about all of your [environments](https://learning.postman.com/docs/sending-requests/managing-environments/)."
         },
         {
           "info": {
-            "name": "Postman Create an environment",
+            "name": "Create an environment",
             "type": "http"
           },
           "http": {
             "method": "POST",
-            "url": "https://api.getpostman.com/environments",
+            "url": "https://api.postman.com/environments",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "workspace",
                 "value": "",
                 "type": "query",
-                "description": "The workspace ID to create the environment in."
+                "description": "The workspace's ID."
               }
             ],
             "body": {
@@ -59,41 +63,53 @@
               "data": "{}"
             }
           },
-          "docs": "Creates a new environment with the specified name and variables. You can optionally specify a workspace to create the environment in."
+          "docs": "Creates an environment.\n\n**Note:**\n\n- The request body size cannot exceed the maximum allowed size of 30MB.\n- If you receive an HTTP `411 Length Required` error response, manually pass the `Content-Length` header and its value in the request header.\n- If you do not include the `workspace` query parameter, the system creates the environment in the oldest personal Internal workspace you own.\n- Only [shared variable](https://learning.postman.com/docs/use/send-requests/variables/variables/#share-var"
         },
         {
           "info": {
-            "name": "Postman Get an environment",
+            "name": "Get an environment",
             "type": "http"
           },
           "http": {
             "method": "GET",
-            "url": "https://api.getpostman.com/environments/:environmentId",
+            "url": "https://api.postman.com/environments/:environmentId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "environmentId",
                 "value": "",
                 "type": "path",
-                "description": "The environment's unique ID or UID."
+                "description": "The environment's ID."
               }
             ]
           },
-          "docs": "Gets information about a single environment, including its variables. Variable values that are marked as secret will be masked in the response."
+          "docs": "Gets information about an environment."
         },
         {
           "info": {
-            "name": "Postman Update an environment",
+            "name": "Replace an environment's data",
             "type": "http"
           },
           "http": {
             "method": "PUT",
-            "url": "https://api.getpostman.com/environments/:environmentId",
+            "url": "https://api.postman.com/environments/:environmentId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "environmentId",
                 "value": "",
                 "type": "path",
-                "description": "The environment's unique ID or UID."
+                "description": "The environment's ID."
               }
             ],
             "body": {
@@ -101,26 +117,203 @@
               "data": "{}"
             }
           },
-          "docs": "Updates an existing environment. You can update the name and variables. This replaces the entire set of variables with the values provided."
+          "docs": "Replaces all the contents of an environment with the given information.\n\n**Note:**\n\n- The request body size cannot exceed the maximum allowed size of 30MB.\n- If you receive an HTTP `411 Length Required` error response, manually pass the `Content-Length` header and its value in the request header.\n- Only [shared variable](https://learning.postman.com/docs/use/send-requests/variables/variables/#share-variable-values) values can be modified through the Postman API. A shared variable is an environme"
         },
         {
           "info": {
-            "name": "Postman Delete an environment",
+            "name": "Update an environment",
             "type": "http"
           },
           "http": {
-            "method": "DELETE",
-            "url": "https://api.getpostman.com/environments/:environmentId",
+            "method": "PATCH",
+            "url": "https://api.postman.com/environments/:environmentId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
             "params": [
               {
                 "name": "environmentId",
                 "value": "",
                 "type": "path",
-                "description": "The environment's unique ID or UID."
+                "description": "The environment's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates specific environment properties, such as its name and variables.\n\n**Note:**\n\n- You can only perform one type of operation at a time. For example, you cannot perform an `add` and `replace` operation in the same call.\n- The request body size cannot exceed the maximum allowed size of 30MB.\n- If you receive an HTTP `411 Length Required` error response, manually pass the `Content-Length` header and its value in the request header.\n- To add a description to an existing variable, use the `add` "
+        },
+        {
+          "info": {
+            "name": "Delete an environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.postman.com/environments/:environmentId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "The environment's ID."
               }
             ]
           },
-          "docs": "Deletes an existing environment. This action is irreversible."
+          "docs": "Deletes an environment."
+        },
+        {
+          "info": {
+            "name": "Get an environment's forks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/environments/:environmentId/forks",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "The environment's unique ID."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query",
+                "description": "Sort results in ascending (`asc`) or descending (`desc`) order."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results by the date and time of creation."
+              }
+            ]
+          },
+          "docs": "Gets all of an environment's forked environments."
+        },
+        {
+          "info": {
+            "name": "Create a fork",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/environments/:environmentId/forks",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "The environment's unique ID."
+              },
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "query",
+                "description": "The workspace's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a [fork](https://learning.postman.com/docs/collaborating-in-postman/using-version-control/forking-elements/) of an existing environment."
+        },
+        {
+          "info": {
+            "name": "Merge a fork",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/environments/:environmentId/merges",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "The environment's unique ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "[Merges](https://learning.postman.com/docs/collaborating-in-postman/using-version-control/forking-elements/#merge-changes-from-a-fork) a forked environment back into its parent environment.\n"
+        },
+        {
+          "info": {
+            "name": "Pull source changes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/environments/:environmentUid/pulls",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "environmentUid",
+                "value": "",
+                "type": "path",
+                "description": "The destination environment's unique ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "[Pulls](https://learning.postman.com/docs/collaborating-in-postman/using-version-control/forking-elements/#pull-updates-from-a-parent-element) the changes from a parent (source) environment into the forked environment.\n"
         }
       ]
     }

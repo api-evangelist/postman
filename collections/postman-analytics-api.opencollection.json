@@ -1,0 +1,158 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Postman Analytics API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "analytics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get analytics data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/analytics",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "resource",
+                "value": "",
+                "type": "query",
+                "description": "Returns metrics and insights for API usage, success, and workspace/team trends in Postman:\n\n- `user` — Data related to individual user activities and engagement within Postman workspaces.\n- `team` — Team-level analytics, license consumption, and organizational trends.\n- `workspace` — Workspace-level activities, elements, and collaboration patterns.\n- `ai` — Analytics related to Agent Mode usage across workspaces, covering user activity, model usage, and credit consumption patterns.\n- `api_development` — API development activity metrics that include workspace counts, entity activity by type (collection, flow, mock, specification, sdk), and top entities.\n- `api_testing` — API testing metrics such as total test runs, functional test runs (Collection Runner), and performance test runs.\n- `api_production` — API production metrics, including monitor run activity and production flow execution activity.\n- `api_distribution` — API distribution metrics, such as active workspace counts across distribution channels.\n- `api_management` — API management metrics, such as workspace activity, active counts, trends, and top workspaces.\n"
+              },
+              {
+                "name": "metrics",
+                "value": "",
+                "type": "query",
+                "description": "Filters the response by only the given metrics. The metric must match the given `resource` value.\n\nFor a list of metrics and their related `resource` value, call the GET `/analytics-metadata` endpoint.\n"
+              },
+              {
+                "name": "view",
+                "value": "",
+                "type": "query",
+                "description": "The view type for the analytics data:\n  - `detailed` — Return extensive information.\n  - `summary` — Return aggregated information.\n  - `trend` — Return trend information over a duration.\n"
+              },
+              {
+                "name": "workspaceType",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of `internal`, `public`, and `partner` workspace types to filter the results by."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of user IDs to filter the results by. Only pass this parameter when calling the `user_requests` metric for the `workspace` resource."
+              },
+              {
+                "name": "duration",
+                "value": "",
+                "type": "query",
+                "description": "Filters the response by the given duration."
+              },
+              {
+                "name": "requestId",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of unique request IDs (`userId`-`requestId`) to filter the response by. Only pass this parameter when using the `user_requests` metric."
+              },
+              {
+                "name": "responseStatus",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of HTTP response status codes to filter the results by. Accepts values `100` through `600`. Only pass this parameter when using the `user_requests` metric."
+              },
+              {
+                "name": "attentionType",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of issues types to filter the results by. Attention types provide details about issues users or partners are facing. Accepts the `high_non_200OK_rate_for_partner` and `no_success_on_tried_request` values. Only pass this parameter when using the `needs_attention` metric."
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query",
+                "description": "Filters results for a given period of time (as opposed to a range) for supported views. Use a YEAR-MONTH value for month filtering or YEAR-MONTH-DAY day filtering."
+              },
+              {
+                "name": "userType",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by a specific user type for supported views."
+              },
+              {
+                "name": "entityType",
+                "value": "",
+                "type": "query",
+                "description": "The type of Postman entity to filter results by."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The zero-based offset of the first item to return."
+              }
+            ]
+          },
+          "docs": "Gets analytics data based on the specified resource, metrics, and given filters for team, internal, and public workspaces, as well as Partner Workspaces.\n\n**Note:**\n\nThis endpoint only accepts the following resource:metric query parameter combinations:\n- `user` — `workspace_active_users`, `active_users`\n- `workspace` — `elements_in_workspace`, `active_workspaces`, `api_calls`, `active_collections`, `response_status`, `pending_invites`, `needs_attention`, `success_rate`, `user_requests`, `collect"
+        },
+        {
+          "info": {
+            "name": "Get analytics metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/analytics-metadata",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of the additional information to include in the response. Accepts the `parameters` and `response` values.\n\nWhen you pass this query parameter and its values, the response provides detailed information, including parameters and response schemas for the given metrics.\n"
+              },
+              {
+                "name": "resources",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of resource types to filter the metrics by. Accepts the `user`, `workspace`, `team`, and `ai` values."
+              },
+              {
+                "name": "metrics",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of metrics values to use to filter the response.\n\nIf you don't pass this query parameter, then the response returns all metadata for all available metrics.\n"
+              }
+            ]
+          },
+          "docs": "Returns a catalog of analytics resources and their corresponding metrics for use with the GET /analytics endpoint. These metrics provide insights on API usage, success, workspace, and team trends in Postman."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

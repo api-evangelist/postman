@@ -1,0 +1,1058 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Postman API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "api",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all APIs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/apis",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "query",
+                "description": "The workspace's ID."
+              },
+              {
+                "name": "createdBy",
+                "value": "",
+                "type": "query",
+                "description": "Return only results created by the given user ID."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              },
+              {
+                "name": "description",
+                "value": "",
+                "type": "query",
+                "description": "Return only APIs whose description includes the given value. Matching is not case-sensitive."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response."
+              }
+            ]
+          },
+          "docs": "Gets information about all APIs in a workspace."
+        },
+        {
+          "info": {
+            "name": "Create an API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/apis",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "query",
+                "description": "The workspace's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an API."
+        },
+        {
+          "info": {
+            "name": "Get an API",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/apis/:apiId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "An array that contains additional resources to include in the response. Use this parameter to query for element links to the API, such as collections and schemas:\n- `collections` — Query for linked Postman collections.\n- `versions` — Query for linked versions.\n- `schemas` — Query for linked schemas.\n- `gitInfo` — Query for information about the API's git-linked repository. This query only returns the linked repository and folder locations of the files. It does not return `collections` or `schemas` information.\n\n**Note:**\n\nAPI viewers can only use the `versions` option.\n"
+              }
+            ]
+          },
+          "docs": "Gets information about an API.\n\n**Note:**\n\n- Git-connected APIs will only return the `versions` and `gitInfo` query responses. This is because schema and collection information is stored in the connected Git repository. The `gitInfo` object only lists the repository and folder locations of the files.\n- API viewers can only use the `versions` option in the `include` query parameter.\n"
+        },
+        {
+          "info": {
+            "name": "Update an API",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.postman.com/apis/:apiId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an API."
+        },
+        {
+          "info": {
+            "name": "Delete an API",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.postman.com/apis/:apiId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              }
+            ]
+          },
+          "docs": "Deletes an API. On success, this returns an HTTP `204 No Content` response."
+        },
+        {
+          "info": {
+            "name": "Add a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/apis/:apiId/collections",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a collection to an API. To do this, use the following `operationType` values:\n\n- `COPY_COLLECTION` — Copies a collection from the workspace and adds it to an API.\n- `CREATE_NEW` — Creates a new collection by providing the new collection's content.\n- `GENERATE_FROM_SCHEMA` — Generates the collection from an API schema.\n    - `options` — An object that contains advanced creation options and their values. You can find a complete list of properties and their values in Postman's [OpenAPI to Post"
+        },
+        {
+          "info": {
+            "name": "Get a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/apis/:apiId/collections/:collectionId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "query",
+                "description": "The API's version ID. This is a required parameter for API viewers."
+              }
+            ]
+          },
+          "docs": "Gets a collection attached to an API. You can use the `versionId` query parameter to get a collection published in a version.\n\n**Note:**\n\n- You cannot use this endpoint to get a Git-linked API collection. Collections in a Git-linked API are stored in the linked Git repository, not in the Postman cloud. This endpoint only has access to Postman servers.\n- You can get a collection published in an API version with the `versionId` query parameter.\n- The `versionId` query parameter is a required param"
+        },
+        {
+          "info": {
+            "name": "Get a collection's comments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/apis/:apiId/collections/:collectionId/comments",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID."
+              }
+            ]
+          },
+          "docs": "Gets all comments left by users in an API's collection."
+        },
+        {
+          "info": {
+            "name": "Create a collection comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/apis/:apiId/collections/:collectionId/comments",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a comment on an API's collection. To create a reply on an existing comment, include the `threadId` property in the request body.\n\n**Note:**\n\nThis endpoint accepts a max of 10,000 characters.\n"
+        },
+        {
+          "info": {
+            "name": "Update a collection's comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.postman.com/apis/:apiId/collections/:collectionId/comments/:commentId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID."
+              },
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "The comment's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a comment on an API's collection.\n\n**Note:**\n\nThis endpoint accepts a max of 10,000 characters.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a collection's comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.postman.com/apis/:apiId/collections/:collectionId/comments/:commentId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID."
+              },
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "The comment's ID."
+              }
+            ]
+          },
+          "docs": "Deletes a comment from an API's collection. On success, this returns an HTTP `204 No Content` response.\n\n**Note:**\n\nDeleting the first comment of a thread deletes all the comments in the thread.\n"
+        },
+        {
+          "info": {
+            "name": "Sync collection with schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.postman.com/apis/:apiId/collections/:collectionId/sync-with-schema-tasks",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID."
+              }
+            ]
+          },
+          "docs": "Syncs a collection attached to an API with the API schema.\n\nThis is an asynchronous endpoint that returns an HTTP `202 Accepted` response. The response contains a polling link to the `/apis/{apiId}/tasks/{taskId}` endpoint in the `Location` header.\n\n**Note:**\n\nThis endpoint only supports the OpenAPI 3 schema type.\n"
+        },
+        {
+          "info": {
+            "name": "Get an API's comments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/apis/:apiId/comments",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              }
+            ]
+          },
+          "docs": "Gets all comments left by users in an API."
+        },
+        {
+          "info": {
+            "name": "Create an API comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/apis/:apiId/comments",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a comment on an API. To create a reply on an existing comment, include the `threadId` property in the request body.\n\n**Note:**\n\nThis endpoint accepts a max of 10,000 characters.\n"
+        },
+        {
+          "info": {
+            "name": "Update an API's comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.postman.com/apis/:apiId/comments/:commentId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              },
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "The comment's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a comment on an API.\n\n**Note:**\n\nThis endpoint accepts a max of 10,000 characters.\n"
+        },
+        {
+          "info": {
+            "name": "Delete an API's comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.postman.com/apis/:apiId/comments/:commentId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              },
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "The comment's ID."
+              }
+            ]
+          },
+          "docs": "Deletes a comment from an API. On success, this returns an HTTP `204 No Content` response.\n\n**Note:**\n\nDeleting the first comment of a thread deletes all the comments in the thread.\n"
+        },
+        {
+          "info": {
+            "name": "Create a schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/apis/:apiId/schemas",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a schema for an API."
+        },
+        {
+          "info": {
+            "name": "Get a schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/apis/:apiId/schemas/:schemaId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              },
+              {
+                "name": "schemaId",
+                "value": "",
+                "type": "path",
+                "description": "The API schema's ID."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "query",
+                "description": "The API's version ID. This is a required parameter for API viewers."
+              },
+              {
+                "name": "bundled",
+                "value": "",
+                "type": "query",
+                "description": "If true, return the schema in a bundled format."
+              }
+            ]
+          },
+          "docs": "Gets information about API schema. You can use the `versionId` query parameter to get a schema published in an API version.\n\nYou can use this API to do the following:\n\n- Get a schema's metadata.\n- Get all the files in a schema. This only returns the first file in the schema. The endpoint response contains a link to the next set of response results.\n- Get a schema's contents in multi-file or bundled format.\n\n**Note:**\n\nThe `versionId` query parameter is a required parameter for API viewers.\n"
+        },
+        {
+          "info": {
+            "name": "Get schema files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/apis/:apiId/schemas/:schemaId/files",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              },
+              {
+                "name": "schemaId",
+                "value": "",
+                "type": "path",
+                "description": "The API schema's ID."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "query",
+                "description": "The API's version ID. This is a required parameter for API viewers."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              }
+            ]
+          },
+          "docs": "Gets the files in an API schema. You can use the `versionId` query parameter to get schema files published in an API version.\n\n**Note:**\n\nThe `versionId` query parameter is a required parameter for API viewers.\n"
+        },
+        {
+          "info": {
+            "name": "Get schema file contents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/apis/:apiId/schemas/:schemaId/files/:file-path",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              },
+              {
+                "name": "schemaId",
+                "value": "",
+                "type": "path",
+                "description": "The API schema's ID."
+              },
+              {
+                "name": "file-path",
+                "value": "",
+                "type": "path",
+                "description": "The path to the schema file."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "query",
+                "description": "The API's version ID. This is a required parameter for API viewers."
+              }
+            ]
+          },
+          "docs": "Gets an API schema file contents at the defined path. You can use the `versionId` query parameter to get schema file contents published in an API version.\n\n**Note:**\n\nThe `versionId` query parameter is a required parameter for API viewers.\n"
+        },
+        {
+          "info": {
+            "name": "Create or update a schema file",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.postman.com/apis/:apiId/schemas/:schemaId/files/:file-path",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              },
+              {
+                "name": "schemaId",
+                "value": "",
+                "type": "path",
+                "description": "The API schema's ID."
+              },
+              {
+                "name": "file-path",
+                "value": "",
+                "type": "path",
+                "description": "The path to the schema file."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or updates an API schema file.\n\n**Note:**\n\n- If the provided file path exists, the file is updated with the new contents.\n- If the provided file path does not exist, then a new schema file is created.\n- If the file path contains a `/` (forward slash) character, then a folder is created. For example, if the file path is the `dir/schema.json` value, then a `dir` folder is created with the `schema.json` file inside.\n- You can only update the `root` tag for protobuf specifications.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a schema file",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.postman.com/apis/:apiId/schemas/:schemaId/files/:file-path",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              },
+              {
+                "name": "schemaId",
+                "value": "",
+                "type": "path",
+                "description": "The API schema's ID."
+              },
+              {
+                "name": "file-path",
+                "value": "",
+                "type": "path",
+                "description": "The path to the schema file."
+              }
+            ]
+          },
+          "docs": "Deletes a file in an API schema. On success, this returns an HTTP `204 No Content` response."
+        },
+        {
+          "info": {
+            "name": "Get status of an asynchronous task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/apis/:apiId/tasks/:taskId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              },
+              {
+                "name": "taskId",
+                "value": "",
+                "type": "path",
+                "description": "The task's ID."
+              }
+            ]
+          },
+          "docs": "Gets the status of an asynchronous task."
+        },
+        {
+          "info": {
+            "name": "Get all versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/apis/:apiId/versions",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response."
+              }
+            ]
+          },
+          "docs": "Gets all the published versions of an API."
+        },
+        {
+          "info": {
+            "name": "Create a version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/apis/:apiId/versions",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new API version asynchronously and immediately returns an HTTP `202 Accepted` response. The response contains a polling link to the task status API in the `Location` header.\n\nThis endpoint is equivalent to publishing a version in Postman app, which is the snapshot of API collections and schema at a given point in time.\n"
+        },
+        {
+          "info": {
+            "name": "Get a version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/apis/:apiId/versions/:versionId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "The API's version ID."
+              }
+            ]
+          },
+          "docs": "Gets information about an API version.\n\n**Note:**\n\n- For API editors, this endpoint returns an HTTP `302 Found` status code when the version status is pending. It also returns the `/apis/{apiId}/tasks/{taskId}` task status response header.\n- For API viewers, this endpoint returns an HTTP `404 Not Found` when the version status is pending.\n"
+        },
+        {
+          "info": {
+            "name": "Update a version",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.postman.com/apis/:apiId/versions/:versionId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "The API's version ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an API version.\n\n**Note:**\n\nThis endpoint returns an HTTP `404 Not Found` response when an API version is pending publication.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a version",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.postman.com/apis/:apiId/versions/:versionId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "The API's version ID."
+              }
+            ]
+          },
+          "docs": "Deletes an API version. On success, this returns an HTTP `204 No Content` response.\n\n**Note:**\n\nThis endpoint returns an HTTP `404 Not Found` response when an API version is pending publication.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,716 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Postman API Catalog API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "apiCatalog",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get discovered services",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/api-catalog/discovery-services",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "discoverySource",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by the given discovery source type:\n- `api_gateway_app` — API Gateway integrations.\n- `insights_project` — Postman Insights.\n- `infra_watcher` — Cluster Watcher.\n- `public_api` — Services manually added using the POST `/api-catalog/discovery-services` endpoint.\n"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of statuses to filter the results by. Accepts the `discovered`, `integrated`, and `archived` values."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by the given value that match a service's name. Matching is not case-sensitive."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response, up to a maximum value of 100. Any value greater than 100 returns a 400 Bad Request response."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              }
+            ]
+          },
+          "docs": "Gets a list of all [discovered services](https://learning.postman.com/docs/api-catalog/overview#discover-apis-and-services) in the API Catalog."
+        },
+        {
+          "info": {
+            "name": "Add discovered services to the API Catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/api-catalog/discovery-services",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds discovered services to the API Catalog. Accepts up to 20 services in a single call."
+        },
+        {
+          "info": {
+            "name": "Get a discovered service's information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/api-catalog/discovery-services/:serviceId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "serviceId",
+                "value": "",
+                "type": "path",
+                "description": "The discovered service's ID."
+              }
+            ]
+          },
+          "docs": "Gets detailed information about a discovered service, including a base64-encoded OpenAPI specification and an array of endpoints."
+        },
+        {
+          "info": {
+            "name": "Get all services",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/api-catalog/services",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "systemEnvironmentId",
+                "value": "",
+                "type": "query",
+                "description": "The system environment's ID."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to the given the service name. This is case-insensitive."
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of tag names to filter by."
+              },
+              {
+                "name": "governanceGroupId",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to only services that belong to the given governance group ID."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response, up to a maximum value of 100. Any value greater than 100 returns a 400 Bad Request response."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              }
+            ]
+          },
+          "docs": "Gets a list of services in a system environment. The response includes details about analytics, compliance, and governance metadata."
+        },
+        {
+          "info": {
+            "name": "Get a service by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/api-catalog/services/:serviceId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "serviceId",
+                "value": "",
+                "type": "path",
+                "description": "The service's ID."
+              },
+              {
+                "name": "systemEnvironmentId",
+                "value": "",
+                "type": "query",
+                "description": "The system environment's ID."
+              }
+            ]
+          },
+          "docs": "Gets information about a service, including its health, traffic, compliance, ownership, and dependencies."
+        },
+        {
+          "info": {
+            "name": "Get a service's endpoints",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/api-catalog/services/:serviceId/endpoints",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "serviceId",
+                "value": "",
+                "type": "path",
+                "description": "The service's ID."
+              },
+              {
+                "name": "systemEnvironmentId",
+                "value": "",
+                "type": "query",
+                "description": "The system environment's ID."
+              },
+              {
+                "name": "httpMethods",
+                "value": "",
+                "type": "query",
+                "description": "A.comma-separated list of HTTP methods to filter the results by."
+              },
+              {
+                "name": "hosts",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of hostnames to filter the results by."
+              },
+              {
+                "name": "responseCodes",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of HTTP status codes to filter the results by."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to the search filter given on the endpoint's path."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in field:direction order format. Accepts the `count`, `endpoint`, `p95LatencyMs`, and `errorRate` fields. Supports the `asc` and `desc` directions."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response, up to a maximum value of 100. Any value greater than 100 returns a 400 Bad Request response."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              }
+            ]
+          },
+          "docs": "Get a list of observed API endpoints for a service and its performance metrics."
+        },
+        {
+          "info": {
+            "name": "Get a service's monitor runs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/api-catalog/services/:serviceId/monitor-runs",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "serviceId",
+                "value": "",
+                "type": "path",
+                "description": "The service's ID."
+              },
+              {
+                "name": "systemEnvironmentId",
+                "value": "",
+                "type": "query",
+                "description": "The system environment's ID."
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to only the given collection ID's runs."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in field:direction order format. Accepts the `timestamp`, `duration`, and `failedAssertions` fields. Supports the `asc` and `desc` directions."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to only the given environment ID runs."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by run status."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response, up to a maximum value of 100. Any value greater than 100 returns a 400 Bad Request response."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              }
+            ]
+          },
+          "docs": "Gets a list of scheduled monitor runs for a service that includes summary statistics."
+        },
+        {
+          "info": {
+            "name": "Get a service's specification lints",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/api-catalog/services/:serviceId/spec-lints",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "serviceId",
+                "value": "",
+                "type": "path",
+                "description": "The service's ID."
+              },
+              {
+                "name": "specId",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to the given API specification ID."
+              },
+              {
+                "name": "severity",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to runs with issues at or above the given severity threshold. Higher severities are always included."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to the given spec lint outcome."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in field:direction order format. Accepts the `timestamp` and `errorCount` fields. Supports the `asc` and `desc` directions."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response, up to a maximum value of 100. Any value greater than 100 returns a 400 Bad Request response."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              }
+            ]
+          },
+          "docs": "Gets a list of API specification lint runs for a service that includes summary statistics and per-severity issue counts."
+        },
+        {
+          "info": {
+            "name": "Get a service's CI runs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/api-catalog/services/:serviceId/ci-runs",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "serviceId",
+                "value": "",
+                "type": "path",
+                "description": "The service's ID."
+              },
+              {
+                "name": "systemEnvironmentId",
+                "value": "",
+                "type": "query",
+                "description": "The system environment's ID."
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to only the given collection ID's runs."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to only the given environment ID runs."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by run status."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by the given Git branch name."
+              },
+              {
+                "name": "workflowName",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by the given CI workflow name."
+              },
+              {
+                "name": "actor",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by the given CI user that triggered the run."
+              },
+              {
+                "name": "repoName",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by the given repository name."
+              },
+              {
+                "name": "repoOwner",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by the given repository owner."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort the results in field:direction order format. Accepts the `timestamp` and `duration` fields. Supports the `asc` and `desc` directions."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response, up to a maximum value of 100. Any value greater than 100 returns a 400 Bad Request response."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              }
+            ]
+          },
+          "docs": "Gets a paginated list of CI collection runs for a service that includes summary statistics, pipeline details, and Git metadata."
+        },
+        {
+          "info": {
+            "name": "Get all system environments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/api-catalog/system-environments",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "isProduction",
+                "value": "",
+                "type": "query",
+                "description": "If true, filters the response results to return only system environments marked as production."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response, up to a maximum value of 100. Any value greater than 100 returns a 400 Bad Request response."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              }
+            ]
+          },
+          "docs": "Gets all of the authenticated team's system environments."
+        },
+        {
+          "info": {
+            "name": "Create a system environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/api-catalog/system-environments",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a system environment for the authenticated team."
+        },
+        {
+          "info": {
+            "name": "Get a system environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/api-catalog/system-environments/:systemEnvironmentId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "systemEnvironmentId",
+                "value": "",
+                "type": "path",
+                "description": "The system environment's ID."
+              }
+            ]
+          },
+          "docs": "Gets information about a system environment."
+        },
+        {
+          "info": {
+            "name": "Update a system environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.postman.com/api-catalog/system-environments/:systemEnvironmentId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "systemEnvironmentId",
+                "value": "",
+                "type": "path",
+                "description": "The system environment's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a system environment's information. You can update one or more fields in a single call.\n\n**Note:**\n\nIf you update the name, it must be unique within the team.\n"
+        },
+        {
+          "info": {
+            "name": "Get a system environment's associations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/api-catalog/system-environments/:systemEnvironmentId/associations",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "systemEnvironmentId",
+                "value": "",
+                "type": "path",
+                "description": "The system environment's ID."
+              },
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "query",
+                "description": "The workspace's ID to which the environments in the association belong to."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response, up to a maximum value of 100. Any value greater than 100 returns a 400 Bad Request response."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              }
+            ]
+          },
+          "docs": "Gets the workspace-environment associations for a system environment."
+        },
+        {
+          "info": {
+            "name": "Add system environment associations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/api-catalog/system-environments/:systemEnvironmentId/associations",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "systemEnvironmentId",
+                "value": "",
+                "type": "path",
+                "description": "The system environment's ID."
+              },
+              {
+                "name": "allowPartial",
+                "value": "",
+                "type": "query",
+                "description": "If false, the system only adds associations when there are no status errors. If true, the system skips any ineligible associations and adds eligible associations."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds workspace-environment associations to a system environment."
+        },
+        {
+          "info": {
+            "name": "Remove system environment associations",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.postman.com/api-catalog/system-environments/:systemEnvironmentId/associations",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "systemEnvironmentId",
+                "value": "",
+                "type": "path",
+                "description": "The system environment's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Removes workspace-environment associations from a system environment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

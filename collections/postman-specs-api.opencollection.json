@@ -1,0 +1,776 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Postman Specs API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "specs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get status of API Builder to Spec Hub migration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/apis/:apiId/spec-migrations",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              }
+            ]
+          },
+          "docs": "Returns the status of an API Builder definition's migration to Spec Hub."
+        },
+        {
+          "info": {
+            "name": "Migrate API Builder API to Spec Hub",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/apis/:apiId/spec-migrations",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Migrates an API Builder definition to a [Spec Hub](https://learning.postman.com/docs/design-apis/specifications/overview) specification. You can migrate the definition to an existing workspace, or create a new workspace to migrate the definition into. On success, this returns an HTTP `202 Created` response. You can use the GET `/apis/{apiId}/spec-migrations` endpoint to check the migration status.\n\n**Note:**\n\n- This returns an HTTP `200 OK` response if the given API ID isn't an API Builder defin"
+        },
+        {
+          "info": {
+            "name": "Get generated spec",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/collections/:collectionUid/generations/:elementType",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionUid",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID."
+              },
+              {
+                "name": "elementType",
+                "value": "",
+                "type": "path",
+                "description": "The `spec` value."
+              }
+            ]
+          },
+          "docs": "Gets the API specification generated for the given collection."
+        },
+        {
+          "info": {
+            "name": "Generate spec from collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/collections/:collectionUid/generations/:elementType",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionUid",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID."
+              },
+              {
+                "name": "elementType",
+                "value": "",
+                "type": "path",
+                "description": "The `spec` value."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates an OpenAPI 2.0, 3.0, or 3.1 specification for the given collection. The response contains a polling link to the task status."
+        },
+        {
+          "info": {
+            "name": "Sync collection with spec",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.postman.com/collections/:collectionUid/synchronizations",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "collectionUid",
+                "value": "",
+                "type": "path",
+                "description": "The collection's unique ID."
+              },
+              {
+                "name": "specId",
+                "value": "",
+                "type": "query",
+                "description": "The spec's ID."
+              }
+            ]
+          },
+          "docs": "Syncs a collection generated from an API specification. This is an asynchronous endpoint that returns an HTTP `202 Accepted` response.\n\n**Note:**\n\n- This endpoint only supports the OpenAPI 2.0, 3.0, and 3.1 specification types.\n- You can only sync collections generated from the given spec ID.\n"
+        },
+        {
+          "info": {
+            "name": "Get status of an async spec task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/:elementType/:elementId/tasks/:taskId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "elementType",
+                "value": "",
+                "type": "path",
+                "description": "The element to filter results by."
+              },
+              {
+                "name": "elementId",
+                "value": "",
+                "type": "path",
+                "description": "The element's ID."
+              },
+              {
+                "name": "taskId",
+                "value": "",
+                "type": "path",
+                "description": "The task's ID."
+              }
+            ]
+          },
+          "docs": "Gets the status of an asynchronous API specification creation task."
+        },
+        {
+          "info": {
+            "name": "Get all specs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/specs",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "query",
+                "description": "The workspace's ID."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response."
+              }
+            ]
+          },
+          "docs": "Gets all API specifications in a workspace."
+        },
+        {
+          "info": {
+            "name": "Create a spec",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/specs",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "query",
+                "description": "The workspace's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an API specification in Postman's [Spec Hub](https://learning.postman.com/docs/design-apis/specifications/overview/). Specifications can be single or multi-file.\n\n**Note:**\n- Postman supports OpenAPI (2.0, 3.0, and 3.1), AsyncAPI (2.0 and 3.0), protobuf (2 and 3), GraphQL, and Smithy specifications.\n- If the file path contains a `/` (forward slash) character, then a folder is created. For example, if the path is the `components/schemas.json` value, then a `components` folder is created w"
+        },
+        {
+          "info": {
+            "name": "Get a spec",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/specs/:specId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "The spec's ID."
+              }
+            ]
+          },
+          "docs": "Gets information about an API specification."
+        },
+        {
+          "info": {
+            "name": "Update a spec's properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.postman.com/specs/:specId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "The spec's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an API specification's properties, such as its name."
+        },
+        {
+          "info": {
+            "name": "Delete a spec",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.postman.com/specs/:specId",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "The spec's ID."
+              }
+            ]
+          },
+          "docs": "Deletes an API specification. On success, this returns an HTTP `204 No Content` response."
+        },
+        {
+          "info": {
+            "name": "Update spec sync options",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.postman.com/specs/:specId/collections/:collectionId/sync-options",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "The spec's ID."
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the [sync options](https://learning.postman.com/docs/design-apis/specifications/generate-collections/#configure-sync-settings) for a specification's generated collection."
+        },
+        {
+          "info": {
+            "name": "Get a spec's definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/specs/:specId/definitions",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "The spec's ID."
+              }
+            ]
+          },
+          "docs": "Gets the complete contents of an OpenAPI or AsyncAPI specification's definition."
+        },
+        {
+          "info": {
+            "name": "Get a spec's files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/specs/:specId/files",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "The spec's ID."
+              }
+            ]
+          },
+          "docs": "Gets all the files in an API specification."
+        },
+        {
+          "info": {
+            "name": "Create a spec file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/specs/:specId/files",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "The spec's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a file for an OpenAPI or a protobuf 2 or 3 specification.\n\n**Note:**\n\n- If the file path contains a `/` (forward slash) character, then a folder is created. For example, if the path is the `components/schemas.json` value, then a `components` folder is created with the `schemas.json` file inside.\n- Creating a spec file assigns it the `DEFAULT` file type.\n- Multi-file specifications can only have one root file.\n- Files cannot exceed a maximum of 10 MB in size.\n"
+        },
+        {
+          "info": {
+            "name": "Get a spec file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/specs/:specId/files/:filePath",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "The spec's ID."
+              },
+              {
+                "name": "filePath",
+                "value": "",
+                "type": "path",
+                "description": "The path to the file."
+              }
+            ]
+          },
+          "docs": "Gets the contents of an API specification's file."
+        },
+        {
+          "info": {
+            "name": "Update a spec file",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.postman.com/specs/:specId/files/:filePath",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "The spec's ID."
+              },
+              {
+                "name": "filePath",
+                "value": "",
+                "type": "path",
+                "description": "The path to the file."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a file for an OpenAPI or protobuf 2 or 3 specification.\n\n**Note:**\n\n- This endpoint does not accept an empty request body. You must pass one of the accepted values.\n- This endpoint does not accept multiple request body properties in a single call. For example, you cannot pass both the `content` and `type` property at the same time.\n- Multi-file specifications can only have one root file.\n- When updating a file type to `ROOT`, the previous root file is updated to the `DEFAULT` file type.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a spec file",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.postman.com/specs/:specId/files/:filePath",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "The spec's ID."
+              },
+              {
+                "name": "filePath",
+                "value": "",
+                "type": "path",
+                "description": "The path to the file."
+              }
+            ]
+          },
+          "docs": "Deletes a file in an API specification. On success, this returns an HTTP `204 No Content` response."
+        },
+        {
+          "info": {
+            "name": "Get a spec's generated collections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/specs/:specId/generations/:elementType",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "The spec's ID."
+              },
+              {
+                "name": "elementType",
+                "value": "",
+                "type": "path",
+                "description": "The `collection` element type."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              }
+            ]
+          },
+          "docs": "Gets all of an API specification's generated collections."
+        },
+        {
+          "info": {
+            "name": "Generate a collection from spec",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/specs/:specId/generations/:elementType",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "The spec's ID."
+              },
+              {
+                "name": "elementType",
+                "value": "",
+                "type": "path",
+                "description": "The `collection` element type."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a collection from the given OpenAPI 2.0, 3.0, or 3.1 specification or Smithy specification. The response contains a polling link to the task status."
+        },
+        {
+          "info": {
+            "name": "Sync spec with collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.postman.com/specs/:specId/synchronizations",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "The spec's ID."
+              },
+              {
+                "name": "collectionUid",
+                "value": "",
+                "type": "query",
+                "description": "The collection's unique ID."
+              }
+            ]
+          },
+          "docs": "Syncs an API specification linked to a collection. This is an asynchronous endpoint that returns an HTTP `202 Accepted` response.\n\n**Note:**\n\n- This endpoint only supports the OpenAPI 2.0, 3.0, and 3.1 specification types.\n- You can only sync collections generated from the given specification ID.\n"
+        },
+        {
+          "info": {
+            "name": "Get a version tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/specs/:specId/version-tags/:tagId/files",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "The spec's ID."
+              },
+              {
+                "name": "tagId",
+                "value": "",
+                "type": "path",
+                "description": "The version tag's ID."
+              }
+            ]
+          },
+          "docs": "Gets information about a specification's version tag. The response returns a snapshot of a specification at a point in time that lets you track changes to your specifications over time."
+        },
+        {
+          "info": {
+            "name": "Get a specification's version tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.postman.com/specs/:specId/version-tags",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "The spec's ID."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of rows to return in the response."
+              }
+            ]
+          },
+          "docs": "Gets a list of a specification's version tags."
+        },
+        {
+          "info": {
+            "name": "Create a version tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.postman.com/specs/:specId/version-tags",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "The spec's ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a version tag for a specification. Version tags are snapshots of a specification at a point in time that let you to track changes to your specifications over time.\n\n**Note:**\n\nConflicts can occur if you try to create a version tag for a changelog group that already has a version tag. To resolve this, make new changes to the specification to create a new changelog group, then create a version tag on that new changelog group.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
