@@ -1,0 +1,46 @@
+slug: postman
+provider: Postman
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 3
+edges:
+- tag: sdKs
+  spec_file: postman-sdks-api-openapi.yml
+  capability_id: BC-4270.20
+  capability_id_l1: BC-4270
+  capability_name: SDK & Client Library Management
+  confidence: 0.85
+  evidence: POST /sdks createSdk 'Generate an SDK'; GET /sdks/{sdkId}/downloads 'Get an SDK's download
+    URL'; schemas goOptions, rubyOptions, rustOptions
+  reason: Generation, language-specific options, download and Git delivery of client SDKs — directly SDK
+    & Client Library Management.
+- tag: billing
+  spec_file: postman-billing-api-openapi.yml
+  capability_id: BC-4250.30
+  capability_id_l1: BC-4250
+  capability_name: Invoicing & Statement Management
+  confidence: 0.75
+  evidence: GET /accounts/{accountId}/invoices getAccountInvoices 'List account invoices'; schemas invoiceData,
+    invoicesTotal, billingAccountStatus
+  reason: Exposes billing accounts and their invoices for the SaaS subscription, matching Invoicing &
+    Statement Management; read-only scope leaves some doubt about breadth.
+- tag: pullRequests
+  spec_file: postman-pullrequests-api-openapi.yml
+  capability_id: BC-4200.40
+  capability_id_l1: BC-4200
+  capability_name: Software Construction Management
+  confidence: 0.75
+  evidence: POST /pull-requests/{pullRequestId}/tasks reviewPullRequest 'Review a pull request'; schemas
+    PullRequestGetMergeStatus, PullRequestGetReviewersItems
+  reason: Fork/merge/review workflow over versioned artefacts — squarely source control and code review,
+    which BC-4200.40 names explicitly.
