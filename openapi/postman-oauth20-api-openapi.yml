@@ -1,8 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Postman O Auth20 API
   version: 1.0.0
-  description: 'Operations tagged oAuth20 across 2 of this provider''s published API definitions: postman-api-openapi.yml, postman-oauth20-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.postman.com
   description: https://api.postman.com
@@ -63,11 +62,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/generateOauthToken'
-    servers:
-    - url: https://api.postman.com
-      description: https://api.postman.com
-    - url: https://api.eu.postman.com
-      description: https://api.eu.postman.com
   /oauth2/token/revoke:
     post:
       operationId: revokeOauthToken
@@ -109,61 +103,18 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/revokeOauthToken'
-    servers:
-    - url: https://api.postman.com
-      description: https://api.postman.com
-    - url: https://api.eu.postman.com
-      description: https://api.eu.postman.com
 components:
   schemas:
-    revokeOauthToken:
-      type: object
-      properties:
-        token:
-          type: string
-          description: The Postman OAuth 2.0 access token to revoke.
-      required:
-      - token
-      title: revokeOauthToken
-    generateOauthTokenResponse:
-      type: object
-      properties:
-        access_token:
-          type: string
-          description: A Postman OAuth 2.0 access token.
-        expires_in:
-          type: integer
-          description: The time the token expires, in milliseconds.
-        token_type:
-          $ref: '#/components/schemas/GenerateOauthTokenResponseTokenType'
-          description: The `Bearer` token type.
-      title: generateOauthTokenResponse
-    commonErrorNameMessage:
+    oauthTokenError:
       type: object
       properties:
         error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
-    commonErrorTypeTitleDetail:
-      type: object
-      properties:
-        type:
           type: string
           description: The type of error.
-        title:
+        error_description:
           type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
           description: Information about the error.
-      title: commonErrorTypeTitleDetail
-    GenerateOauthTokenRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GenerateOauthTokenRequestInternalServerError
+      title: oauthTokenError
     commonErrorTypeTitleDetailStatus:
       type: object
       properties:
@@ -179,13 +130,70 @@ components:
           type: integer
           description: The error's HTTP status code.
       title: commonErrorTypeTitleDetailStatus
-    revokeOauthTokenResponse:
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    commonErrorNameMessage:
       type: object
       properties:
-        success:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    generateOauthTokenResponse:
+      type: object
+      properties:
+        access_token:
           type: string
-          description: The `true` value.
-      title: revokeOauthTokenResponse
+          description: A Postman OAuth 2.0 access token.
+        expires_in:
+          type: integer
+          description: The time the token expires, in milliseconds.
+        token_type:
+          $ref: '#/components/schemas/GenerateOauthTokenResponseTokenType'
+          description: The `Bearer` token type.
+      title: generateOauthTokenResponse
+    GenerateOauthTokenRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GenerateOauthTokenRequestInternalServerError
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
     generateOauthToken:
       type: object
       properties:
@@ -203,53 +211,34 @@ components:
       - installationAuthId
       - jwt
       title: generateOauthToken
-    GenerateOauthTokenResponseTokenType:
-      type: string
-      enum:
-      - Bearer
-      description: The `Bearer` token type.
-      title: GenerateOauthTokenResponseTokenType
+    revokeOauthTokenResponse:
+      type: object
+      properties:
+        success:
+          type: string
+          description: The `true` value.
+      title: revokeOauthTokenResponse
     RevokeOauthTokenRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
       title: RevokeOauthTokenRequestInternalServerError
-    CommonErrorTypeTitleDetailDetail:
-      oneOf:
-      - type: string
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
-    oauthTokenError:
+    GenerateOauthTokenResponseTokenType:
+      type: string
+      enum:
+      - Bearer
+      description: The `Bearer` token type.
+      title: GenerateOauthTokenResponseTokenType
+    revokeOauthToken:
       type: object
       properties:
-        error:
+        token:
           type: string
-          description: The type of error.
-        error_description:
-          type: string
-          description: Information about the error.
-      title: oauthTokenError
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    CommonErrorNameMessageError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
+          description: The Postman OAuth 2.0 access token to revoke.
+      required:
+      - token
+      title: revokeOauthToken
   securitySchemes:
     PostmanApiKey:
       type: apiKey
@@ -263,9 +252,6 @@ components:
       in: header
       name: Authorization
       description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
-x-refined-from:
-- postman-api-openapi.yml
-- postman-oauth20-api-openapi.yml
 x-provenance:
   first_party: true
   method: harvested

@@ -1,8 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Postman Groups API
   version: 1.0.0
-  description: 'Operations tagged groups across 2 of this provider''s published API definitions: postman-api-openapi.yml, postman-groups-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.postman.com
   description: https://api.postman.com
@@ -49,11 +48,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetGroupsRequestInternalServerError'
-    servers:
-    - url: https://api.postman.com
-      description: https://api.postman.com
-    - url: https://api.eu.postman.com
-      description: https://api.eu.postman.com
   /groups/{groupId}:
     get:
       operationId: getGroup
@@ -110,36 +104,32 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetGroupRequestInternalServerError'
-    servers:
-    - url: https://api.postman.com
-      description: https://api.postman.com
-    - url: https://api.eu.postman.com
-      description: https://api.eu.postman.com
 components:
   schemas:
-    GetGroupRequestBadRequestError:
+    GetGroupRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
-      title: GetGroupRequestBadRequestError
-    GetGroupRequestForbiddenError:
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetGroupRequestInternalServerError
+    GetGroupsRequestInternalServerError:
       oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetGroupRequestForbiddenError
-    commonErrorNameMessageDetails:
+      title: GetGroupsRequestInternalServerError
+    getGroups:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageDetailsError'
-      title: commonErrorNameMessageDetails
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetGroupsDataItems'
+          description: A list of Postman groups.
+      title: getGroups
+    groupId:
+      type: integer
+      title: groupId
     CommonErrorNameMessageError:
       type: object
       properties:
@@ -151,16 +141,6 @@ components:
           description: The error message.
       description: Information about the error.
       title: CommonErrorNameMessageError
-    GetGroupsRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetGroupsRequestForbiddenError
-    GetGroupRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetGroupRequestUnauthorizedError
     commonErrorTypeTitleDetail:
       type: object
       properties:
@@ -174,70 +154,12 @@ components:
           $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
           description: Information about the error.
       title: commonErrorTypeTitleDetail
-    CommonErrorNameMessageDetailsErrorDetails:
+    GetGroupRequestBadRequestError:
       oneOf:
-      - type: object
-        additionalProperties:
-          description: Any type
-      - type: array
-        items:
-          type: string
-      description: Information about the error.
-      title: CommonErrorNameMessageDetailsErrorDetails
-    getGroups:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetGroupsDataItems'
-          description: A list of Postman groups.
-      title: getGroups
-    GetGroupsDataItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-          description: The group's ID.
-        teamId:
-          type: number
-          format: double
-          description: The group's Postman team ID.
-        name:
-          type: string
-          description: The group's name.
-        summary:
-          type: string
-          description: The group's summary.
-        createdBy:
-          type: number
-          format: double
-          description: The ID of ther user who created the group.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the group was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the group was updated.
-        members:
-          type: array
-          items:
-            type: number
-            format: double
-          description: The group members' IDs.
-        roles:
-          type: array
-          items:
-            type: string
-          description: The group's roles.
-      description: Information about the group.
-      title: GetGroupsDataItems
-    groupId:
-      type: integer
-      title: groupId
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
+      title: GetGroupRequestBadRequestError
     commonErrorTypeTitleDetailStatus:
       type: object
       properties:
@@ -253,17 +175,34 @@ components:
           type: integer
           description: The error's HTTP status code.
       title: commonErrorTypeTitleDetailStatus
-    GetGroupRequestInternalServerError:
+    CommonErrorTypeTitleDetailDetail:
       oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetGroupRequestInternalServerError
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
     GetGroupsRequestUnauthorizedError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
       title: GetGroupsRequestUnauthorizedError
+    CommonErrorNameMessageDetailsErrorDetails:
+      oneOf:
+      - type: object
+        additionalProperties:
+          description: Any type
+      - type: array
+        items:
+          type: string
+      description: Information about the error.
+      title: CommonErrorNameMessageDetailsErrorDetails
+    GetGroupRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetGroupRequestUnauthorizedError
     getGroup:
       type: object
       properties:
@@ -319,20 +258,22 @@ components:
           $ref: '#/components/schemas/CommonErrorNameMessageError'
           description: Information about the error.
       title: commonErrorNameMessage
-    GetGroupsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetGroupsRequestInternalServerError
-    CommonErrorTypeTitleDetailDetail:
+    CommonErrorTypeTitleDetailStatusType:
       oneOf:
       - type: string
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    GetGroupsRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetGroupsRequestForbiddenError
+    GetGroupRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetGroupRequestForbiddenError
     CommonErrorNameMessageDetailsError:
       type: object
       properties:
@@ -346,6 +287,54 @@ components:
           $ref: '#/components/schemas/CommonErrorNameMessageDetailsErrorDetails'
           description: Information about the error.
       title: CommonErrorNameMessageDetailsError
+    GetGroupsDataItems:
+      type: object
+      properties:
+        id:
+          type: number
+          format: double
+          description: The group's ID.
+        teamId:
+          type: number
+          format: double
+          description: The group's Postman team ID.
+        name:
+          type: string
+          description: The group's name.
+        summary:
+          type: string
+          description: The group's summary.
+        createdBy:
+          type: number
+          format: double
+          description: The ID of ther user who created the group.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the group was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the group was updated.
+        members:
+          type: array
+          items:
+            type: number
+            format: double
+          description: The group members' IDs.
+        roles:
+          type: array
+          items:
+            type: string
+          description: The group's roles.
+      description: Information about the group.
+      title: GetGroupsDataItems
+    commonErrorNameMessageDetails:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsError'
+      title: commonErrorNameMessageDetails
   securitySchemes:
     PostmanApiKey:
       type: apiKey
@@ -359,9 +348,6 @@ components:
       in: header
       name: Authorization
       description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
-x-refined-from:
-- postman-api-openapi.yml
-- postman-groups-api-openapi.yml
 x-provenance:
   first_party: true
   method: harvested

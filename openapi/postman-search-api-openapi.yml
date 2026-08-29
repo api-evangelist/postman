@@ -1,8 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Postman Search API
   version: 1.0.0
-  description: 'Operations tagged search across 2 of this provider''s published API definitions: postman-api-openapi.yml, postman-search-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.postman.com
   description: https://api.postman.com
@@ -69,45 +68,29 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/searchPostmanResources'
-    servers:
-    - url: https://api.postman.com
-      description: https://api.postman.com
-    - url: https://api.eu.postman.com
-      description: https://api.eu.postman.com
 components:
   schemas:
-    SearchFilterVisibilityEq:
-      type: string
-      enum:
-      - internal
-      - public
-      - partner
-      description: The visibility value to match.
-      title: SearchFilterVisibilityEq
-    environmentId:
-      type: string
-      title: environmentId
-    searchFilterOrgId:
+    searchFilterRequestId:
       type: object
       properties:
         $eq:
           type: string
-          description: The organization ID to match.
+          description: The request ID to match.
         $ne:
           type: string
-          description: The organization ID to exclude.
+          description: The request ID to exclude.
         $in:
           type: array
           items:
-            $ref: '#/components/schemas/organizationIdString'
-          description: A list of organization IDs to match.
+            $ref: '#/components/schemas/collectionRequestId'
+          description: A list of request IDs to match.
         $nin:
           type: array
           items:
-            $ref: '#/components/schemas/organizationIdString'
-          description: A list of organization IDs to exclude.
-      description: Filters by organization ID. Supported for all element types.
-      title: searchFilterOrgId
+            $ref: '#/components/schemas/collectionRequestId'
+          description: A list of request IDs to exclude.
+      description: Filters by request ID. Supported for `requests` only.
+      title: searchFilterRequestId
     searchPostmanResourcesResponseData:
       type: object
       properties:
@@ -168,27 +151,12 @@ components:
           $ref: '#/components/schemas/searchResourceLinksData'
       description: Information about the Postman resource.
       title: searchPostmanResourcesResponseData
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    searchResourceTeamData:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          description: The team's ID.
-        name:
-          type:
-          - string
-          - 'null'
-          description: The team's name.
-      description: Information about the team associated with the resource. This returns a null value for the `user` publisher type.
-      title: searchResourceTeamData
+    flowId:
+      type: string
+      title: flowId
+    environmentId:
+      type: string
+      title: environmentId
     CommonErrorNameMessageError:
       type: object
       properties:
@@ -200,24 +168,30 @@ components:
           description: The error message.
       description: Information about the error.
       title: CommonErrorNameMessageError
-    searchResourceOrganizationData:
+    searchPostmanResourcesResponse:
       type: object
       properties:
-        id:
-          type:
-          - string
-          - 'null'
-          description: The organization's ID.
-        name:
-          type:
-          - string
-          - 'null'
-          description: The organization's name.
-        isVerified:
-          type: boolean
-          description: If true, the organization is verified by Postman.
-      description: Information about the organization that published the resource. This returns a null value for the `user` publisher type.
-      title: searchResourceOrganizationData
+        meta:
+          $ref: '#/components/schemas/searchMetaData'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/searchPostmanResourcesResponseData'
+          description: A list of Postman elements that match the search query and filters.
+      title: searchPostmanResourcesResponse
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
     searchResourceLinksData:
       type: object
       properties:
@@ -227,6 +201,29 @@ components:
           $ref: '#/components/schemas/searchResourceLinksSelfData'
       description: Information about the resource's hypermedia links.
       title: searchResourceLinksData
+    collectionUid:
+      type: string
+      format: uid
+      title: collectionUid
+    SearchFilterVisibilityNe:
+      type: string
+      enum:
+      - internal
+      - public
+      - partner
+      description: The visibility value to exclude.
+      title: SearchFilterVisibilityNe
+    searchFilterPrivateApiNetwork:
+      type: object
+      properties:
+        $eq:
+          type: boolean
+          description: If true, return only resources that are part of the Private API Network.
+        $ne:
+          type: boolean
+          description: If true, exclude resources that are part of the Private API Network.
+      description: Filters by private API network membership. Supported for all element types.
+      title: searchFilterPrivateApiNetwork
     searchFilters:
       type: object
       properties:
@@ -264,111 +261,23 @@ components:
           $ref: '#/components/schemas/searchFilterRequestResourceType'
       description: A single filter condition.
       title: searchFilters
-    teamIdString:
+    SearchPostmanResourcesOwnership:
       type: string
-      title: teamIdString
-    searchResourceLinksSelfData:
-      type: object
-      properties:
-        href:
-          type: string
-          format: uri
-          description: The URL to access the resource through the Postman API.
-      description: The link to the resource through the Postman API.
-      title: searchResourceLinksSelfData
-    SearchPostmanResourcesFilters:
-      type: object
-      properties:
-        $and:
-          $ref: '#/components/schemas/searchFilterAndOperation'
-      required:
-      - $and
-      description: The search filters to narrow results.
-      title: SearchPostmanResourcesFilters
-    searchFilterPrivateApiNetwork:
-      type: object
-      properties:
-        $eq:
-          type: boolean
-          description: If true, return only resources that are part of the Private API Network.
-        $ne:
-          type: boolean
-          description: If true, exclude resources that are part of the Private API Network.
-      description: Filters by private API network membership. Supported for all element types.
-      title: searchFilterPrivateApiNetwork
-    searchRequestsCollectionData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The collection's ID.
-        name:
-          type: string
-          description: The collection's name.
-      description: Information about the collection containing the resource. Returns only for requests.
-      title: searchRequestsCollectionData
-    commonErrorTypeTitleDetail:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of error.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
-          description: Information about the error.
-      title: commonErrorTypeTitleDetail
-    searchFilterSpecId:
-      type: object
-      properties:
-        $eq:
-          type: string
-          description: The specification ID to match.
-        $ne:
-          type: string
-          description: The specification ID to exclude.
-        $in:
-          type: array
-          items:
-            $ref: '#/components/schemas/specId'
-          description: A list of specification IDs to match.
-        $nin:
-          type: array
-          items:
-            $ref: '#/components/schemas/specId'
-          description: A list of specification IDs to exclude.
-      description: Filters by specification ID. Supported for `specs` only.
-      title: searchFilterSpecId
-    workspaceId:
-      type: string
-      title: workspaceId
-    searchFilterFlowId:
-      type: object
-      properties:
-        $eq:
-          type: string
-          description: The flow ID to match.
-        $ne:
-          type: string
-          description: The flow ID to exclude.
-        $in:
-          type: array
-          items:
-            $ref: '#/components/schemas/flowId'
-          description: A list of flow IDs to match.
-        $nin:
-          type: array
-          items:
-            $ref: '#/components/schemas/flowId'
-          description: A list of flow IDs to exclude.
-      description: Filters by flow ID. Supported for `flows` only.
-      title: searchFilterFlowId
-    collectionUid:
-      type: string
-      format: uid
-      title: collectionUid
+      enum:
+      - organization
+      - external
+      - all
+      default: organization
+      description: 'The ownership scope for search results. One of:
+
+        - `organization` (default) — Resources owned by the user''s team.
+
+        - `external` — Resources not owned by the user''s team.
+
+        - `all` — All resources regardless of ownership.
+
+        '
+      title: SearchPostmanResourcesOwnership
     searchFilterEnvironmentId:
       type: object
       properties:
@@ -390,111 +299,6 @@ components:
           description: A list of environment IDs to exclude.
       description: Filters by environment ID. Supported for `environments` only.
       title: searchFilterEnvironmentId
-    flowId:
-      type: string
-      title: flowId
-    SearchPostmanResourcesRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: SearchPostmanResourcesRequestInternalServerError
-    searchFilterAndOperation:
-      type: array
-      items:
-        $ref: '#/components/schemas/searchFilters'
-      description: A list of filter conditions that must all be true. Each item must contain exactly one filter.
-      title: searchFilterAndOperation
-    searchFilterCreatedBy:
-      type: object
-      properties:
-        $eq:
-          type: string
-          description: The creator ID to match.
-        $ne:
-          type: string
-          description: The creator ID to exclude.
-        $in:
-          type: array
-          items:
-            $ref: '#/components/schemas/createdByString'
-          description: A list of creator IDs to match.
-        $nin:
-          type: array
-          items:
-            $ref: '#/components/schemas/createdByString'
-          description: A list of creator IDs to exclude.
-      description: Filters by the resource creator's user ID. Supported for all element types.
-      title: searchFilterCreatedBy
-    collectionRequestId:
-      type: string
-      title: collectionRequestId
-    searchFilterTags:
-      type: object
-      properties:
-        $eq:
-          type: string
-          description: The tag to match.
-        $ne:
-          type: string
-          description: The tag to exclude.
-        $in:
-          type: array
-          items:
-            $ref: '#/components/schemas/tagName'
-          description: A list of tags to match.
-        $nin:
-          type: array
-          items:
-            $ref: '#/components/schemas/tagName'
-          description: A list of tags to exclude.
-      description: Filters by tags. Supported for `workspaces` and `collections`.
-      title: searchFilterTags
-    searchFilterRequestResourceType:
-      type: object
-      properties:
-        $eq:
-          type: string
-          description: The resource type to match.
-        $ne:
-          type: string
-          description: The resource type to exclude.
-        $in:
-          type: array
-          items:
-            $ref: '#/components/schemas/collectionRequestResourceType'
-          description: A list of resource types to match.
-        $nin:
-          type: array
-          items:
-            $ref: '#/components/schemas/collectionRequestResourceType'
-          description: A list of resource types to exclude.
-      description: Filters by resource type variant (for example, `http` or `grpc`). Supported for `requests` only.
-      title: searchFilterRequestResourceType
-    searchFilterCollectionId:
-      type: object
-      properties:
-        $eq:
-          type: string
-          description: The collection ID to match.
-        $ne:
-          type: string
-          description: The collection ID to exclude.
-        $in:
-          type: array
-          items:
-            $ref: '#/components/schemas/collectionUid'
-          description: A list of collection IDs to match.
-        $nin:
-          type: array
-          items:
-            $ref: '#/components/schemas/collectionUid'
-          description: A list of collection IDs to exclude.
-      description: Filters by collection ID. Supported for `requests` and `collections` only.
-      title: searchFilterCollectionId
-    cursor:
-      type: string
-      title: cursor
     searchFilterVisibility:
       type: object
       properties:
@@ -514,51 +318,6 @@ components:
 
         '
       title: searchFilterVisibility
-    tagName:
-      type: string
-      title: tagName
-    searchFilterWorkspaceId:
-      type: object
-      properties:
-        $eq:
-          type: string
-          description: The workspace ID to match.
-        $ne:
-          type: string
-          description: The workspace ID to exclude.
-        $in:
-          type: array
-          items:
-            $ref: '#/components/schemas/workspaceId'
-          description: A list of workspace IDs to match.
-        $nin:
-          type: array
-          items:
-            $ref: '#/components/schemas/workspaceId'
-          description: A list of workspace IDs to exclude.
-      description: Filters by workspace ID. Supported for all element types.
-      title: searchFilterWorkspaceId
-    searchFilterTeamId:
-      type: object
-      properties:
-        $eq:
-          type: string
-          description: The team ID to match.
-        $ne:
-          type: string
-          description: The team ID to exclude.
-        $in:
-          type: array
-          items:
-            $ref: '#/components/schemas/teamIdString'
-          description: A list of team IDs to match.
-        $nin:
-          type: array
-          items:
-            $ref: '#/components/schemas/teamIdString'
-          description: A list of team IDs to exclude.
-      description: Filters by team ID. Supported for all element types.
-      title: searchFilterTeamId
     commonErrorTypeTitleDetailStatus:
       type: object
       properties:
@@ -574,35 +333,6 @@ components:
           type: integer
           description: The error's HTTP status code.
       title: commonErrorTypeTitleDetailStatus
-    limitDefault10Max25:
-      type: integer
-      default: 10
-      title: limitDefault10Max25
-    searchMetaData:
-      type: object
-      properties:
-        nextCursor:
-          type: string
-          description: The pagination cursor that points to the next record in the results set.
-        q:
-          type: string
-          description: The search query text.
-        total:
-          type: integer
-          description: The number of records found.
-      description: Pagination metadata for the search results.
-      title: searchMetaData
-    searchPostmanResourcesResponse:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/searchMetaData'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/searchPostmanResourcesResponseData'
-          description: A list of Postman elements that match the search query and filters.
-      title: searchPostmanResourcesResponse
     searchPostmanResources:
       type: object
       properties:
@@ -630,6 +360,25 @@ components:
       required:
       - elementType
       title: searchPostmanResources
+    SearchFilterVisibilityEq:
+      type: string
+      enum:
+      - internal
+      - public
+      - partner
+      description: The visibility value to match.
+      title: SearchFilterVisibilityEq
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    createdByString:
+      type: string
+      title: createdByString
     SearchPostmanResourcesElementType:
       type: string
       enum:
@@ -641,76 +390,6 @@ components:
       - specs
       description: The type of Postman resource to search for.
       title: SearchPostmanResourcesElementType
-    searchFilterRequestId:
-      type: object
-      properties:
-        $eq:
-          type: string
-          description: The request ID to match.
-        $ne:
-          type: string
-          description: The request ID to exclude.
-        $in:
-          type: array
-          items:
-            $ref: '#/components/schemas/collectionRequestId'
-          description: A list of request IDs to match.
-        $nin:
-          type: array
-          items:
-            $ref: '#/components/schemas/collectionRequestId'
-          description: A list of request IDs to exclude.
-      description: Filters by request ID. Supported for `requests` only.
-      title: searchFilterRequestId
-    searchFilterPublisherIsVerified:
-      type: object
-      properties:
-        $eq:
-          type: boolean
-          description: If true, return only results from verified publishers.
-        $ne:
-          type: boolean
-          description: If true, exclude results from verified publishers.
-      description: Filters by publisher verification status. Supported for all element types.
-      title: searchFilterPublisherIsVerified
-    commonErrorNameMessage:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
-    searchResourceWebData:
-      type: object
-      properties:
-        href:
-          type: string
-          format: uri
-          description: The URL to view the resource in the Postman web app.
-      description: The link to view the resource in the Postman web app.
-      title: searchResourceWebData
-    searchResourceWorkspacesData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The workspace's ID.
-        name:
-          type: string
-          description: The workspace's name.
-      description: Information about the workspace containing the resource.
-      title: searchResourceWorkspacesData
-    httpMethod:
-      type: string
-      title: httpMethod
-    SearchFilterVisibilityNe:
-      type: string
-      enum:
-      - internal
-      - public
-      - partner
-      description: The visibility value to exclude.
-      title: SearchFilterVisibilityNe
     searchFilterGitConnected:
       type: object
       properties:
@@ -722,20 +401,6 @@ components:
           description: If true, exclude resources connected to Git.
       description: Filters by Git connection status. Supported for `workspaces`, `collections`, `requests`, `environments`, `specs`, and `flows`.
       title: searchFilterGitConnected
-    collectionRequestResourceType:
-      type: string
-      title: collectionRequestResourceType
-    organizationIdString:
-      type: string
-      title: organizationIdString
-    CommonErrorTypeTitleDetailDetail:
-      oneOf:
-      - type: string
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
     searchFilterRequestHttpMethod:
       type: object
       properties:
@@ -757,29 +422,358 @@ components:
           description: A list of HTTP methods to exclude.
       description: Filters by HTTP method (for example, `GET` or `POST`). Supported for `requests` only.
       title: searchFilterRequestHttpMethod
-    SearchPostmanResourcesOwnership:
+    workspaceId:
       type: string
-      enum:
-      - organization
-      - external
-      - all
-      default: organization
-      description: 'The ownership scope for search results. One of:
-
-        - `organization` (default) — Resources owned by the user''s team.
-
-        - `external` — Resources not owned by the user''s team.
-
-        - `all` — All resources regardless of ownership.
-
-        '
-      title: SearchPostmanResourcesOwnership
+      title: workspaceId
+    SearchPostmanResourcesRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: SearchPostmanResourcesRequestInternalServerError
+    searchResourceOrganizationData:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          description: The organization's ID.
+        name:
+          type:
+          - string
+          - 'null'
+          description: The organization's name.
+        isVerified:
+          type: boolean
+          description: If true, the organization is verified by Postman.
+      description: Information about the organization that published the resource. This returns a null value for the `user` publisher type.
+      title: searchResourceOrganizationData
+    SearchPostmanResourcesFilters:
+      type: object
+      properties:
+        $and:
+          $ref: '#/components/schemas/searchFilterAndOperation'
+      required:
+      - $and
+      description: The search filters to narrow results.
+      title: SearchPostmanResourcesFilters
+    collectionRequestResourceType:
+      type: string
+      title: collectionRequestResourceType
+    searchFilterSpecId:
+      type: object
+      properties:
+        $eq:
+          type: string
+          description: The specification ID to match.
+        $ne:
+          type: string
+          description: The specification ID to exclude.
+        $in:
+          type: array
+          items:
+            $ref: '#/components/schemas/specId'
+          description: A list of specification IDs to match.
+        $nin:
+          type: array
+          items:
+            $ref: '#/components/schemas/specId'
+          description: A list of specification IDs to exclude.
+      description: Filters by specification ID. Supported for `specs` only.
+      title: searchFilterSpecId
+    searchResourceTeamData:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          description: The team's ID.
+        name:
+          type:
+          - string
+          - 'null'
+          description: The team's name.
+      description: Information about the team associated with the resource. This returns a null value for the `user` publisher type.
+      title: searchResourceTeamData
+    teamIdString:
+      type: string
+      title: teamIdString
+    cursor:
+      type: string
+      title: cursor
+    searchFilterCollectionId:
+      type: object
+      properties:
+        $eq:
+          type: string
+          description: The collection ID to match.
+        $ne:
+          type: string
+          description: The collection ID to exclude.
+        $in:
+          type: array
+          items:
+            $ref: '#/components/schemas/collectionUid'
+          description: A list of collection IDs to match.
+        $nin:
+          type: array
+          items:
+            $ref: '#/components/schemas/collectionUid'
+          description: A list of collection IDs to exclude.
+      description: Filters by collection ID. Supported for `requests` and `collections` only.
+      title: searchFilterCollectionId
+    searchResourceWorkspacesData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The workspace's ID.
+        name:
+          type: string
+          description: The workspace's name.
+      description: Information about the workspace containing the resource.
+      title: searchResourceWorkspacesData
+    searchResourceWebData:
+      type: object
+      properties:
+        href:
+          type: string
+          format: uri
+          description: The URL to view the resource in the Postman web app.
+      description: The link to view the resource in the Postman web app.
+      title: searchResourceWebData
+    searchMetaData:
+      type: object
+      properties:
+        nextCursor:
+          type: string
+          description: The pagination cursor that points to the next record in the results set.
+        q:
+          type: string
+          description: The search query text.
+        total:
+          type: integer
+          description: The number of records found.
+      description: Pagination metadata for the search results.
+      title: searchMetaData
+    httpMethod:
+      type: string
+      title: httpMethod
+    searchFilterTeamId:
+      type: object
+      properties:
+        $eq:
+          type: string
+          description: The team ID to match.
+        $ne:
+          type: string
+          description: The team ID to exclude.
+        $in:
+          type: array
+          items:
+            $ref: '#/components/schemas/teamIdString'
+          description: A list of team IDs to match.
+        $nin:
+          type: array
+          items:
+            $ref: '#/components/schemas/teamIdString'
+          description: A list of team IDs to exclude.
+      description: Filters by team ID. Supported for all element types.
+      title: searchFilterTeamId
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
     specId:
       type: string
       title: specId
-    createdByString:
+    organizationIdString:
       type: string
-      title: createdByString
+      title: organizationIdString
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    searchFilterOrgId:
+      type: object
+      properties:
+        $eq:
+          type: string
+          description: The organization ID to match.
+        $ne:
+          type: string
+          description: The organization ID to exclude.
+        $in:
+          type: array
+          items:
+            $ref: '#/components/schemas/organizationIdString'
+          description: A list of organization IDs to match.
+        $nin:
+          type: array
+          items:
+            $ref: '#/components/schemas/organizationIdString'
+          description: A list of organization IDs to exclude.
+      description: Filters by organization ID. Supported for all element types.
+      title: searchFilterOrgId
+    searchFilterFlowId:
+      type: object
+      properties:
+        $eq:
+          type: string
+          description: The flow ID to match.
+        $ne:
+          type: string
+          description: The flow ID to exclude.
+        $in:
+          type: array
+          items:
+            $ref: '#/components/schemas/flowId'
+          description: A list of flow IDs to match.
+        $nin:
+          type: array
+          items:
+            $ref: '#/components/schemas/flowId'
+          description: A list of flow IDs to exclude.
+      description: Filters by flow ID. Supported for `flows` only.
+      title: searchFilterFlowId
+    searchResourceLinksSelfData:
+      type: object
+      properties:
+        href:
+          type: string
+          format: uri
+          description: The URL to access the resource through the Postman API.
+      description: The link to the resource through the Postman API.
+      title: searchResourceLinksSelfData
+    searchFilterAndOperation:
+      type: array
+      items:
+        $ref: '#/components/schemas/searchFilters'
+      description: A list of filter conditions that must all be true. Each item must contain exactly one filter.
+      title: searchFilterAndOperation
+    searchRequestsCollectionData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The collection's ID.
+        name:
+          type: string
+          description: The collection's name.
+      description: Information about the collection containing the resource. Returns only for requests.
+      title: searchRequestsCollectionData
+    searchFilterTags:
+      type: object
+      properties:
+        $eq:
+          type: string
+          description: The tag to match.
+        $ne:
+          type: string
+          description: The tag to exclude.
+        $in:
+          type: array
+          items:
+            $ref: '#/components/schemas/tagName'
+          description: A list of tags to match.
+        $nin:
+          type: array
+          items:
+            $ref: '#/components/schemas/tagName'
+          description: A list of tags to exclude.
+      description: Filters by tags. Supported for `workspaces` and `collections`.
+      title: searchFilterTags
+    searchFilterCreatedBy:
+      type: object
+      properties:
+        $eq:
+          type: string
+          description: The creator ID to match.
+        $ne:
+          type: string
+          description: The creator ID to exclude.
+        $in:
+          type: array
+          items:
+            $ref: '#/components/schemas/createdByString'
+          description: A list of creator IDs to match.
+        $nin:
+          type: array
+          items:
+            $ref: '#/components/schemas/createdByString'
+          description: A list of creator IDs to exclude.
+      description: Filters by the resource creator's user ID. Supported for all element types.
+      title: searchFilterCreatedBy
+    searchFilterRequestResourceType:
+      type: object
+      properties:
+        $eq:
+          type: string
+          description: The resource type to match.
+        $ne:
+          type: string
+          description: The resource type to exclude.
+        $in:
+          type: array
+          items:
+            $ref: '#/components/schemas/collectionRequestResourceType'
+          description: A list of resource types to match.
+        $nin:
+          type: array
+          items:
+            $ref: '#/components/schemas/collectionRequestResourceType'
+          description: A list of resource types to exclude.
+      description: Filters by resource type variant (for example, `http` or `grpc`). Supported for `requests` only.
+      title: searchFilterRequestResourceType
+    searchFilterWorkspaceId:
+      type: object
+      properties:
+        $eq:
+          type: string
+          description: The workspace ID to match.
+        $ne:
+          type: string
+          description: The workspace ID to exclude.
+        $in:
+          type: array
+          items:
+            $ref: '#/components/schemas/workspaceId'
+          description: A list of workspace IDs to match.
+        $nin:
+          type: array
+          items:
+            $ref: '#/components/schemas/workspaceId'
+          description: A list of workspace IDs to exclude.
+      description: Filters by workspace ID. Supported for all element types.
+      title: searchFilterWorkspaceId
+    collectionRequestId:
+      type: string
+      title: collectionRequestId
+    tagName:
+      type: string
+      title: tagName
+    limitDefault10Max25:
+      type: integer
+      default: 10
+      title: limitDefault10Max25
+    searchFilterPublisherIsVerified:
+      type: object
+      properties:
+        $eq:
+          type: boolean
+          description: If true, return only results from verified publishers.
+        $ne:
+          type: boolean
+          description: If true, exclude results from verified publishers.
+      description: Filters by publisher verification status. Supported for all element types.
+      title: searchFilterPublisherIsVerified
   securitySchemes:
     PostmanApiKey:
       type: apiKey
@@ -793,9 +787,6 @@ components:
       in: header
       name: Authorization
       description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
-x-refined-from:
-- postman-api-openapi.yml
-- postman-search-api-openapi.yml
 x-provenance:
   first_party: true
   method: harvested

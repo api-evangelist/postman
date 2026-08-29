@@ -1,0 +1,287 @@
+openapi: 3.2.0
+info:
+  title: Postman APIs API Comments Network Folders API
+  description: 'The Postman APIs API enables you to manage your API definitions in Postman''s
+
+    API Builder. You can create APIs, manage versions, add schemas (OpenAPI,
+
+    GraphQL, etc.), and link collections, environments, mock servers, monitors,
+
+    and documentation to your API definitions.
+
+
+    ## Authentication
+
+    All requests require an API key passed in the `x-api-key` header.
+
+
+    ## Rate Limits
+
+    Standard Postman API rate limits apply.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Postman Developer Support
+    url: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    email: help@postman.com
+  license:
+    name: Postman Terms of Service
+    url: https://www.postman.com/legal/terms/
+servers:
+- url: https://api.getpostman.com
+  description: Postman Production API Server
+security:
+- apiKeyAuth: []
+tags:
+- name: Network Folders
+  description: Operations for managing folders in the private API network.
+paths:
+  /network/private/network-folder:
+    get:
+      tags:
+      - Network Folders
+      summary: Postman Get all network folders
+      operationId: getNetworkFolders
+      description: Gets all folders in the private API network. Folders help organize APIs and collections in the network catalog.
+      parameters:
+      - name: offset
+        in: query
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 10
+      - name: parentFolderId
+        in: query
+        schema:
+          type: integer
+      - name: sort
+        in: query
+        schema:
+          type: string
+          enum:
+          - createdAt
+          - updatedAt
+      - name: direction
+        in: query
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+      responses:
+        '200':
+          description: Successful response with network folders
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  folders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NetworkFolder'
+                  meta:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+    post:
+      tags:
+      - Network Folders
+      summary: Postman Create a network folder
+      operationId: createNetworkFolder
+      description: Creates a new folder in the private API network.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                parentFolderId:
+                  type: integer
+      responses:
+        '200':
+          description: Successfully created network folder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkFolder'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /network/private/network-folder/{folderId}:
+    put:
+      tags:
+      - Network Folders
+      summary: Postman Update a network folder
+      operationId: updateNetworkFolder
+      parameters:
+      - name: folderId
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                parentFolderId:
+                  type: integer
+      responses:
+        '200':
+          description: Successfully updated network folder
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+    delete:
+      tags:
+      - Network Folders
+      summary: Postman Delete a network folder
+      operationId: deleteNetworkFolder
+      parameters:
+      - name: folderId
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successfully deleted network folder
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+components:
+  responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    ForbiddenError:
+      description: Insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+  schemas:
+    NetworkFolder:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        parentFolderId:
+          type: integer
+        createdBy:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.

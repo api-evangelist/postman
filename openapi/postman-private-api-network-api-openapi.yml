@@ -1,0 +1,226 @@
+openapi: 3.2.0
+info:
+  title: Postman APIs API Comments Private API Network API
+  description: 'The Postman APIs API enables you to manage your API definitions in Postman''s
+
+    API Builder. You can create APIs, manage versions, add schemas (OpenAPI,
+
+    GraphQL, etc.), and link collections, environments, mock servers, monitors,
+
+    and documentation to your API definitions.
+
+
+    ## Authentication
+
+    All requests require an API key passed in the `x-api-key` header.
+
+
+    ## Rate Limits
+
+    Standard Postman API rate limits apply.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Postman Developer Support
+    url: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    email: help@postman.com
+  license:
+    name: Postman Terms of Service
+    url: https://www.postman.com/legal/terms/
+servers:
+- url: https://api.getpostman.com
+  description: Postman Production API Server
+security:
+- apiKeyAuth: []
+tags:
+- name: Private API Network
+  description: Operations for managing the private API network catalog.
+paths:
+  /network/private:
+    get:
+      tags:
+      - Private API Network
+      summary: Postman Get all elements in the private API network
+      operationId: getPrivateNetworkElements
+      description: Gets all elements published to the team's private API network. Returns APIs, collections, and workspaces that have been added to the network.
+      parameters:
+      - name: since
+        in: query
+        description: Return elements added after this date (ISO 8601).
+        schema:
+          type: string
+          format: date-time
+      - name: until
+        in: query
+        description: Return elements added before this date (ISO 8601).
+        schema:
+          type: string
+          format: date-time
+      - name: addedBy
+        in: query
+        description: Filter by the user who added the element.
+        schema:
+          type: integer
+      - name: name
+        in: query
+        description: Filter by element name (partial match).
+        schema:
+          type: string
+      - name: summary
+        in: query
+        description: Filter by element summary (partial match).
+        schema:
+          type: string
+      - name: description
+        in: query
+        description: Filter by element description (partial match).
+        schema:
+          type: string
+      - name: type
+        in: query
+        description: Filter by element type.
+        schema:
+          type: string
+          enum:
+          - api
+          - collection
+          - workspace
+      - name: offset
+        in: query
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 10
+          maximum: 100
+      - name: parentFolderId
+        in: query
+        description: Filter by parent folder ID.
+        schema:
+          type: integer
+      - name: sort
+        in: query
+        description: Sort field.
+        schema:
+          type: string
+          enum:
+          - createdAt
+          - updatedAt
+      - name: direction
+        in: query
+        description: Sort direction.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+      responses:
+        '200':
+          description: Successful response with network elements
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  elements:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NetworkElement'
+                  meta:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      limit:
+                        type: integer
+                      offset:
+                        type: integer
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+components:
+  responses:
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+    ForbiddenError:
+      description: Insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+  schemas:
+    NetworkElement:
+      type: object
+      description: An element published to the private API network.
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - api
+          - collection
+          - workspace
+        name:
+          type: string
+        summary:
+          type: string
+        description:
+          type: string
+        addedBy:
+          type: integer
+        addedAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        parentFolderId:
+          type: integer
+        href:
+          type: string
+          format: uri
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.

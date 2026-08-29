@@ -1,0 +1,231 @@
+openapi: 3.2.0
+info:
+  title: Postman APIs API Comments Network Requests API
+  description: 'The Postman APIs API enables you to manage your API definitions in Postman''s
+
+    API Builder. You can create APIs, manage versions, add schemas (OpenAPI,
+
+    GraphQL, etc.), and link collections, environments, mock servers, monitors,
+
+    and documentation to your API definitions.
+
+
+    ## Authentication
+
+    All requests require an API key passed in the `x-api-key` header.
+
+
+    ## Rate Limits
+
+    Standard Postman API rate limits apply.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Postman Developer Support
+    url: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    email: help@postman.com
+  license:
+    name: Postman Terms of Service
+    url: https://www.postman.com/legal/terms/
+servers:
+- url: https://api.getpostman.com
+  description: Postman Production API Server
+security:
+- apiKeyAuth: []
+tags:
+- name: Network Requests
+  description: Operations for managing requests to add elements to the network.
+paths:
+  /network/private/network-request:
+    get:
+      tags:
+      - Network Requests
+      summary: Postman Get all network requests
+      operationId: getNetworkRequests
+      description: Gets all pending requests to add elements to the private API network.
+      parameters:
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - pending
+          - approved
+          - denied
+      - name: offset
+        in: query
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 10
+      responses:
+        '200':
+          description: Successful response with network requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requests:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NetworkRequest'
+                  meta:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /network/private/network-request/{requestId}/approve:
+    put:
+      tags:
+      - Network Requests
+      summary: Postman Approve a network request
+      operationId: approveNetworkRequest
+      parameters:
+      - name: requestId
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successfully approved network request
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /network/private/network-request/{requestId}/deny:
+    put:
+      tags:
+      - Network Requests
+      summary: Postman Deny a network request
+      operationId: denyNetworkRequest
+      parameters:
+      - name: requestId
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successfully denied network request
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+components:
+  responses:
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    ForbiddenError:
+      description: Insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+  schemas:
+    NetworkRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          enum:
+          - api
+          - collection
+          - workspace
+        elementId:
+          type: string
+        name:
+          type: string
+        summary:
+          type: string
+        status:
+          type: string
+          enum:
+          - pending
+          - approved
+          - denied
+        requestedBy:
+          type: integer
+        requestedAt:
+          type: string
+          format: date-time
+        respondedBy:
+          type: integer
+        respondedAt:
+          type: string
+          format: date-time
+        message:
+          type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.

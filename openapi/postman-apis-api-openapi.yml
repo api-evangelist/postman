@@ -1,0 +1,483 @@
+openapi: 3.2.0
+info:
+  title: Postman API Comments APIS API
+  description: 'The Postman APIs API enables you to manage your API definitions in Postman''s
+
+    API Builder. You can create APIs, manage versions, add schemas (OpenAPI,
+
+    GraphQL, etc.), and link collections, environments, mock servers, monitors,
+
+    and documentation to your API definitions.
+
+
+    ## Authentication
+
+    All requests require an API key passed in the `x-api-key` header.
+
+
+    ## Rate Limits
+
+    Standard Postman API rate limits apply.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Postman Developer Support
+    url: https://learning.postman.com/docs/developer/postman-api/intro-api/
+    email: help@postman.com
+  license:
+    name: Postman Terms of Service
+    url: https://www.postman.com/legal/terms/
+servers:
+- url: https://api.getpostman.com
+  description: Postman Production API Server
+security:
+- apiKeyAuth: []
+tags:
+- name: Apis
+paths:
+  /apis:
+    get:
+      tags:
+      - Apis
+      summary: Postman Get all APIs
+      operationId: getAllApis
+      description: Gets all APIs in a workspace. Returns metadata about each API including name, description, and creation date.
+      parameters:
+      - name: workspace
+        in: query
+        description: The workspace ID to get APIs from. Required.
+        required: true
+        schema:
+          type: string
+      - name: cursor
+        in: query
+        description: Pagination cursor.
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of results to return.
+        required: false
+        schema:
+          type: integer
+          default: 10
+          maximum: 100
+      - name: createdBy
+        in: query
+        description: Filter by creator user ID.
+        required: false
+        schema:
+          type: integer
+      - name: description
+        in: query
+        description: Filter by description text (partial match).
+        required: false
+        schema:
+          type: string
+      - name: name
+        in: query
+        description: Filter by API name (partial match).
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with list of APIs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  apis:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ApiListItem'
+                  meta:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      nextCursor:
+                        type: string
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+      - Apis
+      summary: Postman Create an API
+      operationId: createApi
+      description: Creates a new API in the specified workspace. After creating the API, you can add versions, schemas, and linked resources.
+      parameters:
+      - name: workspace
+        in: query
+        description: The workspace ID to create the API in. Required.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiInput'
+      responses:
+        '200':
+          description: Successfully created API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /apis/{apiId}:
+    get:
+      tags:
+      - Apis
+      summary: Postman Get an API
+      operationId: getApi
+      description: Gets information about a single API including its versions, schemas, and linked resources.
+      parameters:
+      - $ref: '#/components/parameters/ApiIdParam'
+      - name: include
+        in: query
+        description: Additional data to include in the response.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - schemas
+            - versions
+            - collections
+            - environments
+            - mocks
+            - monitors
+            - documentation
+      responses:
+        '200':
+          description: Successful response with API details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      tags:
+      - Apis
+      summary: Postman Update an API
+      operationId: updateApi
+      description: Updates an existing API's name or description.
+      parameters:
+      - $ref: '#/components/parameters/ApiIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiInput'
+      responses:
+        '200':
+          description: Successfully updated API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags:
+      - Apis
+      summary: Postman Delete an API
+      operationId: deleteApi
+      description: Deletes an API and all of its associated versions and schemas. This action is irreversible.
+      parameters:
+      - $ref: '#/components/parameters/ApiIdParam'
+      responses:
+        '200':
+          description: Successfully deleted API
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    InternalServerError:
+      description: An unexpected error occurred on the server
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+  schemas:
+    ApiInput:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: The API name
+        summary:
+          type: string
+          description: A brief summary
+        description:
+          type: string
+          description: A detailed description
+    Api:
+      type: object
+      description: Full API definition from the Postman API Builder.
+      properties:
+        id:
+          type: string
+          description: The API's unique ID
+        name:
+          type: string
+          description: The API name
+        summary:
+          type: string
+          description: A brief summary of the API
+        description:
+          type: string
+          description: A detailed description in Markdown format
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: integer
+        updatedAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: integer
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiVersion'
+        schemas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiSchema'
+        collections:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              type:
+                type: string
+                enum:
+                - documentation
+                - test
+                - contracttest
+                - integration
+                - mock
+                - monitor
+        gitInfo:
+          type: object
+          description: Git repository information if the API is synced
+          properties:
+            domain:
+              type: string
+            repository:
+              type: string
+            branch:
+              type: string
+            folder:
+              type: string
+    ApiSchema:
+      type: object
+      description: An API schema definition.
+      properties:
+        id:
+          type: string
+        apiId:
+          type: string
+        type:
+          type: string
+          enum:
+          - openapi3_1
+          - openapi3
+          - openapi2
+          - openapi1
+          - raml
+          - graphql
+          - proto2
+          - proto3
+          - wsdl1
+          - wsdl2
+          - asyncapi2
+        language:
+          type: string
+          enum:
+          - json
+          - yaml
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: integer
+        updatedAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: integer
+        files:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              path:
+                type: string
+    ApiListItem:
+      type: object
+      description: Abbreviated API information returned in list responses.
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        summary:
+          type: string
+        description:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: integer
+        updatedAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: integer
+    ApiVersion:
+      type: object
+      description: A version of an API definition.
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        schemas:
+          type: array
+          items:
+            type: string
+        collections:
+          type: array
+          items:
+            type: string
+  parameters:
+    ApiIdParam:
+      name: apiId
+      in: path
+      required: true
+      description: The API's unique ID.
+      schema:
+        type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: x-api-key
+      in: header
+      description: Postman API key for authentication.

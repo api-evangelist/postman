@@ -1,8 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Postman API Catalog API
   version: 1.0.0
-  description: 'Operations tagged apiCatalog across 2 of this provider''s published API definitions: postman-api-openapi.yml, postman-apicatalog-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.postman.com
   description: https://api.postman.com
@@ -144,11 +143,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/postApiCatalogDiscoveryServices'
-    servers:
-    - url: https://api.postman.com
-      description: https://api.postman.com
-    - url: https://api.eu.postman.com
-      description: https://api.eu.postman.com
   /api-catalog/discovery-services/{serviceId}:
     get:
       operationId: getApiCatalogDiscoveryService
@@ -193,11 +187,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetApiCatalogDiscoveryServiceRequestInternalServerError'
-    servers:
-    - url: https://api.postman.com
-      description: https://api.postman.com
-    - url: https://api.eu.postman.com
-      description: https://api.eu.postman.com
   /api-catalog/services:
     get:
       operationId: getApiCatalogServices
@@ -279,11 +268,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetApiCatalogServicesRequestInternalServerError'
-    servers:
-    - url: https://api.postman.com
-      description: https://api.postman.com
-    - url: https://api.eu.postman.com
-      description: https://api.eu.postman.com
   /api-catalog/services/{serviceId}:
     get:
       operationId: getApiCatalogService
@@ -346,11 +330,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetApiCatalogServiceRequestInternalServerError'
-    servers:
-    - url: https://api.postman.com
-      description: https://api.postman.com
-    - url: https://api.eu.postman.com
-      description: https://api.eu.postman.com
   /api-catalog/services/{serviceId}/endpoints:
     get:
       operationId: getApiCatalogServiceEndpoints
@@ -456,11 +435,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetApiCatalogServiceEndpointsRequestInternalServerError'
-    servers:
-    - url: https://api.postman.com
-      description: https://api.postman.com
-    - url: https://api.eu.postman.com
-      description: https://api.eu.postman.com
   /api-catalog/services/{serviceId}/monitor-runs:
     get:
       operationId: getApiCatalogServiceMonitorRuns
@@ -560,11 +534,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetApiCatalogServiceMonitorRunsRequestInternalServerError'
-    servers:
-    - url: https://api.postman.com
-      description: https://api.postman.com
-    - url: https://api.eu.postman.com
-      description: https://api.eu.postman.com
   /api-catalog/services/{serviceId}/spec-lints:
     get:
       operationId: getApiCatalogServiceSpecificationLints
@@ -658,11 +627,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetApiCatalogServiceSpecificationLintsRequestInternalServerError'
-    servers:
-    - url: https://api.postman.com
-      description: https://api.postman.com
-    - url: https://api.eu.postman.com
-      description: https://api.eu.postman.com
   /api-catalog/services/{serviceId}/ci-runs:
     get:
       operationId: getApiCatalogServiceCiRuns
@@ -792,11 +756,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetApiCatalogServiceCiRunsRequestInternalServerError'
-    servers:
-    - url: https://api.postman.com
-      description: https://api.postman.com
-    - url: https://api.eu.postman.com
-      description: https://api.eu.postman.com
   /api-catalog/system-environments:
     get:
       operationId: getApiCatalogSystemEnvironments
@@ -914,11 +873,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/createApiCatalogSystemEnvironment'
-    servers:
-    - url: https://api.postman.com
-      description: https://api.postman.com
-    - url: https://api.eu.postman.com
-      description: https://api.eu.postman.com
   /api-catalog/system-environments/{systemEnvironmentId}:
     get:
       operationId: getApiCatalogSystemEnvironment
@@ -1049,11 +1003,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/updateApiCatalogSystemEnvironment'
-    servers:
-    - url: https://api.postman.com
-      description: https://api.postman.com
-    - url: https://api.eu.postman.com
-      description: https://api.eu.postman.com
   /api-catalog/system-environments/{systemEnvironmentId}/associations:
     get:
       operationId: getApiCatalogSystemEnvironmentAssociations
@@ -1250,14 +1199,896 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/removeApiCatalogSystemEnvironmentAssociations'
-    servers:
-    - url: https://api.postman.com
-      description: https://api.postman.com
-    - url: https://api.eu.postman.com
-      description: https://api.eu.postman.com
 components:
   schemas:
-    GetApiCatalogServiceEndpointsMeta:
+    ApiCatalogServiceServiceDataOwnerType:
+      type: string
+      enum:
+      - user
+      - group
+      description: The type of owner.
+      title: ApiCatalogServiceServiceDataOwnerType
+    UpdateApiCatalogSystemEnvironmentRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateApiCatalogSystemEnvironmentRequestInternalServerError
+    GetApiCatalogServiceComplianceDataMonitorRun:
+      type: object
+      properties:
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/GetApiCatalogServiceComplianceDataMonitorRunStatus'
+          - type: 'null'
+          description: Whether the monitor's latest runs passed or failed. If no runs exist, this returns a null value.
+        totalMonitors:
+          type: integer
+          description: The total number of monitors in the workspace. This value is the same as the as `entityCounts.monitors` value.
+        activeMonitors:
+          type: integer
+          description: The number of distinct monitors with at least one run in the time window.
+        passingMonitors:
+          type: integer
+          description: The number of distinct monitors whose latest run passed within the time window.
+        failingMonitors:
+          type: integer
+          description: The number of distinct monitors whose latest run failed within the time window.
+        lastRunAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The date and time of the most recent run across all monitors. If no runs exist, this returns a null value.
+      required:
+      - status
+      - totalMonitors
+      - activeMonitors
+      - passingMonitors
+      - failingMonitors
+      - lastRunAt
+      description: The scheduled monitor run summary.
+      title: GetApiCatalogServiceComplianceDataMonitorRun
+    apiCatalogServiceActorFilter:
+      type: string
+      title: apiCatalogServiceActorFilter
+    ApiCatalogServiceServiceDataGovernanceGroup:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The governance group's ID.
+        name:
+          type: string
+          description: The governance group's name.
+      required:
+      - id
+      - name
+      description: The governance group that the workspace belongs to. If no governance group is assigned, this returns a null value.
+      title: ApiCatalogServiceServiceDataGovernanceGroup
+    GetApiCatalogServiceComplianceDataSpecLintStatus:
+      type: string
+      enum:
+      - passed
+      - failed
+      description: Whether the specifications' latest lints passed or failed. If no lints exist, this returns a null value.
+      title: GetApiCatalogServiceComplianceDataSpecLintStatus
+    addApiCatalogSystemEnvironmentAssociationsWorkspaceEnvId:
+      type: string
+      description: A workspace environment ID.
+      title: addApiCatalogSystemEnvironmentAssociationsWorkspaceEnvId
+    addApiCatalogSystemEnvironmentAssociationsResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/addApiCatalogSystemEnvironmentAssociationsMetaData'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/addApiCatalogSystemEnvironmentAssociationsData'
+      required:
+      - meta
+      - data
+      title: addApiCatalogSystemEnvironmentAssociationsResponse
+    collectionUid:
+      type: string
+      format: uid
+      title: collectionUid
+    GetApiCatalogServiceDataStatus:
+      type: string
+      enum:
+      - healthy
+      - warning
+      - critical
+      - inactive
+      description: The overall health status, derived from compliance signals.
+      title: GetApiCatalogServiceDataStatus
+    GetApiCatalogServiceEndpointsDataItemsPerformance:
+      type: object
+      properties:
+        p90LatencyMs:
+          type: number
+          format: double
+          description: The 90th-percentile response latency, in milliseconds.
+        p95LatencyMs:
+          type: number
+          format: double
+          description: The 95th-percentile response latency, in milliseconds.
+      required:
+      - p90LatencyMs
+      - p95LatencyMs
+      description: Information about latency percentile metrics.
+      title: GetApiCatalogServiceEndpointsDataItemsPerformance
+    apiCatalogSystemEnvironmentsMetaData:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: The number of records that match the defined criteria.
+        nextCursor:
+          type:
+          - string
+          - 'null'
+          description: The pagination cursor that points to the next record in the results set.
+        limit:
+          type: integer
+          description: The maximum number of records in the paginated response.
+        filters:
+          $ref: '#/components/schemas/apiCatalogSystemEnvironmentsFiltersData'
+      required:
+      - total
+      - nextCursor
+      - limit
+      description: The response's meta information for paginated results.
+      title: apiCatalogSystemEnvironmentsMetaData
+    GetApiCatalogServiceMonitorRunsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiCatalogServiceMonitorRunsRequestInternalServerError
+    ApiCatalogServiceServiceDataComplianceCliRun:
+      type: object
+      properties:
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/ApiCatalogServiceServiceDataComplianceCliRunStatus'
+          - type: 'null'
+          description: Whether the pipelines' latest runs passed or failed. If no runs exist, this returns a null value.
+      required:
+      - status
+      description: Information about the CI/CD pipeline.
+      title: ApiCatalogServiceServiceDataComplianceCliRun
+    apiCatalogServiceHostsFilter:
+      type: string
+      title: apiCatalogServiceHostsFilter
+    GetApiCatalogDiscoveryServicesRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiCatalogDiscoveryServicesRequestInternalServerError
+    GetApiCatalogServiceEndpointsDataItems:
+      type: object
+      properties:
+        method:
+          $ref: '#/components/schemas/GetApiCatalogServiceEndpointsDataItemsMethod'
+          description: The endpoint's HTTP method.
+        path:
+          type: string
+          description: The endpoint's URL path template.
+        host:
+          type: string
+          description: The hostname the endpoint was observed on.
+        requestCount:
+          type: integer
+          description: The total number of requests to this endpoint within the time window.
+        performance:
+          $ref: '#/components/schemas/GetApiCatalogServiceEndpointsDataItemsPerformance'
+          description: Information about latency percentile metrics.
+        errors:
+          $ref: '#/components/schemas/GetApiCatalogServiceEndpointsDataItemsErrors'
+          description: Information about the endpoint's errors.
+      required:
+      - method
+      - path
+      - host
+      - requestCount
+      - performance
+      - errors
+      title: GetApiCatalogServiceEndpointsDataItems
+    apiCatalogServiceMetadataConformanceRatePctData:
+      type: number
+      format: double
+      description: The percentage of runs that passed, rounded to two decimal places.
+      title: apiCatalogServiceMetadataConformanceRatePctData
+    GetApiCatalogServiceComplianceDataMonitorRunStatus:
+      type: string
+      enum:
+      - passed
+      - failed
+      description: Whether the monitor's latest runs passed or failed. If no runs exist, this returns a null value.
+      title: GetApiCatalogServiceComplianceDataMonitorRunStatus
+    apiCatalogErrorPathMessage:
+      type: object
+      properties:
+        path:
+          type: string
+          description: The path in which the error occurred.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: apiCatalogErrorPathMessage
+    cursor:
+      type: string
+      title: cursor
+    AddApiCatalogSystemEnvironmentAssociationsDataStatus:
+      type: string
+      enum:
+      - created
+      - existing
+      - replaced
+      - excluded
+      description: 'The association''s status:
+
+        - `created` — An association was created.
+
+        - `existing` — The association already existed and is unchanged.
+
+        - `replaced` — The association was moved from a different system environment.
+
+        - `excluded` — The association was skipped.
+
+        '
+      title: AddApiCatalogSystemEnvironmentAssociationsDataStatus
+    GetApiCatalogServiceDataGovernanceGroup:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The governance group's ID.
+        name:
+          type: string
+          description: The governance group's name.
+      required:
+      - id
+      - name
+      description: The governance group that the workspace belongs to. If no governance group is assigned, this returns a null value.
+      title: GetApiCatalogServiceDataGovernanceGroup
+    apiCatalogServiceMetadataPassedRunsData:
+      type: integer
+      description: The number of successful runs.
+      title: apiCatalogServiceMetadataPassedRunsData
+    GetApiCatalogSystemEnvironmentRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/apiCatalogError'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      title: GetApiCatalogSystemEnvironmentRequestBadRequestError
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    apiCatalogDiscoveryServicesTagsData:
+      type: array
+      items:
+        type: string
+      description: A list of tags associated with the service.
+      title: apiCatalogDiscoveryServicesTagsData
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    getApiCatalogServiceEntityCountData:
+      type: object
+      properties:
+        collections:
+          type: integer
+          description: The total number of collections.
+        specifications:
+          type: integer
+          description: The total number of API specifications.
+        monitors:
+          type: integer
+          description: The total number of monitors.
+        mocks:
+          type: integer
+          description: The total number of mock servers.
+        flows:
+          type: integer
+          description: The total number of Postman Flows.
+        environments:
+          type: integer
+          description: The total number of environments.
+      required:
+      - collections
+      - specifications
+      - monitors
+      - mocks
+      - flows
+      - environments
+      description: Information about the workspace's entities.
+      title: getApiCatalogServiceEntityCountData
+    GetApiCatalogServiceDataDependenciesItemsDirection:
+      type: string
+      enum:
+      - inbound
+      - outbound
+      description: Whether traffic flows into (inbound) or out of (outbound) the service.
+      title: GetApiCatalogServiceDataDependenciesItemsDirection
+    systemEnvironmentWorkspaceId:
+      type: string
+      title: systemEnvironmentWorkspaceId
+    ApiCatalogServiceServiceDataComplianceSpecLint:
+      type: object
+      properties:
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/ApiCatalogServiceServiceDataComplianceSpecLintStatus'
+          - type: 'null'
+          description: Whether the specifications' latest lints passed or failed. If no lints exist, this returns a null value.
+      required:
+      - status
+      description: Information about the API specification lint.
+      title: ApiCatalogServiceServiceDataComplianceSpecLint
+    apiCatalogServiceEnvironmentData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The environment's ID.
+        name:
+          type:
+          - string
+          - 'null'
+          description: The environment's name. If the environment was deleted, this returns a null value.
+      required:
+      - id
+      - name
+      description: Information about the environment.
+      title: apiCatalogServiceEnvironmentData
+    RemoveApiCatalogSystemEnvironmentAssociationsDataStatus:
+      type: string
+      enum:
+      - deleted
+      - notFound
+      description: 'The status of the operation:
+
+        - `deleted` — The association was successfully removed.
+
+        - `notFound` — The association could not be removed.
+
+        '
+      title: RemoveApiCatalogSystemEnvironmentAssociationsDataStatus
+    discoveryServicesStatus:
+      type: string
+      title: discoveryServicesStatus
+    GetApiCatalogServiceCiRunsDataItemsExecutionSystem:
+      type: object
+      properties:
+        os:
+          type: string
+          description: The operating system and kernel version.
+        cpus:
+          type: integer
+          description: The number of CPU cores.
+        memoryMb:
+          type: integer
+          description: The available memory, in megabytes.
+      description: The system information about the execution run. This returns as null if unavailable.
+      title: GetApiCatalogServiceCiRunsDataItemsExecutionSystem
+    getApiCatalogServiceEndpoints:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/GetApiCatalogServiceEndpointsMeta'
+          description: The response's meta information for paginated results.
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetApiCatalogServiceEndpointsDataItems'
+          description: A list of observed API endpoints with traffic and performance metrics.
+      required:
+      - meta
+      - data
+      title: getApiCatalogServiceEndpoints
+    apiCatalogServiceSortCiFilter:
+      type: string
+      title: apiCatalogServiceSortCiFilter
+    GetApiCatalogSystemEnvironmentsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiCatalogSystemEnvironmentsRequestInternalServerError
+    RemoveApiCatalogSystemEnvironmentAssociationsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: RemoveApiCatalogSystemEnvironmentAssociationsRequestInternalServerError
+    GetApiCatalogSystemEnvironmentAssociationsRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/apiCatalogError'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      title: GetApiCatalogSystemEnvironmentAssociationsRequestBadRequestError
+    systemEnvironmentId:
+      type: string
+      title: systemEnvironmentId
+    GetApiCatalogServiceCiRunsDataItemsExecution:
+      type: object
+      properties:
+        cliVersion:
+          type:
+          - string
+          - 'null'
+          description: The Postman CLI version.
+        system:
+          $ref: '#/components/schemas/GetApiCatalogServiceCiRunsDataItemsExecutionSystem'
+          description: The system information about the execution run. This returns as null if unavailable.
+      required:
+      - cliVersion
+      - system
+      description: Information about the environment run.
+      title: GetApiCatalogServiceCiRunsDataItemsExecution
+    postApiCatalogDiscoveryServicesResponseMetaData:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: The total number of services processed.
+        created:
+          type: integer
+          description: The number of new services created.
+        updated:
+          type: integer
+          description: The number of existing services updated.
+      description: The operation's metadata summary.
+      title: postApiCatalogDiscoveryServicesResponseMetaData
+    ApiCatalogServiceServiceDataComplianceMonitorRun:
+      type: object
+      properties:
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/ApiCatalogServiceServiceDataComplianceMonitorRunStatus'
+          - type: 'null'
+          description: Whether the monitor's latest runs passed or failed. If no runs exist, this returns a null value.
+      required:
+      - status
+      description: The scheduled monitor run summary.
+      title: ApiCatalogServiceServiceDataComplianceMonitorRun
+    GetApiCatalogServiceCiRunsDataItemsSourceRepo:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The repository's name.
+        owner:
+          type:
+          - string
+          - 'null'
+          description: The repository owner or organization.
+        url:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The repository's URL.
+      required:
+      - name
+      - owner
+      - url
+      description: Information about the source repository.
+      title: GetApiCatalogServiceCiRunsDataItemsSourceRepo
+    PostApiCatalogDiscoveryServicesRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: PostApiCatalogDiscoveryServicesRequestInternalServerError
+    apiCatalogServiceRepoOwnerFilter:
+      type: string
+      title: apiCatalogServiceRepoOwnerFilter
+    apiCatalogError:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          description: The [URI reference](https://www.rfc-editor.org/rfc/rfc3986) that identifies the type of problem.
+        status:
+          type: integer
+          description: The HTTP status code generated by the origin server.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: An explanation about the problem.
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/apiCatalogErrorPathMessage'
+          description: A list of errors.
+      title: apiCatalogError
+    getApiCatalogServiceOwnerData:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/GetApiCatalogServiceOwnerDataType'
+          description: The type of owner.
+        id:
+          type: string
+          description: The owner's ID.
+        name:
+          type:
+          - string
+          - 'null'
+          description: The owner's display name.
+        profilePicUrl:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The URL of the owner's profile picture.
+        publicHandle:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The URL of the owner's public profile.
+      required:
+      - type
+      - id
+      - name
+      - profilePicUrl
+      - publicHandle
+      description: The service's owner. If no owner is assigned, this returns a null value.
+      title: getApiCatalogServiceOwnerData
+    apiCatalogServiceGovernanceGroupIdFilter:
+      type: string
+      title: apiCatalogServiceGovernanceGroupIdFilter
+    apiCatalogServiceNameFilter:
+      type: string
+      title: apiCatalogServiceNameFilter
+    postApiCatalogDiscoveryServices:
+      type: object
+      properties:
+        discoveredServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/postApiCatalogDiscoveryServiceData'
+          description: A list of discovered services to add to the API Catalog.
+      required:
+      - discoveredServices
+      title: postApiCatalogDiscoveryServices
+    ApiCatalogServiceServiceDataCompliance:
+      type: object
+      properties:
+        monitorRun:
+          $ref: '#/components/schemas/ApiCatalogServiceServiceDataComplianceMonitorRun'
+          description: The scheduled monitor run summary.
+        cliRun:
+          $ref: '#/components/schemas/ApiCatalogServiceServiceDataComplianceCliRun'
+          description: Information about the CI/CD pipeline.
+        specLint:
+          $ref: '#/components/schemas/ApiCatalogServiceServiceDataComplianceSpecLint'
+          description: Information about the API specification lint.
+      required:
+      - monitorRun
+      - cliRun
+      - specLint
+      description: Information about compliance and governance.
+      title: ApiCatalogServiceServiceDataCompliance
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    GetApiCatalogServiceRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiCatalogServiceRequestInternalServerError
+    getApiCatalogDiscoveryServiceApiDefinitionData:
+      type: object
+      properties:
+        format:
+          type: string
+          description: The definition's format.
+        formatVersion:
+          type: string
+          description: The API definition format's version.
+        contentHash:
+          type: string
+          description: A SHA-256 hash of the API definition content for change detection.
+        content:
+          type: string
+          description: A Base64-encoded API definition.
+      description: The API definition associated with the service.
+      title: getApiCatalogDiscoveryServiceApiDefinitionData
+    apiCatalogServiceBranchFilter:
+      type: string
+      title: apiCatalogServiceBranchFilter
+    GetApiCatalogServiceSpecificationLintsDataItemsStatus:
+      type: string
+      enum:
+      - passed
+      - failed
+      description: Whether the lint run passed or failed.
+      title: GetApiCatalogServiceSpecificationLintsDataItemsStatus
+    apiCatalogSystemEnvironmentsFiltersData:
+      type: object
+      properties:
+        isProduction:
+          type: boolean
+      description: The applied filters, if any.
+      title: apiCatalogSystemEnvironmentsFiltersData
+    apiCatalogServiceSortEndpointsFilter:
+      type: string
+      title: apiCatalogServiceSortEndpointsFilter
+    getApiCatalogSystemEnvironmentAssociationsData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The association's ID.
+        workspaceEnvironmentId:
+          type: string
+          description: The workspace environment's ID.
+        workspaceId:
+          type: string
+          description: The ID of the workspace that contains the environment.
+        associatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the association was created.
+      required:
+      - id
+      - workspaceEnvironmentId
+      - workspaceId
+      - associatedAt
+      description: Information about the workspace-environment association.
+      title: getApiCatalogSystemEnvironmentAssociationsData
+    GetApiCatalogDiscoveryServiceRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiCatalogDiscoveryServiceRequestInternalServerError
+    GetApiCatalogServiceCiRunsDataItemsStatus:
+      type: string
+      enum:
+      - passed
+      - failed
+      description: Whether the CI run passed or failed.
+      title: GetApiCatalogServiceCiRunsDataItemsStatus
+    GetApiCatalogSystemEnvironmentsRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/apiCatalogError'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      title: GetApiCatalogSystemEnvironmentsRequestBadRequestError
+    GetApiCatalogServiceComplianceDataCliRunStatus:
+      type: string
+      enum:
+      - passed
+      - failed
+      description: Whether the pipelines' latest runs passed or failed. If no runs exist, this returns a null value.
+      title: GetApiCatalogServiceComplianceDataCliRunStatus
+    GetApiCatalogServiceSpecificationLintsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiCatalogServiceSpecificationLintsRequestInternalServerError
+    AddApiCatalogSystemEnvironmentAssociationsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: AddApiCatalogSystemEnvironmentAssociationsRequestInternalServerError
+    apiCatalogServiceServiceData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The service's ID.
+        name:
+          type: string
+          description: The service's name.
+        status:
+          $ref: '#/components/schemas/ApiCatalogServiceServiceDataStatus'
+          description: The overall health status, derived from compliance signals.
+        lastActivityAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The date and time of the last observed activity. If there's no activity in the time window, this returns a null value.
+        traffic:
+          oneOf:
+          - $ref: '#/components/schemas/ApiCatalogServiceServiceDataTraffic'
+          - type: 'null'
+          description: Information about traffic and performance within the time window. If there's no traffic data, this returns a null value.
+        compliance:
+          $ref: '#/components/schemas/ApiCatalogServiceServiceDataCompliance'
+          description: Information about compliance and governance.
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The date and time at which the workspace was created.
+        gitRepo:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The URL of the linked Git repository. If the workspace isn't connected to a repository, this returns a null value.
+        owner:
+          oneOf:
+          - $ref: '#/components/schemas/ApiCatalogServiceServiceDataOwner'
+          - type: 'null'
+          description: The service's owner. If no owner is assigned, this returns a null value.
+        tags:
+          type: array
+          items:
+            type: string
+          description: A list of the workspace's tags.
+        governanceGroup:
+          oneOf:
+          - $ref: '#/components/schemas/ApiCatalogServiceServiceDataGovernanceGroup'
+          - type: 'null'
+          description: The governance group that the workspace belongs to. If no governance group is assigned, this returns a null value.
+      required:
+      - id
+      - name
+      - status
+      - lastActivityAt
+      - traffic
+      - compliance
+      - createdAt
+      - gitRepo
+      - owner
+      - tags
+      - governanceGroup
+      description: Information about the service.
+      title: apiCatalogServiceServiceData
+    getApiCatalogServiceCiRuns:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/GetApiCatalogServiceCiRunsMeta'
+          description: The response's meta information for paginated results.
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetApiCatalogServiceCiRunsDataItems'
+          description: A list of CI collection runs.
+      required:
+      - meta
+      - data
+      title: getApiCatalogServiceCiRuns
+    RemoveApiCatalogSystemEnvironmentAssociationsRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/apiCatalogError'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      title: RemoveApiCatalogSystemEnvironmentAssociationsRequestBadRequestError
+    GetApiCatalogSystemEnvironmentAssociationsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiCatalogSystemEnvironmentAssociationsRequestInternalServerError
+    removeApiCatalogSystemEnvironmentAssociationsData:
+      type: object
+      properties:
+        workspaceEnvironmentId:
+          type: string
+          description: The workspace's environment ID.
+        status:
+          $ref: '#/components/schemas/RemoveApiCatalogSystemEnvironmentAssociationsDataStatus'
+          description: 'The status of the operation:
+
+            - `deleted` — The association was successfully removed.
+
+            - `notFound` — The association could not be removed.
+
+            '
+      required:
+      - workspaceEnvironmentId
+      - status
+      description: Information about the associated workspace environment.
+      title: removeApiCatalogSystemEnvironmentAssociationsData
+    GetApiCatalogServiceCiRunsDataItemsPipeline:
+      type: object
+      properties:
+        provider:
+          type:
+          - string
+          - 'null'
+          description: The CI provider.
+        workflowName:
+          type:
+          - string
+          - 'null'
+          description: The workflow or pipeline name.
+        workflowId:
+          type:
+          - string
+          - 'null'
+          description: The workflow ID.
+        jobName:
+          type:
+          - string
+          - 'null'
+          description: The job name in the workflow.
+        jobId:
+          type:
+          - string
+          - 'null'
+          description: The job's ID.
+        pipelineId:
+          type:
+          - string
+          - 'null'
+          description: The pipeline run's ID.
+        pipelineNumber:
+          type:
+          - string
+          - 'null'
+          description: The pipeline run number.
+        runAttempt:
+          type:
+          - integer
+          - 'null'
+          description: The attempt number for this run.
+        actor:
+          type:
+          - string
+          - 'null'
+          description: The user or bot that triggered the run.
+      required:
+      - provider
+      - workflowName
+      - workflowId
+      - jobName
+      - jobId
+      - pipelineId
+      - pipelineNumber
+      - runAttempt
+      - actor
+      description: Information about the CI/CD pipeline.
+      title: GetApiCatalogServiceCiRunsDataItemsPipeline
+    specId:
+      type: string
+      title: specId
+    GetApiCatalogServiceMeta:
+      type: object
+      properties:
+        filters:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataFiltersData'
+        timeRange:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataTimeRangeData'
+      required:
+      - timeRange
+      description: The response's meta information for paginated results.
+      title: GetApiCatalogServiceMeta
+    GetApiCatalogServiceMonitorRunsMeta:
       type: object
       properties:
         nextCursor:
@@ -1268,21 +2099,35 @@ components:
           $ref: '#/components/schemas/apiCatalogServiceMetadataFiltersData'
         timeRange:
           $ref: '#/components/schemas/apiCatalogServiceMetadataTimeRangeData'
-        totalEndpoints:
-          type: integer
-          description: The total number of endpoints that match the given filters.
-        totalRequests:
-          type: integer
-          description: The total number of requests that match the given filters.
+        totalRuns:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataTotalRunsData'
+        passedRuns:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataPassedRunsData'
+        failedRuns:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataFailedRunsData'
+        successRatePct:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataSuccessRatePctData'
       required:
       - nextCursor
       - limit
       - filters
       - timeRange
-      - totalEndpoints
-      - totalRequests
+      - totalRuns
+      - passedRuns
+      - failedRuns
+      - successRatePct
       description: The response's meta information for paginated results.
-      title: GetApiCatalogServiceEndpointsMeta
+      title: GetApiCatalogServiceMonitorRunsMeta
+    ApiCatalogServiceServiceDataComplianceSpecLintStatus:
+      type: string
+      enum:
+      - passed
+      - failed
+      description: Whether the specifications' latest lints passed or failed. If no lints exist, this returns a null value.
+      title: ApiCatalogServiceServiceDataComplianceSpecLintStatus
+    apiCatalogServiceHttpMethodFilter:
+      type: string
+      title: apiCatalogServiceHttpMethodFilter
     getApiCatalogServiceTrafficData:
       type: object
       properties:
@@ -1323,180 +2168,6 @@ components:
           description: The percentage change in error rate compared to the preceding seven day window.
       description: Information about traffic and performance within the time window. If there's no traffic data, this returns a null value.
       title: getApiCatalogServiceTrafficData
-    apiCatalogServiceSortEndpointsFilter:
-      type: string
-      title: apiCatalogServiceSortEndpointsFilter
-    GetApiCatalogServiceOwnerDataType:
-      type: string
-      enum:
-      - user
-      - group
-      description: The type of owner.
-      title: GetApiCatalogServiceOwnerDataType
-    GetApiCatalogServiceCiRunsDataItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The CI run's ID.
-        status:
-          $ref: '#/components/schemas/GetApiCatalogServiceCiRunsDataItemsStatus'
-          description: Whether the CI run passed or failed.
-        timestamp:
-          type: string
-          format: date-time
-          description: The date and time at which the run completed.
-        collection:
-          $ref: '#/components/schemas/apiCatalogServiceCollectionData'
-        environment:
-          $ref: '#/components/schemas/apiCatalogServiceEnvironmentData'
-        source:
-          $ref: '#/components/schemas/GetApiCatalogServiceCiRunsDataItemsSource'
-          description: Information about the Git source control for the CI run.
-        pipeline:
-          $ref: '#/components/schemas/GetApiCatalogServiceCiRunsDataItemsPipeline'
-          description: Information about the CI/CD pipeline.
-        execution:
-          oneOf:
-          - $ref: '#/components/schemas/GetApiCatalogServiceCiRunsDataItemsExecution'
-          - type: 'null'
-          description: Information about the environment run.
-        summary:
-          $ref: '#/components/schemas/GetApiCatalogServiceCiRunsDataItemsSummary'
-          description: Information about the CI run.
-        performance:
-          $ref: '#/components/schemas/apiCatalogServicePerformanceData'
-      required:
-      - id
-      - status
-      - timestamp
-      - collection
-      - environment
-      - source
-      - pipeline
-      - execution
-      - summary
-      - performance
-      title: GetApiCatalogServiceCiRunsDataItems
-    ApiCatalogServiceServiceDataOwner:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/ApiCatalogServiceServiceDataOwnerType'
-          description: The type of owner.
-        id:
-          type: string
-          description: The owner's ID.
-        name:
-          type:
-          - string
-          - 'null'
-          description: The owner's display name.
-        profilePicUrl:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: The URL of the owner's profile picture.
-        publicHandle:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: The URL of the owner's public profile.
-      required:
-      - type
-      - id
-      - name
-      - profilePicUrl
-      - publicHandle
-      description: The service's owner. If no owner is assigned, this returns a null value.
-      title: ApiCatalogServiceServiceDataOwner
-    UpdateApiCatalogSystemEnvironmentRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/apiCatalogError'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      title: UpdateApiCatalogSystemEnvironmentRequestBadRequestError
-    GetApiCatalogSystemEnvironmentsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiCatalogSystemEnvironmentsRequestInternalServerError
-    GetApiCatalogServiceCiRunsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiCatalogServiceCiRunsRequestInternalServerError
-    removeApiCatalogSystemEnvironmentAssociationsData:
-      type: object
-      properties:
-        workspaceEnvironmentId:
-          type: string
-          description: The workspace's environment ID.
-        status:
-          $ref: '#/components/schemas/RemoveApiCatalogSystemEnvironmentAssociationsDataStatus'
-          description: 'The status of the operation:
-
-            - `deleted` — The association was successfully removed.
-
-            - `notFound` — The association could not be removed.
-
-            '
-      required:
-      - workspaceEnvironmentId
-      - status
-      description: Information about the associated workspace environment.
-      title: removeApiCatalogSystemEnvironmentAssociationsData
-    removeApiCatalogSystemEnvironmentAssociationsMetaData:
-      type: object
-      properties:
-        deleted:
-          type: integer
-          description: The number of associations successfully removed.
-        notFound:
-          type: integer
-          description: The number of environment IDs with no existing association to remove.
-      required:
-      - deleted
-      - notFound
-      description: The response's meta information for paginated results.
-      title: removeApiCatalogSystemEnvironmentAssociationsMetaData
-    getApiCatalogServiceOwnerData:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/GetApiCatalogServiceOwnerDataType'
-          description: The type of owner.
-        id:
-          type: string
-          description: The owner's ID.
-        name:
-          type:
-          - string
-          - 'null'
-          description: The owner's display name.
-        profilePicUrl:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: The URL of the owner's profile picture.
-        publicHandle:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: The URL of the owner's public profile.
-      required:
-      - type
-      - id
-      - name
-      - profilePicUrl
-      - publicHandle
-      description: The service's owner. If no owner is assigned, this returns a null value.
-      title: getApiCatalogServiceOwnerData
     createApiCatalogSystemEnvironmentResponse:
       type: object
       properties:
@@ -1505,12 +2176,66 @@ components:
       required:
       - data
       title: createApiCatalogSystemEnvironmentResponse
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
+    postApiCatalogDiscoveryServicesServiceData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The service's ID.
+        organizationId:
+          type: integer
+          description: The ID of the organization that the service belongs to.
+        name:
+          type: string
+          description: The servie's name.
+        description:
+          type:
+          - string
+          - 'null'
+          description: The service's description.
+        version:
+          type:
+          - string
+          - 'null'
+          description: The service's version.
+        sourceEnvironment:
+          type:
+          - string
+          - 'null'
+          description: The source environment in which the service was discovered.
+        systemEnvironmentId:
+          type:
+          - string
+          - 'null'
+          description: The mapped system environment's ID. Returns a null value if the environment is not mapped.
+        tags:
+          $ref: '#/components/schemas/apiCatalogDiscoveryServicesTagsData'
+        status:
+          type: string
+          description: The service's current status.
+        endpointsCount:
+          type: integer
+          description: The total number of endpoints associated with the service.
+        providerServiceId:
+          type: string
+          description: The ID of the service in the source registry.
+        discoveredAt:
+          type: string
+          format: date-time
+          description: The date and time at which the service was first discovered.
+        discoveredBy:
+          type: integer
+          description: The user ID of the user who discovered or ingested the service.
+        lastSyncedAt:
+          type: string
+          format: date-time
+          description: The date and time of the most recent service sync.
+      description: Information about a discovered service.
+      title: postApiCatalogDiscoveryServicesServiceData
+    limitDefault20:
+      type: integer
+      default: 20
+      title: limitDefault20
     discoveryServicesSource:
       type: string
       enum:
@@ -1519,6 +2244,40 @@ components:
       - infra_watcher
       - public_api
       title: discoveryServicesSource
+    discoveryServicesSearch:
+      type: string
+      title: discoveryServicesSearch
+    GetApiCatalogServiceMonitorRunsDataItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The monitor run's ID.
+        status:
+          $ref: '#/components/schemas/GetApiCatalogServiceMonitorRunsDataItemsStatus'
+          description: Whether the monitor run passed or failed.
+        timestamp:
+          type: string
+          format: date-time
+          description: The date and time at which the run completed.
+        collection:
+          $ref: '#/components/schemas/apiCatalogServiceCollectionData'
+        environment:
+          $ref: '#/components/schemas/apiCatalogServiceEnvironmentData'
+        summary:
+          $ref: '#/components/schemas/GetApiCatalogServiceMonitorRunsDataItemsSummary'
+          description: Information about the monitor run.
+        performance:
+          $ref: '#/components/schemas/apiCatalogServicePerformanceData'
+      required:
+      - id
+      - status
+      - timestamp
+      - collection
+      - environment
+      - summary
+      - performance
+      title: GetApiCatalogServiceMonitorRunsDataItems
     apiCatalogServicePerformanceData:
       type: object
       properties:
@@ -1535,66 +2294,128 @@ components:
       - maxResponseMs
       description: Information about the response time range across all requests in the run.
       title: apiCatalogServicePerformanceData
-    limitDefault20:
-      type: integer
-      default: 20
-      title: limitDefault20
-    serviceId:
-      type: string
-      title: serviceId
-    apiCatalogServiceStatusFilter:
-      type: string
-      enum:
-      - passed
-      - failed
-      title: apiCatalogServiceStatusFilter
-    UpdateApiCatalogSystemEnvironmentRequestInternalServerError:
+    apiCatalogDiscoveryServicesProviderMetadata:
+      type: object
+      properties:
+        title:
+          type: string
+          description: The provider's service display title.
+        environmentId:
+          type: string
+          description: The provider's environment ID.
+        environmentVersion:
+          type: string
+          description: The provider's environment version.
+        openApiSpecCanBeDownloaded:
+          type: boolean
+          description: If true, the provider has enabled downloading of the OpenAPI specification.
+      description: Additional metadata from the discovery source provider.
+      title: apiCatalogDiscoveryServicesProviderMetadata
+    CreateApiCatalogSystemEnvironmentRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/apiCatalogError'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      title: CreateApiCatalogSystemEnvironmentRequestBadRequestError
+    GetApiCatalogSystemEnvironmentRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateApiCatalogSystemEnvironmentRequestInternalServerError
-    commonErrorTypeTitleDetail:
+      title: GetApiCatalogSystemEnvironmentRequestInternalServerError
+    apiCatalogServiceSpecLintSeverityFilter:
+      type: string
+      enum:
+      - info
+      - warning
+      - error
+      title: apiCatalogServiceSpecLintSeverityFilter
+    postApiCatalogDiscoveryServiceData:
       type: object
       properties:
-        type:
+        name:
           type: string
-          description: The type of error.
-        title:
+          description: The service's name.
+        version:
           type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
-          description: Information about the error.
-      title: commonErrorTypeTitleDetail
-    postApiCatalogDiscoveryServicesResponseMetaData:
+          description: The service's version.
+        providerServiceId:
+          type: string
+          description: The ID of the service in the source registry. If you do not pass this property, the system uses the `{name}:{version}` value.
+        description:
+          type: string
+          description: The service's description.
+        sourceEnvironment:
+          type: string
+          description: The service's source environment.
+        apiDefinition:
+          $ref: '#/components/schemas/postApiCatalogDiscoveryServicesApiDefinitionData'
+        endpoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/apiCatalogDiscoveryServiceEndpointsData'
+          description: A list of the service's endpoints. If you pass this with the `apiDefinition` array, this array is ignored.
+        tags:
+          $ref: '#/components/schemas/apiCatalogDiscoveryServicesTagsData'
+        providerMetadata:
+          $ref: '#/components/schemas/postApiCatalogDiscoveryServicesProviderMetadataData'
+      required:
+      - name
+      description: Information about the discovered service.
+      title: postApiCatalogDiscoveryServiceData
+    GetApiCatalogServiceComplianceDataCliRun:
       type: object
       properties:
-        total:
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/GetApiCatalogServiceComplianceDataCliRunStatus'
+          - type: 'null'
+          description: Whether the pipelines' latest runs passed or failed. If no runs exist, this returns a null value.
+        activePipelines:
           type: integer
-          description: The total number of services processed.
-        created:
+          description: The number of distinct pipelines with at least one run within the time window.
+        passingPipelines:
           type: integer
-          description: The number of new services created.
-        updated:
+          description: The number of distinct pipelines whose latest run passed within the time window.
+        failingPipelines:
           type: integer
-          description: The number of existing services updated.
-      description: The operation's metadata summary.
-      title: postApiCatalogDiscoveryServicesResponseMetaData
-    GetApiCatalogServiceCiRunsDataItemsExecutionSystem:
+          description: The number of distinct pipelines whose latest run failed within the time window.
+        lastRunAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The date and time of the most recent run across all pipelines. If no runs exist, this returns a null value.
+      required:
+      - status
+      - activePipelines
+      - passingPipelines
+      - failingPipelines
+      - lastRunAt
+      description: Information about the CI/CD pipeline.
+      title: GetApiCatalogServiceComplianceDataCliRun
+    createApiCatalogSystemEnvironment:
       type: object
       properties:
-        os:
+        name:
           type: string
-          description: The operating system and kernel version.
-        cpus:
-          type: integer
-          description: The number of CPU cores.
-        memoryMb:
-          type: integer
-          description: The available memory, in megabytes.
-      description: The system information about the execution run. This returns as null if unavailable.
-      title: GetApiCatalogServiceCiRunsDataItemsExecutionSystem
+          description: The system environment's name. This value must be unique within the team.
+        label:
+          type: string
+          description: A lowercase, terminal-friendly identifier for the system environment. Accepts only alphanumeric characters, hyphens, and underscores.
+        description:
+          type: string
+          description: A description of the system environment. To remove a description, pass this value as an empty string.
+        color:
+          type: string
+          description: A six-digit hex color code.
+        isProduction:
+          type: boolean
+          default: false
+          description: If true, the system environment is a production environment.
+      required:
+      - name
+      - color
+      title: createApiCatalogSystemEnvironment
     GetApiCatalogServiceCiRunsDataItemsSourcePullRequest:
       type: object
       properties:
@@ -1635,6 +2456,194 @@ components:
       - headBranch
       description: Information about the pull request. This returns null if the run wasn't triggered by a pull request.
       title: GetApiCatalogServiceCiRunsDataItemsSourcePullRequest
+    apiCatalogSystemEnvironmentData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The system environment's ID.
+        name:
+          type: string
+          description: The system environment's name.
+        label:
+          type: string
+          description: A lowercase, terminal-friendly identifier for the system environment.
+        color:
+          type: string
+          description: A six-digit hex color code.
+        description:
+          type: string
+          description: A description of the system environment.
+        isProduction:
+          type: boolean
+          description: If true, the system environment is a production environment.
+        associationCount:
+          type: integer
+          description: The total number of workspace environments associated with this system environment.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the system environment was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the system environment was last updated.
+      required:
+      - id
+      - name
+      - label
+      - color
+      - description
+      - isProduction
+      - associationCount
+      - createdAt
+      - updatedAt
+      description: Information about the system environment.
+      title: apiCatalogSystemEnvironmentData
+    removeApiCatalogSystemEnvironmentAssociations:
+      type: object
+      properties:
+        workspaceEnvironmentIds:
+          $ref: '#/components/schemas/workspaceEnvironmentIdsData'
+      required:
+      - workspaceEnvironmentIds
+      title: removeApiCatalogSystemEnvironmentAssociations
+    systemEnvironmentAllowPartial:
+      type: boolean
+      default: false
+      title: systemEnvironmentAllowPartial
+    getApiCatalogServiceMonitorRuns:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/GetApiCatalogServiceMonitorRunsMeta'
+          description: The response's meta information for paginated results.
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetApiCatalogServiceMonitorRunsDataItems'
+          description: A list of monitor runs.
+      required:
+      - meta
+      - data
+      title: getApiCatalogServiceMonitorRuns
+    apiCatalogServiceMetadataLimitData:
+      type: integer
+      description: The maximum number of records in the paginated response.
+      title: apiCatalogServiceMetadataLimitData
+    GetApiCatalogServiceEndpointsMeta:
+      type: object
+      properties:
+        nextCursor:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataNextCursorData'
+        limit:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataLimitData'
+        filters:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataFiltersData'
+        timeRange:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataTimeRangeData'
+        totalEndpoints:
+          type: integer
+          description: The total number of endpoints that match the given filters.
+        totalRequests:
+          type: integer
+          description: The total number of requests that match the given filters.
+      required:
+      - nextCursor
+      - limit
+      - filters
+      - timeRange
+      - totalEndpoints
+      - totalRequests
+      description: The response's meta information for paginated results.
+      title: GetApiCatalogServiceEndpointsMeta
+    apiCatalogServiceSearchFilter:
+      type: string
+      title: apiCatalogServiceSearchFilter
+    getApiCatalogSystemEnvironments:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/apiCatalogSystemEnvironmentsMetaData'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/apiCatalogSystemEnvironmentData'
+          description: A list of system environments.
+      required:
+      - meta
+      - data
+      title: getApiCatalogSystemEnvironments
+    postApiCatalogDiscoveryServicesApiDefinitionData:
+      type: object
+      properties:
+        content:
+          type: string
+          description: A Base64-encoded JSON API definition. Cannot exceed 2 MB after decoding.
+      description: The API definition (specification) for the service. If you pass this with the `endpoints` array, this object is given preference and `endpoints` is ignored.
+      title: postApiCatalogDiscoveryServicesApiDefinitionData
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    apiCatalogServiceStatusFilter:
+      type: string
+      enum:
+      - passed
+      - failed
+      title: apiCatalogServiceStatusFilter
+    GetApiCatalogServiceCiRunsDataItemsSource:
+      type: object
+      properties:
+        branch:
+          type:
+          - string
+          - 'null'
+          description: The Git branch's name.
+        commitSha:
+          type:
+          - string
+          - 'null'
+          description: The full Git commit SHA.
+        repo:
+          $ref: '#/components/schemas/GetApiCatalogServiceCiRunsDataItemsSourceRepo'
+          description: Information about the source repository.
+        pullRequest:
+          oneOf:
+          - $ref: '#/components/schemas/GetApiCatalogServiceCiRunsDataItemsSourcePullRequest'
+          - type: 'null'
+          description: Information about the pull request. This returns null if the run wasn't triggered by a pull request.
+      required:
+      - branch
+      - commitSha
+      - repo
+      - pullRequest
+      description: Information about the Git source control for the CI run.
+      title: GetApiCatalogServiceCiRunsDataItemsSource
+    GetApiCatalogServiceEndpointsDataItemsMethod:
+      type: string
+      enum:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+      - HEAD
+      - OPTIONS
+      - TRACE
+      description: The endpoint's HTTP method.
+      title: GetApiCatalogServiceEndpointsDataItemsMethod
     getApiCatalogDiscoveryService:
       type: object
       properties:
@@ -1712,6 +2721,374 @@ components:
           description: The date and time at which the service was linked to a Postman workspace. Returns a null value if the service is not integrated.
       description: Information about the discovered service.
       title: getApiCatalogDiscoveryService
+    UpdateApiCatalogSystemEnvironmentRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/apiCatalogError'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      title: UpdateApiCatalogSystemEnvironmentRequestBadRequestError
+    getApiCatalogServiceData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The service's ID.
+        name:
+          type: string
+          description: The service's name.
+        version:
+          type: string
+          description: The service's version.
+        sourceEnvironment:
+          type:
+          - string
+          - 'null'
+          description: The source environment in which the service was discovered.
+        systemEnvironmentId:
+          type:
+          - string
+          - 'null'
+          description: The mapped system environment's ID. Returns a null value if the environment is not mapped.
+        status:
+          type: string
+          description: The service's current status.
+        endpointsCount:
+          type: integer
+          description: The total number of endpoints associated with the service.
+        discoverySource:
+          type: string
+          description: The source through which the service was discovered.
+        tags:
+          $ref: '#/components/schemas/apiCatalogDiscoveryServicesTagsData'
+        discoveredAt:
+          type: string
+          format: date-time
+          description: The date and time at which the service was first discovered.
+      description: Information about the discovered service.
+      title: getApiCatalogServiceData
+    GetApiCatalogServiceCiRunsDataItemsSummary:
+      type: object
+      properties:
+        totalRequests:
+          type: integer
+          description: The total number of HTTP requests executed in the run.
+        failedRequests:
+          type: integer
+          description: The number of requests that failed.
+        totalAssertions:
+          type: integer
+          description: The total number of test assertions evaluated.
+        failedAssertions:
+          type: integer
+          description: The number of failed assertions.
+        durationMs:
+          type: integer
+          description: Total execution duration in milliseconds.
+      required:
+      - totalRequests
+      - failedRequests
+      - totalAssertions
+      - failedAssertions
+      - durationMs
+      description: Information about the CI run.
+      title: GetApiCatalogServiceCiRunsDataItemsSummary
+    GetApiCatalogServiceDataDependenciesItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The dependent service's ID.
+        name:
+          type: string
+          description: The dependent service's name.
+        direction:
+          $ref: '#/components/schemas/GetApiCatalogServiceDataDependenciesItemsDirection'
+          description: Whether traffic flows into (inbound) or out of (outbound) the service.
+      required:
+      - id
+      - name
+      - direction
+      title: GetApiCatalogServiceDataDependenciesItems
+    GetApiCatalogServiceCiRunsDataItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The CI run's ID.
+        status:
+          $ref: '#/components/schemas/GetApiCatalogServiceCiRunsDataItemsStatus'
+          description: Whether the CI run passed or failed.
+        timestamp:
+          type: string
+          format: date-time
+          description: The date and time at which the run completed.
+        collection:
+          $ref: '#/components/schemas/apiCatalogServiceCollectionData'
+        environment:
+          $ref: '#/components/schemas/apiCatalogServiceEnvironmentData'
+        source:
+          $ref: '#/components/schemas/GetApiCatalogServiceCiRunsDataItemsSource'
+          description: Information about the Git source control for the CI run.
+        pipeline:
+          $ref: '#/components/schemas/GetApiCatalogServiceCiRunsDataItemsPipeline'
+          description: Information about the CI/CD pipeline.
+        execution:
+          oneOf:
+          - $ref: '#/components/schemas/GetApiCatalogServiceCiRunsDataItemsExecution'
+          - type: 'null'
+          description: Information about the environment run.
+        summary:
+          $ref: '#/components/schemas/GetApiCatalogServiceCiRunsDataItemsSummary'
+          description: Information about the CI run.
+        performance:
+          $ref: '#/components/schemas/apiCatalogServicePerformanceData'
+      required:
+      - id
+      - status
+      - timestamp
+      - collection
+      - environment
+      - source
+      - pipeline
+      - execution
+      - summary
+      - performance
+      title: GetApiCatalogServiceCiRunsDataItems
+    GetApiCatalogServiceCiRunsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiCatalogServiceCiRunsRequestInternalServerError
+    ApiCatalogServiceServiceDataOwner:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/ApiCatalogServiceServiceDataOwnerType'
+          description: The type of owner.
+        id:
+          type: string
+          description: The owner's ID.
+        name:
+          type:
+          - string
+          - 'null'
+          description: The owner's display name.
+        profilePicUrl:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The URL of the owner's profile picture.
+        publicHandle:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The URL of the owner's public profile.
+      required:
+      - type
+      - id
+      - name
+      - profilePicUrl
+      - publicHandle
+      description: The service's owner. If no owner is assigned, this returns a null value.
+      title: ApiCatalogServiceServiceDataOwner
+    apiCatalogServiceCollectionData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The collection's ID.
+        name:
+          type:
+          - string
+          - 'null'
+          description: The collection's name. If the collection was deleted, this returns a null value.
+      required:
+      - id
+      - name
+      description: Information about the collection.
+      title: apiCatalogServiceCollectionData
+    ApiCatalogServiceServiceDataTraffic:
+      type: object
+      properties:
+        p95LatencyMs:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: The 95th-percentile response latency, in milliseconds.
+        errorRatePct:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: The percentage of requests that resulted in errors.
+      required:
+      - p95LatencyMs
+      - errorRatePct
+      description: Information about traffic and performance within the time window. If there's no traffic data, this returns a null value.
+      title: ApiCatalogServiceServiceDataTraffic
+    apiCatalogServiceRepoNameFilter:
+      type: string
+      title: apiCatalogServiceRepoNameFilter
+    apiCatalogServiceSortSpecLintFilter:
+      type: string
+      title: apiCatalogServiceSortSpecLintFilter
+    apiCatalogServiceMetadataSuccessRatePctData:
+      type: number
+      format: double
+      description: The percentage of runs that passed, rounded to two decimal places.
+      title: apiCatalogServiceMetadataSuccessRatePctData
+    postApiCatalogDiscoveryServicesProviderMetadataData:
+      type: object
+      properties:
+        commitSha:
+          type: string
+          description: A commit hash ID.
+        branch:
+          type: string
+          description: The source provider's branch name.
+        gitRepoUrl:
+          type: string
+          description: The source provider's Git repo URL.
+        deployedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the service was deployed.
+      description: Additional metadata from the discovery source provider.
+      title: postApiCatalogDiscoveryServicesProviderMetadataData
+    removeApiCatalogSystemEnvironmentAssociationsResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/removeApiCatalogSystemEnvironmentAssociationsMetaData'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/removeApiCatalogSystemEnvironmentAssociationsData'
+      required:
+      - meta
+      - data
+      title: removeApiCatalogSystemEnvironmentAssociationsResponse
+    apiCatalogServiceWorkflowNameFilter:
+      type: string
+      title: apiCatalogServiceWorkflowNameFilter
+    apiCatalogServiceMetadataNextCursorData:
+      type: string
+      description: The pagination cursor that points to the next record in the results set.
+      title: apiCatalogServiceMetadataNextCursorData
+    serviceId:
+      type: string
+      title: serviceId
+    getApiCatalogSystemEnvironment:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/apiCatalogSystemEnvironmentData'
+      required:
+      - data
+      title: getApiCatalogSystemEnvironment
+    GetApiCatalogServiceSpecificationLintsMeta:
+      type: object
+      properties:
+        nextCursor:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataNextCursorData'
+        limit:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataLimitData'
+        filters:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataFiltersData'
+        timeRange:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataTimeRangeData'
+        totalRuns:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataTotalRunsData'
+        passedRuns:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataPassedRunsData'
+        failedRuns:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataFailedRunsData'
+        conformanceRatePct:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataConformanceRatePctData'
+      required:
+      - nextCursor
+      - limit
+      - filters
+      - timeRange
+      - totalRuns
+      - passedRuns
+      - failedRuns
+      - conformanceRatePct
+      description: The response's meta information for paginated results.
+      title: GetApiCatalogServiceSpecificationLintsMeta
+    apiCatalogServiceMetadataTotalRunsData:
+      type: integer
+      description: The total number of runs that match the given filters.
+      title: apiCatalogServiceMetadataTotalRunsData
+    ApiCatalogServiceServiceDataComplianceMonitorRunStatus:
+      type: string
+      enum:
+      - passed
+      - failed
+      description: Whether the monitor's latest runs passed or failed. If no runs exist, this returns a null value.
+      title: ApiCatalogServiceServiceDataComplianceMonitorRunStatus
+    GetApiCatalogServicesMeta:
+      type: object
+      properties:
+        nextCursor:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataNextCursorData'
+        limit:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataLimitData'
+        filters:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataFiltersData'
+        timeRange:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataTimeRangeData'
+      required:
+      - nextCursor
+      - limit
+      - filters
+      - timeRange
+      description: The response's meta information for paginated results.
+      title: GetApiCatalogServicesMeta
+    getApiCatalogServices:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/GetApiCatalogServicesMeta'
+          description: The response's meta information for paginated results.
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/apiCatalogServiceServiceData'
+          description: A list of list of services.
+      title: getApiCatalogServices
+    apiCatalogDiscoveryServiceEndpointsData:
+      type: object
+      properties:
+        method:
+          type: string
+          description: The endpoint's HTTP method.
+        path:
+          type: string
+          description: The endpoint's URL path.
+        description:
+          type:
+          - string
+          - 'null'
+          description: The endpoint's description.
+        host:
+          type: string
+          description: The endpoint's host.
+      description: Information about a service's endpoint.
+      title: apiCatalogDiscoveryServiceEndpointsData
+    GetApiCatalogServiceMonitorRunsDataItemsStatus:
+      type: string
+      enum:
+      - passed
+      - failed
+      description: Whether the monitor run passed or failed.
+      title: GetApiCatalogServiceMonitorRunsDataItemsStatus
+    environmentId:
+      type: string
+      title: environmentId
     GetApiCatalogServiceMonitorRunsDataItemsSummary:
       type: object
       properties:
@@ -1738,174 +3115,74 @@ components:
       - durationMs
       description: Information about the monitor run.
       title: GetApiCatalogServiceMonitorRunsDataItemsSummary
-    GetApiCatalogServiceEndpointsDataItemsPerformance:
+    getApiCatalogDiscoveryServices:
       type: object
       properties:
-        p90LatencyMs:
-          type: number
-          format: double
-          description: The 90th-percentile response latency, in milliseconds.
-        p95LatencyMs:
-          type: number
-          format: double
-          description: The 95th-percentile response latency, in milliseconds.
-      required:
-      - p90LatencyMs
-      - p95LatencyMs
-      description: Information about latency percentile metrics.
-      title: GetApiCatalogServiceEndpointsDataItemsPerformance
-    GetApiCatalogServicesMeta:
+        meta:
+          $ref: '#/components/schemas/getApiCatalogDiscoveryMetaData'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/getApiCatalogServiceData'
+          description: A list of discovered services.
+      title: getApiCatalogDiscoveryServices
+    GetApiCatalogServiceEndpointsDataItemsErrors:
       type: object
       properties:
-        nextCursor:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataNextCursorData'
-        limit:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataLimitData'
-        filters:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataFiltersData'
-        timeRange:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataTimeRangeData'
-      required:
-      - nextCursor
-      - limit
-      - filters
-      - timeRange
-      description: The response's meta information for paginated results.
-      title: GetApiCatalogServicesMeta
-    ApiCatalogServiceServiceDataTraffic:
-      type: object
-      properties:
-        p95LatencyMs:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: The 95th-percentile response latency, in milliseconds.
+        totalErrors:
+          type: integer
+          description: The total number of 4xx and 5xx responses.
         errorRatePct:
-          type:
-          - number
-          - 'null'
+          type: number
           format: double
           description: The percentage of requests that resulted in errors.
+        breakdown:
+          type: object
+          additionalProperties:
+            type: integer
+          description: The error counts, keyed by the HTTP status code.
       required:
-      - p95LatencyMs
+      - totalErrors
       - errorRatePct
-      description: Information about traffic and performance within the time window. If there's no traffic data, this returns a null value.
-      title: ApiCatalogServiceServiceDataTraffic
-    postApiCatalogDiscoveryServicesServiceData:
+      - breakdown
+      description: Information about the endpoint's errors.
+      title: GetApiCatalogServiceEndpointsDataItemsErrors
+    getApiCatalogServiceComplianceData:
       type: object
       properties:
-        id:
-          type: string
-          description: The service's ID.
-        organizationId:
-          type: integer
-          description: The ID of the organization that the service belongs to.
-        name:
-          type: string
-          description: The servie's name.
-        description:
-          type:
-          - string
-          - 'null'
-          description: The service's description.
-        version:
-          type:
-          - string
-          - 'null'
-          description: The service's version.
-        sourceEnvironment:
-          type:
-          - string
-          - 'null'
-          description: The source environment in which the service was discovered.
-        systemEnvironmentId:
-          type:
-          - string
-          - 'null'
-          description: The mapped system environment's ID. Returns a null value if the environment is not mapped.
-        tags:
-          $ref: '#/components/schemas/apiCatalogDiscoveryServicesTagsData'
-        status:
-          type: string
-          description: The service's current status.
-        endpointsCount:
-          type: integer
-          description: The total number of endpoints associated with the service.
-        providerServiceId:
-          type: string
-          description: The ID of the service in the source registry.
-        discoveredAt:
-          type: string
-          format: date-time
-          description: The date and time at which the service was first discovered.
-        discoveredBy:
-          type: integer
-          description: The user ID of the user who discovered or ingested the service.
-        lastSyncedAt:
-          type: string
-          format: date-time
-          description: The date and time of the most recent service sync.
-      description: Information about a discovered service.
-      title: postApiCatalogDiscoveryServicesServiceData
-    apiCatalogSystemEnvironmentData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The system environment's ID.
-        name:
-          type: string
-          description: The system environment's name.
-        label:
-          type: string
-          description: A lowercase, terminal-friendly identifier for the system environment.
-        color:
-          type: string
-          description: A six-digit hex color code.
-        description:
-          type: string
-          description: A description of the system environment.
-        isProduction:
-          type: boolean
-          description: If true, the system environment is a production environment.
-        associationCount:
-          type: integer
-          description: The total number of workspace environments associated with this system environment.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the system environment was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the system environment was last updated.
+        monitorRun:
+          $ref: '#/components/schemas/GetApiCatalogServiceComplianceDataMonitorRun'
+          description: The scheduled monitor run summary.
+        cliRun:
+          $ref: '#/components/schemas/GetApiCatalogServiceComplianceDataCliRun'
+          description: Information about the CI/CD pipeline.
+        specLint:
+          $ref: '#/components/schemas/GetApiCatalogServiceComplianceDataSpecLint'
+          description: Information about the API specification lint.
+        collectionRuns:
+          $ref: '#/components/schemas/GetApiCatalogServiceComplianceDataCollectionRuns'
+          description: Information about collection runs, including monitor runs, CI pipeline runs, and manual runs.
       required:
-      - id
-      - name
-      - label
-      - color
-      - description
-      - isProduction
-      - associationCount
-      - createdAt
-      - updatedAt
-      description: Information about the system environment.
-      title: apiCatalogSystemEnvironmentData
-    AddApiCatalogSystemEnvironmentAssociationsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: AddApiCatalogSystemEnvironmentAssociationsRequestInternalServerError
-    apiCatalogServiceMetadataConformanceRatePctData:
-      type: number
-      format: double
-      description: The percentage of runs that passed, rounded to two decimal places.
-      title: apiCatalogServiceMetadataConformanceRatePctData
-    apiCatalogServiceSortCiFilter:
+      - monitorRun
+      - cliRun
+      - specLint
+      - collectionRuns
+      description: Information about compliance and governance.
+      title: getApiCatalogServiceComplianceData
+    ApiCatalogServiceMetadataTimeRangeDataLabel:
       type: string
-      title: apiCatalogServiceSortCiFilter
+      enum:
+      - last_7_days
+      description: The time range's label.
+      title: ApiCatalogServiceMetadataTimeRangeDataLabel
+    updateApiCatalogSystemEnvironmentResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/postPatchApiCatalogSystemEnvironmentData'
+      required:
+      - data
+      title: updateApiCatalogSystemEnvironmentResponse
     postPatchApiCatalogSystemEnvironmentData:
       type: object
       properties:
@@ -1946,165 +3223,299 @@ components:
       - updatedAt
       description: Information about the system environment.
       title: postPatchApiCatalogSystemEnvironmentData
-    apiCatalogServiceMetadataSuccessRatePctData:
-      type: number
-      format: double
-      description: The percentage of runs that passed, rounded to two decimal places.
-      title: apiCatalogServiceMetadataSuccessRatePctData
-    addApiCatalogSystemEnvironmentAssociationsWorkspaceEnvId:
+    apiCatalogServiceMetadataTimeRangeData:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+          description: The start of the time window.
+        end:
+          type: string
+          format: date-time
+          description: The end of the time window.
+        label:
+          $ref: '#/components/schemas/ApiCatalogServiceMetadataTimeRangeDataLabel'
+          description: The time range's label.
+      required:
+      - start
+      - end
+      - label
+      description: The time window for the returned data.
+      title: apiCatalogServiceMetadataTimeRangeData
+    getApiCatalogDiscoveryMetaData:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: The number of records found.
+        nextCursor:
+          type:
+          - string
+          - 'null'
+          description: The pagination cursor that points to the next record in the results set.
+      description: The response's meta information for paginated results.
+      title: getApiCatalogDiscoveryMetaData
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    workspaceEnvironmentIdsData:
+      type: array
+      items:
+        $ref: '#/components/schemas/addApiCatalogSystemEnvironmentAssociationsWorkspaceEnvId'
+      description: A list of workspace environment IDs to remove. Accepts both the environment ID or the environment's unique ID (`userId`-`environmentId`).
+      title: workspaceEnvironmentIdsData
+    GetApiCatalogServiceOwnerDataType:
       type: string
-      description: A workspace environment ID.
-      title: addApiCatalogSystemEnvironmentAssociationsWorkspaceEnvId
-    GetApiCatalogServiceComplianceDataMonitorRun:
+      enum:
+      - user
+      - group
+      description: The type of owner.
+      title: GetApiCatalogServiceOwnerDataType
+    apiCatalogServiceTagsFilter:
+      type: string
+      title: apiCatalogServiceTagsFilter
+    apiCatalogServiceResponseCodeFilter:
+      type: string
+      title: apiCatalogServiceResponseCodeFilter
+    systemEnvironmentProductionFilter:
+      type: boolean
+      title: systemEnvironmentProductionFilter
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    apiCatalogServiceSortMonitorRun:
+      type: string
+      title: apiCatalogServiceSortMonitorRun
+    getApiCatalogServiceSpecificationLints:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/GetApiCatalogServiceSpecificationLintsMeta'
+          description: The response's meta information for paginated results.
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetApiCatalogServiceSpecificationLintsDataItems'
+          description: A list of API specification lint runs.
+      required:
+      - meta
+      - data
+      title: getApiCatalogServiceSpecificationLints
+    addApiCatalogSystemEnvironmentAssociationsMetaData:
+      type: object
+      properties:
+        created:
+          type: integer
+          description: The number of new associations created.
+        existing:
+          type: integer
+          description: The number of associations that already existed and were unchanged.
+        replaced:
+          type: integer
+          description: The number of associations that were moved from a different system environment.
+        excluded:
+          type: integer
+          description: The number of associations that were skipped. This only returns if you pass the `allowPartial` query parameter as `true`).
+      required:
+      - created
+      - existing
+      - replaced
+      - excluded
+      description: The response's meta information for paginated results.
+      title: addApiCatalogSystemEnvironmentAssociationsMetaData
+    getApiCatalogService:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/GetApiCatalogServiceMeta'
+          description: The response's meta information for paginated results.
+        data:
+          $ref: '#/components/schemas/GetApiCatalogServiceData'
+          description: Information about the service.
+      required:
+      - meta
+      - data
+      title: getApiCatalogService
+    apiCatalogServiceMetadataFiltersData:
+      type: object
+      properties: {}
+      description: The filters applied to the request.
+      title: apiCatalogServiceMetadataFiltersData
+    AddApiCatalogSystemEnvironmentAssociationsRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/apiCatalogError'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      title: AddApiCatalogSystemEnvironmentAssociationsRequestBadRequestError
+    GetApiCatalogServiceComplianceDataSpecLint:
       type: object
       properties:
         status:
           oneOf:
-          - $ref: '#/components/schemas/GetApiCatalogServiceComplianceDataMonitorRunStatus'
+          - $ref: '#/components/schemas/GetApiCatalogServiceComplianceDataSpecLintStatus'
           - type: 'null'
-          description: Whether the monitor's latest runs passed or failed. If no runs exist, this returns a null value.
-        totalMonitors:
+          description: Whether the specifications' latest lints passed or failed. If no lints exist, this returns a null value.
+        totalSpecs:
           type: integer
-          description: The total number of monitors in the workspace. This value is the same as the as `entityCounts.monitors` value.
-        activeMonitors:
+          description: The total number of API specifications in the workspace. This value is the same as the as `entityCounts.specifications` value.
+        activeSpecs:
           type: integer
-          description: The number of distinct monitors with at least one run in the time window.
-        passingMonitors:
+          description: The number of distinct specifications with at least one lint within the time window.
+        passingSpecs:
           type: integer
-          description: The number of distinct monitors whose latest run passed within the time window.
-        failingMonitors:
+          description: The number of distinct specifications whose latest lint passed within the time window.
+        failingSpecs:
           type: integer
-          description: The number of distinct monitors whose latest run failed within the time window.
+          description: The number of distinct specifications whose latest lint failed within the time window.
         lastRunAt:
           type:
           - string
           - 'null'
           format: date-time
-          description: The date and time of the most recent run across all monitors. If no runs exist, this returns a null value.
+          description: The date and time of the most recent lint run across all specifications. If no lint exist, this returns a null value.
       required:
       - status
-      - totalMonitors
-      - activeMonitors
-      - passingMonitors
-      - failingMonitors
+      - totalSpecs
+      - activeSpecs
+      - passingSpecs
+      - failingSpecs
       - lastRunAt
-      description: The scheduled monitor run summary.
-      title: GetApiCatalogServiceComplianceDataMonitorRun
-    apiCatalogServiceResponseCodeFilter:
-      type: string
-      title: apiCatalogServiceResponseCodeFilter
-    GetApiCatalogServiceComplianceDataCliRunStatus:
-      type: string
-      enum:
-      - passed
-      - failed
-      description: Whether the pipelines' latest runs passed or failed. If no runs exist, this returns a null value.
-      title: GetApiCatalogServiceComplianceDataCliRunStatus
-    getApiCatalogServiceComplianceData:
-      type: object
-      properties:
-        monitorRun:
-          $ref: '#/components/schemas/GetApiCatalogServiceComplianceDataMonitorRun'
-          description: The scheduled monitor run summary.
-        cliRun:
-          $ref: '#/components/schemas/GetApiCatalogServiceComplianceDataCliRun'
-          description: Information about the CI/CD pipeline.
-        specLint:
-          $ref: '#/components/schemas/GetApiCatalogServiceComplianceDataSpecLint'
-          description: Information about the API specification lint.
-        collectionRuns:
-          $ref: '#/components/schemas/GetApiCatalogServiceComplianceDataCollectionRuns'
-          description: Information about collection runs, including monitor runs, CI pipeline runs, and manual runs.
-      required:
-      - monitorRun
-      - cliRun
-      - specLint
-      - collectionRuns
-      description: Information about compliance and governance.
-      title: getApiCatalogServiceComplianceData
-    PostApiCatalogDiscoveryServicesRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: PostApiCatalogDiscoveryServicesRequestInternalServerError
-    apiCatalogServiceSortMonitorRun:
-      type: string
-      title: apiCatalogServiceSortMonitorRun
-    discoveryServicesStatus:
-      type: string
-      title: discoveryServicesStatus
-    RemoveApiCatalogSystemEnvironmentAssociationsRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/apiCatalogError'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      title: RemoveApiCatalogSystemEnvironmentAssociationsRequestBadRequestError
-    discoveryServicesSearch:
-      type: string
-      title: discoveryServicesSearch
+      description: Information about the API specification lint.
+      title: GetApiCatalogServiceComplianceDataSpecLint
     GetApiCatalogServicesRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
       title: GetApiCatalogServicesRequestInternalServerError
-    postApiCatalogDiscoveryServicesProviderMetadataData:
+    removeApiCatalogSystemEnvironmentAssociationsMetaData:
       type: object
       properties:
-        commitSha:
+        deleted:
+          type: integer
+          description: The number of associations successfully removed.
+        notFound:
+          type: integer
+          description: The number of environment IDs with no existing association to remove.
+      required:
+      - deleted
+      - notFound
+      description: The response's meta information for paginated results.
+      title: removeApiCatalogSystemEnvironmentAssociationsMetaData
+    addApiCatalogSystemEnvironmentAssociations:
+      type: object
+      properties:
+        workspaceEnvironmentIds:
+          $ref: '#/components/schemas/workspaceEnvironmentIdsData'
+      required:
+      - workspaceEnvironmentIds
+      title: addApiCatalogSystemEnvironmentAssociations
+    ApiCatalogServiceServiceDataStatus:
+      type: string
+      enum:
+      - healthy
+      - warning
+      - critical
+      - inactive
+      description: The overall health status, derived from compliance signals.
+      title: ApiCatalogServiceServiceDataStatus
+    ApiCatalogServiceServiceDataComplianceCliRunStatus:
+      type: string
+      enum:
+      - passed
+      - failed
+      description: Whether the pipelines' latest runs passed or failed. If no runs exist, this returns a null value.
+      title: ApiCatalogServiceServiceDataComplianceCliRunStatus
+    GetApiCatalogServiceSpecificationLintsDataItems:
+      type: object
+      properties:
+        specId:
           type: string
-          description: A commit hash ID.
-        branch:
-          type: string
-          description: The source provider's branch name.
-        gitRepoUrl:
-          type: string
-          description: The source provider's Git repo URL.
-        deployedAt:
+          description: The API specification's ID.
+        specName:
+          type:
+          - string
+          - 'null'
+          description: The API specification's name. If the specification was deleted or its metadata is unavailable, this returns a null value.
+        specType:
+          type:
+          - string
+          - 'null'
+          description: The API specification's type and version ID. If the metadata is unavailable, this returns a null value.
+        timestamp:
           type: string
           format: date-time
-          description: The date and time at which the service was deployed.
-      description: Additional metadata from the discovery source provider.
-      title: postApiCatalogDiscoveryServicesProviderMetadataData
-    getApiCatalogDiscoveryServiceApiDefinitionData:
+          description: The date and time at which the run completed.
+        status:
+          $ref: '#/components/schemas/GetApiCatalogServiceSpecificationLintsDataItemsStatus'
+          description: Whether the lint run passed or failed.
+        issues:
+          $ref: '#/components/schemas/GetApiCatalogServiceSpecificationLintsDataItemsIssues'
+          description: Issue counts by severity level.
+      required:
+      - specId
+      - specName
+      - specType
+      - timestamp
+      - status
+      - issues
+      title: GetApiCatalogServiceSpecificationLintsDataItems
+    addApiCatalogSystemEnvironmentAssociationsData:
       type: object
       properties:
-        format:
+        id:
           type: string
-          description: The definition's format.
-        formatVersion:
+          description: The association's unique ID. This value doesn't return if the item was excluded.
+        workspaceEnvironmentId:
           type: string
-          description: The API definition format's version.
-        contentHash:
+          description: The workspace's environment ID.
+        workspaceId:
           type: string
-          description: A SHA-256 hash of the API definition content for change detection.
-        content:
+          description: The ID of the workspace that contains the environment. This value doesn't return if the item was excluded.
+        associatedAt:
           type: string
-          description: A Base64-encoded API definition.
-      description: The API definition associated with the service.
-      title: getApiCatalogDiscoveryServiceApiDefinitionData
-    GetApiCatalogDiscoveryServicesRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiCatalogDiscoveryServicesRequestInternalServerError
-    GetApiCatalogServiceEndpointsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiCatalogServiceEndpointsRequestInternalServerError
-    GetApiCatalogServiceRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiCatalogServiceRequestInternalServerError
-    environmentId:
-      type: string
-      title: environmentId
-    GetApiCatalogServiceSpecificationLintsMeta:
+          format: date-time
+          description: The date and time at which the association was created. This value doesn't return if the item was excluded.
+        status:
+          $ref: '#/components/schemas/AddApiCatalogSystemEnvironmentAssociationsDataStatus'
+          description: 'The association''s status:
+
+            - `created` — An association was created.
+
+            - `existing` — The association already existed and is unchanged.
+
+            - `replaced` — The association was moved from a different system environment.
+
+            - `excluded` — The association was skipped.
+
+            '
+        previousSystemEnvironmentId:
+          type: string
+          description: The system environment ID the association was moved from. This only returns when the status is `replaced`.
+        reason:
+          type: string
+          description: The reason the association was excluded. This only returns when the status is `excluded`.
+      required:
+      - workspaceEnvironmentId
+      - status
+      description: Information about the associated workspace environment.
+      title: addApiCatalogSystemEnvironmentAssociationsData
+    GetApiCatalogServiceCiRunsMeta:
       type: object
       properties:
         nextCursor:
@@ -2121,8 +3532,8 @@ components:
           $ref: '#/components/schemas/apiCatalogServiceMetadataPassedRunsData'
         failedRuns:
           $ref: '#/components/schemas/apiCatalogServiceMetadataFailedRunsData'
-        conformanceRatePct:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataConformanceRatePctData'
+        successRatePct:
+          $ref: '#/components/schemas/apiCatalogServiceMetadataSuccessRatePctData'
       required:
       - nextCursor
       - limit
@@ -2131,74 +3542,46 @@ components:
       - totalRuns
       - passedRuns
       - failedRuns
-      - conformanceRatePct
+      - successRatePct
       description: The response's meta information for paginated results.
-      title: GetApiCatalogServiceSpecificationLintsMeta
-    apiCatalogServiceHttpMethodFilter:
-      type: string
-      title: apiCatalogServiceHttpMethodFilter
-    CommonErrorNameMessageError:
+      title: GetApiCatalogServiceCiRunsMeta
+    GetApiCatalogServiceEndpointsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiCatalogServiceEndpointsRequestInternalServerError
+    apiCatalogServiceMetadataFailedRunsData:
+      type: integer
+      description: The number of runs with at least one failure.
+      title: apiCatalogServiceMetadataFailedRunsData
+    updateApiCatalogSystemEnvironment:
       type: object
       properties:
         name:
           type: string
-          description: The error name.
-        message:
+          description: The system environment's name. This value must be unique within the team.
+        description:
           type: string
-          description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
-    getApiCatalogServices:
+          description: A description of the system environment. To remove a description, pass this value as an empty string.
+        color:
+          type: string
+          description: A six-digit hex color code.
+        isProduction:
+          type: boolean
+          description: If true, the system environment is a production environment.
+      title: updateApiCatalogSystemEnvironment
+    getApiCatalogSystemEnvironmentAssociations:
       type: object
       properties:
         meta:
-          $ref: '#/components/schemas/GetApiCatalogServicesMeta'
-          description: The response's meta information for paginated results.
+          $ref: '#/components/schemas/apiCatalogSystemEnvironmentsMetaData'
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/apiCatalogServiceServiceData'
-          description: A list of list of services.
-      title: getApiCatalogServices
-    GetApiCatalogServiceComplianceDataMonitorRunStatus:
-      type: string
-      enum:
-      - passed
-      - failed
-      description: Whether the monitor's latest runs passed or failed. If no runs exist, this returns a null value.
-      title: GetApiCatalogServiceComplianceDataMonitorRunStatus
-    apiCatalogServiceSortSpecLintFilter:
-      type: string
-      title: apiCatalogServiceSortSpecLintFilter
-    apiCatalogServiceRepoNameFilter:
-      type: string
-      title: apiCatalogServiceRepoNameFilter
-    ApiCatalogServiceServiceDataOwnerType:
-      type: string
-      enum:
-      - user
-      - group
-      description: The type of owner.
-      title: ApiCatalogServiceServiceDataOwnerType
-    AddApiCatalogSystemEnvironmentAssociationsDataStatus:
-      type: string
-      enum:
-      - created
-      - existing
-      - replaced
-      - excluded
-      description: 'The association''s status:
-
-        - `created` — An association was created.
-
-        - `existing` — The association already existed and is unchanged.
-
-        - `replaced` — The association was moved from a different system environment.
-
-        - `excluded` — The association was skipped.
-
-        '
-      title: AddApiCatalogSystemEnvironmentAssociationsDataStatus
+          $ref: '#/components/schemas/getApiCatalogSystemEnvironmentAssociationsData'
+      required:
+      - meta
+      - data
+      title: getApiCatalogSystemEnvironmentAssociations
     GetApiCatalogServiceData:
       type: object
       properties:
@@ -2268,252 +3651,17 @@ components:
       - dependencies
       description: Information about the service.
       title: GetApiCatalogServiceData
-    collectionUid:
-      type: string
-      format: uid
-      title: collectionUid
-    ApiCatalogServiceServiceDataGovernanceGroup:
+    postApiCatalogDiscoveryServicesResponse:
       type: object
       properties:
-        id:
-          type: string
-          description: The governance group's ID.
-        name:
-          type: string
-          description: The governance group's name.
-      required:
-      - id
-      - name
-      description: The governance group that the workspace belongs to. If no governance group is assigned, this returns a null value.
-      title: ApiCatalogServiceServiceDataGovernanceGroup
-    GetApiCatalogDiscoveryServiceRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiCatalogDiscoveryServiceRequestInternalServerError
-    apiCatalogServiceNameFilter:
-      type: string
-      title: apiCatalogServiceNameFilter
-    postApiCatalogDiscoveryServicesApiDefinitionData:
-      type: object
-      properties:
-        content:
-          type: string
-          description: A Base64-encoded JSON API definition. Cannot exceed 2 MB after decoding.
-      description: The API definition (specification) for the service. If you pass this with the `endpoints` array, this object is given preference and `endpoints` is ignored.
-      title: postApiCatalogDiscoveryServicesApiDefinitionData
-    apiCatalogServiceBranchFilter:
-      type: string
-      title: apiCatalogServiceBranchFilter
-    apiCatalogServiceSearchFilter:
-      type: string
-      title: apiCatalogServiceSearchFilter
-    ApiCatalogServiceServiceDataComplianceCliRunStatus:
-      type: string
-      enum:
-      - passed
-      - failed
-      description: Whether the pipelines' latest runs passed or failed. If no runs exist, this returns a null value.
-      title: ApiCatalogServiceServiceDataComplianceCliRunStatus
-    GetApiCatalogServiceMonitorRunsDataItemsStatus:
-      type: string
-      enum:
-      - passed
-      - failed
-      description: Whether the monitor run passed or failed.
-      title: GetApiCatalogServiceMonitorRunsDataItemsStatus
-    apiCatalogSystemEnvironmentsMetaData:
-      type: object
-      properties:
-        total:
-          type: integer
-          description: The number of records that match the defined criteria.
-        nextCursor:
-          type:
-          - string
-          - 'null'
-          description: The pagination cursor that points to the next record in the results set.
-        limit:
-          type: integer
-          description: The maximum number of records in the paginated response.
-        filters:
-          $ref: '#/components/schemas/apiCatalogSystemEnvironmentsFiltersData'
-      required:
-      - total
-      - nextCursor
-      - limit
-      description: The response's meta information for paginated results.
-      title: apiCatalogSystemEnvironmentsMetaData
-    getApiCatalogServiceMonitorRuns:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/GetApiCatalogServiceMonitorRunsMeta'
-          description: The response's meta information for paginated results.
         data:
           type: array
           items:
-            $ref: '#/components/schemas/GetApiCatalogServiceMonitorRunsDataItems'
-          description: A list of monitor runs.
-      required:
-      - meta
-      - data
-      title: getApiCatalogServiceMonitorRuns
-    systemEnvironmentProductionFilter:
-      type: boolean
-      title: systemEnvironmentProductionFilter
-    GetApiCatalogServiceCiRunsDataItemsSummary:
-      type: object
-      properties:
-        totalRequests:
-          type: integer
-          description: The total number of HTTP requests executed in the run.
-        failedRequests:
-          type: integer
-          description: The number of requests that failed.
-        totalAssertions:
-          type: integer
-          description: The total number of test assertions evaluated.
-        failedAssertions:
-          type: integer
-          description: The number of failed assertions.
-        durationMs:
-          type: integer
-          description: Total execution duration in milliseconds.
-      required:
-      - totalRequests
-      - failedRequests
-      - totalAssertions
-      - failedAssertions
-      - durationMs
-      description: Information about the CI run.
-      title: GetApiCatalogServiceCiRunsDataItemsSummary
-    apiCatalogServiceSpecLintSeverityFilter:
-      type: string
-      enum:
-      - info
-      - warning
-      - error
-      title: apiCatalogServiceSpecLintSeverityFilter
-    apiCatalogErrorPathMessage:
-      type: object
-      properties:
-        path:
-          type: string
-          description: The path in which the error occurred.
-        message:
-          type: string
-          description: The error message.
-      description: Information about the error.
-      title: apiCatalogErrorPathMessage
-    getApiCatalogService:
-      type: object
-      properties:
+            $ref: '#/components/schemas/postApiCatalogDiscoveryServicesServiceData'
+          description: A list of discovered services.
         meta:
-          $ref: '#/components/schemas/GetApiCatalogServiceMeta'
-          description: The response's meta information for paginated results.
-        data:
-          $ref: '#/components/schemas/GetApiCatalogServiceData'
-          description: Information about the service.
-      required:
-      - meta
-      - data
-      title: getApiCatalogService
-    commonErrorNameMessage:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
-    GetApiCatalogServiceDataDependenciesItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The dependent service's ID.
-        name:
-          type: string
-          description: The dependent service's name.
-        direction:
-          $ref: '#/components/schemas/GetApiCatalogServiceDataDependenciesItemsDirection'
-          description: Whether traffic flows into (inbound) or out of (outbound) the service.
-      required:
-      - id
-      - name
-      - direction
-      title: GetApiCatalogServiceDataDependenciesItems
-    GetApiCatalogServiceComplianceDataSpecLintStatus:
-      type: string
-      enum:
-      - passed
-      - failed
-      description: Whether the specifications' latest lints passed or failed. If no lints exist, this returns a null value.
-      title: GetApiCatalogServiceComplianceDataSpecLintStatus
-    addApiCatalogSystemEnvironmentAssociationsResponse:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/addApiCatalogSystemEnvironmentAssociationsMetaData'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/addApiCatalogSystemEnvironmentAssociationsData'
-      required:
-      - meta
-      - data
-      title: addApiCatalogSystemEnvironmentAssociationsResponse
-    ApiCatalogServiceServiceDataComplianceSpecLint:
-      type: object
-      properties:
-        status:
-          oneOf:
-          - $ref: '#/components/schemas/ApiCatalogServiceServiceDataComplianceSpecLintStatus'
-          - type: 'null'
-          description: Whether the specifications' latest lints passed or failed. If no lints exist, this returns a null value.
-      required:
-      - status
-      description: Information about the API specification lint.
-      title: ApiCatalogServiceServiceDataComplianceSpecLint
-    createApiCatalogSystemEnvironment:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The system environment's name. This value must be unique within the team.
-        label:
-          type: string
-          description: A lowercase, terminal-friendly identifier for the system environment. Accepts only alphanumeric characters, hyphens, and underscores.
-        description:
-          type: string
-          description: A description of the system environment. To remove a description, pass this value as an empty string.
-        color:
-          type: string
-          description: A six-digit hex color code.
-        isProduction:
-          type: boolean
-          default: false
-          description: If true, the system environment is a production environment.
-      required:
-      - name
-      - color
-      title: createApiCatalogSystemEnvironment
-    getApiCatalogServiceSpecificationLints:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/GetApiCatalogServiceSpecificationLintsMeta'
-          description: The response's meta information for paginated results.
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetApiCatalogServiceSpecificationLintsDataItems'
-          description: A list of API specification lint runs.
-      required:
-      - meta
-      - data
-      title: getApiCatalogServiceSpecificationLints
+          $ref: '#/components/schemas/postApiCatalogDiscoveryServicesResponseMetaData'
+      title: postApiCatalogDiscoveryServicesResponse
     GetApiCatalogServiceComplianceDataCollectionRuns:
       type: object
       properties:
@@ -2555,1063 +3703,12 @@ components:
       - failedAssertions
       description: Information about collection runs, including monitor runs, CI pipeline runs, and manual runs.
       title: GetApiCatalogServiceComplianceDataCollectionRuns
-    GetApiCatalogSystemEnvironmentRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiCatalogSystemEnvironmentRequestInternalServerError
-    GetApiCatalogSystemEnvironmentsRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/apiCatalogError'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      title: GetApiCatalogSystemEnvironmentsRequestBadRequestError
-    getApiCatalogServiceData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The service's ID.
-        name:
-          type: string
-          description: The service's name.
-        version:
-          type: string
-          description: The service's version.
-        sourceEnvironment:
-          type:
-          - string
-          - 'null'
-          description: The source environment in which the service was discovered.
-        systemEnvironmentId:
-          type:
-          - string
-          - 'null'
-          description: The mapped system environment's ID. Returns a null value if the environment is not mapped.
-        status:
-          type: string
-          description: The service's current status.
-        endpointsCount:
-          type: integer
-          description: The total number of endpoints associated with the service.
-        discoverySource:
-          type: string
-          description: The source through which the service was discovered.
-        tags:
-          $ref: '#/components/schemas/apiCatalogDiscoveryServicesTagsData'
-        discoveredAt:
-          type: string
-          format: date-time
-          description: The date and time at which the service was first discovered.
-      description: Information about the discovered service.
-      title: getApiCatalogServiceData
-    GetApiCatalogServiceSpecificationLintsDataItems:
-      type: object
-      properties:
-        specId:
-          type: string
-          description: The API specification's ID.
-        specName:
-          type:
-          - string
-          - 'null'
-          description: The API specification's name. If the specification was deleted or its metadata is unavailable, this returns a null value.
-        specType:
-          type:
-          - string
-          - 'null'
-          description: The API specification's type and version ID. If the metadata is unavailable, this returns a null value.
-        timestamp:
-          type: string
-          format: date-time
-          description: The date and time at which the run completed.
-        status:
-          $ref: '#/components/schemas/GetApiCatalogServiceSpecificationLintsDataItemsStatus'
-          description: Whether the lint run passed or failed.
-        issues:
-          $ref: '#/components/schemas/GetApiCatalogServiceSpecificationLintsDataItemsIssues'
-          description: Issue counts by severity level.
-      required:
-      - specId
-      - specName
-      - specType
-      - timestamp
-      - status
-      - issues
-      title: GetApiCatalogServiceSpecificationLintsDataItems
-    workspaceEnvironmentIdsData:
-      type: array
-      items:
-        $ref: '#/components/schemas/addApiCatalogSystemEnvironmentAssociationsWorkspaceEnvId'
-      description: A list of workspace environment IDs to remove. Accepts both the environment ID or the environment's unique ID (`userId`-`environmentId`).
-      title: workspaceEnvironmentIdsData
-    apiCatalogDiscoveryServiceEndpointsData:
-      type: object
-      properties:
-        method:
-          type: string
-          description: The endpoint's HTTP method.
-        path:
-          type: string
-          description: The endpoint's URL path.
-        description:
-          type:
-          - string
-          - 'null'
-          description: The endpoint's description.
-        host:
-          type: string
-          description: The endpoint's host.
-      description: Information about a service's endpoint.
-      title: apiCatalogDiscoveryServiceEndpointsData
-    CreateApiCatalogSystemEnvironmentRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/apiCatalogError'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      title: CreateApiCatalogSystemEnvironmentRequestBadRequestError
-    addApiCatalogSystemEnvironmentAssociations:
-      type: object
-      properties:
-        workspaceEnvironmentIds:
-          $ref: '#/components/schemas/workspaceEnvironmentIdsData'
-      required:
-      - workspaceEnvironmentIds
-      title: addApiCatalogSystemEnvironmentAssociations
-    apiCatalogServiceTagsFilter:
-      type: string
-      title: apiCatalogServiceTagsFilter
-    apiCatalogServiceMetadataNextCursorData:
-      type: string
-      description: The pagination cursor that points to the next record in the results set.
-      title: apiCatalogServiceMetadataNextCursorData
-    apiCatalogServiceMetadataLimitData:
-      type: integer
-      description: The maximum number of records in the paginated response.
-      title: apiCatalogServiceMetadataLimitData
-    GetApiCatalogServiceCiRunsDataItemsStatus:
-      type: string
-      enum:
-      - passed
-      - failed
-      description: Whether the CI run passed or failed.
-      title: GetApiCatalogServiceCiRunsDataItemsStatus
-    GetApiCatalogServiceCiRunsMeta:
-      type: object
-      properties:
-        nextCursor:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataNextCursorData'
-        limit:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataLimitData'
-        filters:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataFiltersData'
-        timeRange:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataTimeRangeData'
-        totalRuns:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataTotalRunsData'
-        passedRuns:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataPassedRunsData'
-        failedRuns:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataFailedRunsData'
-        successRatePct:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataSuccessRatePctData'
-      required:
-      - nextCursor
-      - limit
-      - filters
-      - timeRange
-      - totalRuns
-      - passedRuns
-      - failedRuns
-      - successRatePct
-      description: The response's meta information for paginated results.
-      title: GetApiCatalogServiceCiRunsMeta
-    GetApiCatalogServiceEndpointsDataItemsErrors:
-      type: object
-      properties:
-        totalErrors:
-          type: integer
-          description: The total number of 4xx and 5xx responses.
-        errorRatePct:
-          type: number
-          format: double
-          description: The percentage of requests that resulted in errors.
-        breakdown:
-          type: object
-          additionalProperties:
-            type: integer
-          description: The error counts, keyed by the HTTP status code.
-      required:
-      - totalErrors
-      - errorRatePct
-      - breakdown
-      description: Information about the endpoint's errors.
-      title: GetApiCatalogServiceEndpointsDataItemsErrors
-    GetApiCatalogServiceComplianceDataSpecLint:
-      type: object
-      properties:
-        status:
-          oneOf:
-          - $ref: '#/components/schemas/GetApiCatalogServiceComplianceDataSpecLintStatus'
-          - type: 'null'
-          description: Whether the specifications' latest lints passed or failed. If no lints exist, this returns a null value.
-        totalSpecs:
-          type: integer
-          description: The total number of API specifications in the workspace. This value is the same as the as `entityCounts.specifications` value.
-        activeSpecs:
-          type: integer
-          description: The number of distinct specifications with at least one lint within the time window.
-        passingSpecs:
-          type: integer
-          description: The number of distinct specifications whose latest lint passed within the time window.
-        failingSpecs:
-          type: integer
-          description: The number of distinct specifications whose latest lint failed within the time window.
-        lastRunAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: The date and time of the most recent lint run across all specifications. If no lint exist, this returns a null value.
-      required:
-      - status
-      - totalSpecs
-      - activeSpecs
-      - passingSpecs
-      - failingSpecs
-      - lastRunAt
-      description: Information about the API specification lint.
-      title: GetApiCatalogServiceComplianceDataSpecLint
-    RemoveApiCatalogSystemEnvironmentAssociationsDataStatus:
-      type: string
-      enum:
-      - deleted
-      - notFound
-      description: 'The status of the operation:
-
-        - `deleted` — The association was successfully removed.
-
-        - `notFound` — The association could not be removed.
-
-        '
-      title: RemoveApiCatalogSystemEnvironmentAssociationsDataStatus
-    updateApiCatalogSystemEnvironment:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The system environment's name. This value must be unique within the team.
-        description:
-          type: string
-          description: A description of the system environment. To remove a description, pass this value as an empty string.
-        color:
-          type: string
-          description: A six-digit hex color code.
-        isProduction:
-          type: boolean
-          description: If true, the system environment is a production environment.
-      title: updateApiCatalogSystemEnvironment
-    removeApiCatalogSystemEnvironmentAssociations:
-      type: object
-      properties:
-        workspaceEnvironmentIds:
-          $ref: '#/components/schemas/workspaceEnvironmentIdsData'
-      required:
-      - workspaceEnvironmentIds
-      title: removeApiCatalogSystemEnvironmentAssociations
-    ApiCatalogServiceServiceDataComplianceMonitorRun:
-      type: object
-      properties:
-        status:
-          oneOf:
-          - $ref: '#/components/schemas/ApiCatalogServiceServiceDataComplianceMonitorRunStatus'
-          - type: 'null'
-          description: Whether the monitor's latest runs passed or failed. If no runs exist, this returns a null value.
-      required:
-      - status
-      description: The scheduled monitor run summary.
-      title: ApiCatalogServiceServiceDataComplianceMonitorRun
-    getApiCatalogSystemEnvironmentAssociationsData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The association's ID.
-        workspaceEnvironmentId:
-          type: string
-          description: The workspace environment's ID.
-        workspaceId:
-          type: string
-          description: The ID of the workspace that contains the environment.
-        associatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the association was created.
-      required:
-      - id
-      - workspaceEnvironmentId
-      - workspaceId
-      - associatedAt
-      description: Information about the workspace-environment association.
-      title: getApiCatalogSystemEnvironmentAssociationsData
-    GetApiCatalogSystemEnvironmentAssociationsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiCatalogSystemEnvironmentAssociationsRequestInternalServerError
-    systemEnvironmentAllowPartial:
-      type: boolean
-      default: false
-      title: systemEnvironmentAllowPartial
-    apiCatalogServiceMetadataPassedRunsData:
-      type: integer
-      description: The number of successful runs.
-      title: apiCatalogServiceMetadataPassedRunsData
-    ApiCatalogServiceServiceDataComplianceSpecLintStatus:
-      type: string
-      enum:
-      - passed
-      - failed
-      description: Whether the specifications' latest lints passed or failed. If no lints exist, this returns a null value.
-      title: ApiCatalogServiceServiceDataComplianceSpecLintStatus
-    ApiCatalogServiceServiceDataCompliance:
-      type: object
-      properties:
-        monitorRun:
-          $ref: '#/components/schemas/ApiCatalogServiceServiceDataComplianceMonitorRun'
-          description: The scheduled monitor run summary.
-        cliRun:
-          $ref: '#/components/schemas/ApiCatalogServiceServiceDataComplianceCliRun'
-          description: Information about the CI/CD pipeline.
-        specLint:
-          $ref: '#/components/schemas/ApiCatalogServiceServiceDataComplianceSpecLint'
-          description: Information about the API specification lint.
-      required:
-      - monitorRun
-      - cliRun
-      - specLint
-      description: Information about compliance and governance.
-      title: ApiCatalogServiceServiceDataCompliance
-    GetApiCatalogServiceEndpointsDataItemsMethod:
-      type: string
-      enum:
-      - GET
-      - POST
-      - PUT
-      - PATCH
-      - DELETE
-      - HEAD
-      - OPTIONS
-      - TRACE
-      description: The endpoint's HTTP method.
-      title: GetApiCatalogServiceEndpointsDataItemsMethod
-    apiCatalogDiscoveryServicesProviderMetadata:
-      type: object
-      properties:
-        title:
-          type: string
-          description: The provider's service display title.
-        environmentId:
-          type: string
-          description: The provider's environment ID.
-        environmentVersion:
-          type: string
-          description: The provider's environment version.
-        openApiSpecCanBeDownloaded:
-          type: boolean
-          description: If true, the provider has enabled downloading of the OpenAPI specification.
-      description: Additional metadata from the discovery source provider.
-      title: apiCatalogDiscoveryServicesProviderMetadata
-    updateApiCatalogSystemEnvironmentResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/postPatchApiCatalogSystemEnvironmentData'
-      required:
-      - data
-      title: updateApiCatalogSystemEnvironmentResponse
-    addApiCatalogSystemEnvironmentAssociationsMetaData:
-      type: object
-      properties:
-        created:
-          type: integer
-          description: The number of new associations created.
-        existing:
-          type: integer
-          description: The number of associations that already existed and were unchanged.
-        replaced:
-          type: integer
-          description: The number of associations that were moved from a different system environment.
-        excluded:
-          type: integer
-          description: The number of associations that were skipped. This only returns if you pass the `allowPartial` query parameter as `true`).
-      required:
-      - created
-      - existing
-      - replaced
-      - excluded
-      description: The response's meta information for paginated results.
-      title: addApiCatalogSystemEnvironmentAssociationsMetaData
-    apiCatalogServiceMetadataFailedRunsData:
-      type: integer
-      description: The number of runs with at least one failure.
-      title: apiCatalogServiceMetadataFailedRunsData
-    postApiCatalogDiscoveryServicesResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/postApiCatalogDiscoveryServicesServiceData'
-          description: A list of discovered services.
-        meta:
-          $ref: '#/components/schemas/postApiCatalogDiscoveryServicesResponseMetaData'
-      title: postApiCatalogDiscoveryServicesResponse
-    cursor:
-      type: string
-      title: cursor
-    GetApiCatalogServiceSpecificationLintsDataItemsStatus:
-      type: string
-      enum:
-      - passed
-      - failed
-      description: Whether the lint run passed or failed.
-      title: GetApiCatalogServiceSpecificationLintsDataItemsStatus
-    getApiCatalogDiscoveryMetaData:
-      type: object
-      properties:
-        total:
-          type: integer
-          description: The number of records found.
-        nextCursor:
-          type:
-          - string
-          - 'null'
-          description: The pagination cursor that points to the next record in the results set.
-      description: The response's meta information for paginated results.
-      title: getApiCatalogDiscoveryMetaData
-    apiCatalogServiceMetadataFiltersData:
-      type: object
-      properties: {}
-      description: The filters applied to the request.
-      title: apiCatalogServiceMetadataFiltersData
-    apiCatalogServiceWorkflowNameFilter:
-      type: string
-      title: apiCatalogServiceWorkflowNameFilter
-    GetApiCatalogServiceMonitorRunsMeta:
-      type: object
-      properties:
-        nextCursor:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataNextCursorData'
-        limit:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataLimitData'
-        filters:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataFiltersData'
-        timeRange:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataTimeRangeData'
-        totalRuns:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataTotalRunsData'
-        passedRuns:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataPassedRunsData'
-        failedRuns:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataFailedRunsData'
-        successRatePct:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataSuccessRatePctData'
-      required:
-      - nextCursor
-      - limit
-      - filters
-      - timeRange
-      - totalRuns
-      - passedRuns
-      - failedRuns
-      - successRatePct
-      description: The response's meta information for paginated results.
-      title: GetApiCatalogServiceMonitorRunsMeta
-    GetApiCatalogSystemEnvironmentAssociationsRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/apiCatalogError'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      title: GetApiCatalogSystemEnvironmentAssociationsRequestBadRequestError
-    GetApiCatalogServiceEndpointsDataItems:
-      type: object
-      properties:
-        method:
-          $ref: '#/components/schemas/GetApiCatalogServiceEndpointsDataItemsMethod'
-          description: The endpoint's HTTP method.
-        path:
-          type: string
-          description: The endpoint's URL path template.
-        host:
-          type: string
-          description: The hostname the endpoint was observed on.
-        requestCount:
-          type: integer
-          description: The total number of requests to this endpoint within the time window.
-        performance:
-          $ref: '#/components/schemas/GetApiCatalogServiceEndpointsDataItemsPerformance'
-          description: Information about latency percentile metrics.
-        errors:
-          $ref: '#/components/schemas/GetApiCatalogServiceEndpointsDataItemsErrors'
-          description: Information about the endpoint's errors.
-      required:
-      - method
-      - path
-      - host
-      - requestCount
-      - performance
-      - errors
-      title: GetApiCatalogServiceEndpointsDataItems
-    GetApiCatalogServiceComplianceDataCliRun:
-      type: object
-      properties:
-        status:
-          oneOf:
-          - $ref: '#/components/schemas/GetApiCatalogServiceComplianceDataCliRunStatus'
-          - type: 'null'
-          description: Whether the pipelines' latest runs passed or failed. If no runs exist, this returns a null value.
-        activePipelines:
-          type: integer
-          description: The number of distinct pipelines with at least one run within the time window.
-        passingPipelines:
-          type: integer
-          description: The number of distinct pipelines whose latest run passed within the time window.
-        failingPipelines:
-          type: integer
-          description: The number of distinct pipelines whose latest run failed within the time window.
-        lastRunAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: The date and time of the most recent run across all pipelines. If no runs exist, this returns a null value.
-      required:
-      - status
-      - activePipelines
-      - passingPipelines
-      - failingPipelines
-      - lastRunAt
-      description: Information about the CI/CD pipeline.
-      title: GetApiCatalogServiceComplianceDataCliRun
-    ApiCatalogServiceServiceDataStatus:
-      type: string
-      enum:
-      - healthy
-      - warning
-      - critical
-      - inactive
-      description: The overall health status, derived from compliance signals.
-      title: ApiCatalogServiceServiceDataStatus
-    getApiCatalogServiceCiRuns:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/GetApiCatalogServiceCiRunsMeta'
-          description: The response's meta information for paginated results.
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetApiCatalogServiceCiRunsDataItems'
-          description: A list of CI collection runs.
-      required:
-      - meta
-      - data
-      title: getApiCatalogServiceCiRuns
-    getApiCatalogServiceEndpoints:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/GetApiCatalogServiceEndpointsMeta'
-          description: The response's meta information for paginated results.
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetApiCatalogServiceEndpointsDataItems'
-          description: A list of observed API endpoints with traffic and performance metrics.
-      required:
-      - meta
-      - data
-      title: getApiCatalogServiceEndpoints
-    GetApiCatalogServiceMeta:
-      type: object
-      properties:
-        filters:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataFiltersData'
-        timeRange:
-          $ref: '#/components/schemas/apiCatalogServiceMetadataTimeRangeData'
-      required:
-      - timeRange
-      description: The response's meta information for paginated results.
-      title: GetApiCatalogServiceMeta
-    apiCatalogServiceCollectionData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The collection's ID.
-        name:
-          type:
-          - string
-          - 'null'
-          description: The collection's name. If the collection was deleted, this returns a null value.
-      required:
-      - id
-      - name
-      description: Information about the collection.
-      title: apiCatalogServiceCollectionData
-    getApiCatalogSystemEnvironmentAssociations:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/apiCatalogSystemEnvironmentsMetaData'
-        data:
-          $ref: '#/components/schemas/getApiCatalogSystemEnvironmentAssociationsData'
-      required:
-      - meta
-      - data
-      title: getApiCatalogSystemEnvironmentAssociations
-    apiCatalogSystemEnvironmentsFiltersData:
-      type: object
-      properties:
-        isProduction:
-          type: boolean
-      description: The applied filters, if any.
-      title: apiCatalogSystemEnvironmentsFiltersData
-    GetApiCatalogServiceDataGovernanceGroup:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The governance group's ID.
-        name:
-          type: string
-          description: The governance group's name.
-      required:
-      - id
-      - name
-      description: The governance group that the workspace belongs to. If no governance group is assigned, this returns a null value.
-      title: GetApiCatalogServiceDataGovernanceGroup
-    apiCatalogDiscoveryServicesTagsData:
-      type: array
-      items:
-        type: string
-      description: A list of tags associated with the service.
-      title: apiCatalogDiscoveryServicesTagsData
-    apiCatalogServiceEnvironmentData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The environment's ID.
-        name:
-          type:
-          - string
-          - 'null'
-          description: The environment's name. If the environment was deleted, this returns a null value.
-      required:
-      - id
-      - name
-      description: Information about the environment.
-      title: apiCatalogServiceEnvironmentData
-    RemoveApiCatalogSystemEnvironmentAssociationsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: RemoveApiCatalogSystemEnvironmentAssociationsRequestInternalServerError
-    removeApiCatalogSystemEnvironmentAssociationsResponse:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/removeApiCatalogSystemEnvironmentAssociationsMetaData'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/removeApiCatalogSystemEnvironmentAssociationsData'
-      required:
-      - meta
-      - data
-      title: removeApiCatalogSystemEnvironmentAssociationsResponse
-    GetApiCatalogSystemEnvironmentRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/apiCatalogError'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      title: GetApiCatalogSystemEnvironmentRequestBadRequestError
-    AddApiCatalogSystemEnvironmentAssociationsRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/apiCatalogError'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      title: AddApiCatalogSystemEnvironmentAssociationsRequestBadRequestError
-    getApiCatalogServiceEntityCountData:
-      type: object
-      properties:
-        collections:
-          type: integer
-          description: The total number of collections.
-        specifications:
-          type: integer
-          description: The total number of API specifications.
-        monitors:
-          type: integer
-          description: The total number of monitors.
-        mocks:
-          type: integer
-          description: The total number of mock servers.
-        flows:
-          type: integer
-          description: The total number of Postman Flows.
-        environments:
-          type: integer
-          description: The total number of environments.
-      required:
-      - collections
-      - specifications
-      - monitors
-      - mocks
-      - flows
-      - environments
-      description: Information about the workspace's entities.
-      title: getApiCatalogServiceEntityCountData
-    getApiCatalogSystemEnvironments:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/apiCatalogSystemEnvironmentsMetaData'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/apiCatalogSystemEnvironmentData'
-          description: A list of system environments.
-      required:
-      - meta
-      - data
-      title: getApiCatalogSystemEnvironments
-    GetApiCatalogServiceCiRunsDataItemsSource:
-      type: object
-      properties:
-        branch:
-          type:
-          - string
-          - 'null'
-          description: The Git branch's name.
-        commitSha:
-          type:
-          - string
-          - 'null'
-          description: The full Git commit SHA.
-        repo:
-          $ref: '#/components/schemas/GetApiCatalogServiceCiRunsDataItemsSourceRepo'
-          description: Information about the source repository.
-        pullRequest:
-          oneOf:
-          - $ref: '#/components/schemas/GetApiCatalogServiceCiRunsDataItemsSourcePullRequest'
-          - type: 'null'
-          description: Information about the pull request. This returns null if the run wasn't triggered by a pull request.
-      required:
-      - branch
-      - commitSha
-      - repo
-      - pullRequest
-      description: Information about the Git source control for the CI run.
-      title: GetApiCatalogServiceCiRunsDataItemsSource
-    systemEnvironmentId:
-      type: string
-      title: systemEnvironmentId
-    apiCatalogServiceHostsFilter:
-      type: string
-      title: apiCatalogServiceHostsFilter
-    addApiCatalogSystemEnvironmentAssociationsData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The association's unique ID. This value doesn't return if the item was excluded.
-        workspaceEnvironmentId:
-          type: string
-          description: The workspace's environment ID.
-        workspaceId:
-          type: string
-          description: The ID of the workspace that contains the environment. This value doesn't return if the item was excluded.
-        associatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the association was created. This value doesn't return if the item was excluded.
-        status:
-          $ref: '#/components/schemas/AddApiCatalogSystemEnvironmentAssociationsDataStatus'
-          description: 'The association''s status:
-
-            - `created` — An association was created.
-
-            - `existing` — The association already existed and is unchanged.
-
-            - `replaced` — The association was moved from a different system environment.
-
-            - `excluded` — The association was skipped.
-
-            '
-        previousSystemEnvironmentId:
-          type: string
-          description: The system environment ID the association was moved from. This only returns when the status is `replaced`.
-        reason:
-          type: string
-          description: The reason the association was excluded. This only returns when the status is `excluded`.
-      required:
-      - workspaceEnvironmentId
-      - status
-      description: Information about the associated workspace environment.
-      title: addApiCatalogSystemEnvironmentAssociationsData
-    apiCatalogServiceMetadataTimeRangeData:
-      type: object
-      properties:
-        start:
-          type: string
-          format: date-time
-          description: The start of the time window.
-        end:
-          type: string
-          format: date-time
-          description: The end of the time window.
-        label:
-          $ref: '#/components/schemas/ApiCatalogServiceMetadataTimeRangeDataLabel'
-          description: The time range's label.
-      required:
-      - start
-      - end
-      - label
-      description: The time window for the returned data.
-      title: apiCatalogServiceMetadataTimeRangeData
-    apiCatalogServiceRepoOwnerFilter:
-      type: string
-      title: apiCatalogServiceRepoOwnerFilter
-    GetApiCatalogServiceCiRunsDataItemsExecution:
-      type: object
-      properties:
-        cliVersion:
-          type:
-          - string
-          - 'null'
-          description: The Postman CLI version.
-        system:
-          $ref: '#/components/schemas/GetApiCatalogServiceCiRunsDataItemsExecutionSystem'
-          description: The system information about the execution run. This returns as null if unavailable.
-      required:
-      - cliVersion
-      - system
-      description: Information about the environment run.
-      title: GetApiCatalogServiceCiRunsDataItemsExecution
-    getApiCatalogSystemEnvironment:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/apiCatalogSystemEnvironmentData'
-      required:
-      - data
-      title: getApiCatalogSystemEnvironment
-    GetApiCatalogServiceCiRunsDataItemsSourceRepo:
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: The repository's name.
-        owner:
-          type:
-          - string
-          - 'null'
-          description: The repository owner or organization.
-        url:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: The repository's URL.
-      required:
-      - name
-      - owner
-      - url
-      description: Information about the source repository.
-      title: GetApiCatalogServiceCiRunsDataItemsSourceRepo
-    apiCatalogServiceActorFilter:
-      type: string
-      title: apiCatalogServiceActorFilter
-    ApiCatalogServiceMetadataTimeRangeDataLabel:
-      type: string
-      enum:
-      - last_7_days
-      description: The time range's label.
-      title: ApiCatalogServiceMetadataTimeRangeDataLabel
-    GetApiCatalogServiceDataStatus:
-      type: string
-      enum:
-      - healthy
-      - warning
-      - critical
-      - inactive
-      description: The overall health status, derived from compliance signals.
-      title: GetApiCatalogServiceDataStatus
-    apiCatalogError:
-      type: object
-      properties:
-        type:
-          type: string
-          format: uri
-          description: The [URI reference](https://www.rfc-editor.org/rfc/rfc3986) that identifies the type of problem.
-        status:
-          type: integer
-          description: The HTTP status code generated by the origin server.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: An explanation about the problem.
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/apiCatalogErrorPathMessage'
-          description: A list of errors.
-      title: apiCatalogError
-    ApiCatalogServiceServiceDataComplianceCliRun:
-      type: object
-      properties:
-        status:
-          oneOf:
-          - $ref: '#/components/schemas/ApiCatalogServiceServiceDataComplianceCliRunStatus'
-          - type: 'null'
-          description: Whether the pipelines' latest runs passed or failed. If no runs exist, this returns a null value.
-      required:
-      - status
-      description: Information about the CI/CD pipeline.
-      title: ApiCatalogServiceServiceDataComplianceCliRun
-    commonErrorTypeTitleDetailStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
-    postApiCatalogDiscoveryServiceData:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The service's name.
-        version:
-          type: string
-          description: The service's version.
-        providerServiceId:
-          type: string
-          description: The ID of the service in the source registry. If you do not pass this property, the system uses the `{name}:{version}` value.
-        description:
-          type: string
-          description: The service's description.
-        sourceEnvironment:
-          type: string
-          description: The service's source environment.
-        apiDefinition:
-          $ref: '#/components/schemas/postApiCatalogDiscoveryServicesApiDefinitionData'
-        endpoints:
-          type: array
-          items:
-            $ref: '#/components/schemas/apiCatalogDiscoveryServiceEndpointsData'
-          description: A list of the service's endpoints. If you pass this with the `apiDefinition` array, this array is ignored.
-        tags:
-          $ref: '#/components/schemas/apiCatalogDiscoveryServicesTagsData'
-        providerMetadata:
-          $ref: '#/components/schemas/postApiCatalogDiscoveryServicesProviderMetadataData'
-      required:
-      - name
-      description: Information about the discovered service.
-      title: postApiCatalogDiscoveryServiceData
-    GetApiCatalogServiceCiRunsDataItemsPipeline:
-      type: object
-      properties:
-        provider:
-          type:
-          - string
-          - 'null'
-          description: The CI provider.
-        workflowName:
-          type:
-          - string
-          - 'null'
-          description: The workflow or pipeline name.
-        workflowId:
-          type:
-          - string
-          - 'null'
-          description: The workflow ID.
-        jobName:
-          type:
-          - string
-          - 'null'
-          description: The job name in the workflow.
-        jobId:
-          type:
-          - string
-          - 'null'
-          description: The job's ID.
-        pipelineId:
-          type:
-          - string
-          - 'null'
-          description: The pipeline run's ID.
-        pipelineNumber:
-          type:
-          - string
-          - 'null'
-          description: The pipeline run number.
-        runAttempt:
-          type:
-          - integer
-          - 'null'
-          description: The attempt number for this run.
-        actor:
-          type:
-          - string
-          - 'null'
-          description: The user or bot that triggered the run.
-      required:
-      - provider
-      - workflowName
-      - workflowId
-      - jobName
-      - jobId
-      - pipelineId
-      - pipelineNumber
-      - runAttempt
-      - actor
-      description: Information about the CI/CD pipeline.
-      title: GetApiCatalogServiceCiRunsDataItemsPipeline
     CreateApiCatalogSystemEnvironmentRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
       title: CreateApiCatalogSystemEnvironmentRequestInternalServerError
-    getApiCatalogDiscoveryServices:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/getApiCatalogDiscoveryMetaData'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/getApiCatalogServiceData'
-          description: A list of discovered services.
-      title: getApiCatalogDiscoveryServices
-    apiCatalogServiceGovernanceGroupIdFilter:
-      type: string
-      title: apiCatalogServiceGovernanceGroupIdFilter
     GetApiCatalogServiceSpecificationLintsDataItemsIssues:
       type: object
       properties:
@@ -3630,159 +3727,6 @@ components:
       - info
       description: Issue counts by severity level.
       title: GetApiCatalogServiceSpecificationLintsDataItemsIssues
-    apiCatalogServiceServiceData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The service's ID.
-        name:
-          type: string
-          description: The service's name.
-        status:
-          $ref: '#/components/schemas/ApiCatalogServiceServiceDataStatus'
-          description: The overall health status, derived from compliance signals.
-        lastActivityAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: The date and time of the last observed activity. If there's no activity in the time window, this returns a null value.
-        traffic:
-          oneOf:
-          - $ref: '#/components/schemas/ApiCatalogServiceServiceDataTraffic'
-          - type: 'null'
-          description: Information about traffic and performance within the time window. If there's no traffic data, this returns a null value.
-        compliance:
-          $ref: '#/components/schemas/ApiCatalogServiceServiceDataCompliance'
-          description: Information about compliance and governance.
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: The date and time at which the workspace was created.
-        gitRepo:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: The URL of the linked Git repository. If the workspace isn't connected to a repository, this returns a null value.
-        owner:
-          oneOf:
-          - $ref: '#/components/schemas/ApiCatalogServiceServiceDataOwner'
-          - type: 'null'
-          description: The service's owner. If no owner is assigned, this returns a null value.
-        tags:
-          type: array
-          items:
-            type: string
-          description: A list of the workspace's tags.
-        governanceGroup:
-          oneOf:
-          - $ref: '#/components/schemas/ApiCatalogServiceServiceDataGovernanceGroup'
-          - type: 'null'
-          description: The governance group that the workspace belongs to. If no governance group is assigned, this returns a null value.
-      required:
-      - id
-      - name
-      - status
-      - lastActivityAt
-      - traffic
-      - compliance
-      - createdAt
-      - gitRepo
-      - owner
-      - tags
-      - governanceGroup
-      description: Information about the service.
-      title: apiCatalogServiceServiceData
-    systemEnvironmentWorkspaceId:
-      type: string
-      title: systemEnvironmentWorkspaceId
-    postApiCatalogDiscoveryServices:
-      type: object
-      properties:
-        discoveredServices:
-          type: array
-          items:
-            $ref: '#/components/schemas/postApiCatalogDiscoveryServiceData'
-          description: A list of discovered services to add to the API Catalog.
-      required:
-      - discoveredServices
-      title: postApiCatalogDiscoveryServices
-    GetApiCatalogServiceDataDependenciesItemsDirection:
-      type: string
-      enum:
-      - inbound
-      - outbound
-      description: Whether traffic flows into (inbound) or out of (outbound) the service.
-      title: GetApiCatalogServiceDataDependenciesItemsDirection
-    GetApiCatalogServiceMonitorRunsDataItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The monitor run's ID.
-        status:
-          $ref: '#/components/schemas/GetApiCatalogServiceMonitorRunsDataItemsStatus'
-          description: Whether the monitor run passed or failed.
-        timestamp:
-          type: string
-          format: date-time
-          description: The date and time at which the run completed.
-        collection:
-          $ref: '#/components/schemas/apiCatalogServiceCollectionData'
-        environment:
-          $ref: '#/components/schemas/apiCatalogServiceEnvironmentData'
-        summary:
-          $ref: '#/components/schemas/GetApiCatalogServiceMonitorRunsDataItemsSummary'
-          description: Information about the monitor run.
-        performance:
-          $ref: '#/components/schemas/apiCatalogServicePerformanceData'
-      required:
-      - id
-      - status
-      - timestamp
-      - collection
-      - environment
-      - summary
-      - performance
-      title: GetApiCatalogServiceMonitorRunsDataItems
-    ApiCatalogServiceServiceDataComplianceMonitorRunStatus:
-      type: string
-      enum:
-      - passed
-      - failed
-      description: Whether the monitor's latest runs passed or failed. If no runs exist, this returns a null value.
-      title: ApiCatalogServiceServiceDataComplianceMonitorRunStatus
-    CommonErrorTypeTitleDetailDetail:
-      oneOf:
-      - type: string
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
-    specId:
-      type: string
-      title: specId
-    GetApiCatalogServiceMonitorRunsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiCatalogServiceMonitorRunsRequestInternalServerError
-    GetApiCatalogServiceSpecificationLintsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiCatalogServiceSpecificationLintsRequestInternalServerError
-    apiCatalogServiceMetadataTotalRunsData:
-      type: integer
-      description: The total number of runs that match the given filters.
-      title: apiCatalogServiceMetadataTotalRunsData
   securitySchemes:
     PostmanApiKey:
       type: apiKey
@@ -3796,9 +3740,6 @@ components:
       in: header
       name: Authorization
       description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
-x-refined-from:
-- postman-api-openapi.yml
-- postman-apicatalog-api-openapi.yml
 x-provenance:
   first_party: true
   method: harvested
