@@ -8,7 +8,7 @@ servers:
 - url: https://api.eu.postman.com
   description: https://api.eu.postman.com
 tags:
-- name: teams
+- name: Teams
 paths:
   /teams:
     get:
@@ -16,7 +16,7 @@ paths:
       summary: Get all teams
       description: Gets all Postman teams in your organization.
       tags:
-      - teams
+      - Teams
       parameters:
       - name: cursor
         in: query
@@ -84,11 +84,9 @@ paths:
     post:
       operationId: createTeam
       summary: Create a team
-      description: '[Creates](https://learning.postman.com/docs/administration/managing-your-team/create-teams/) a Postman team in your organization.
-
-        '
+      description: Creates a Postman team in your organization.
       tags:
-      - teams
+      - Teams
       parameters:
       - name: x-api-key
         in: header
@@ -143,7 +141,7 @@ paths:
       summary: Get a team
       description: Gets information about a Postman team.
       tags:
-      - teams
+      - Teams
       parameters:
       - name: teamId
         in: path
@@ -205,7 +203,7 @@ paths:
       summary: Get a team's access requests
       description: Gets a team's pending access requests.
       tags:
-      - teams
+      - Teams
       parameters:
       - name: teamId
         in: path
@@ -277,11 +275,9 @@ paths:
         **Note:**
 
 
-        If a team discovery is enabled, the team''s access request is automatically approved.
-
-        '
+        If a team discovery is enabled, the team''s access request is automatically approved.'
       tags:
-      - teams
+      - Teams
       parameters:
       - name: teamId
         in: path
@@ -336,7 +332,7 @@ paths:
       summary: Approve or deny an access request
       description: Approve or deny a team's access request.
       tags:
-      - teams
+      - Teams
       parameters:
       - name: teamId
         in: path
@@ -413,11 +409,9 @@ paths:
         **Note:**
 
 
-        If you remove a role from a group or team, then all members lose the that role''s permissions.
-
-        '
+        If you remove a role from a group or team, then all members lose the that role''s permissions.'
       tags:
-      - teams
+      - Teams
       parameters:
       - name: teamId
         in: path
@@ -471,7 +465,7 @@ paths:
       summary: Remove team members
       description: Removes entities, such as users or organizations, from your Postman team. On success, this returns an HTTP `204 No Content` response.
       tags:
-      - teams
+      - Teams
       parameters:
       - name: teamId
         in: path
@@ -533,7 +527,7 @@ paths:
       summary: Get a team's settings
       description: Gets a team's settings.
       tags:
-      - teams
+      - Teams
       parameters:
       - name: teamId
         in: path
@@ -576,7 +570,7 @@ paths:
       summary: Update team settings
       description: Updates a team's settings.
       tags:
-      - teams
+      - Teams
       parameters:
       - name: teamId
         in: path
@@ -621,69 +615,15 @@ paths:
               $ref: '#/components/schemas/updateTeamSettings'
 components:
   schemas:
-    teamsInclude:
-      type: string
-      enum:
-      - members
-      - userRoles
-      title: teamsInclude
-    TeamsAccessRequestDataEntityId:
-      oneOf:
-      - type: integer
-      - type: string
-      description: The entity's ID.
-      title: TeamsAccessRequestDataEntityId
-    TeamsErrorDetailInvalidEntriesResultItems:
+    orgsInfo:
       type: object
       properties:
-        entityType:
-          type: string
-          description: The entity type.
-        entityId:
-          $ref: '#/components/schemas/TeamsErrorDetailInvalidEntriesResultItemsEntityId'
-          description: The entity ID.
-        role:
-          type:
-          - string
-          - 'null'
-          description: The assigned role.
-        status:
-          type: string
-          description: The `Invalid` response status.
-        reason:
-          type: string
-          description: The reason for the error.
-      title: TeamsErrorDetailInvalidEntriesResultItems
-    CreateAccessRequestRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/teamsError'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: CreateAccessRequestRequestBadRequestError
-    getTeamAccessRequests:
-      type: object
-      properties:
-        data:
+        '{{orgId}}':
           type: array
           items:
-            $ref: '#/components/schemas/GetTeamAccessRequestsDataItems'
-          description: A list of access requests.
-        metadata:
-          $ref: '#/components/schemas/metaDataNextCursor'
-      title: getTeamAccessRequests
-    GetTeamAccessRequestsDataItemsEntityId:
-      oneOf:
-      - type: integer
-      - type: string
-      description: The entity's ID.
-      title: GetTeamAccessRequestsDataItemsEntityId
-    manageTeamMemberRolesResponse:
-      type: object
-      properties:
-        result:
-          type: array
-          items:
-            $ref: '#/components/schemas/ManageTeamMemberRolesResponseResultItems'
-      title: manageTeamMemberRolesResponse
+            $ref: '#/components/schemas/teamRoles'
+          description: A list of the organization's roles. The array's name is the organization's ID.
+      title: orgsInfo
     GetTeamAccessRequestsDataItemsRole:
       type: string
       enum:
@@ -698,11 +638,14 @@ components:
       - TEAM_COMMUNITY_MANAGER
       description: The requested team role.
       title: GetTeamAccessRequestsDataItemsRole
-    GetTeamsRequestBadRequestError:
+    teamId:
+      type: integer
+      title: teamId
+    UpdateTeamSettingsRequestBadRequestError:
       oneOf:
       - $ref: '#/components/schemas/teamsError'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: GetTeamsRequestBadRequestError
+      title: UpdateTeamSettingsRequestBadRequestError
     ApproveDenyAccessRequestResponseResult:
       type: object
       properties:
@@ -728,14 +671,298 @@ components:
           description: Information about the access request.
       description: Information about the approved or denied access request.
       title: ApproveDenyAccessRequestResponseResult
+    ApproveDenyAccessRequestResponseResultAccessRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The access request's ID.
+        requestType:
+          type: string
+          description: The access request type.
+        reason:
+          type: string
+          description: The reason the access request was created.
+        status:
+          type: string
+          description: The access request's status.
+        objectType:
+          type: string
+          description: The entity type.
+        objectId:
+          type: integer
+          description: The entity's ID.
+        createdBy:
+          type: integer
+          description: The user ID of the user who created the access request.
+      description: Information about the access request.
+      title: ApproveDenyAccessRequestResponseResultAccessRequest
+    approveDenyAccessRequest:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/ApproveDenyAccessRequestAction'
+          description: Whether to approve or deny the access request.
+      required:
+      - action
+      title: approveDenyAccessRequest
+    manageTeamMemberRolesRemove:
+      type: object
+      properties:
+        users:
+          $ref: '#/components/schemas/usersInfo'
+        groups:
+          $ref: '#/components/schemas/userGroupsInfo'
+        orgs:
+          $ref: '#/components/schemas/orgsInfo'
+        teams:
+          $ref: '#/components/schemas/teamsInfo'
+      description: Information about the bulk `remove` operation.
+      title: manageTeamMemberRolesRemove
+    UpdateTeamSettingsSettingsRfaForAddMember:
+      type: string
+      enum:
+      - enabled
+      - disabled
+      description: If enabled, admins must approve any new team members before they can join.
+      title: UpdateTeamSettingsSettingsRfaForAddMember
+    teamsAccessRequestData:
+      type: object
+      properties:
+        entityType:
+          type: string
+          description: The entity type.
+        entityId:
+          $ref: '#/components/schemas/TeamsAccessRequestDataEntityId'
+          description: The entity's ID.
+        role:
+          type: string
+          description: The entity's role.
+        previousRole:
+          type:
+          - string
+          - 'null'
+          description: The entity's previous role. This value only returns if the entity's role is modified.
+        status:
+          type: string
+          description: The request's status.
+        reason:
+          type: string
+          description: The reason for the access request. This only returns if there's an issue with the request.
+      title: teamsAccessRequestData
+    metaDataNextCursor:
+      type: object
+      properties:
+        nextCursor:
+          type:
+          - string
+          - 'null'
+          description: The pagination cursor that points to the next record in the results set.
+      description: The response's meta information for paginated results.
+      title: metaDataNextCursor
+    teamsErrorDetailInvalidEntries:
+      type: object
+      properties:
+        error:
+          type: string
+          description: The error message.
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamsErrorDetailInvalidEntriesResultItems'
+          description: A list of invalid entities.
+      description: An explanation about the problem.
+      title: teamsErrorDetailInvalidEntries
+    GetTeamAccessRequestsRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/teamsError'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: GetTeamAccessRequestsRequestBadRequestError
+    teamSettingsQuery:
+      type: boolean
+      default: false
+      title: teamSettingsQuery
+    usersInfo:
+      type: object
+      properties:
+        '{{userId}}':
+          type: array
+          items:
+            $ref: '#/components/schemas/teamRoles'
+          description: A list of the user's roles. The array's name is the user's ID.
+      title: usersInfo
     identifierType:
       type: string
       title: identifierType
-    TeamsErrorDetail:
+    CreateAccessRequestRequestBadRequestError:
       oneOf:
-      - $ref: '#/components/schemas/teamsErrorDetail'
-      - $ref: '#/components/schemas/teamsErrorDetailInvalidEntries'
-      title: TeamsErrorDetail
+      - $ref: '#/components/schemas/teamsError'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: CreateAccessRequestRequestBadRequestError
+    accessRequestId:
+      type: integer
+      title: accessRequestId
+    TeamsErrorDetailError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: TeamsErrorDetailError
+    teamsInfo:
+      type: object
+      properties:
+        '{{teamId}}':
+          type: array
+          items:
+            $ref: '#/components/schemas/teamRoles'
+          description: A list of the team's roles. The array's name is the team's ID.
+      title: teamsInfo
+    userRolesQuery:
+      type: boolean
+      default: false
+      title: userRolesQuery
+    teamData:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the team was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the team was last updated.
+        id:
+          type: integer
+          description: The team's ID.
+        name:
+          type: string
+          description: The team's name.
+        handle:
+          type: string
+          description: The team's handle.
+        description:
+          type: string
+          description: A description about the team.
+        organizationId:
+          type: integer
+          description: The team's organization ID.
+        createdBy:
+          $ref: '#/components/schemas/TeamDataCreatedBy'
+          description: The user ID of the user who created the team.
+        enabled:
+          type: boolean
+          description: If true, the team is active.
+        memberCount:
+          type: integer
+          description: The number of members in the team.
+      description: Information about the team.
+      title: teamData
+    teamRoles:
+      type: string
+      enum:
+      - TEAM_MANAGER
+      - TEAM_DEVELOPER
+      - TEAM_GUEST_DEVELOPER
+      - TEAM_GUEST_VIEWER
+      - TEAM_PARTNER_MANAGER
+      - TEAM_PARTNER_LEAD
+      - TEAM_GUEST
+      - TEAM_PARTNER
+      - TEAM_COMMUNITY_MANAGER
+      title: teamRoles
+    Teams_getTeams_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/teamData'
+          description: A list of teams.
+        metadata:
+          $ref: '#/components/schemas/metaDataNextCursor'
+      title: Teams_getTeams_Response_200
+    TeamsErrorDetailInvalidEntriesResultItems:
+      type: object
+      properties:
+        entityType:
+          type: string
+          description: The entity type.
+        entityId:
+          $ref: '#/components/schemas/TeamsErrorDetailInvalidEntriesResultItemsEntityId'
+          description: The entity ID.
+        role:
+          type:
+          - string
+          - 'null'
+          description: The assigned role.
+        status:
+          type: string
+          description: The `Invalid` response status.
+        reason:
+          type: string
+          description: The reason for the error.
+      title: TeamsErrorDetailInvalidEntriesResultItems
+    CreateAccessRequestRole:
+      type: string
+      enum:
+      - TEAM_MANAGER
+      - TEAM_DEVELOPER
+      - TEAM_GUEST_DEVELOPER
+      - TEAM_GUEST_VIEWER
+      - TEAM_PARTNER_MANAGER
+      - TEAM_PARTNER_LEAD
+      - TEAM_GUEST
+      - TEAM_PARTNER
+      - TEAM_COMMUNITY_MANAGER
+      description: The team role to request.
+      title: CreateAccessRequestRole
+    CreateGetTeamSettingsResponseSettings:
+      type: object
+      properties:
+        rfa_for_add_member:
+          type: string
+          description: If enabled, admins must approve any new team members before they can join.
+        rfa_for_add_collaborator:
+          type: string
+          description: If enabled, collaborators require approval before they can access the team's workspaces.
+      title: CreateGetTeamSettingsResponseSettings
+    removeTeamMembers:
+      type: object
+      properties:
+        entities:
+          type: array
+          items:
+            $ref: '#/components/schemas/teamEntityInfo'
+          description: A list of entities to remove.
+      title: removeTeamMembers
+    TeamEntityInfoEntityId:
+      oneOf:
+      - type: integer
+      - type: string
+      description: The entity's ID.
+      title: TeamEntityInfoEntityId
+    UpdateTeamSettingsSettingsRfaForAddCollaborator:
+      type: string
+      enum:
+      - enabled
+      - disabled
+      description: If enabled, collaborators require approval before they can access the team's workspaces.
+      title: UpdateTeamSettingsSettingsRfaForAddCollaborator
+    GetTeamSettingsRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/teamsError'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: GetTeamSettingsRequestBadRequestError
+    limitDefault50:
+      type: integer
+      default: 50
+      title: limitDefault50
     TeamEntityInfoEntityType:
       type: string
       enum:
@@ -745,19 +972,23 @@ components:
       - organization
       description: The entity type.
       title: TeamEntityInfoEntityType
-    approveDenyAccessRequestResponse:
-      type: object
-      properties:
-        result:
-          $ref: '#/components/schemas/ApproveDenyAccessRequestResponseResult'
-          description: Information about the approved or denied access request.
-      title: approveDenyAccessRequestResponse
-    CreateGetTeamResponseTeamCreatedBy:
+    TeamDataCreatedBy:
       oneOf:
       - type: integer
       - type: string
       description: The user ID of the user who created the team.
-      title: CreateGetTeamResponseTeamCreatedBy
+      title: TeamDataCreatedBy
+    createGetTeamSettingsResponse:
+      type: object
+      properties:
+        settings:
+          $ref: '#/components/schemas/CreateGetTeamSettingsResponseSettings'
+      title: createGetTeamSettingsResponse
+    GetTeamRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/teamsError'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: GetTeamRequestBadRequestError
     GetTeamAccessRequestsDataItems:
       type: object
       properties:
@@ -801,109 +1032,67 @@ components:
           description: The user ID of the user who created the access request.
       description: Information about the access request.
       title: GetTeamAccessRequestsDataItems
-    teamRoles:
-      type: string
-      enum:
-      - TEAM_MANAGER
-      - TEAM_DEVELOPER
-      - TEAM_GUEST_DEVELOPER
-      - TEAM_GUEST_VIEWER
-      - TEAM_PARTNER_MANAGER
-      - TEAM_PARTNER_LEAD
-      - TEAM_GUEST
-      - TEAM_PARTNER
-      - TEAM_COMMUNITY_MANAGER
-      title: teamRoles
-    createGetTeamSettingsResponse:
-      type: object
-      properties:
-        settings:
-          $ref: '#/components/schemas/CreateGetTeamSettingsResponseSettings'
-      title: createGetTeamSettingsResponse
-    userGroupsInfo:
-      type: object
-      properties:
-        '{{userGroupId}}':
-          type: array
-          items:
-            $ref: '#/components/schemas/teamRoles'
-          description: A list of the user group's roles. The array's name is the group's ID.
-      title: userGroupsInfo
-    CreateGetTeamSettingsResponseSettings:
-      type: object
-      properties:
-        rfa_for_add_member:
-          type: string
-          description: If enabled, admins must approve any new team members before they can join.
-        rfa_for_add_collaborator:
-          type: string
-          description: If enabled, collaborators require approval before they can access the team's workspaces.
-      title: CreateGetTeamSettingsResponseSettings
-    ApproveDenyAccessRequestResponseResultAccessRequest:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The access request's ID.
-        requestType:
-          type: string
-          description: The access request type.
-        reason:
-          type: string
-          description: The reason the access request was created.
-        status:
-          type: string
-          description: The access request's status.
-        objectType:
-          type: string
-          description: The entity type.
-        objectId:
-          type: integer
-          description: The entity's ID.
-        createdBy:
-          type: integer
-          description: The user ID of the user who created the access request.
-      description: Information about the access request.
-      title: ApproveDenyAccessRequestResponseResultAccessRequest
-    CreateTeamRequestBadRequestError:
+    GetTeamAccessRequestsDataItemsCreatedBy:
       oneOf:
-      - $ref: '#/components/schemas/teamsError'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: CreateTeamRequestBadRequestError
-    ManageTeamMemberRolesResponseResultItems:
-      type: object
-      properties:
-        entityType:
-          type: string
-          description: The entity type.
-        entityId:
-          $ref: '#/components/schemas/ManageTeamMemberRolesResponseResultItemsEntityId'
-          description: The entity's ID.
-        role:
-          type:
-          - string
-          - 'null'
-          description: The user's role.
-        previousRole:
-          type:
-          - string
-          - 'null'
-          description: The user's previous role. This value only returns if the user's role is modified.
-        status:
-          type: string
-          description: The request's status.
-      title: ManageTeamMemberRolesResponseResultItems
-    Teams_getTeams_Response_200:
+      - type: integer
+      - type: string
+      description: The user ID of the user who created the access request.
+      title: GetTeamAccessRequestsDataItemsCreatedBy
+    getTeamAccessRequests:
       type: object
       properties:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/teamData'
-          description: A list of teams.
+            $ref: '#/components/schemas/GetTeamAccessRequestsDataItems'
+          description: A list of access requests.
         metadata:
           $ref: '#/components/schemas/metaDataNextCursor'
-      title: Teams_getTeams_Response_200
+      title: getTeamAccessRequests
+    cursor:
+      type: string
+      title: cursor
+    ApproveDenyAccessRequestResponseResultEntityId:
+      oneOf:
+      - type: integer
+      - type: string
+      description: The entity's ID.
+      title: ApproveDenyAccessRequestResponseResultEntityId
+    GetTeamAccessRequestsDataItemsEntityId:
+      oneOf:
+      - type: integer
+      - type: string
+      description: The entity's ID.
+      title: GetTeamAccessRequestsDataItemsEntityId
+    GetTeamsRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/teamsError'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: GetTeamsRequestBadRequestError
+    TeamsErrorDetail:
+      oneOf:
+      - $ref: '#/components/schemas/teamsErrorDetail'
+      - $ref: '#/components/schemas/teamsErrorDetailInvalidEntries'
+      title: TeamsErrorDetail
+    manageTeamMemberRolesAdd:
+      type: object
+      properties:
+        users:
+          $ref: '#/components/schemas/usersInfo'
+        groups:
+          $ref: '#/components/schemas/userGroupsInfo'
+        orgs:
+          $ref: '#/components/schemas/orgsInfo'
+        teams:
+          $ref: '#/components/schemas/teamsInfo'
+      description: Information about the bulk `add` operation.
+      title: manageTeamMemberRolesAdd
+    TeamsErrorDetailInvalidEntriesResultItemsEntityId:
+      oneOf:
+      - type: integer
+      - type: string
+      description: The entity ID.
+      title: TeamsErrorDetailInvalidEntriesResultItemsEntityId
     teamsErrorDetail:
       type: object
       properties:
@@ -912,157 +1101,106 @@ components:
           description: Information about the error.
       description: An explanation about the problem.
       title: teamsErrorDetail
-    manageTeamMemberRoles:
+    ApproveDenyAccessRequestRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/teamsError'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: ApproveDenyAccessRequestRequestBadRequestError
+    ManageTeamMemberRolesResponseResultItemsEntityId:
+      oneOf:
+      - type: integer
+      - type: string
+      description: The entity's ID.
+      title: ManageTeamMemberRolesResponseResultItemsEntityId
+    updateTeamSettings:
       type: object
       properties:
-        add:
-          $ref: '#/components/schemas/manageTeamMemberRolesAdd'
-        remove:
-          $ref: '#/components/schemas/manageTeamMemberRolesRemove'
-      description: Information about the bulk add and bulk remove operations.
-      title: manageTeamMemberRoles
-    approveDenyAccessRequest:
+        settings:
+          $ref: '#/components/schemas/UpdateTeamSettingsSettings'
+          description: Information about the team settings.
+      title: updateTeamSettings
+    createGetTeamResponse:
       type: object
       properties:
-        action:
-          $ref: '#/components/schemas/ApproveDenyAccessRequestAction'
-          description: Whether to approve or deny the access request.
+        team:
+          $ref: '#/components/schemas/CreateGetTeamResponseTeam'
+          description: Information about the team.
+      title: createGetTeamResponse
+    approveDenyAccessRequestResponse:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/ApproveDenyAccessRequestResponseResult'
+          description: Information about the approved or denied access request.
+      title: approveDenyAccessRequestResponse
+    ManageTeamMemberRolesRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/teamsError'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: ManageTeamMemberRolesRequestBadRequestError
+    TeamsAccessRequestDataEntityId:
+      oneOf:
+      - type: integer
+      - type: string
+      description: The entity's ID.
+      title: TeamsAccessRequestDataEntityId
+    createAccessRequest:
+      type: object
+      properties:
+        entityList:
+          type: array
+          items:
+            $ref: '#/components/schemas/teamEntityInfo'
+          description: A list of the entities for which to create access requests.
+        role:
+          oneOf:
+          - $ref: '#/components/schemas/CreateAccessRequestRole'
+          - type: 'null'
+          description: The team role to request.
+        reason:
+          type: string
+          description: The reason for the access request.
+        requestType:
+          $ref: '#/components/schemas/CreateAccessRequestRequestType'
+          description: The type of access request.
       required:
-      - action
-      title: approveDenyAccessRequest
-    CreateAccessRequestRole:
-      type: string
-      enum:
-      - TEAM_MANAGER
-      - TEAM_DEVELOPER
-      - TEAM_GUEST_DEVELOPER
-      - TEAM_GUEST_VIEWER
-      - TEAM_PARTNER_MANAGER
-      - TEAM_PARTNER_LEAD
-      - TEAM_GUEST
-      - TEAM_PARTNER
-      - TEAM_COMMUNITY_MANAGER
-      description: The team role to request.
-      title: CreateAccessRequestRole
-    commonErrorTypeTitleDetailStatusInstance:
+      - entityList
+      - role
+      - reason
+      - requestType
+      title: createAccessRequest
+    teamsError:
       type: object
       properties:
         type:
           type: string
           format: uri-reference
           description: The [URI reference](https://www.rfc-editor.org/rfc/rfc3986) that identifies the type of problem.
+        status:
+          type: integer
+          description: The HTTP status code generated by the origin server.
         title:
           type: string
           description: A short summary of the problem.
         detail:
-          type: string
-          description: An explanation about the problem.
-        status:
-          type: integer
-          description: The HTTP status code generated by the origin server.
+          $ref: '#/components/schemas/TeamsErrorDetail'
         instance:
           type: string
           description: The URI reference that identifies the specific occurrence of the problem.
-      title: commonErrorTypeTitleDetailStatusInstance
-    GetTeamAccessRequestsRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/teamsError'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: GetTeamAccessRequestsRequestBadRequestError
-    userRolesQuery:
-      type: boolean
-      default: false
-      title: userRolesQuery
-    usersInfo:
+      title: teamsError
+    teamEntityInfo:
       type: object
       properties:
-        '{{userId}}':
-          type: array
-          items:
-            $ref: '#/components/schemas/teamRoles'
-          description: A list of the user's roles. The array's name is the user's ID.
-      title: usersInfo
-    createTeam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The team's name. Accepts only alphanumeric characters and spaces.
-        description:
-          type:
-          - string
-          - 'null'
-          description: The team's description.
-      title: createTeam
-    ApproveDenyAccessRequestRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/teamsError'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: ApproveDenyAccessRequestRequestBadRequestError
-    UpdateTeamSettingsSettingsRfaForAddCollaborator:
-      type: string
-      enum:
-      - enabled
-      - disabled
-      description: If enabled, collaborators require approval before they can access the team's workspaces.
-      title: UpdateTeamSettingsSettingsRfaForAddCollaborator
-    teamsInfo:
-      type: object
-      properties:
-        '{{teamId}}':
-          type: array
-          items:
-            $ref: '#/components/schemas/teamRoles'
-          description: A list of the team's roles. The array's name is the team's ID.
-      title: teamsInfo
-    ApproveDenyAccessRequestAction:
-      type: string
-      enum:
-      - approve
-      - deny
-      description: Whether to approve or deny the access request.
-      title: ApproveDenyAccessRequestAction
-    cursor:
-      type: string
-      title: cursor
-    orgsInfo:
-      type: object
-      properties:
-        '{{orgId}}':
-          type: array
-          items:
-            $ref: '#/components/schemas/teamRoles'
-          description: A list of the organization's roles. The array's name is the organization's ID.
-      title: orgsInfo
-    UpdateTeamSettingsSettings:
-      type: object
-      properties:
-        rfa_for_add_member:
-          $ref: '#/components/schemas/UpdateTeamSettingsSettingsRfaForAddMember'
-          description: If enabled, admins must approve any new team members before they can join.
-        rfa_for_add_collaborator:
-          $ref: '#/components/schemas/UpdateTeamSettingsSettingsRfaForAddCollaborator'
-          description: If enabled, collaborators require approval before they can access the team's workspaces.
-      description: Information about the team settings.
-      title: UpdateTeamSettingsSettings
-    teamsErrorDetailInvalidEntries:
-      type: object
-      properties:
-        error:
-          type: string
-          description: The error message.
-        result:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamsErrorDetailInvalidEntriesResultItems'
-          description: A list of invalid entities.
-      description: An explanation about the problem.
-      title: teamsErrorDetailInvalidEntries
-    GetTeamSettingsRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/teamsError'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: GetTeamSettingsRequestBadRequestError
+        entityType:
+          $ref: '#/components/schemas/TeamEntityInfoEntityType'
+          description: The entity type.
+        entityId:
+          $ref: '#/components/schemas/TeamEntityInfoEntityId'
+          description: The entity's ID.
+      required:
+      - entityType
+      - entityId
+      title: teamEntityInfo
     CreateGetTeamResponseTeam:
       type: object
       properties:
@@ -1097,216 +1235,45 @@ components:
           description: If true, the team is active.
       description: Information about the team.
       title: CreateGetTeamResponseTeam
-    manageTeamMemberRolesAdd:
+    ApproveDenyAccessRequestAction:
+      type: string
+      enum:
+      - approve
+      - deny
+      description: Whether to approve or deny the access request.
+      title: ApproveDenyAccessRequestAction
+    userGroupsInfo:
       type: object
       properties:
-        users:
-          $ref: '#/components/schemas/usersInfo'
-        groups:
-          $ref: '#/components/schemas/userGroupsInfo'
-        orgs:
-          $ref: '#/components/schemas/orgsInfo'
-        teams:
-          $ref: '#/components/schemas/teamsInfo'
-      description: Information about the bulk `add` operation.
-      title: manageTeamMemberRolesAdd
-    teamSettingsQuery:
-      type: boolean
-      default: false
-      title: teamSettingsQuery
-    createAccessRequest:
-      type: object
-      properties:
-        entityList:
+        '{{userGroupId}}':
           type: array
           items:
-            $ref: '#/components/schemas/teamEntityInfo'
-          description: A list of the entities for which to create access requests.
-        role:
-          oneOf:
-          - $ref: '#/components/schemas/CreateAccessRequestRole'
-          - type: 'null'
-          description: The team role to request.
-        reason:
-          type: string
-          description: The reason for the access request.
-        requestType:
-          $ref: '#/components/schemas/CreateAccessRequestRequestType'
-          description: The type of access request.
-      required:
-      - entityList
-      - role
-      - reason
-      - requestType
-      title: createAccessRequest
-    updateTeamSettings:
-      type: object
-      properties:
-        settings:
-          $ref: '#/components/schemas/UpdateTeamSettingsSettings'
-          description: Information about the team settings.
-      title: updateTeamSettings
-    teamId:
-      type: integer
-      title: teamId
-    removeTeamMembers:
-      type: object
-      properties:
-        entities:
-          type: array
-          items:
-            $ref: '#/components/schemas/teamEntityInfo'
-          description: A list of entities to remove.
-      title: removeTeamMembers
-    TeamDataCreatedBy:
-      oneOf:
-      - type: integer
-      - type: string
-      description: The user ID of the user who created the team.
-      title: TeamDataCreatedBy
-    accessRequestId:
-      type: integer
-      title: accessRequestId
-    GetTeamAccessRequestsDataItemsCreatedBy:
-      oneOf:
-      - type: integer
-      - type: string
-      description: The user ID of the user who created the access request.
-      title: GetTeamAccessRequestsDataItemsCreatedBy
-    TeamEntityInfoEntityId:
-      oneOf:
-      - type: integer
-      - type: string
-      description: The entity's ID.
-      title: TeamEntityInfoEntityId
-    teamsAccessRequestData:
+            $ref: '#/components/schemas/teamRoles'
+          description: A list of the user group's roles. The array's name is the group's ID.
+      title: userGroupsInfo
+    ManageTeamMemberRolesResponseResultItems:
       type: object
       properties:
         entityType:
           type: string
           description: The entity type.
         entityId:
-          $ref: '#/components/schemas/TeamsAccessRequestDataEntityId'
+          $ref: '#/components/schemas/ManageTeamMemberRolesResponseResultItemsEntityId'
           description: The entity's ID.
         role:
-          type: string
-          description: The entity's role.
+          type:
+          - string
+          - 'null'
+          description: The user's role.
         previousRole:
           type:
           - string
           - 'null'
-          description: The entity's previous role. This value only returns if the entity's role is modified.
+          description: The user's previous role. This value only returns if the user's role is modified.
         status:
           type: string
           description: The request's status.
-        reason:
-          type: string
-          description: The reason for the access request. This only returns if there's an issue with the request.
-      title: teamsAccessRequestData
-    RemoveTeamMembersRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/teamsError'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: RemoveTeamMembersRequestBadRequestError
-    createGetTeamResponse:
-      type: object
-      properties:
-        team:
-          $ref: '#/components/schemas/CreateGetTeamResponseTeam'
-          description: Information about the team.
-      title: createGetTeamResponse
-    TeamsErrorDetailError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      description: Information about the error.
-      title: TeamsErrorDetailError
-    limitDefault50:
-      type: integer
-      default: 50
-      title: limitDefault50
-    metaDataNextCursor:
-      type: object
-      properties:
-        nextCursor:
-          type:
-          - string
-          - 'null'
-          description: The pagination cursor that points to the next record in the results set.
-      description: The response's meta information for paginated results.
-      title: metaDataNextCursor
-    ManageTeamMemberRolesRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/teamsError'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: ManageTeamMemberRolesRequestBadRequestError
-    ApproveDenyAccessRequestResponseResultEntityId:
-      oneOf:
-      - type: integer
-      - type: string
-      description: The entity's ID.
-      title: ApproveDenyAccessRequestResponseResultEntityId
-    GetTeamRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/teamsError'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: GetTeamRequestBadRequestError
-    manageTeamMemberRolesRemove:
-      type: object
-      properties:
-        users:
-          $ref: '#/components/schemas/usersInfo'
-        groups:
-          $ref: '#/components/schemas/userGroupsInfo'
-        orgs:
-          $ref: '#/components/schemas/orgsInfo'
-        teams:
-          $ref: '#/components/schemas/teamsInfo'
-      description: Information about the bulk `remove` operation.
-      title: manageTeamMemberRolesRemove
-    teamEntityInfo:
-      type: object
-      properties:
-        entityType:
-          $ref: '#/components/schemas/TeamEntityInfoEntityType'
-          description: The entity type.
-        entityId:
-          $ref: '#/components/schemas/TeamEntityInfoEntityId'
-          description: The entity's ID.
-      required:
-      - entityType
-      - entityId
-      title: teamEntityInfo
-    ManageTeamMemberRolesResponseResultItemsEntityId:
-      oneOf:
-      - type: integer
-      - type: string
-      description: The entity's ID.
-      title: ManageTeamMemberRolesResponseResultItemsEntityId
-    teamsError:
-      type: object
-      properties:
-        type:
-          type: string
-          format: uri-reference
-          description: The [URI reference](https://www.rfc-editor.org/rfc/rfc3986) that identifies the type of problem.
-        status:
-          type: integer
-          description: The HTTP status code generated by the origin server.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/TeamsErrorDetail'
-        instance:
-          type: string
-          description: The URI reference that identifies the specific occurrence of the problem.
-      title: teamsError
+      title: ManageTeamMemberRolesResponseResultItems
     createAccessRequestResponse:
       type: object
       properties:
@@ -1315,11 +1282,62 @@ components:
           items:
             $ref: '#/components/schemas/teamsAccessRequestData'
       title: createAccessRequestResponse
-    UpdateTeamSettingsRequestBadRequestError:
+    CreateGetTeamResponseTeamCreatedBy:
+      oneOf:
+      - type: integer
+      - type: string
+      description: The user ID of the user who created the team.
+      title: CreateGetTeamResponseTeamCreatedBy
+    CreateTeamRequestBadRequestError:
       oneOf:
       - $ref: '#/components/schemas/teamsError'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: UpdateTeamSettingsRequestBadRequestError
+      title: CreateTeamRequestBadRequestError
+    UpdateTeamSettingsSettings:
+      type: object
+      properties:
+        rfa_for_add_member:
+          $ref: '#/components/schemas/UpdateTeamSettingsSettingsRfaForAddMember'
+          description: If enabled, admins must approve any new team members before they can join.
+        rfa_for_add_collaborator:
+          $ref: '#/components/schemas/UpdateTeamSettingsSettingsRfaForAddCollaborator'
+          description: If enabled, collaborators require approval before they can access the team's workspaces.
+      description: Information about the team settings.
+      title: UpdateTeamSettingsSettings
+    manageTeamMemberRolesResponse:
+      type: object
+      properties:
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManageTeamMemberRolesResponseResultItems'
+      title: manageTeamMemberRolesResponse
+    manageTeamMemberRoles:
+      type: object
+      properties:
+        add:
+          $ref: '#/components/schemas/manageTeamMemberRolesAdd'
+        remove:
+          $ref: '#/components/schemas/manageTeamMemberRolesRemove'
+      description: Information about the bulk add and bulk remove operations.
+      title: manageTeamMemberRoles
+    createTeam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The team's name. Accepts only alphanumeric characters and spaces.
+        description:
+          type:
+          - string
+          - 'null'
+          description: The team's description.
+      title: createTeam
+    RemoveTeamMembersRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/teamsError'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: RemoveTeamMembersRequestBadRequestError
     CreateAccessRequestRequestType:
       type: string
       enum:
@@ -1328,56 +1346,32 @@ components:
       - UPGRADE_ROLE
       description: The type of access request.
       title: CreateAccessRequestRequestType
-    UpdateTeamSettingsSettingsRfaForAddMember:
-      type: string
-      enum:
-      - enabled
-      - disabled
-      description: If enabled, admins must approve any new team members before they can join.
-      title: UpdateTeamSettingsSettingsRfaForAddMember
-    teamData:
+    commonErrorTypeTitleDetailStatusInstance:
       type: object
       properties:
-        createdAt:
+        type:
           type: string
-          format: date-time
-          description: The date and time at which the team was created.
-        updatedAt:
+          format: uri-reference
+          description: The [URI reference](https://www.rfc-editor.org/rfc/rfc3986) that identifies the type of problem.
+        title:
           type: string
-          format: date-time
-          description: The date and time at which the team was last updated.
-        id:
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: An explanation about the problem.
+        status:
           type: integer
-          description: The team's ID.
-        name:
+          description: The HTTP status code generated by the origin server.
+        instance:
           type: string
-          description: The team's name.
-        handle:
-          type: string
-          description: The team's handle.
-        description:
-          type: string
-          description: A description about the team.
-        organizationId:
-          type: integer
-          description: The team's organization ID.
-        createdBy:
-          $ref: '#/components/schemas/TeamDataCreatedBy'
-          description: The user ID of the user who created the team.
-        enabled:
-          type: boolean
-          description: If true, the team is active.
-        memberCount:
-          type: integer
-          description: The number of members in the team.
-      description: Information about the team.
-      title: teamData
-    TeamsErrorDetailInvalidEntriesResultItemsEntityId:
-      oneOf:
-      - type: integer
-      - type: string
-      description: The entity ID.
-      title: TeamsErrorDetailInvalidEntriesResultItemsEntityId
+          description: The URI reference that identifies the specific occurrence of the problem.
+      title: commonErrorTypeTitleDetailStatusInstance
+    teamsInclude:
+      type: string
+      enum:
+      - members
+      - userRoles
+      title: teamsInclude
   securitySchemes:
     PostmanApiKey:
       type: apiKey

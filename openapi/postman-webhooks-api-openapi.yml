@@ -2,16 +2,13 @@ openapi: 3.2.0
 info:
   title: Postman Webhooks API
   version: 1.0.0
-  description: 'Operations tagged webhooks across 2 of this provider''s published API definitions: postman-api-openapi.yml, postman-webhooks-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.postman.com
   description: https://api.postman.com
 - url: https://api.eu.postman.com
   description: https://api.eu.postman.com
-- url: https://api.getpostman.com
-  description: Postman Production API Server
 tags:
-- name: webhooks
+- name: Webhooks
 paths:
   /webhooks:
     post:
@@ -23,11 +20,9 @@ paths:
         **Note:**
 
 
-        If you do not include the `workspace` query parameter, the system creates the webhook in the oldest personal Internal workspace you own.
-
-        '
+        If you do not include the `workspace` query parameter, the system creates the webhook in the oldest personal Internal workspace you own.'
       tags:
-      - webhooks
+      - Webhooks
       parameters:
       - name: workspace
         in: query
@@ -70,13 +65,26 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/createWebhook'
-    servers:
-    - url: https://api.postman.com
-      description: https://api.postman.com
-    - url: https://api.eu.postman.com
-      description: https://api.eu.postman.com
 components:
   schemas:
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    CreateWebhookRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateWebhookRequestUnauthorizedError
     commonErrorTypeTitleDetailStatus:
       type: object
       properties:
@@ -92,54 +100,6 @@ components:
           type: integer
           description: The error's HTTP status code.
       title: commonErrorTypeTitleDetailStatus
-    CreateWebhookRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateWebhookRequestInternalServerError
-    CommonErrorTypeTitleDetailDetail:
-      oneOf:
-      - type: string
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
-    CreateWebhookRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateWebhookRequestUnauthorizedError
-    createWebhook:
-      type: object
-      properties:
-        webhook:
-          $ref: '#/components/schemas/CreateWebhookWebhook'
-      title: createWebhook
-    commonErrorNameMessage:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
-    CommonErrorNameMessageDetailsError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-        details:
-          $ref: '#/components/schemas/CommonErrorNameMessageDetailsErrorDetails'
-          description: Information about the error.
-      title: CommonErrorNameMessageDetailsError
-    workspaceId:
-      type: string
-      title: workspaceId
     CommonErrorNameMessageError:
       type: object
       properties:
@@ -151,16 +111,12 @@ components:
           description: The error message.
       description: Information about the error.
       title: CommonErrorNameMessageError
-    CommonErrorNameMessageDetailsErrorDetails:
+    CreateWebhookRequestInternalServerError:
       oneOf:
-      - type: object
-        additionalProperties:
-          description: Any type
-      - type: array
-        items:
-          type: string
-      description: Information about the error.
-      title: CommonErrorNameMessageDetailsErrorDetails
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateWebhookRequestInternalServerError
     CreateWebhookResponseWebhook:
       type: object
       properties:
@@ -182,25 +138,12 @@ components:
           format: uid
           description: The webhook's unique ID.
       title: CreateWebhookResponseWebhook
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    commonErrorTypeTitleDetail:
+    createWebhook:
       type: object
       properties:
-        type:
-          type: string
-          description: The type of error.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
-          description: Information about the error.
-      title: commonErrorTypeTitleDetail
+        webhook:
+          $ref: '#/components/schemas/CreateWebhookWebhook'
+      title: createWebhook
     CreateWebhookWebhook:
       type: object
       properties:
@@ -219,95 +162,65 @@ components:
       - collection
       - name
       title: CreateWebhookWebhook
-    createWebhookResponse:
+    CommonErrorNameMessageDetailsError:
       type: object
       properties:
-        webhook:
-          $ref: '#/components/schemas/CreateWebhookResponseWebhook'
-      title: createWebhookResponse
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+        details:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsErrorDetails'
+          description: Information about the error.
+      title: CommonErrorNameMessageDetailsError
+    CommonErrorNameMessageDetailsErrorDetails:
+      oneOf:
+      - type: object
+        additionalProperties:
+          description: Any type
+      - type: array
+        items:
+          type: string
+      description: Information about the error.
+      title: CommonErrorNameMessageDetailsErrorDetails
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
     commonErrorNameMessageDetails:
       type: object
       properties:
         error:
           $ref: '#/components/schemas/CommonErrorNameMessageDetailsError'
       title: commonErrorNameMessageDetails
-    Webhook:
+    workspaceId:
+      type: string
+      title: workspaceId
+    createWebhookResponse:
       type: object
-      description: A Postman webhook that triggers collection runs on HTTP POST requests.
       properties:
-        id:
-          type: string
-          description: The webhook's unique ID
-        name:
-          type: string
-          description: The webhook name
-        collection:
-          type: string
-          description: The collection UID being triggered
-        webhookUrl:
-          type: string
-          format: uri
-          description: The URL that triggers the webhook when it receives a POST request
-        uid:
-          type: string
-          description: The webhook's UID
-        createdAt:
-          type: string
-          format: date-time
-  responses:
-    BadRequestError:
-      description: Bad request - invalid input
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-    InternalServerError:
-      description: An unexpected error occurred on the server
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-    RateLimitError:
-      description: Too many requests - rate limit exceeded
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-              message:
-                type: string
-    UnauthorizedError:
-      description: Authentication credentials are missing or invalid
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
+        webhook:
+          $ref: '#/components/schemas/CreateWebhookResponseWebhook'
+      title: createWebhookResponse
   securitySchemes:
     PostmanApiKey:
       type: apiKey
@@ -321,11 +234,10 @@ components:
       in: header
       name: Authorization
       description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
-    apiKeyAuth:
-      type: apiKey
-      name: x-api-key
-      in: header
-      description: Postman API key for authentication.
-x-refined-from:
-- postman-api-openapi.yml
-- postman-webhooks-api-openapi.yml
+x-provenance:
+  first_party: true
+  method: harvested
+  provider_published: true
+  source: https://learning.postman.com/api-docs/openapi.json
+  harvested: '2026-08-05'
+  note: Postman's own OpenAPI 3.1 definition for the Postman API, served by its Fern-hosted API reference. 162 paths, 256 operations, servers api.postman.com and api.eu.postman.com.

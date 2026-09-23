@@ -17,9 +17,7 @@ info:
 
     ## Rate Limits
 
-    Standard Postman API rate limits apply.
-
-    '
+    Standard Postman API rate limits apply.'
   version: 1.0.0
   contact:
     name: Postman Developer Support
@@ -137,7 +135,109 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimitError'
 components:
+  responses:
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+  parameters:
+    CollectionIdParam:
+      name: collectionId
+      in: path
+      required: true
+      description: The collection's unique ID or UID.
+      schema:
+        type: string
   schemas:
+    CollectionRunSummary:
+      type: object
+      description: Summary information about a collection run.
+      properties:
+        id:
+          type: string
+          description: The run's unique ID
+        status:
+          type: string
+          enum:
+          - queued
+          - running
+          - finished
+          - failed
+          description: The run status
+        source:
+          type: string
+          enum:
+          - collection_runner
+          - monitor
+          - webhook
+          - schedule
+          - api
+          - newman
+          description: How the run was triggered
+        startedAt:
+          type: string
+          format: date-time
+        finishedAt:
+          type: string
+          format: date-time
+        stats:
+          type: object
+          properties:
+            requests:
+              type: object
+              properties:
+                total:
+                  type: integer
+                failed:
+                  type: integer
+            assertions:
+              type: object
+              properties:
+                total:
+                  type: integer
+                failed:
+                  type: integer
+        collectionId:
+          type: string
+        environmentId:
+          type: string
+        createdBy:
+          type: string
     CollectionRun:
       type: object
       description: Detailed collection run including individual request results.
@@ -224,108 +324,6 @@ components:
           type: string
         createdBy:
           type: string
-    CollectionRunSummary:
-      type: object
-      description: Summary information about a collection run.
-      properties:
-        id:
-          type: string
-          description: The run's unique ID
-        status:
-          type: string
-          enum:
-          - queued
-          - running
-          - finished
-          - failed
-          description: The run status
-        source:
-          type: string
-          enum:
-          - collection_runner
-          - monitor
-          - webhook
-          - schedule
-          - api
-          - newman
-          description: How the run was triggered
-        startedAt:
-          type: string
-          format: date-time
-        finishedAt:
-          type: string
-          format: date-time
-        stats:
-          type: object
-          properties:
-            requests:
-              type: object
-              properties:
-                total:
-                  type: integer
-                failed:
-                  type: integer
-            assertions:
-              type: object
-              properties:
-                total:
-                  type: integer
-                failed:
-                  type: integer
-        collectionId:
-          type: string
-        environmentId:
-          type: string
-        createdBy:
-          type: string
-  parameters:
-    CollectionIdParam:
-      name: collectionId
-      in: path
-      required: true
-      description: The collection's unique ID or UID.
-      schema:
-        type: string
-  responses:
-    NotFoundError:
-      description: The requested resource was not found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-    RateLimitError:
-      description: Too many requests - rate limit exceeded
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-              message:
-                type: string
-    UnauthorizedError:
-      description: Authentication credentials are missing or invalid
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
   securitySchemes:
     apiKeyAuth:
       type: apiKey

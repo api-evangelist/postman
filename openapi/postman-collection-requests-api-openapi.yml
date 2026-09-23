@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Postman Collection Folders API
+  title: Postman Collection Requests API
   version: 1.0.0
 servers:
 - url: https://api.postman.com
@@ -8,15 +8,15 @@ servers:
 - url: https://api.eu.postman.com
   description: https://api.eu.postman.com
 tags:
-- name: collectionFolders
+- name: Collection Requests
 paths:
-  /collections/{collectionId}/folders/{folderId}/comments:
+  /collections/{collectionId}/requests/{requestId}/comments:
     get:
-      operationId: getFolderComments
-      summary: Get a folder's comments
-      description: Gets all comments left by users in a folder.
+      operationId: getRequestComments
+      summary: Get a request's comments
+      description: Gets all comments left by users in a request.
       tags:
-      - collectionFolders
+      - Collection Requests
       parameters:
       - name: collectionId
         in: path
@@ -24,12 +24,12 @@ paths:
         required: true
         schema:
           $ref: '#/components/schemas/collectionUid'
-      - name: folderId
+      - name: requestId
         in: path
-        description: The folder's unique ID.
+        description: The request's unique ID.
         required: true
         schema:
-          $ref: '#/components/schemas/collectionFolderUid'
+          $ref: '#/components/schemas/collectionRequestUid'
       - name: x-api-key
         in: header
         required: true
@@ -67,19 +67,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
     post:
-      operationId: createFolderComment
-      summary: Create a folder comment
-      description: 'Creates a comment on a folder. To create a reply on an existing comment, include the `threadId` property in the request body.
+      operationId: createRequestComment
+      summary: Create a request comment
+      description: 'Creates a comment on a request. To create a reply on an existing comment, include the `threadId` property in the request body.
 
 
         **Note:**
 
 
-        This endpoint accepts a max of 10,000 characters.
-
-        '
+        This endpoint accepts a max of 10,000 characters.'
       tags:
-      - collectionFolders
+      - Collection Requests
       parameters:
       - name: collectionId
         in: path
@@ -87,12 +85,12 @@ paths:
         required: true
         schema:
           $ref: '#/components/schemas/collectionUid'
-      - name: folderId
+      - name: requestId
         in: path
-        description: The folder's unique ID.
+        description: The request's unique ID.
         required: true
         schema:
-          $ref: '#/components/schemas/collectionFolderUid'
+          $ref: '#/components/schemas/collectionRequestUid'
       - name: x-api-key
         in: header
         required: true
@@ -134,21 +132,19 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/commentCreate'
-  /collections/{collectionId}/folders/{folderId}/comments/{commentId}:
+  /collections/{collectionId}/requests/{requestId}/comments/{commentId}:
     put:
-      operationId: updateFolderComment
-      summary: Update a folder's comment
-      description: 'Updates a comment on a folder.
+      operationId: updateRequestComment
+      summary: Update a request's comment
+      description: 'Updates a comment on a request.
 
 
         **Note:**
 
 
-        This endpoint accepts a max of 10,000 characters.
-
-        '
+        This endpoint accepts a max of 10,000 characters.'
       tags:
-      - collectionFolders
+      - Collection Requests
       parameters:
       - name: collectionId
         in: path
@@ -156,12 +152,12 @@ paths:
         required: true
         schema:
           $ref: '#/components/schemas/collectionUid'
-      - name: folderId
+      - name: requestId
         in: path
-        description: The folder's unique ID.
+        description: The request's unique ID.
         required: true
         schema:
-          $ref: '#/components/schemas/collectionFolderUid'
+          $ref: '#/components/schemas/collectionRequestUid'
       - name: commentId
         in: path
         description: The comment's ID.
@@ -210,19 +206,17 @@ paths:
             schema:
               $ref: '#/components/schemas/commentUpdate'
     delete:
-      operationId: deleteFolderComment
-      summary: Delete a folder's comment
-      description: 'Deletes a comment from a folder. On success, this returns an HTTP `204 No Content` response.
+      operationId: deleteRequestComment
+      summary: Delete a request's comment
+      description: 'Deletes a comment from a request. On success, this returns an HTTP `204 No Content` response.
 
 
         **Note:**
 
 
-        Deleting the first comment of a thread deletes all the comments in the thread.
-
-        '
+        Deleting the first comment of a thread deletes all the comments in the thread.'
       tags:
-      - collectionFolders
+      - Collection Requests
       parameters:
       - name: collectionId
         in: path
@@ -230,12 +224,12 @@ paths:
         required: true
         schema:
           $ref: '#/components/schemas/collectionUid'
-      - name: folderId
+      - name: requestId
         in: path
-        description: The folder's unique ID.
+        description: The request's unique ID.
         required: true
         schema:
-          $ref: '#/components/schemas/collectionFolderUid'
+          $ref: '#/components/schemas/collectionRequestUid'
       - name: commentId
         in: path
         description: The comment's ID.
@@ -281,6 +275,61 @@ paths:
                 $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
 components:
   schemas:
+    commentCreatedUpdated:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CommentCreatedUpdatedData'
+      title: commentCreatedUpdated
+    CommentDataStatus:
+      type: string
+      enum:
+      - Open
+      - Resolved
+      description: The comment's current status.
+      title: CommentDataStatus
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    commentTaggedUsers:
+      type: object
+      properties:
+        '{{userName}}':
+          $ref: '#/components/schemas/CommentTaggedUsersUserName'
+          description: An object that contains information about the tagged user. The object's name is the user's Postman username. For example, `@user-postman`.
+      description: Information about users tagged in the `body` comment.
+      title: commentTaggedUsers
+    commentCreate:
+      type: object
+      properties:
+        body:
+          type: string
+          description: The contents of the comment.
+        threadId:
+          type: integer
+          description: The comment's thread ID. To create a reply on an existing comment, include this property.
+        tags:
+          $ref: '#/components/schemas/commentTaggedUsers'
+      required:
+      - body
+      description: Information about the comment.
+      title: commentCreate
+    collectionRequestUid:
+      type: string
+      format: uid
+      title: collectionRequestUid
     commentData:
       type: object
       properties:
@@ -309,6 +358,37 @@ components:
           description: The contents of the comment.
       description: Information about the comment.
       title: commentData
+    commentResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/commentData'
+          description: A list of comments.
+      title: commentResponse
+    collectionUid:
+      type: string
+      format: uid
+      title: collectionUid
+    commentUpdate:
+      type: object
+      properties:
+        body:
+          type: string
+          description: The contents of the comment.
+        tags:
+          $ref: '#/components/schemas/commentTaggedUsers'
+      required:
+      - body
+      description: Information about the comment.
+      title: commentUpdate
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
     CommentCreatedUpdatedData:
       type: object
       properties:
@@ -333,92 +413,12 @@ components:
           type: string
           description: The contents of the comment.
       title: CommentCreatedUpdatedData
-    commonErrorTypeTitleDetailStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
-    commentUpdate:
-      type: object
-      properties:
-        body:
-          type: string
-          description: The contents of the comment.
-        tags:
-          $ref: '#/components/schemas/commentTaggedUsers'
-      required:
-      - body
-      description: Information about the comment.
-      title: commentUpdate
-    commentTaggedUsers:
-      type: object
-      properties:
-        '{{userName}}':
-          $ref: '#/components/schemas/CommentTaggedUsersUserName'
-          description: An object that contains information about the tagged user. The object's name is the user's Postman username. For example, `@user-postman`.
-      description: Information about users tagged in the `body` comment.
-      title: commentTaggedUsers
-    collectionFolderUid:
-      type: string
-      format: uid
-      title: collectionFolderUid
-    commentResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/commentData'
-          description: A list of comments.
-      title: commentResponse
-    CommentDataStatus:
-      type: string
-      enum:
-      - Open
-      - Resolved
-      description: The comment's current status.
-      title: CommentDataStatus
-    commentCreate:
-      type: object
-      properties:
-        body:
-          type: string
-          description: The contents of the comment.
-        threadId:
-          type: integer
-          description: The comment's thread ID. To create a reply on an existing comment, include this property.
-        tags:
-          $ref: '#/components/schemas/commentTaggedUsers'
-      required:
-      - body
-      description: Information about the comment.
-      title: commentCreate
     CommentTaggedUsersUserNameType:
       type: string
       enum:
       - user
       description: The `user` value.
       title: CommentTaggedUsersUserNameType
-    collectionUid:
-      type: string
-      format: uid
-      title: collectionUid
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
     CommentTaggedUsersUserName:
       type: object
       properties:
@@ -436,12 +436,6 @@ components:
     commentId:
       type: integer
       title: commentId
-    commentCreatedUpdated:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/CommentCreatedUpdatedData'
-      title: commentCreatedUpdated
   securitySchemes:
     PostmanApiKey:
       type: apiKey

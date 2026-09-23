@@ -8,13 +8,13 @@ servers:
 - url: https://api.eu.postman.com
   description: https://api.eu.postman.com
 tags:
-- name: import
+- name: Import
 paths:
   /import/openapi:
     post:
       operationId: openApiDefinition
       summary: Import an OpenAPI definition
-      description: 'Imports an OpenAPI definition into Postman as a new [Postman Collection](https://learning.postman.com/docs/getting-started/creating-the-first-collection/).
+      description: 'Imports an OpenAPI definition into Postman as a new Postman Collection.
 
 
         **Note:**
@@ -26,11 +26,9 @@ paths:
 
         - If you do not include the `workspace` query parameter, the system imports the definition into the oldest personal Internal workspace you own.
 
-        - For an example of importing a file, see the [Postman API collection](https://www.postman.com/postman/postman-public-workspace/example/12959542-08d74ce2-8150-4f72-99a7-11e60492eb47).
-
-        '
+        - For an example of importing a file, see the Postman API collection.'
       tags:
-      - import
+      - Import
       parameters:
       - name: workspace
         in: query
@@ -75,6 +73,46 @@ paths:
               $ref: '#/components/schemas/Import_openApiDefinition_Request'
 components:
   schemas:
+    ImportOpenApiDefinitionCollectionsItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The collection's ID.
+        name:
+          type: string
+          description: The collection's name.
+        uid:
+          type: string
+          format: uid
+          description: The collection's unique ID.
+      title: ImportOpenApiDefinitionCollectionsItems
+    ImportOpenApiDefinitionRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: ImportOpenApiDefinitionRequestUnauthorizedError
+    CommonErrorNameMessageDetailsErrorDetails:
+      oneOf:
+      - type: object
+        additionalProperties:
+          description: Any type
+      - type: array
+        items:
+          type: string
+      description: Information about the error.
+      title: CommonErrorNameMessageDetailsErrorDetails
+    Import_openApiDefinition_Request:
+      oneOf:
+      - $ref: '#/components/schemas/jsonSchema'
+      - $ref: '#/components/schemas/jsonStringified'
+      title: Import_openApiDefinition_Request
+    JsonStringifiedType:
+      type: string
+      enum:
+      - string
+      description: The `string` type value.
+      title: JsonStringifiedType
     generateCollectionOptions:
       type: object
       properties:
@@ -130,12 +168,6 @@ components:
           description: If true, creates subfolders in the generated collection based on the order of the endpoints' tags.
       description: The advanced creation options and their values. For more details, see Postman's [OpenAPI to Postman Collection Converter OPTIONS documentation](https://github.com/postmanlabs/openapi-to-postman/blob/develop/OPTIONS.md). These properties are case-sensitive.
       title: generateCollectionOptions
-    JsonStringifiedType:
-      type: string
-      enum:
-      - string
-      description: The `string` type value.
-      title: JsonStringifiedType
     CommonErrorNameMessageError:
       type: object
       properties:
@@ -147,30 +179,26 @@ components:
           description: The error message.
       description: Information about the error.
       title: CommonErrorNameMessageError
-    commonErrorTypeTitleDetail:
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    commonErrorNameMessageDetails:
       type: object
       properties:
-        type:
-          type: string
-          description: The type of error.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
-          description: Information about the error.
-      title: commonErrorTypeTitleDetail
-    ImportOpenApiDefinitionRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: ImportOpenApiDefinitionRequestInternalServerError
-    ImportOpenApiDefinitionRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: ImportOpenApiDefinitionRequestUnauthorizedError
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsError'
+      title: commonErrorNameMessageDetails
+    JsonSchemaType:
+      type: string
+      enum:
+      - json
+      description: The `json` type value.
+      title: JsonSchemaType
     GenerateCollectionOptionsRequestNameSource:
       type: string
       enum:
@@ -189,75 +217,29 @@ components:
 
         '
       title: GenerateCollectionOptionsRequestNameSource
-    GenerateCollectionOptionsFolderStrategy:
-      type: string
-      enum:
-      - Paths
-      - Tags
-      default: Paths
-      description: Whether to create folders based on the specification's `paths` or `tags` properties.
-      title: GenerateCollectionOptionsFolderStrategy
-    ImportOpenApiDefinitionCollectionsItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The collection's ID.
-        name:
-          type: string
-          description: The collection's name.
-        uid:
-          type: string
-          format: uid
-          description: The collection's unique ID.
-      title: ImportOpenApiDefinitionCollectionsItems
-    JsonSchemaType:
-      type: string
-      enum:
-      - json
-      description: The `json` type value.
-      title: JsonSchemaType
-    commonErrorTypeTitleDetailStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
-    CommonErrorTypeTitleDetailDetail:
-      oneOf:
-      - type: string
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
-    workspaceId:
-      type: string
-      title: workspaceId
-    CommonErrorNameMessageDetailsErrorDetails:
-      oneOf:
-      - type: object
-        additionalProperties:
-          description: Any type
-      - type: array
-        items:
-          type: string
-      description: Information about the error.
-      title: CommonErrorNameMessageDetailsErrorDetails
     JsonSchemaInput:
       type: object
       properties: {}
       description: An object that contains a valid JSON OpenAPI definition. For more information, read the [OpenAPI documentation](https://swagger.io/docs/specification/basic-structure/).
       title: JsonSchemaInput
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    import400Error:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
+      title: import400Error
     jsonSchema:
       type: object
       properties:
@@ -273,37 +255,26 @@ components:
       - type
       - input
       title: jsonSchema
-    commonErrorNameMessage:
+    importOpenApiDefinition:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImportOpenApiDefinitionCollectionsItems'
+      title: importOpenApiDefinition
     CommonErrorTypeTitleDetailStatusType:
       oneOf:
       - type: string
         format: uri-reference
       - type: string
       title: CommonErrorTypeTitleDetailStatusType
-    GenerateCollectionOptionsIndentCharacter:
-      type: string
-      enum:
-      - Tab
-      - Space
-      default: Space
-      description: The option for setting the indentation character type.
-      title: GenerateCollectionOptionsIndentCharacter
-    Import_openApiDefinition_Request:
+    ImportOpenApiDefinitionRequestInternalServerError:
       oneOf:
-      - $ref: '#/components/schemas/jsonSchema'
-      - $ref: '#/components/schemas/jsonStringified'
-      title: Import_openApiDefinition_Request
-    import400Error:
-      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
-      title: import400Error
+      title: ImportOpenApiDefinitionRequestInternalServerError
     jsonStringified:
       type: object
       properties:
@@ -332,20 +303,47 @@ components:
           $ref: '#/components/schemas/CommonErrorNameMessageDetailsErrorDetails'
           description: Information about the error.
       title: CommonErrorNameMessageDetailsError
-    importOpenApiDefinition:
+    GenerateCollectionOptionsIndentCharacter:
+      type: string
+      enum:
+      - Tab
+      - Space
+      default: Space
+      description: The option for setting the indentation character type.
+      title: GenerateCollectionOptionsIndentCharacter
+    GenerateCollectionOptionsFolderStrategy:
+      type: string
+      enum:
+      - Paths
+      - Tags
+      default: Paths
+      description: Whether to create folders based on the specification's `paths` or `tags` properties.
+      title: GenerateCollectionOptionsFolderStrategy
+    workspaceId:
+      type: string
+      title: workspaceId
+    commonErrorTypeTitleDetailStatus:
       type: object
       properties:
-        collections:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImportOpenApiDefinitionCollectionsItems'
-      title: importOpenApiDefinition
-    commonErrorNameMessageDetails:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    commonErrorNameMessage:
       type: object
       properties:
         error:
-          $ref: '#/components/schemas/CommonErrorNameMessageDetailsError'
-      title: commonErrorNameMessageDetails
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
   securitySchemes:
     PostmanApiKey:
       type: apiKey

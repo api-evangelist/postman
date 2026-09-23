@@ -8,7 +8,7 @@ servers:
 - url: https://api.eu.postman.com
   description: https://api.eu.postman.com
 tags:
-- name: comments
+- name: Comments
 paths:
   /comments-resolutions/{threadId}:
     post:
@@ -17,11 +17,9 @@ paths:
       description: 'Resolves a comment and any associated replies. On success, this returns an HTTP `204 No Content` response.
 
 
-        Comment thread IDs return in the GET `/comments` response for [collections](https://www.postman.com/postman/workspace/postman-public-workspace/request/12959542-a6582e0a-9382-4760-8b91-53a8aa6cb8d7) and [collection items](https://www.postman.com/postman/workspace/postman-public-workspace/folder/12959542-efeda219-66e1-474c-a83b-253d15723bf7).
-
-        '
+        Comment thread IDs return in the GET `/comments` response for collections and collection items.'
       tags:
-      - comments
+      - Comments
       parameters:
       - name: threadId
         in: path
@@ -62,6 +60,9 @@ paths:
                 $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
 components:
   schemas:
+    threadId:
+      type: integer
+      title: threadId
     CommonErrorTypeTitleDetailStatusType:
       oneOf:
       - type: string
@@ -83,9 +84,6 @@ components:
           type: integer
           description: The error's HTTP status code.
       title: commonErrorTypeTitleDetailStatus
-    threadId:
-      type: integer
-      title: threadId
   securitySchemes:
     PostmanApiKey:
       type: apiKey

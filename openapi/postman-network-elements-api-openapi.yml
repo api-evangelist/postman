@@ -17,9 +17,7 @@ info:
 
     ## Rate Limits
 
-    Standard Postman API rate limits apply.
-
-    '
+    Standard Postman API rate limits apply.'
   version: 1.0.0
   contact:
     name: Postman Developer Support
@@ -163,47 +161,8 @@ paths:
           $ref: '#/components/responses/RateLimitError'
 components:
   responses:
-    BadRequestError:
-      description: Bad request - invalid input
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
     NotFoundError:
       description: The requested resource was not found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-    RateLimitError:
-      description: Too many requests - rate limit exceeded
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-              message:
-                type: string
-    UnauthorizedError:
-      description: Authentication credentials are missing or invalid
       content:
         application/json:
           schema:
@@ -230,6 +189,45 @@ components:
                     type: string
                   message:
                     type: string
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
   schemas:
     NetworkElement:
       type: object

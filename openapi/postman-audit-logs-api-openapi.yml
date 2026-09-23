@@ -1,236 +1,386 @@
 openapi: 3.2.0
 info:
-  title: Postman APIs API Comments Audit Logs API
-  description: 'The Postman APIs API enables you to manage your API definitions in Postman''s
-
-    API Builder. You can create APIs, manage versions, add schemas (OpenAPI,
-
-    GraphQL, etc.), and link collections, environments, mock servers, monitors,
-
-    and documentation to your API definitions.
-
-
-    ## Authentication
-
-    All requests require an API key passed in the `x-api-key` header.
-
-
-    ## Rate Limits
-
-    Standard Postman API rate limits apply.
-
-    '
+  title: Postman Audit Logs API
   version: 1.0.0
-  contact:
-    name: Postman Developer Support
-    url: https://learning.postman.com/docs/developer/postman-api/intro-api/
-    email: help@postman.com
-  license:
-    name: Postman Terms of Service
-    url: https://www.postman.com/legal/terms/
 servers:
-- url: https://api.getpostman.com
-  description: Postman Production API Server
-security:
-- apiKeyAuth: []
+- url: https://api.postman.com
+  description: https://api.postman.com
+- url: https://api.eu.postman.com
+  description: https://api.eu.postman.com
 tags:
 - name: Audit Logs
-  description: Operations for accessing team audit logs.
 paths:
   /audit/logs:
     get:
+      operationId: getAuditLogs
+      summary: Get team audit logs
+      description: Gets a list of your team's generated audit events. For a complete list of all audit events, see Audit logs.
       tags:
       - Audit Logs
-      summary: Postman Get audit logs
-      operationId: getAuditLogs
-      description: Gets team audit log events. You can filter by date range, event name, and user. Audit logs include user sign-ins, collection changes, workspace modifications, team membership changes, and other security and governance events.
       parameters:
+      - name: userId
+        in: query
+        description: Return only results that match the given user ID.
+        required: false
+        schema:
+          $ref: '#/components/schemas/auditLogsUserIdQuery'
+      - name: action
+        in: query
+        description: Filter results by an audit log action.
+        required: false
+        schema:
+          $ref: '#/components/schemas/auditLogsActionQuery'
       - name: since
         in: query
-        description: Return audit events since this date (ISO 8601).
+        description: Return logs created after the given time, in `YYYY-MM-DD` format.
         required: false
         schema:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/sinceDateQuery'
       - name: until
         in: query
-        description: Return audit events until this date (ISO 8601).
+        description: Return logs created before the given time, in `YYYY-MM-DD` format.
         required: false
         schema:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/untilDateQuery'
       - name: limit
         in: query
-        description: Maximum number of results to return.
+        description: The maximum number of audit events to return at once.
         required: false
         schema:
-          type: integer
-          default: 50
-          maximum: 300
+          $ref: '#/components/schemas/auditLogsLimitQuery'
       - name: cursor
         in: query
-        description: Pagination cursor for the next page of results.
+        description: The pointer to the first record of the set of paginated results. To view the next response, use the `nextCursor` value for this parameter.
         required: false
         schema:
-          type: string
+          $ref: '#/components/schemas/cursor'
       - name: orderBy
         in: query
-        description: Sort order for results.
+        description: Return the records in ascending (`asc`) or descending (`desc`) order.
         required: false
         schema:
-          type: string
-          enum:
-          - asc
-          - desc
+          $ref: '#/components/schemas/ascDescDefaultDesc'
           default: desc
+      - name: order_by
+        in: query
+        description: Return the records in ascending (`asc`) or descending (`desc`) order.
+        required: false
+        schema:
+          $ref: '#/components/schemas/ascDescDefaultDesc'
+          default: desc
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
       responses:
         '200':
-          description: Successful response with audit log events
+          description: Successful Response
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  trails:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/AuditEvent'
-                  meta:
-                    type: object
-                    properties:
-                      nextCursor:
-                        type: string
-                        description: Cursor for the next page of results
-                      total:
-                        type: integer
+                $ref: '#/components/schemas/getAuditLogs'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessage'
         '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/ForbiddenError'
-        '429':
-          $ref: '#/components/responses/RateLimitError'
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAuditLogsRequestUnauthorizedError'
         '500':
-          $ref: '#/components/responses/InternalServerError'
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAuditLogsRequestInternalServerError'
+  /audit-actions:
+    get:
+      operationId: getAuditLogEventActions
+      summary: Get all audit log event actions
+      description: Gets a complete list of all available audit log event actions.
+      tags:
+      - Audit Logs
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAuditLogEventActions'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/commonErrorNameMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAuditLogEventActionsRequestInternalServerError'
 components:
-  responses:
-    InternalServerError:
-      description: An unexpected error occurred on the server
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-    RateLimitError:
-      description: Too many requests - rate limit exceeded
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-              message:
-                type: string
-    UnauthorizedError:
-      description: Authentication credentials are missing or invalid
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-    ForbiddenError:
-      description: Insufficient permissions - Enterprise plan required
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
   schemas:
-    AuditEvent:
+    auditLogTeam:
       type: object
-      description: An audit log event tracking a user action or system event.
+      properties:
+        name:
+          type: string
+          description: The team's name.
+        id:
+          type: number
+          format: double
+          description: The team's ID.
+      description: The user's team information.
+      title: auditLogTeam
+    GetAuditLogEventActionsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAuditLogEventActionsRequestInternalServerError
+    getAuditLogEventActions:
+      type: array
+      items:
+        $ref: '#/components/schemas/auditLogAction'
+      description: A list of available audit log event actions.
+      title: getAuditLogEventActions
+    ascDescDefaultDesc:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: desc
+      title: ascDescDefaultDesc
+    auditLogsActionQuery:
+      type: string
+      title: auditLogsActionQuery
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    auditLogAction:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The audit log event action's name.
+        displayName:
+          type: string
+          description: The audit log event's display name as it appears in Postman's Audit Logs dashboard.
+      description: Information about the audit log event action.
+      title: auditLogAction
+    auditLogsUserIdQuery:
+      type: integer
+      title: auditLogsUserIdQuery
+    sinceDateQuery:
+      type: string
+      format: date
+      title: sinceDateQuery
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    auditLogEvent:
+      type: object
       properties:
         id:
-          type: string
-          description: The unique ID of the audit event
+          type: number
+          format: double
+          description: The audit event's ID.
         ip:
           type: string
-          description: The IP address of the user who performed the action
+          description: The IP address of the user that performed the action.
         userAgent:
           type: string
-          description: The user agent string from the request
+          description: The user agent information.
         action:
           type: string
-          description: The action that was performed. Common actions include user.sign_in, team.member_added, collection.created, workspace.created, api_key.created, etc.
-          example: user.sign_in
+          description: The action performed by the user.
         timestamp:
           type: string
           format: date-time
-          description: When the event occurred
+          description: The date and time at which the event occurred.
         message:
           type: string
-          description: A human-readable description of the event
-        user:
-          type: object
-          description: The user who performed the action
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
-            email:
-              type: string
-              format: email
-            username:
-              type: string
+          description: The audit event's description.
         data:
+          $ref: '#/components/schemas/auditLogData'
+      description: Information about the audit log event.
+      title: auditLogEvent
+    GetAuditLogsRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAuditLogsRequestUnauthorizedError
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    cursor:
+      type: string
+      title: cursor
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    getAuditLogs:
+      type: object
+      properties:
+        trails:
+          type: array
+          items:
+            $ref: '#/components/schemas/auditLogEvent'
+          description: A list of audit log events.
+      title: getAuditLogs
+    auditLogData:
+      type: object
+      properties:
+        actor:
+          $ref: '#/components/schemas/auditLogActor'
+        user:
+          $ref: '#/components/schemas/auditLogUser'
+        team:
+          $ref: '#/components/schemas/auditLogTeam'
+        variables:
           type: object
-          description: Additional context data about the event. The structure varies by event type.
-          additionalProperties: true
-          properties:
-            team:
-              type: object
-              properties:
-                id:
-                  type: integer
-                name:
-                  type: string
-            actor:
-              type: object
-              properties:
-                id:
-                  type: integer
-                name:
-                  type: string
-                email:
-                  type: string
-            variables:
-              type: object
-              additionalProperties: true
+          additionalProperties:
+            description: Any type
+          description: Additional information about the performed action.
+      description: Information about the audit log.
+      title: auditLogData
+    untilDateQuery:
+      type: string
+      format: date
+      title: untilDateQuery
+    auditLogsLimitQuery:
+      type: integer
+      title: auditLogsLimitQuery
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    auditLogUser:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The user's name.
+        username:
+          type: string
+          description: The user's username.
+        email:
+          type: string
+          format: email
+          description: The user's email address.
+        id:
+          type: number
+          format: double
+          description: The user's ID.
+      description: Information about the user.
+      title: auditLogUser
+    GetAuditLogsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAuditLogsRequestInternalServerError
+    auditLogActor:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The user's name.
+        username:
+          type: string
+          description: The user's username.
+        email:
+          type: string
+          format: email
+          description: The user's email address.
+        id:
+          type: number
+          format: double
+          description: The user's ID.
+        active:
+          type: boolean
+          description: If true, the user is active. If false, the user is deactivated.
+      description: Information about the user who preformed the audit event.
+      title: auditLogActor
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
   securitySchemes:
-    apiKeyAuth:
+    PostmanApiKey:
       type: apiKey
-      name: x-api-key
       in: header
-      description: Postman API key for authentication.
+      name: x-api-key
+    basicAuth:
+      type: http
+      scheme: basic
+    scimApiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: A valid [SCIM API key](https://learning.postman.com/docs/administration/scim-provisioning/scim-provisioning-overview/#generating-scim-api-key) for calls to SCIM endpoints.
+x-provenance:
+  first_party: true
+  method: harvested
+  provider_published: true
+  source: https://learning.postman.com/api-docs/openapi.json
+  harvested: '2026-08-05'
+  note: Postman's own OpenAPI 3.1 definition for the Postman API, served by its Fern-hosted API reference. 162 paths, 256 operations, servers api.postman.com and api.eu.postman.com.

@@ -17,7 +17,7 @@ paths:
       description: '**This endpoint is deprecated**
 
 
-        Generates code for an AI agent tool using a collection and request from the Public API Network. For more information, see [**Tool Generation Demo**](http://postman.com/explore/toolgen) in Postman''s Public API Network.
+        Generates code for an AI agent tool using a collection and request from the Public API Network. For more information, see **Tool Generation Demo** in Postman''s Public API Network.
 
 
         ### Important
@@ -25,9 +25,7 @@ paths:
 
         - This endpoint has a rate limit of **300 calls every 3 hours**. This does not accrue Postbot usage.
 
-        - This endpoint only supports public Postman Collections and requests.
-
-        '
+        - This endpoint only supports public Postman Collections and requests.'
       tags:
       - postbot
       parameters:
@@ -79,6 +77,25 @@ components:
       - autogen
       description: The AI agent framework to use. Note that the `autogen` framework only supports the `python` language.
       title: GenerateToolConfigAgentFramework
+    GenerateToolRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GenerateToolRequestInternalServerError
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
     GenerateToolResponseData:
       type: object
       properties:
@@ -102,24 +119,24 @@ components:
           type: integer
           description: The error's HTTP status code.
       title: commonErrorTypeTitleDetailStatus
-    postbot400Error:
+    CommonErrorNameMessageError:
       type: object
       properties:
-        detail:
+        name:
           type: string
-          description: Details about the occurrence of the error.
-        status:
-          type: number
-          format: double
-          description: The error's HTTP status code.
-        title:
+          description: The error name.
+        message:
           type: string
-          description: A short summary of the error.
-        type:
-          type: string
-          format: uri
-          description: The error type.
-      title: postbot400Error
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
     generateTool:
       type: object
       properties:
@@ -138,34 +155,6 @@ components:
       - collectionId
       - config
       title: generateTool
-    CommonErrorTypeTitleDetailDetail:
-      oneOf:
-      - type: string
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
-    generateToolResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/GenerateToolResponseData'
-          description: The generated response data.
-      title: generateToolResponse
-    commonErrorNameMessage:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
-    GenerateToolRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GenerateToolRequestInternalServerError
     GenerateToolConfigLanguage:
       type: string
       enum:
@@ -174,36 +163,45 @@ components:
       - python
       description: The programming language to use.
       title: GenerateToolConfigLanguage
-    CommonErrorNameMessageError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
     CommonErrorTypeTitleDetailStatusType:
       oneOf:
       - type: string
         format: uri-reference
       - type: string
       title: CommonErrorTypeTitleDetailStatusType
-    commonErrorTypeTitleDetail:
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    postbot400Error:
       type: object
       properties:
-        type:
+        detail:
           type: string
-          description: The type of error.
+          description: Details about the occurrence of the error.
+        status:
+          type: number
+          format: double
+          description: The error's HTTP status code.
         title:
           type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
-          description: Information about the error.
-      title: commonErrorTypeTitleDetail
+          description: A short summary of the error.
+        type:
+          type: string
+          format: uri
+          description: The error type.
+      title: postbot400Error
+    generateToolResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/GenerateToolResponseData'
+          description: The generated response data.
+      title: generateToolResponse
     GenerateToolConfig:
       type: object
       properties:

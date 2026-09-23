@@ -8,7 +8,7 @@ servers:
 - url: https://api.eu.postman.com
   description: https://api.eu.postman.com
 tags:
-- name: billing
+- name: Billing
 paths:
   /accounts:
     get:
@@ -16,7 +16,7 @@ paths:
       summary: Get accounts
       description: Gets Postman billing account details for the given team.
       tags:
-      - billing
+      - Billing
       parameters:
       - name: x-api-key
         in: header
@@ -54,7 +54,7 @@ paths:
       summary: List account invoices
       description: Gets all invoices for a Postman billing account filtered by the status of the invoice.
       tags:
-      - billing
+      - Billing
       parameters:
       - name: accountId
         in: path
@@ -106,6 +106,184 @@ paths:
                 $ref: '#/components/schemas/GetAccountInvoicesRequestInternalServerError'
 components:
   schemas:
+    GetAccountInvoicesRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAccountInvoicesRequestInternalServerError
+    getAccountInvoices:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/invoiceData'
+          description: A list of account invoices.
+      required:
+      - data
+      title: getAccountInvoices
+    invoicesLinks:
+      type: object
+      properties:
+        web:
+          $ref: '#/components/schemas/InvoicesLinksWeb'
+          description: An object containing web-based account references.
+      description: A [JSON API spec](https://jsonapi.org/format/#document-links) object containing hypermedia links.
+      title: invoicesLinks
+    InvoicesLinksWeb:
+      type: object
+      properties:
+        href:
+          type: string
+          format: url
+          description: A URL where you can download the invoice in PDF and view details.
+      description: An object containing web-based account references.
+      title: InvoicesLinksWeb
+    invoicesTotal:
+      type: object
+      properties:
+        value:
+          type: integer
+          description: The amount billed.
+        currency:
+          type: string
+          description: The currency of the billed amount. Currently only supports the `USD` value.
+      description: Information about the invoice's total billed amount.
+      title: invoicesTotal
+    billingAccountStatus:
+      type: string
+      enum:
+      - PAID
+      title: billingAccountStatus
+    invoiceData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The invoice's ID.
+        status:
+          type: string
+          description: The invoice's status.
+        issuedAt:
+          type: string
+          format: date
+          description: The date on which the invoice was issued.
+        totalAmount:
+          $ref: '#/components/schemas/invoicesTotal'
+        links:
+          $ref: '#/components/schemas/invoicesLinks'
+      description: Information about the invoice.
+      title: invoiceData
+    InvoicesAccountInfoSalesChannel:
+      type: string
+      enum:
+      - SELF_SERVE
+      - SALES_SERVE
+      description: 'The sales channel from which the account was created:
+
+        - `SELF_SERVE` — The user purchased the account plan.
+
+        - `SALES_SERVE` — The account was purchased through the Postman sales team process.
+
+        '
+      title: InvoicesAccountInfoSalesChannel
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    GetAccountInvoicesRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAccountInvoicesRequestUnauthorizedError
+    billingAccountId:
+      type: string
+      title: billingAccountId
+    GetAccountsRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAccountsRequestUnauthorizedError
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    GetAccountsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAccountsRequestInternalServerError
+    invoicesSlots:
+      type: object
+      properties:
+        available:
+          type: integer
+          description: The number of the team's available slots.
+        consumed:
+          type: integer
+          description: The number of currently-billed team members.
+        total:
+          type: integer
+          description: The total number of slots available to the team.
+        unbilled:
+          type: integer
+          description: The number of unbilled slots if [auto-flex billing](https://learning.postman.com/auto-flex-policy/) is available.
+      description: Information about the team's slots.
+      title: invoicesSlots
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
     invoicesAccountInfo:
       type: object
       properties:
@@ -151,184 +329,6 @@ components:
           $ref: '#/components/schemas/invoicesSlots'
       description: Information about the account.
       title: invoicesAccountInfo
-    GetAccountInvoicesRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetAccountInvoicesRequestInternalServerError
-    CommonErrorNameMessageError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
-    commonErrorTypeTitleDetail:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of error.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
-          description: Information about the error.
-      title: commonErrorTypeTitleDetail
-    invoicesLinks:
-      type: object
-      properties:
-        web:
-          $ref: '#/components/schemas/InvoicesLinksWeb'
-          description: An object containing web-based account references.
-      description: A [JSON API spec](https://jsonapi.org/format/#document-links) object containing hypermedia links.
-      title: invoicesLinks
-    InvoicesAccountInfoSalesChannel:
-      type: string
-      enum:
-      - SELF_SERVE
-      - SALES_SERVE
-      description: 'The sales channel from which the account was created:
-
-        - `SELF_SERVE` — The user purchased the account plan.
-
-        - `SALES_SERVE` — The account was purchased through the Postman sales team process.
-
-        '
-      title: InvoicesAccountInfoSalesChannel
-    GetAccountsRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetAccountsRequestUnauthorizedError
-    commonErrorTypeTitleDetailStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
-    CommonErrorTypeTitleDetailDetail:
-      oneOf:
-      - type: string
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
-    billingAccountStatus:
-      type: string
-      enum:
-      - PAID
-      title: billingAccountStatus
-    GetAccountsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetAccountsRequestInternalServerError
-    getAccountInvoices:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/invoiceData'
-          description: A list of account invoices.
-      required:
-      - data
-      title: getAccountInvoices
-    commonErrorNameMessage:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    invoiceData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The invoice's ID.
-        status:
-          type: string
-          description: The invoice's status.
-        issuedAt:
-          type: string
-          format: date
-          description: The date on which the invoice was issued.
-        totalAmount:
-          $ref: '#/components/schemas/invoicesTotal'
-        links:
-          $ref: '#/components/schemas/invoicesLinks'
-      description: Information about the invoice.
-      title: invoiceData
-    invoicesSlots:
-      type: object
-      properties:
-        available:
-          type: integer
-          description: The number of the team's available slots.
-        consumed:
-          type: integer
-          description: The number of currently-billed team members.
-        total:
-          type: integer
-          description: The total number of slots available to the team.
-        unbilled:
-          type: integer
-          description: The number of unbilled slots if [auto-flex billing](https://learning.postman.com/auto-flex-policy/) is available.
-      description: Information about the team's slots.
-      title: invoicesSlots
-    billingAccountId:
-      type: string
-      title: billingAccountId
-    InvoicesLinksWeb:
-      type: object
-      properties:
-        href:
-          type: string
-          format: url
-          description: A URL where you can download the invoice in PDF and view details.
-      description: An object containing web-based account references.
-      title: InvoicesLinksWeb
-    GetAccountInvoicesRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetAccountInvoicesRequestUnauthorizedError
-    invoicesTotal:
-      type: object
-      properties:
-        value:
-          type: integer
-          description: The amount billed.
-        currency:
-          type: string
-          description: The currency of the billed amount. Currently only supports the `USD` value.
-      description: Information about the invoice's total billed amount.
-      title: invoicesTotal
   securitySchemes:
     PostmanApiKey:
       type: apiKey

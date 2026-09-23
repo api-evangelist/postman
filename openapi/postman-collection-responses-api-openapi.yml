@@ -8,7 +8,7 @@ servers:
 - url: https://api.eu.postman.com
   description: https://api.eu.postman.com
 tags:
-- name: collectionResponses
+- name: Collection Responses
 paths:
   /collections/{collectionId}/responses/{responseId}/comments:
     get:
@@ -16,7 +16,7 @@ paths:
       summary: Get a response's comments
       description: Gets all comments left by users in a response.
       tags:
-      - collectionResponses
+      - Collection Responses
       parameters:
       - name: collectionId
         in: path
@@ -75,11 +75,9 @@ paths:
         **Note:**
 
 
-        This endpoint accepts a max of 10,000 characters.
-
-        '
+        This endpoint accepts a max of 10,000 characters.'
       tags:
-      - collectionResponses
+      - Collection Responses
       parameters:
       - name: collectionId
         in: path
@@ -144,11 +142,9 @@ paths:
         **Note:**
 
 
-        This endpoint accepts a max of 10,000 characters.
-
-        '
+        This endpoint accepts a max of 10,000 characters.'
       tags:
-      - collectionResponses
+      - Collection Responses
       parameters:
       - name: collectionId
         in: path
@@ -218,11 +214,9 @@ paths:
         **Note:**
 
 
-        Deleting the first comment of a thread deletes all the comments in the thread.
-
-        '
+        Deleting the first comment of a thread deletes all the comments in the thread.'
       tags:
-      - collectionResponses
+      - Collection Responses
       parameters:
       - name: collectionId
         in: path
@@ -281,10 +275,81 @@ paths:
                 $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
 components:
   schemas:
-    collectionResponseUid:
+    commentCreatedUpdated:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CommentCreatedUpdatedData'
+      title: commentCreatedUpdated
+    CommentDataStatus:
       type: string
-      format: uid
-      title: collectionResponseUid
+      enum:
+      - Open
+      - Resolved
+      description: The comment's current status.
+      title: CommentDataStatus
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    commentTaggedUsers:
+      type: object
+      properties:
+        '{{userName}}':
+          $ref: '#/components/schemas/CommentTaggedUsersUserName'
+          description: An object that contains information about the tagged user. The object's name is the user's Postman username. For example, `@user-postman`.
+      description: Information about users tagged in the `body` comment.
+      title: commentTaggedUsers
+    commentCreate:
+      type: object
+      properties:
+        body:
+          type: string
+          description: The contents of the comment.
+        threadId:
+          type: integer
+          description: The comment's thread ID. To create a reply on an existing comment, include this property.
+        tags:
+          $ref: '#/components/schemas/commentTaggedUsers'
+      required:
+      - body
+      description: Information about the comment.
+      title: commentCreate
+    CommentCreatedUpdatedData:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The comment's ID.
+        threadId:
+          type: integer
+          description: The comment's thread ID.
+        createdBy:
+          type: integer
+          description: The user ID of the user who created the comment.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the comment was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time when the comment was last updated.
+        body:
+          type: string
+          description: The contents of the comment.
+      title: CommentCreatedUpdatedData
     commentData:
       type: object
       properties:
@@ -313,45 +378,19 @@ components:
           description: The contents of the comment.
       description: Information about the comment.
       title: commentData
-    CommentCreatedUpdatedData:
+    commentResponse:
       type: object
       properties:
-        id:
-          type: integer
-          description: The comment's ID.
-        threadId:
-          type: integer
-          description: The comment's thread ID.
-        createdBy:
-          type: integer
-          description: The user ID of the user who created the comment.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the comment was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time when the comment was last updated.
-        body:
-          type: string
-          description: The contents of the comment.
-      title: CommentCreatedUpdatedData
-    commonErrorTypeTitleDetailStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/commentData'
+          description: A list of comments.
+      title: commentResponse
+    collectionUid:
+      type: string
+      format: uid
+      title: collectionUid
     commentUpdate:
       type: object
       properties:
@@ -364,61 +403,18 @@ components:
       - body
       description: Information about the comment.
       title: commentUpdate
-    commentTaggedUsers:
-      type: object
-      properties:
-        '{{userName}}':
-          $ref: '#/components/schemas/CommentTaggedUsersUserName'
-          description: An object that contains information about the tagged user. The object's name is the user's Postman username. For example, `@user-postman`.
-      description: Information about users tagged in the `body` comment.
-      title: commentTaggedUsers
-    commentResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/commentData'
-          description: A list of comments.
-      title: commentResponse
-    CommentDataStatus:
-      type: string
-      enum:
-      - Open
-      - Resolved
-      description: The comment's current status.
-      title: CommentDataStatus
     CommonErrorTypeTitleDetailStatusType:
       oneOf:
       - type: string
         format: uri-reference
       - type: string
       title: CommonErrorTypeTitleDetailStatusType
-    commentCreate:
-      type: object
-      properties:
-        body:
-          type: string
-          description: The contents of the comment.
-        threadId:
-          type: integer
-          description: The comment's thread ID. To create a reply on an existing comment, include this property.
-        tags:
-          $ref: '#/components/schemas/commentTaggedUsers'
-      required:
-      - body
-      description: Information about the comment.
-      title: commentCreate
     CommentTaggedUsersUserNameType:
       type: string
       enum:
       - user
       description: The `user` value.
       title: CommentTaggedUsersUserNameType
-    collectionUid:
-      type: string
-      format: uid
-      title: collectionUid
     CommentTaggedUsersUserName:
       type: object
       properties:
@@ -436,12 +432,10 @@ components:
     commentId:
       type: integer
       title: commentId
-    commentCreatedUpdated:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/CommentCreatedUpdatedData'
-      title: commentCreatedUpdated
+    collectionResponseUid:
+      type: string
+      format: uid
+      title: collectionResponseUid
   securitySchemes:
     PostmanApiKey:
       type: apiKey

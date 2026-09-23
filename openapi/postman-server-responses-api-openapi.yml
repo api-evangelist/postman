@@ -1,6 +1,25 @@
 openapi: 3.2.0
 info:
-  title: Postman Server Responses API
+  title: Postman Mock Servers Server Responses API
+  description: 'The Postman Mock Servers API enables you to create and manage mock servers
+
+    that simulate API behavior. Mock servers generate responses based on examples
+
+    saved in your Postman collections, allowing frontend and backend teams to
+
+    work in parallel during API development.
+
+
+    ## Authentication
+
+    All requests require an API key passed in the `x-api-key` header.
+
+
+    ## Rate Limits
+
+    Mock server calls have separate usage limits based on your Postman plan.
+
+    Free plans include 1,000 mock server calls per month.'
   version: 1.0.0
   contact:
     name: Postman Developer Support
@@ -9,7 +28,6 @@ info:
   license:
     name: Postman Terms of Service
     url: https://www.postman.com/legal/terms/
-  description: 'Operations tagged Server Responses across 2 of this provider''s published API definitions: postman-mock-servers-api-openapi.yml, postman-server-responses-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.getpostman.com
   description: Postman Production API Server
@@ -72,9 +90,6 @@ paths:
           $ref: '#/components/responses/NotFoundError'
         '429':
           $ref: '#/components/responses/RateLimitError'
-    servers:
-    - url: https://api.getpostman.com
-      description: Postman Production API Server
   /mocks/{mockId}/serverResponses/{serverResponseId}:
     put:
       tags:
@@ -130,13 +145,10 @@ paths:
           $ref: '#/components/responses/NotFoundError'
         '429':
           $ref: '#/components/responses/RateLimitError'
-    servers:
-    - url: https://api.getpostman.com
-      description: Postman Production API Server
 components:
   responses:
-    BadRequestError:
-      description: Bad request - invalid input
+    NotFoundError:
+      description: The requested resource was not found
       content:
         application/json:
           schema:
@@ -149,8 +161,22 @@ components:
                     type: string
                   message:
                     type: string
-    NotFoundError:
-      description: The requested resource was not found
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    BadRequestError:
+      description: Bad request - invalid input
       content:
         application/json:
           schema:
@@ -174,20 +200,6 @@ components:
                 type: string
               message:
                 type: string
-    UnauthorizedError:
-      description: Authentication credentials are missing or invalid
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
   parameters:
     MockIdParam:
       name: mockId
@@ -197,6 +209,35 @@ components:
       schema:
         type: string
   schemas:
+    ServerResponseInput:
+      type: object
+      required:
+      - name
+      - statusCode
+      properties:
+        name:
+          type: string
+        statusCode:
+          type: integer
+        headers:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+              value:
+                type: string
+        body:
+          type: string
+        language:
+          type: string
+          enum:
+          - text
+          - json
+          - xml
+          - html
+          - javascript
     ServerResponse:
       type: object
       description: A custom server response configured on a mock server.
@@ -232,41 +273,9 @@ components:
         updatedAt:
           type: string
           format: date-time
-    ServerResponseInput:
-      type: object
-      required:
-      - name
-      - statusCode
-      properties:
-        name:
-          type: string
-        statusCode:
-          type: integer
-        headers:
-          type: array
-          items:
-            type: object
-            properties:
-              key:
-                type: string
-              value:
-                type: string
-        body:
-          type: string
-        language:
-          type: string
-          enum:
-          - text
-          - json
-          - xml
-          - html
-          - javascript
   securitySchemes:
     apiKeyAuth:
       type: apiKey
       name: x-api-key
       in: header
       description: Postman API key for authentication.
-x-refined-from:
-- postman-mock-servers-api-openapi.yml
-- postman-server-responses-api-openapi.yml
