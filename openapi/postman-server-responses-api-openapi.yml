@@ -146,68 +146,6 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimitError'
 components:
-  responses:
-    NotFoundError:
-      description: The requested resource was not found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-    UnauthorizedError:
-      description: Authentication credentials are missing or invalid
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-    BadRequestError:
-      description: Bad request - invalid input
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-    RateLimitError:
-      description: Too many requests - rate limit exceeded
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-              message:
-                type: string
-  parameters:
-    MockIdParam:
-      name: mockId
-      in: path
-      required: true
-      description: The mock server's unique ID or UID.
-      schema:
-        type: string
   schemas:
     ServerResponseInput:
       type: object
@@ -273,6 +211,68 @@ components:
         updatedAt:
           type: string
           format: date-time
+  responses:
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    RateLimitError:
+      description: Too many requests - rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+  parameters:
+    MockIdParam:
+      name: mockId
+      in: path
+      required: true
+      description: The mock server's unique ID or UID.
+      schema:
+        type: string
   securitySchemes:
     apiKeyAuth:
       type: apiKey

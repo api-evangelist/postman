@@ -1501,393 +1501,6 @@ paths:
               $ref: '#/components/schemas/createSpecVersionTag'
 components:
   schemas:
-    GenerateCollectionRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GenerateCollectionRequestInternalServerError
-    GetAsyncTaskStatusMeta:
-      type: object
-      properties:
-        action:
-          type: string
-          description: The task's action.
-        model:
-          $ref: '#/components/schemas/GetAsyncTaskStatusMetaModel'
-          description: The model for which the task is performing the operation.
-      description: The response's non-standard meta information.
-      title: GetAsyncTaskStatusMeta
-    collectionId:
-      type: string
-      title: collectionId
-    fileFormat:
-      type: string
-      enum:
-      - json
-      - yaml
-      - proto
-      - graphql
-      - smithy
-      description: The specification's file format.
-      title: fileFormat
-    GetMigrationStatus400ErrorError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-        details:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Information about the error.
-      title: GetMigrationStatus400ErrorError
-    GetSpecVersionTagsRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: GetSpecVersionTagsRequestForbiddenError
-    apiId:
-      type: string
-      title: apiId
-    GetSpecVersionTagRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSpecVersionTagRequestInternalServerError
-    CreateUpdateSpecFileResponseType:
-      type: string
-      enum:
-      - DEFAULT
-      - ROOT
-      default: DEFAULT
-      description: 'The type of file:
-
-        - `ROOT` — The file containing the full OpenAPI structure. This serves as the entry point for the API spec and references other (`DEFAULT`) spec files. Multi-file specs can only have one root file.
-
-        - `DEFAULT` — A file referenced by the `ROOT` file.
-
-        '
-      title: CreateUpdateSpecFileResponseType
-    apiSpecSyncOptions:
-      type: object
-      properties:
-        syncOptions:
-          $ref: '#/components/schemas/ApiSpecSyncOptionsSyncOptions'
-          description: Information about the specification sync options.
-      title: apiSpecSyncOptions
-    AsyncSpecTaskStatusResourcesItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The ID of the assigned resource.
-        url:
-          type: string
-          description: The task's assigned resource URL.
-      title: AsyncSpecTaskStatusResourcesItems
-    MigrateApiToSpecHub400ErrorTitleMessageDetailsErrorDetails:
-      type: object
-      properties:
-        workspaceId:
-          type: string
-          description: The workspace's ID.
-      description: Information about the error.
-      title: MigrateApiToSpecHub400ErrorTitleMessageDetailsErrorDetails
-    UpdateSpecSyncOptionsRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: UpdateSpecSyncOptionsRequestForbiddenError
-    GetMigrationStatusStatus:
-      type: string
-      enum:
-      - COMPLETED
-      - FAILED
-      description: The status of the migration.
-      title: GetMigrationStatusStatus
-    CreateSpecFileRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: CreateSpecFileRequestForbiddenError
-    GetGeneratedCollectionSpecsRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: GetGeneratedCollectionSpecsRequestForbiddenError
-    SyncSpecWithCollectionRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: SyncSpecWithCollectionRequestInternalServerError
-    elementTypeCollection:
-      type: string
-      enum:
-      - collection
-      title: elementTypeCollection
-    GetSpecVersionTagsDataItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The version tag's ID.
-        name:
-          type: string
-          description: The version tag's name.
-      description: Information about the version tag.
-      title: GetSpecVersionTagsDataItems
-    getMigrationStatus:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/GetMigrationStatusStatus'
-          description: The status of the migration.
-        details:
-          $ref: '#/components/schemas/getMigrationStatusDetails'
-      title: getMigrationStatus
-    MigrateApiToSpecHub400ErrorTitleMessageError:
-      type: object
-      properties:
-        title:
-          type: string
-          description: A short summary of the problem.
-        message:
-          type: string
-          description: The error message.
-      title: MigrateApiToSpecHub400ErrorTitleMessageError
-    GetSpecVersionTagRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: GetSpecVersionTagRequestForbiddenError
-    CommonErrorTypeTitleDetailDetail:
-      oneOf:
-      - type: string
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
-    CreateSpecVersionTagResponseData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The version tag's ID.
-        name:
-          type: string
-          description: The version tag's name.
-      description: Information about the created version tag.
-      title: CreateSpecVersionTagResponseData
-    getSpecFile:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The file's ID.
-        name:
-          type: string
-          description: The file's name.
-        path:
-          type: string
-          description: The file's path.
-        createdBy:
-          type: integer
-          description: The user ID of the user that created the file.
-        updatedBy:
-          type: integer
-          description: The ID of the user who updated the file.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the file was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the file was updated.
-        type:
-          $ref: '#/components/schemas/GetSpecFileType'
-          description: 'The type of file:
-
-            - `ROOT` — A file containing the full OpenAPI structure and references other (DEFAULT) spec files.
-
-            - `DEFAULT` — A file referenced by the `ROOT` file.
-
-            '
-        content:
-          type: string
-          description: The file's stringified contents.
-      description: Information about the API specification file.
-      title: getSpecFile
-    GetAllSpecsRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: GetAllSpecsRequestForbiddenError
-    CreateSpecRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateSpecRequestInternalServerError
-    createSpecVersionTag:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The version tag's name.
-      required:
-      - name
-      title: createSpecVersionTag
-    GetSpecFileRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSpecFileRequestInternalServerError
-    migrateApiToSpecHub400ErrorTitleMessageDetails:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/MigrateApiToSpecHub400ErrorTitleMessageDetailsError'
-      title: migrateApiToSpecHub400ErrorTitleMessageDetails
-    MigrateApiToSpecHubRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: MigrateApiToSpecHubRequestInternalServerError
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    GenerateCollectionOptionsIndentCharacter:
-      type: string
-      enum:
-      - Tab
-      - Space
-      default: Space
-      description: The option for setting the indentation character type.
-      title: GenerateCollectionOptionsIndentCharacter
-    GetMigrationStatusDetails1:
-      type: object
-      properties:
-        reason:
-          type: string
-          description: The reason the migration failed.
-      description: Information about the migration.
-      title: GetMigrationStatusDetails1
-    workspaceId:
-      type: string
-      title: workspaceId
-    specType:
-      type: string
-      enum:
-      - OPENAPI:2.0
-      - OPENAPI:3.0
-      - OPENAPI:3.1
-      - ASYNCAPI:2.0
-      - ASYNCAPI:3.0
-      - PROTOBUF:2
-      - PROTOBUF:3
-      - GRAPHQL
-      - SMITHY:2.0
-      description: The type of API specification.
-      title: specType
-    MigrateApiToSpecHub400ErrorTypeNameMessageTitleError:
-      type: object
-      properties:
-        type:
-          type: string
-          description: A short summary of the problem.
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-        title:
-          type: string
-          description: A short summary of the problem.
-      title: MigrateApiToSpecHub400ErrorTypeNameMessageTitleError
-    updateSpecFile:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The file's name.
-        type:
-          $ref: '#/components/schemas/UpdateSpecFileType'
-          description: 'The type of file:
-
-            - `ROOT` — The file containing the full OpenAPI structure. This serves as the entry point for the API spec and references other (`DEFAULT`) spec files. Multi-file specs can only have one root file.
-
-            - `DEFAULT` — A file referenced by the `ROOT` file.
-
-            '
-        content:
-          type: string
-          description: The specification's stringified contents.
-      description: You must pass one of the accepted values in this request body. Also, this request body does not accept multiple properties in a single call. For example, you cannot pass both the `content` and `type` property at the same time.
-      title: updateSpecFile
-    commonErrorTypeTitleDetailStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
-    GetSpecVersionTagDataItemsFileType:
-      type: string
-      enum:
-      - ROOT
-      - DEFAULT
-      description: 'The type of file:
-
-
-        - `ROOT` — The file containing the full OpenAPI structure. This serves as the entry point for the API spec and references other (`DEFAULT`) spec files. Multi-file specs can only have one root file.
-
-        - `DEFAULT` — A file referenced by the `ROOT` file. This file contains a subset of the OpenAPI structure, such as specific components or paths.
-
-
-        This value doesn''t return for folders.
-
-        '
-      title: GetSpecVersionTagDataItemsFileType
-    GenerateSpecFromCollectionFormat:
-      type: string
-      enum:
-      - JSON
-      - YAML
-      description: The format of the API specification.
-      title: GenerateSpecFromCollectionFormat
-    GetSpecFilesRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: GetSpecFilesRequestForbiddenError
-    UpdateSpecFileRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: UpdateSpecFileRequestForbiddenError
     createSpecResponse:
       type: object
       properties:
@@ -1914,331 +1527,131 @@ components:
           type: integer
           description: The user ID of the user that last updated the specification file.
       title: createSpecResponse
-    GetSpecVersionTagDataItems:
+    fileFormat:
+      type: string
+      enum:
+      - json
+      - yaml
+      - proto
+      - graphql
+      - smithy
+      description: The specification's file format.
+      title: fileFormat
+    createSpecVersionTagResponse:
       type: object
       properties:
-        id:
-          type: string
-          description: The file's ID.
+        data:
+          $ref: '#/components/schemas/CreateSpecVersionTagResponseData'
+          description: Information about the created version tag.
+      title: createSpecVersionTagResponse
+    createSpec:
+      type: object
+      properties:
         name:
           type: string
-          description: The file's name.
-        updatedBy:
-          type: string
-          description: The ID of the user who updated the file.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the file was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the file was updated.
-        createdBy:
-          type: string
-          description: The user ID of the user that created the file.
+          description: The specification's name.
         type:
-          $ref: '#/components/schemas/GetSpecVersionTagDataItemsType'
-          description: The file's type.
-        path:
-          type: string
-          description: The file's path.
-        fileType:
-          $ref: '#/components/schemas/GetSpecVersionTagDataItemsFileType'
-          description: 'The type of file:
-
-
-            - `ROOT` — The file containing the full OpenAPI structure. This serves as the entry point for the API spec and references other (`DEFAULT`) spec files. Multi-file specs can only have one root file.
-
-            - `DEFAULT` — A file referenced by the `ROOT` file. This file contains a subset of the OpenAPI structure, such as specific components or paths.
-
-
-            This value doesn''t return for folders.
-
-            '
-        content:
-          type: string
-          description: The file's content. Folders don't return this property.
-        parentId:
-          type: string
-          description: The file's parent folder ID. This property is absent for ROOT-level files.
-      description: Information about the element.
-      title: GetSpecVersionTagDataItems
-    DeleteSpecFileRequestInternalServerError:
+          $ref: '#/components/schemas/specType'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateSpecFilesItems'
+          description: A list of the specification's files and their contents.
+      required:
+      - name
+      - type
+      - files
+      title: createSpec
+    GetSpecVersionTagsRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteSpecFileRequestInternalServerError
-    getAsyncTaskStatus:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/GetAsyncTaskStatusMeta'
-          description: The response's non-standard meta information.
-        details:
-          $ref: '#/components/schemas/asyncSpecTaskStatus'
-        status:
-          $ref: '#/components/schemas/GetAsyncTaskStatusStatus'
-          description: The task's current status.
-      title: getAsyncTaskStatus
-    GetSpecFileType:
+      title: GetSpecVersionTagsRequestInternalServerError
+    elementTypeCollection:
       type: string
       enum:
-      - ROOT
-      - DEFAULT
-      description: 'The type of file:
-
-        - `ROOT` — A file containing the full OpenAPI structure and references other (DEFAULT) spec files.
-
-        - `DEFAULT` — A file referenced by the `ROOT` file.
-
-        '
-      title: GetSpecFileType
-    migrateGitConnectedApiToSpecHub:
-      type: object
-      properties:
-        workspaceInfo:
-          $ref: '#/components/schemas/MigrateGitConnectedApiToSpecHubWorkspaceInfo'
-          description: Information about the new workspace.
-        gitInfo:
-          $ref: '#/components/schemas/MigrateGitConnectedApiToSpecHubGitInfo'
-          description: Information about the connected remote Git mono-repo.
-      required:
-      - workspaceInfo
-      - gitInfo
-      title: migrateGitConnectedApiToSpecHub
+      - collection
+      title: elementTypeCollection
+    GetSpecFileRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: GetSpecFileRequestForbiddenError
+    GetAsyncSpecTaskStatusRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAsyncSpecTaskStatusRequestInternalServerError
+    GetMigrationStatusRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: GetMigrationStatusRequestForbiddenError
+    GenerateCollectionRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: GenerateCollectionRequestForbiddenError
+    CreateSpecFileRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateSpecFileRequestInternalServerError
     GenerateSpecFromCollectionRequestForbiddenError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
       title: GenerateSpecFromCollectionRequestForbiddenError
-    GetSpecCollectionsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSpecCollectionsRequestInternalServerError
-    MigrateApiToSpecHubRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/migrateApiToSpecHub400ErrorTitleMessage'
-      - $ref: '#/components/schemas/migrateApiToSpecHub400ErrorTitleMessageDetails'
-      - $ref: '#/components/schemas/migrateApiToSpecHub400ErrorTypeNameMessageTitle'
-      title: MigrateApiToSpecHubRequestBadRequestError
-    ApiSpecSyncOptionsSyncOptions:
-      type: object
-      properties:
-        syncExamples:
-          type: boolean
-          default: true
-          description: If true, updates made to examples in the specification or to example values in the generated collection stay synchronized.
-        deleteOrphanedRequests:
-          type: boolean
-          default: true
-          description: If true, deletes requests and endpoints that no longer exist in the source during sync.
-      description: Information about the specification sync options.
-      title: ApiSpecSyncOptionsSyncOptions
-    DeleteSpecRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: DeleteSpecRequestForbiddenError
-    GeneratedSpecCollectionDataState:
-      type: string
-      enum:
-      - in-sync
-      - out-of-sync
-      - sync-in-progress
-      description: The sync state of the collection and its API specification.
-      title: GeneratedSpecCollectionDataState
-    collectionUid:
-      type: string
-      format: uid
-      title: collectionUid
-    metaData:
-      type: object
-      properties:
-        nextCursor:
-          type:
-          - string
-          - 'null'
-          format: base64
-          description: The pagination cursor that points to the next record in the results set.
-      description: The response's meta information for paginated results.
-      title: metaData
-    GenerateSpecFromCollectionRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GenerateSpecFromCollectionRequestInternalServerError
-    getAllSpecs:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/metaData'
-        specs:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetAllSpecsSpecsItems'
-          description: A list of API specifications.
-      title: getAllSpecs
-    asyncSpecTaskStatus:
-      type: object
-      properties:
-        resources:
-          type: array
-          items:
-            $ref: '#/components/schemas/AsyncSpecTaskStatusResourcesItems'
-      description: Information about the task's resources.
-      title: asyncSpecTaskStatus
-    getMigrationStatus400Error:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/GetMigrationStatus400ErrorError'
-      title: getMigrationStatus400Error
-    limit:
-      type: integer
-      default: 10
-      title: limit
-    GetSpecDefinitionRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: GetSpecDefinitionRequestForbiddenError
-    specFileData:
+    updateSpecPropertiesResponse:
       type: object
       properties:
         id:
           type: string
-          description: The file's ID.
-        path:
-          type: string
-          description: The file's path.
-        name:
-          type: string
-          description: The file's name.
+          description: The specification's ID.
+        type:
+          $ref: '#/components/schemas/specType'
         createdBy:
           type: integer
-          description: The user ID of the user that created the file.
+          description: The ID of the user that created the specification.
         updatedBy:
           type: integer
-          description: The ID of the user who updated the file.
+          description: The ID of the user that last updated the specification.
         createdAt:
           type: string
           format: date-time
-          description: The date and time at which the file was created.
+          description: The date and time at which the specification was created.
         updatedAt:
           type: string
           format: date-time
-          description: The date and time at which the file was updated.
-        type:
-          $ref: '#/components/schemas/SpecFileDataType'
-          description: 'The type of file:
-
-            - `ROOT` — A file containing the full OpenAPI structure and references other (DEFAULT) spec files.
-
-            - `DEFAULT` — A file referenced by the `ROOT` file.
-
-            '
-      description: Information about the API specification file.
-      title: specFileData
-    migrateApiToSpecHubNewWorkspace:
-      type: object
-      properties:
-        workspaceInfo:
-          $ref: '#/components/schemas/MigrateApiToSpecHubNewWorkspaceWorkspaceInfo'
-          description: Information about the new workspace.
-      required:
-      - workspaceInfo
-      title: migrateApiToSpecHubNewWorkspace
-    MigrateApiToSpecHub400ErrorTitleMessageDetailsError:
-      type: object
-      properties:
-        title:
-          type: string
-          description: A short summary of the problem.
-        details:
-          $ref: '#/components/schemas/MigrateApiToSpecHub400ErrorTitleMessageDetailsErrorDetails'
-          description: Information about the error.
-        message:
-          type: string
-          description: The error message.
-      title: MigrateApiToSpecHub400ErrorTitleMessageDetailsError
-    GetAsyncTaskStatusStatus:
-      type: string
-      enum:
-      - pending
-      - failed
-      - completed
-      description: The task's current status.
-      title: GetAsyncTaskStatusStatus
-    getSpecCollections:
-      type: object
-      properties:
-        collections:
-          type: array
-          items:
-            $ref: '#/components/schemas/specCollectionData'
-          description: A list of the API specification's generated collections.
-        meta:
-          $ref: '#/components/schemas/metaData'
-      title: getSpecCollections
-    GetSpecRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: GetSpecRequestForbiddenError
-    generateTaskResponse:
-      type: object
-      properties:
-        taskId:
-          type: string
-          description: The created task ID. You can use this ID to track the status of the task.
-        url:
-          type: string
-          description: The URL to get or poll the status of a generated spec task.
-      title: generateTaskResponse
-    meta:
-      type: object
-      properties:
-        nextCursor:
-          type:
-          - string
-          - 'null'
-          description: The pagination cursor that points to the next record in the results set.
-      title: meta
-    DeleteSpecRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteSpecRequestInternalServerError
-    specId:
-      type: string
-      title: specId
-    MigrateGitConnectedApiToSpecHubWorkspaceInfo:
-      type: object
-      properties:
+          description: The date and time at which the specification was last updated.
         name:
           type: string
-          description: The name of the workspace to create and migrate the definition to.
-      required:
-      - name
-      description: Information about the new workspace.
-      title: MigrateGitConnectedApiToSpecHubWorkspaceInfo
-    UpdateSpecFileRequestInternalServerError:
+          description: The API specification's name.
+      title: updateSpecPropertiesResponse
+    GetSpecDefinitionRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateSpecFileRequestInternalServerError
-    CreateSpecVersionTagRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: CreateSpecVersionTagRequestForbiddenError
+      title: GetSpecDefinitionRequestInternalServerError
+    MigrateApiToSpecHub400ErrorTitleMessageDetailsErrorDetails:
+      type: object
+      properties:
+        workspaceId:
+          type: string
+          description: The workspace's ID.
+      description: Information about the error.
+      title: MigrateApiToSpecHub400ErrorTitleMessageDetailsErrorDetails
+    GetSpecVersionTagDataItemsType:
+      type: string
+      enum:
+      - FILE
+      - FOLDER
+      description: The file's type.
+      title: GetSpecVersionTagDataItemsType
     CreateSpecFilesItems0:
       type: object
       properties:
@@ -2262,232 +1675,9 @@ components:
       - content
       - type
       title: CreateSpecFilesItems0
-    GetAllSpecsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetAllSpecsRequestInternalServerError
-    GenerateCollectionRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: GenerateCollectionRequestForbiddenError
-    GetSpecVersionTagsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSpecVersionTagsRequestInternalServerError
-    GenerateSpecFromCollectionType:
+    tagId:
       type: string
-      enum:
-      - OPENAPI:2.0
-      - OPENAPI:3.0
-      - OPENAPI:3.1
-      description: The specification's type.
-      title: GenerateSpecFromCollectionType
-    migrateToSpecHubResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The operation's message.
-        success:
-          type: boolean
-          description: If true, the migration succeeded.
-      title: migrateToSpecHubResponse
-    GetSpecFileRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: GetSpecFileRequestForbiddenError
-    specData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The specification's ID.
-        fileFormat:
-          $ref: '#/components/schemas/fileFormat'
-        name:
-          type: string
-          description: The specification's name.
-        type:
-          $ref: '#/components/schemas/specType'
-        createdBy:
-          type: integer
-          description: The user ID of the user that created the specification.
-        updatedBy:
-          type: integer
-          description: The ID of the user who updated the specification.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the specification was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the specification was updated.
-      description: Information about the API specification.
-      title: specData
-    getSpecFiles:
-      type: object
-      properties:
-        files:
-          type: array
-          items:
-            $ref: '#/components/schemas/specFileData'
-          description: A list of the API specification's files.
-        meta:
-          $ref: '#/components/schemas/metaData'
-      description: Information about the specification's files.
-      title: getSpecFiles
-    getSpecVersionTag:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetSpecVersionTagDataItems'
-          description: A list of the version tag's files and folders.
-      title: getSpecVersionTag
-    commonErrorNameMessage:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
-    CreateSpecFilesItems:
-      oneOf:
-      - $ref: '#/components/schemas/CreateSpecFilesItems0'
-      - $ref: '#/components/schemas/CreateSpecFilesItems1'
-      title: CreateSpecFilesItems
-    getAsyncTaskStatusFailed:
-      type: object
-      properties:
-        details:
-          type: string
-          description: Details about the generation error.
-        meta:
-          $ref: '#/components/schemas/GetAsyncTaskStatusFailedMeta'
-          description: The response's non-standard meta information.
-        status:
-          $ref: '#/components/schemas/GetAsyncTaskStatusFailedStatus'
-          description: The task's current status.
-      title: getAsyncTaskStatusFailed
-    Specs_getAsyncSpecTaskStatus_Response_200:
-      oneOf:
-      - $ref: '#/components/schemas/getAsyncTaskStatus'
-      - $ref: '#/components/schemas/getAsyncTaskStatusFailed'
-      title: Specs_getAsyncSpecTaskStatus_Response_200
-    migrateApiToSpecHub400ErrorTypeNameMessageTitle:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/MigrateApiToSpecHub400ErrorTypeNameMessageTitleError'
-      title: migrateApiToSpecHub400ErrorTypeNameMessageTitle
-    generateCollection:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The generated collection's name.
-        options:
-          $ref: '#/components/schemas/generateCollectionOptions'
-      required:
-      - name
-      - options
-      title: generateCollection
-    GetAsyncTaskStatusFailedMeta:
-      type: object
-      properties:
-        action:
-          type: string
-          description: The task's action.
-        model:
-          $ref: '#/components/schemas/GetAsyncTaskStatusFailedMetaModel'
-          description: The model for which the task is performing the operation.
-      description: The response's non-standard meta information.
-      title: GetAsyncTaskStatusFailedMeta
-    getSpecVersionTags:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetSpecVersionTagsDataItems'
-          description: A list of the specification's version tags.
-        meta:
-          $ref: '#/components/schemas/meta'
-      title: getSpecVersionTags
-    createSpecVersionTagResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/CreateSpecVersionTagResponseData'
-          description: Information about the created version tag.
-      title: createSpecVersionTagResponse
-    MigrateApiToSpecHubRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: MigrateApiToSpecHubRequestForbiddenError
-    specCollectionData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The collection's ID.
-        name:
-          type: string
-          description: The collection's name.
-        state:
-          $ref: '#/components/schemas/SpecCollectionDataState'
-          description: The sync state of the collection and its API specification.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the collection was generated.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the collection was updated.
-        createdBy:
-          type: integer
-          description: The user ID of the user that generated the collection.
-      description: Information about the API specification's collection.
-      title: specCollectionData
-    GetSpecVersionTagDataItemsType:
-      type: string
-      enum:
-      - FILE
-      - FOLDER
-      description: The file's type.
-      title: GetSpecVersionTagDataItemsType
-    CommonErrorNameMessageError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
-    getGeneratedCollectionSpecs:
-      type: object
-      properties:
-        specs:
-          type: array
-          items:
-            $ref: '#/components/schemas/generatedSpecCollectionData'
-          description: A list of the collection's generated API specficiations.
-        meta:
-          $ref: '#/components/schemas/metaData'
-      title: getGeneratedCollectionSpecs
+      title: tagId
     createSpecFile:
       type: object
       properties:
@@ -2501,37 +1691,67 @@ components:
       - path
       - content
       title: createSpecFile
-    SyncCollectionWithSpecRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
-      title: SyncCollectionWithSpecRequestForbiddenError
-    elementId:
-      oneOf:
-      - type: string
-      - type: string
-        format: uid
-      title: elementId
-    CreateSpecFilesItemsOneOf0Type:
+    getAsyncTaskStatus:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/GetAsyncTaskStatusMeta'
+          description: The response's non-standard meta information.
+        details:
+          $ref: '#/components/schemas/asyncSpecTaskStatus'
+        status:
+          $ref: '#/components/schemas/GetAsyncTaskStatusStatus'
+          description: The task's current status.
+      title: getAsyncTaskStatus
+    collectionUid:
       type: string
-      enum:
-      - DEFAULT
-      - ROOT
-      description: 'The type of file. This property is required when creating multi-file specifications:
-
-        - `ROOT` — The file containing the full OpenAPI structure. This serves as the entry point for the API spec and references other (`DEFAULT`) spec files. Multi-file specs can only have one root file.
-
-        - `DEFAULT` — A file referenced by the `ROOT` file.
-
-        '
-      title: CreateSpecFilesItemsOneOf0Type
-    GetSpecRequestInternalServerError:
+      format: uid
+      title: collectionUid
+    migrateApiToSpecHubExistingWorkspace:
+      type: object
+      properties:
+        workspaceId:
+          type: string
+          description: The ID of an existing workspace to migrate the definition to.
+      required:
+      - workspaceId
+      title: migrateApiToSpecHubExistingWorkspace
+    GetSpecCollectionsRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSpecRequestInternalServerError
+      title: GetSpecCollectionsRequestInternalServerError
+    GetSpecVersionTagDataItemsFileType:
+      type: string
+      enum:
+      - ROOT
+      - DEFAULT
+      description: 'The type of file:
+
+
+        - `ROOT` — The file containing the full OpenAPI structure. This serves as the entry point for the API spec and references other (`DEFAULT`) spec files. Multi-file specs can only have one root file.
+
+        - `DEFAULT` — A file referenced by the `ROOT` file. This file contains a subset of the OpenAPI structure, such as specific components or paths.
+
+
+        This value doesn''t return for folders.
+
+        '
+      title: GetSpecVersionTagDataItemsFileType
+    getAsyncTaskStatusFailed:
+      type: object
+      properties:
+        details:
+          type: string
+          description: Details about the generation error.
+        meta:
+          $ref: '#/components/schemas/GetAsyncTaskStatusFailedMeta'
+          description: The response's non-standard meta information.
+        status:
+          $ref: '#/components/schemas/GetAsyncTaskStatusFailedStatus'
+          description: The task's current status.
+      title: getAsyncTaskStatusFailed
     updateSpecProperties:
       type: object
       properties:
@@ -2541,121 +1761,183 @@ components:
       required:
       - name
       title: updateSpecProperties
-    createSpec:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The specification's name.
-        type:
-          $ref: '#/components/schemas/specType'
-        files:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateSpecFilesItems'
-          description: A list of the specification's files and their contents.
-      required:
-      - name
-      - type
-      - files
-      title: createSpec
-    SpecFileDataType:
-      type: string
-      enum:
-      - ROOT
-      - DEFAULT
-      description: 'The type of file:
-
-        - `ROOT` — A file containing the full OpenAPI structure and references other (DEFAULT) spec files.
-
-        - `DEFAULT` — A file referenced by the `ROOT` file.
-
-        '
-      title: SpecFileDataType
-    GetSpecDefinitionRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSpecDefinitionRequestInternalServerError
-    UpdateSpecFileType:
-      type: string
-      enum:
-      - DEFAULT
-      - ROOT
-      description: 'The type of file:
-
-        - `ROOT` — The file containing the full OpenAPI structure. This serves as the entry point for the API spec and references other (`DEFAULT`) spec files. Multi-file specs can only have one root file.
-
-        - `DEFAULT` — A file referenced by the `ROOT` file.
-
-        '
-      title: UpdateSpecFileType
-    GetAsyncTaskStatusMetaModel:
-      type: string
-      enum:
-      - collection
-      - spec
-      description: The model for which the task is performing the operation.
-      title: GetAsyncTaskStatusMetaModel
-    GetMigrationStatusRequestForbiddenError:
+    GetSpecVersionTagRequestForbiddenError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: GetMigrationStatusRequestForbiddenError
-    elementType:
+      title: GetSpecVersionTagRequestForbiddenError
+    filePath:
       type: string
-      enum:
-      - collections
-      - specs
-      title: elementType
-    createUpdateSpecFileResponse:
+      title: filePath
+    GetMigrationStatusDetails1:
       type: object
       properties:
-        createdAt:
+        reason:
           type: string
-          format: date-time
-          description: The date and time at which the file was created.
-        createdBy:
-          type: integer
-          description: The user ID of the user that created the file.
-        id:
-          type: string
-          description: The file's ID.
-        path:
-          type: string
-          description: The file's path.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the file was updated.
-        updatedBy:
-          type: integer
-          description: The ID of the user who updated the file.
-        type:
-          $ref: '#/components/schemas/CreateUpdateSpecFileResponseType'
-          default: DEFAULT
-          description: 'The type of file:
-
-            - `ROOT` — The file containing the full OpenAPI structure. This serves as the entry point for the API spec and references other (`DEFAULT`) spec files. Multi-file specs can only have one root file.
-
-            - `DEFAULT` — A file referenced by the `ROOT` file.
-
-            '
-      description: Information about the API specification file.
-      title: createUpdateSpecFileResponse
-    migrateApiToSpecHub:
-      oneOf:
-      - $ref: '#/components/schemas/migrateApiToSpecHubExistingWorkspace'
-      - $ref: '#/components/schemas/migrateApiToSpecHubNewWorkspace'
-      - $ref: '#/components/schemas/migrateGitConnectedApiToSpecHub'
-      title: migrateApiToSpecHub
-    GetSpecFilesRequestInternalServerError:
+          description: The reason the migration failed.
+      description: Information about the migration.
+      title: GetMigrationStatusDetails1
+    GetSpecRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSpecFilesRequestInternalServerError
+      title: GetSpecRequestInternalServerError
+    apiId:
+      type: string
+      title: apiId
+    taskId:
+      type: string
+      title: taskId
+    generatedSpecCollectionData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The collection's ID.
+        name:
+          type: string
+          description: The collection's name.
+        state:
+          $ref: '#/components/schemas/GeneratedSpecCollectionDataState'
+          description: The sync state of the collection and its API specification.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the collection was generated.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the collection was updated.
+        createdBy:
+          type: integer
+          description: The user ID of the user that generated the collection.
+        updatedBy:
+          type: integer
+          description: The ID of the user who updated the collection.
+      description: Information about the collection's API specification.
+      title: generatedSpecCollectionData
+    DeleteSpecFileRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: DeleteSpecFileRequestForbiddenError
+    apiSpecSyncOptions:
+      type: object
+      properties:
+        syncOptions:
+          $ref: '#/components/schemas/ApiSpecSyncOptionsSyncOptions'
+          description: Information about the specification sync options.
+      title: apiSpecSyncOptions
+    SyncCollectionWithSpecRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: SyncCollectionWithSpecRequestForbiddenError
+    GetAllSpecsRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: GetAllSpecsRequestForbiddenError
+    MigrateApiToSpecHubRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/migrateApiToSpecHub400ErrorTitleMessage'
+      - $ref: '#/components/schemas/migrateApiToSpecHub400ErrorTitleMessageDetails'
+      - $ref: '#/components/schemas/migrateApiToSpecHub400ErrorTypeNameMessageTitle'
+      title: MigrateApiToSpecHubRequestBadRequestError
+    MigrateApiToSpecHub400ErrorTitleMessageError:
+      type: object
+      properties:
+        title:
+          type: string
+          description: A short summary of the problem.
+        message:
+          type: string
+          description: The error message.
+      title: MigrateApiToSpecHub400ErrorTitleMessageError
+    migrateToSpecHubResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The operation's message.
+        success:
+          type: boolean
+          description: If true, the migration succeeded.
+      title: migrateToSpecHubResponse
+    UpdateSpecFileRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: UpdateSpecFileRequestForbiddenError
+    GetSpecCollectionsRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: GetSpecCollectionsRequestForbiddenError
+    UpdateSpecSyncOptionsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateSpecSyncOptionsRequestInternalServerError
+    UpdateSpecFileRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateSpecFileRequestInternalServerError
+    GetAsyncSpecTaskStatusRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: GetAsyncSpecTaskStatusRequestForbiddenError
+    GetSpecFileRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetSpecFileRequestInternalServerError
+    GetSpecFilesRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: GetSpecFilesRequestForbiddenError
+    getSpecVersionTag:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetSpecVersionTagDataItems'
+          description: A list of the version tag's files and folders.
+      title: getSpecVersionTag
+    GetAsyncTaskStatusFailedMeta:
+      type: object
+      properties:
+        action:
+          type: string
+          description: The task's action.
+        model:
+          $ref: '#/components/schemas/GetAsyncTaskStatusFailedMetaModel'
+          description: The model for which the task is performing the operation.
+      description: The response's non-standard meta information.
+      title: GetAsyncTaskStatusFailedMeta
+    GetAsyncTaskStatusStatus:
+      type: string
+      enum:
+      - pending
+      - failed
+      - completed
+      description: The task's current status.
+      title: GetAsyncTaskStatusStatus
+    DeleteSpecFileRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteSpecFileRequestInternalServerError
     MigrateGitConnectedApiToSpecHubGitInfo:
       type: object
       properties:
@@ -2666,148 +1948,215 @@ components:
       - path
       description: Information about the connected remote Git mono-repo.
       title: MigrateGitConnectedApiToSpecHubGitInfo
-    GetSpecCollectionsRequestForbiddenError:
+    Specs_getSpecDefinition_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Specs_getSpecDefinition_Response_200
+    GetSpecVersionTagsRequestForbiddenError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: GetSpecCollectionsRequestForbiddenError
-    DeleteSpecFileRequestForbiddenError:
+      title: GetSpecVersionTagsRequestForbiddenError
+    collectionId:
+      type: string
+      title: collectionId
+    GetSpecRequestForbiddenError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: DeleteSpecFileRequestForbiddenError
-    GetAsyncTaskStatusFailedStatus:
-      type: string
-      enum:
-      - failed
-      description: The task's current status.
-      title: GetAsyncTaskStatusFailedStatus
-    SpecCollectionDataState:
-      type: string
-      enum:
-      - in-sync
-      - out-of-sync
-      - sync-in-progress
-      description: The sync state of the collection and its API specification.
-      title: SpecCollectionDataState
-    GetAsyncSpecTaskStatusRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetAsyncSpecTaskStatusRequestInternalServerError
-    generateSpecFromCollection:
+      title: GetSpecRequestForbiddenError
+    limit:
+      type: integer
+      default: 10
+      title: limit
+    MigrateApiToSpecHub400ErrorTitleMessageDetailsError:
       type: object
       properties:
-        name:
+        title:
           type: string
-          description: The API specification's name.
-        type:
-          $ref: '#/components/schemas/GenerateSpecFromCollectionType'
-          description: The specification's type.
-        format:
-          $ref: '#/components/schemas/GenerateSpecFromCollectionFormat'
-          description: The format of the API specification.
-      required:
-      - name
-      title: generateSpecFromCollection
-    CreateSpecFileRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateSpecFileRequestInternalServerError
-    commonErrorTypeTitleDetailStatusInstance:
+          description: A short summary of the problem.
+        details:
+          $ref: '#/components/schemas/MigrateApiToSpecHub400ErrorTitleMessageDetailsErrorDetails'
+          description: Information about the error.
+        message:
+          type: string
+          description: The error message.
+      title: MigrateApiToSpecHub400ErrorTitleMessageDetailsError
+    commonErrorTypeTitleDetailStatus:
       type: object
       properties:
         type:
-          type: string
-          format: uri-reference
-          description: The [URI reference](https://www.rfc-editor.org/rfc/rfc3986) that identifies the type of problem.
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
         title:
           type: string
           description: A short summary of the problem.
         detail:
           type: string
-          description: An explanation about the problem.
+          description: Information about the error.
         status:
           type: integer
-          description: The HTTP status code generated by the origin server.
-        instance:
-          type: string
-          description: The URI reference that identifies the specific occurrence of the problem.
-      title: commonErrorTypeTitleDetailStatusInstance
-    migrateApiToSpecHub400ErrorTitleMessage:
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    GetSpecVersionTagRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetSpecVersionTagRequestInternalServerError
+    asyncSpecTaskStatus:
+      type: object
+      properties:
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/AsyncSpecTaskStatusResourcesItems'
+      description: Information about the task's resources.
+      title: asyncSpecTaskStatus
+    migrateApiToSpecHub400ErrorTitleMessageDetails:
       type: object
       properties:
         error:
-          $ref: '#/components/schemas/MigrateApiToSpecHub400ErrorTitleMessageError'
-      title: migrateApiToSpecHub400ErrorTitleMessage
-    MigrateApiToSpecHubNewWorkspaceWorkspaceInfo:
+          $ref: '#/components/schemas/MigrateApiToSpecHub400ErrorTitleMessageDetailsError'
+      title: migrateApiToSpecHub400ErrorTitleMessageDetails
+    commonErrorTypeTitleMessageDetail:
       type: object
       properties:
-        name:
+        type:
           type: string
-          description: The name of the workspace to create and migrate the definition to.
-      required:
-      - name
-      description: Information about the new workspace.
-      title: MigrateApiToSpecHubNewWorkspaceWorkspaceInfo
-    GetAllSpecsSpecsItems:
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        message:
+          type: string
+          description: The error message.
+        detail:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Information about the error.
+      title: commonErrorTypeTitleMessageDetail
+    getSpecFiles:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/specFileData'
+          description: A list of the API specification's files.
+        meta:
+          $ref: '#/components/schemas/metaData'
+      description: Information about the specification's files.
+      title: getSpecFiles
+    CreateSpecVersionTagResponseData:
       type: object
       properties:
         id:
           type: string
-          description: The specification's ID.
+          description: The version tag's ID.
         name:
           type: string
-          description: The specification's name.
+          description: The version tag's name.
+      description: Information about the created version tag.
+      title: CreateSpecVersionTagResponseData
+    SyncSpecWithCollectionRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: SyncSpecWithCollectionRequestForbiddenError
+    MigrateApiToSpecHub400ErrorTypeNameMessageTitleError:
+      type: object
+      properties:
         type:
-          $ref: '#/components/schemas/specType'
-        createdBy:
-          type: integer
-          description: The user ID of the user that created the specification.
-        updatedBy:
-          type: integer
-          description: The ID of the user who updated the specification.
-        createdAt:
           type: string
-          format: date-time
-          description: The date and time at which the specification was created.
-        updatedAt:
+          description: A short summary of the problem.
+        name:
           type: string
-          format: date-time
-          description: The date and time at which the specification was updated.
-      description: Information about the API specification.
-      title: GetAllSpecsSpecsItems
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+        title:
+          type: string
+          description: A short summary of the problem.
+      title: MigrateApiToSpecHub400ErrorTypeNameMessageTitleError
+    migrateApiToSpecHubNewWorkspace:
+      type: object
+      properties:
+        workspaceInfo:
+          $ref: '#/components/schemas/MigrateApiToSpecHubNewWorkspaceWorkspaceInfo'
+          description: Information about the new workspace.
+      required:
+      - workspaceInfo
+      title: migrateApiToSpecHubNewWorkspace
+    GetGeneratedCollectionSpecsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetGeneratedCollectionSpecsRequestInternalServerError
     CreateSpecVersionTagRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
       title: CreateSpecVersionTagRequestInternalServerError
-    GetMigrationStatusRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetMigrationStatusRequestInternalServerError
-    CreateSpecFilesItems1:
+    getMigrationStatus:
       type: object
       properties:
-        path:
-          type: string
-          description: The file's path. Accepts .json, .yaml, .proto, .graphql, and .smithy file types.
-        content:
-          type: string
-          description: The file's stringified contents.
-      required:
-      - path
-      - content
-      title: CreateSpecFilesItems1
-    taskId:
+        status:
+          $ref: '#/components/schemas/GetMigrationStatusStatus'
+          description: The status of the migration.
+        details:
+          $ref: '#/components/schemas/getMigrationStatusDetails'
+      title: getMigrationStatus
+    CreateUpdateSpecFileResponseType:
       type: string
-      title: taskId
+      enum:
+      - DEFAULT
+      - ROOT
+      default: DEFAULT
+      description: 'The type of file:
+
+        - `ROOT` — The file containing the full OpenAPI structure. This serves as the entry point for the API spec and references other (`DEFAULT`) spec files. Multi-file specs can only have one root file.
+
+        - `DEFAULT` — A file referenced by the `ROOT` file.
+
+        '
+      title: CreateUpdateSpecFileResponseType
+    AsyncSpecTaskStatusResourcesItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the assigned resource.
+        url:
+          type: string
+          description: The task's assigned resource URL.
+      title: AsyncSpecTaskStatusResourcesItems
+    generateCollection:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The generated collection's name.
+        options:
+          $ref: '#/components/schemas/generateCollectionOptions'
+      required:
+      - name
+      - options
+      title: generateCollection
+    UpdateSpecSyncOptionsRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: UpdateSpecSyncOptionsRequestForbiddenError
+    CreateSpecRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: CreateSpecRequestForbiddenError
     generateCollectionOptions:
       type: object
       properties:
@@ -2863,20 +2212,30 @@ components:
           description: If true, creates subfolders in the generated collection based on the order of the endpoints' tags.
       description: The advanced creation options and their values. For more details, see Postman's [OpenAPI to Postman Collection Converter OPTIONS documentation](https://github.com/postmanlabs/openapi-to-postman/blob/develop/OPTIONS.md). These properties are case-sensitive.
       title: generateCollectionOptions
-    updateSpecPropertiesResponse:
+    v10Accept:
+      type: string
+      enum:
+      - application/vnd.api.v10+json
+      title: v10Accept
+    specData:
       type: object
       properties:
         id:
           type: string
           description: The specification's ID.
+        fileFormat:
+          $ref: '#/components/schemas/fileFormat'
+        name:
+          type: string
+          description: The specification's name.
         type:
           $ref: '#/components/schemas/specType'
         createdBy:
           type: integer
-          description: The ID of the user that created the specification.
+          description: The user ID of the user that created the specification.
         updatedBy:
           type: integer
-          description: The ID of the user that last updated the specification.
+          description: The ID of the user who updated the specification.
         createdAt:
           type: string
           format: date-time
@@ -2884,36 +2243,565 @@ components:
         updatedAt:
           type: string
           format: date-time
-          description: The date and time at which the specification was last updated.
+          description: The date and time at which the specification was updated.
+      description: Information about the API specification.
+      title: specData
+    GetAsyncTaskStatusMeta:
+      type: object
+      properties:
+        action:
+          type: string
+          description: The task's action.
+        model:
+          $ref: '#/components/schemas/GetAsyncTaskStatusMetaModel'
+          description: The model for which the task is performing the operation.
+      description: The response's non-standard meta information.
+      title: GetAsyncTaskStatusMeta
+    GetSpecVersionTagsDataItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The version tag's ID.
+        name:
+          type: string
+          description: The version tag's name.
+      description: Information about the version tag.
+      title: GetSpecVersionTagsDataItems
+    CreateSpecFilesItems:
+      oneOf:
+      - $ref: '#/components/schemas/CreateSpecFilesItems0'
+      - $ref: '#/components/schemas/CreateSpecFilesItems1'
+      title: CreateSpecFilesItems
+    GetGeneratedCollectionSpecsRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: GetGeneratedCollectionSpecsRequestForbiddenError
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    GetSpecFilesRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetSpecFilesRequestInternalServerError
+    DeleteSpecRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteSpecRequestInternalServerError
+    MigrateApiToSpecHubNewWorkspaceWorkspaceInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the workspace to create and migrate the definition to.
+      required:
+      - name
+      description: Information about the new workspace.
+      title: MigrateApiToSpecHubNewWorkspaceWorkspaceInfo
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    Specs_getAsyncSpecTaskStatus_Response_200:
+      oneOf:
+      - $ref: '#/components/schemas/getAsyncTaskStatus'
+      - $ref: '#/components/schemas/getAsyncTaskStatusFailed'
+      title: Specs_getAsyncSpecTaskStatus_Response_200
+    UpdateSpecPropertiesRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: UpdateSpecPropertiesRequestForbiddenError
+    CreateSpecVersionTagRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: CreateSpecVersionTagRequestForbiddenError
+    DeleteSpecRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: DeleteSpecRequestForbiddenError
+    GeneratedSpecCollectionDataState:
+      type: string
+      enum:
+      - in-sync
+      - out-of-sync
+      - sync-in-progress
+      description: The sync state of the collection and its API specification.
+      title: GeneratedSpecCollectionDataState
+    SyncCollectionWithSpecRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: SyncCollectionWithSpecRequestInternalServerError
+    GetSpecVersionTagDataItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The file's ID.
+        name:
+          type: string
+          description: The file's name.
+        updatedBy:
+          type: string
+          description: The ID of the user who updated the file.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was updated.
+        createdBy:
+          type: string
+          description: The user ID of the user that created the file.
+        type:
+          $ref: '#/components/schemas/GetSpecVersionTagDataItemsType'
+          description: The file's type.
+        path:
+          type: string
+          description: The file's path.
+        fileType:
+          $ref: '#/components/schemas/GetSpecVersionTagDataItemsFileType'
+          description: 'The type of file:
+
+
+            - `ROOT` — The file containing the full OpenAPI structure. This serves as the entry point for the API spec and references other (`DEFAULT`) spec files. Multi-file specs can only have one root file.
+
+            - `DEFAULT` — A file referenced by the `ROOT` file. This file contains a subset of the OpenAPI structure, such as specific components or paths.
+
+
+            This value doesn''t return for folders.
+
+            '
+        content:
+          type: string
+          description: The file's content. Folders don't return this property.
+        parentId:
+          type: string
+          description: The file's parent folder ID. This property is absent for ROOT-level files.
+      description: Information about the element.
+      title: GetSpecVersionTagDataItems
+    CreateSpecFilesItems1:
+      type: object
+      properties:
+        path:
+          type: string
+          description: The file's path. Accepts .json, .yaml, .proto, .graphql, and .smithy file types.
+        content:
+          type: string
+          description: The file's stringified contents.
+      required:
+      - path
+      - content
+      title: CreateSpecFilesItems1
+    GenerateSpecFromCollectionType:
+      type: string
+      enum:
+      - OPENAPI:2.0
+      - OPENAPI:3.0
+      - OPENAPI:3.1
+      description: The specification's type.
+      title: GenerateSpecFromCollectionType
+    SyncSpecWithCollectionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: SyncSpecWithCollectionRequestInternalServerError
+    CreateSpecFileRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: CreateSpecFileRequestForbiddenError
+    generateSpecFromCollection:
+      type: object
+      properties:
         name:
           type: string
           description: The API specification's name.
-      title: updateSpecPropertiesResponse
-    UpdateSpecPropertiesRequestInternalServerError:
+        type:
+          $ref: '#/components/schemas/GenerateSpecFromCollectionType'
+          description: The specification's type.
+        format:
+          $ref: '#/components/schemas/GenerateSpecFromCollectionFormat'
+          description: The format of the API specification.
+      required:
+      - name
+      title: generateSpecFromCollection
+    GenerateCollectionRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateSpecPropertiesRequestInternalServerError
-    UpdateSpecSyncOptionsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateSpecSyncOptionsRequestInternalServerError
-    GetAsyncSpecTaskStatusRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: GetAsyncSpecTaskStatusRequestForbiddenError
-    CreateSpecRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: CreateSpecRequestForbiddenError
-    filePath:
+      title: GenerateCollectionRequestInternalServerError
+    GetMigrationStatusDetails0:
+      type: object
+      properties:
+        workspaceId:
+          type: string
+          description: The ID of the workspace the definition was migrated to.
+      description: Information about the migration.
+      title: GetMigrationStatusDetails0
+    cursor:
       type: string
-      title: filePath
+      title: cursor
+    UpdateSpecFileType:
+      type: string
+      enum:
+      - DEFAULT
+      - ROOT
+      description: 'The type of file:
+
+        - `ROOT` — The file containing the full OpenAPI structure. This serves as the entry point for the API spec and references other (`DEFAULT`) spec files. Multi-file specs can only have one root file.
+
+        - `DEFAULT` — A file referenced by the `ROOT` file.
+
+        '
+      title: UpdateSpecFileType
+    GetMigrationStatusStatus:
+      type: string
+      enum:
+      - COMPLETED
+      - FAILED
+      description: The status of the migration.
+      title: GetMigrationStatusStatus
+    SpecFileDataType:
+      type: string
+      enum:
+      - ROOT
+      - DEFAULT
+      description: 'The type of file:
+
+        - `ROOT` — A file containing the full OpenAPI structure and references other (DEFAULT) spec files.
+
+        - `DEFAULT` — A file referenced by the `ROOT` file.
+
+        '
+      title: SpecFileDataType
+    GetAllSpecsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAllSpecsRequestInternalServerError
+    getMigrationStatus400Error:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/GetMigrationStatus400ErrorError'
+      title: getMigrationStatus400Error
+    generateTaskResponse:
+      type: object
+      properties:
+        taskId:
+          type: string
+          description: The created task ID. You can use this ID to track the status of the task.
+        url:
+          type: string
+          description: The URL to get or poll the status of a generated spec task.
+      title: generateTaskResponse
+    GenerateCollectionOptionsFolderStrategy:
+      type: string
+      enum:
+      - Paths
+      - Tags
+      default: Paths
+      description: Whether to create folders based on the specification's `paths` or `tags` properties.
+      title: GenerateCollectionOptionsFolderStrategy
+    getAllSpecs:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/metaData'
+        specs:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetAllSpecsSpecsItems'
+          description: A list of API specifications.
+      title: getAllSpecs
+    specFileData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The file's ID.
+        path:
+          type: string
+          description: The file's path.
+        name:
+          type: string
+          description: The file's name.
+        createdBy:
+          type: integer
+          description: The user ID of the user that created the file.
+        updatedBy:
+          type: integer
+          description: The ID of the user who updated the file.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was updated.
+        type:
+          $ref: '#/components/schemas/SpecFileDataType'
+          description: 'The type of file:
+
+            - `ROOT` — A file containing the full OpenAPI structure and references other (DEFAULT) spec files.
+
+            - `DEFAULT` — A file referenced by the `ROOT` file.
+
+            '
+      description: Information about the API specification file.
+      title: specFileData
+    getSpecCollections:
+      type: object
+      properties:
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/specCollectionData'
+          description: A list of the API specification's generated collections.
+        meta:
+          $ref: '#/components/schemas/metaData'
+      title: getSpecCollections
+    metaData:
+      type: object
+      properties:
+        nextCursor:
+          type:
+          - string
+          - 'null'
+          format: base64
+          description: The pagination cursor that points to the next record in the results set.
+      description: The response's meta information for paginated results.
+      title: metaData
+    CreateSpecRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateSpecRequestInternalServerError
+    MigrateApiToSpecHubRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: MigrateApiToSpecHubRequestInternalServerError
+    specCollectionData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The collection's ID.
+        name:
+          type: string
+          description: The collection's name.
+        state:
+          $ref: '#/components/schemas/SpecCollectionDataState'
+          description: The sync state of the collection and its API specification.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the collection was generated.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the collection was updated.
+        createdBy:
+          type: integer
+          description: The user ID of the user that generated the collection.
+      description: Information about the API specification's collection.
+      title: specCollectionData
+    GenerateSpecFromCollectionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GenerateSpecFromCollectionRequestInternalServerError
+    migrateGitConnectedApiToSpecHub:
+      type: object
+      properties:
+        workspaceInfo:
+          $ref: '#/components/schemas/MigrateGitConnectedApiToSpecHubWorkspaceInfo'
+          description: Information about the new workspace.
+        gitInfo:
+          $ref: '#/components/schemas/MigrateGitConnectedApiToSpecHubGitInfo'
+          description: Information about the connected remote Git mono-repo.
+      required:
+      - workspaceInfo
+      - gitInfo
+      title: migrateGitConnectedApiToSpecHub
+    GetMigrationStatusRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetMigrationStatusRequestInternalServerError
+    updateSpecFile:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The file's name.
+        type:
+          $ref: '#/components/schemas/UpdateSpecFileType'
+          description: 'The type of file:
+
+            - `ROOT` — The file containing the full OpenAPI structure. This serves as the entry point for the API spec and references other (`DEFAULT`) spec files. Multi-file specs can only have one root file.
+
+            - `DEFAULT` — A file referenced by the `ROOT` file.
+
+            '
+        content:
+          type: string
+          description: The specification's stringified contents.
+      description: You must pass one of the accepted values in this request body. Also, this request body does not accept multiple properties in a single call. For example, you cannot pass both the `content` and `type` property at the same time.
+      title: updateSpecFile
+    elementId:
+      oneOf:
+      - type: string
+      - type: string
+        format: uid
+      title: elementId
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    getMigrationStatusDetails:
+      oneOf:
+      - $ref: '#/components/schemas/GetMigrationStatusDetails0'
+      - $ref: '#/components/schemas/GetMigrationStatusDetails1'
+      title: getMigrationStatusDetails
+    migrateApiToSpecHub400ErrorTitleMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/MigrateApiToSpecHub400ErrorTitleMessageError'
+      title: migrateApiToSpecHub400ErrorTitleMessage
+    workspaceId:
+      type: string
+      title: workspaceId
+    MigrateGitConnectedApiToSpecHubWorkspaceInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the workspace to create and migrate the definition to.
+      required:
+      - name
+      description: Information about the new workspace.
+      title: MigrateGitConnectedApiToSpecHubWorkspaceInfo
+    GetAsyncTaskStatusFailedStatus:
+      type: string
+      enum:
+      - failed
+      description: The task's current status.
+      title: GetAsyncTaskStatusFailedStatus
+    GetSpecFileType:
+      type: string
+      enum:
+      - ROOT
+      - DEFAULT
+      description: 'The type of file:
+
+        - `ROOT` — A file containing the full OpenAPI structure and references other (DEFAULT) spec files.
+
+        - `DEFAULT` — A file referenced by the `ROOT` file.
+
+        '
+      title: GetSpecFileType
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    GenerateSpecFromCollectionFormat:
+      type: string
+      enum:
+      - JSON
+      - YAML
+      description: The format of the API specification.
+      title: GenerateSpecFromCollectionFormat
+    getSpecFile:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The file's ID.
+        name:
+          type: string
+          description: The file's name.
+        path:
+          type: string
+          description: The file's path.
+        createdBy:
+          type: integer
+          description: The user ID of the user that created the file.
+        updatedBy:
+          type: integer
+          description: The ID of the user who updated the file.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was updated.
+        type:
+          $ref: '#/components/schemas/GetSpecFileType'
+          description: 'The type of file:
+
+            - `ROOT` — A file containing the full OpenAPI structure and references other (DEFAULT) spec files.
+
+            - `DEFAULT` — A file referenced by the `ROOT` file.
+
+            '
+        content:
+          type: string
+          description: The file's stringified contents.
+      description: Information about the API specification file.
+      title: getSpecFile
+    elementType:
+      type: string
+      enum:
+      - collections
+      - specs
+      title: elementType
     GenerateCollectionOptionsRequestNameSource:
       type: string
       enum:
@@ -2932,77 +2820,187 @@ components:
 
         '
       title: GenerateCollectionOptionsRequestNameSource
-    SyncCollectionWithSpecRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: SyncCollectionWithSpecRequestInternalServerError
-    commonErrorTypeTitleDetail:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of error.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
-          description: Information about the error.
-      title: commonErrorTypeTitleDetail
-    UpdateSpecPropertiesRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: UpdateSpecPropertiesRequestForbiddenError
-    cursor:
+    specType:
       type: string
-      title: cursor
-    generatedSpecCollectionData:
+      enum:
+      - OPENAPI:2.0
+      - OPENAPI:3.0
+      - OPENAPI:3.1
+      - ASYNCAPI:2.0
+      - ASYNCAPI:3.0
+      - PROTOBUF:2
+      - PROTOBUF:3
+      - GRAPHQL
+      - SMITHY:2.0
+      description: The type of API specification.
+      title: specType
+    elementTypeSpec:
+      type: string
+      enum:
+      - spec
+      title: elementTypeSpec
+    GetAllSpecsSpecsItems:
       type: object
       properties:
         id:
           type: string
-          description: The collection's ID.
+          description: The specification's ID.
         name:
           type: string
-          description: The collection's name.
-        state:
-          $ref: '#/components/schemas/GeneratedSpecCollectionDataState'
-          description: The sync state of the collection and its API specification.
+          description: The specification's name.
+        type:
+          $ref: '#/components/schemas/specType'
+        createdBy:
+          type: integer
+          description: The user ID of the user that created the specification.
+        updatedBy:
+          type: integer
+          description: The ID of the user who updated the specification.
         createdAt:
           type: string
           format: date-time
-          description: The date and time at which the collection was generated.
+          description: The date and time at which the specification was created.
         updatedAt:
           type: string
           format: date-time
-          description: The date and time at which the collection was updated.
-        createdBy:
-          type: integer
-          description: The user ID of the user that generated the collection.
-        updatedBy:
-          type: integer
-          description: The ID of the user who updated the collection.
-      description: Information about the collection's API specification.
-      title: generatedSpecCollectionData
-    GetGeneratedCollectionSpecsRequestInternalServerError:
+          description: The date and time at which the specification was updated.
+      description: Information about the API specification.
+      title: GetAllSpecsSpecsItems
+    SpecCollectionDataState:
+      type: string
+      enum:
+      - in-sync
+      - out-of-sync
+      - sync-in-progress
+      description: The sync state of the collection and its API specification.
+      title: SpecCollectionDataState
+    GetSpecDefinitionRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: GetSpecDefinitionRequestForbiddenError
+    migrateApiToSpecHub400ErrorTypeNameMessageTitle:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/MigrateApiToSpecHub400ErrorTypeNameMessageTitleError'
+      title: migrateApiToSpecHub400ErrorTypeNameMessageTitle
+    ApiSpecSyncOptionsSyncOptions:
+      type: object
+      properties:
+        syncExamples:
+          type: boolean
+          default: true
+          description: If true, updates made to examples in the specification or to example values in the generated collection stay synchronized.
+        deleteOrphanedRequests:
+          type: boolean
+          default: true
+          description: If true, deletes requests and endpoints that no longer exist in the source during sync.
+      description: Information about the specification sync options.
+      title: ApiSpecSyncOptionsSyncOptions
+    getSpecVersionTags:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetSpecVersionTagsDataItems'
+          description: A list of the specification's version tags.
+        meta:
+          $ref: '#/components/schemas/meta'
+      title: getSpecVersionTags
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    MigrateApiToSpecHubRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      title: MigrateApiToSpecHubRequestForbiddenError
+    GetMigrationStatus400ErrorError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+        details:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Information about the error.
+      title: GetMigrationStatus400ErrorError
+    specId:
+      type: string
+      title: specId
+    UpdateSpecPropertiesRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetGeneratedCollectionSpecsRequestInternalServerError
-    v10Accept:
+      title: UpdateSpecPropertiesRequestInternalServerError
+    commonErrorTypeTitleDetailStatusInstance:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri-reference
+          description: The [URI reference](https://www.rfc-editor.org/rfc/rfc3986) that identifies the type of problem.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: An explanation about the problem.
+        status:
+          type: integer
+          description: The HTTP status code generated by the origin server.
+        instance:
+          type: string
+          description: The URI reference that identifies the specific occurrence of the problem.
+      title: commonErrorTypeTitleDetailStatusInstance
+    meta:
+      type: object
+      properties:
+        nextCursor:
+          type:
+          - string
+          - 'null'
+          description: The pagination cursor that points to the next record in the results set.
+      title: meta
+    GenerateCollectionOptionsIndentCharacter:
       type: string
       enum:
-      - application/vnd.api.v10+json
-      title: v10Accept
-    Specs_getSpecDefinition_Response_200:
+      - Tab
+      - Space
+      default: Space
+      description: The option for setting the indentation character type.
+      title: GenerateCollectionOptionsIndentCharacter
+    getGeneratedCollectionSpecs:
       type: object
-      properties: {}
-      description: Empty response body
-      title: Specs_getSpecDefinition_Response_200
+      properties:
+        specs:
+          type: array
+          items:
+            $ref: '#/components/schemas/generatedSpecCollectionData'
+          description: A list of the collection's generated API specficiations.
+        meta:
+          $ref: '#/components/schemas/metaData'
+      title: getGeneratedCollectionSpecs
+    GetAsyncTaskStatusMetaModel:
+      type: string
+      enum:
+      - collection
+      - spec
+      description: The model for which the task is performing the operation.
+      title: GetAsyncTaskStatusMetaModel
     GetAsyncTaskStatusFailedMetaModel:
       type: string
       enum:
@@ -3010,67 +3008,69 @@ components:
       - spec
       description: The model for which the task is performing the operation.
       title: GetAsyncTaskStatusFailedMetaModel
-    SyncSpecWithCollectionRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      title: SyncSpecWithCollectionRequestForbiddenError
-    GenerateCollectionOptionsFolderStrategy:
-      type: string
-      enum:
-      - Paths
-      - Tags
-      default: Paths
-      description: Whether to create folders based on the specification's `paths` or `tags` properties.
-      title: GenerateCollectionOptionsFolderStrategy
-    elementTypeSpec:
-      type: string
-      enum:
-      - spec
-      title: elementTypeSpec
-    GetMigrationStatusDetails0:
+    createUpdateSpecFileResponse:
       type: object
       properties:
-        workspaceId:
+        createdAt:
           type: string
-          description: The ID of the workspace the definition was migrated to.
-      description: Information about the migration.
-      title: GetMigrationStatusDetails0
-    tagId:
-      type: string
-      title: tagId
-    commonErrorTypeTitleMessageDetail:
-      type: object
-      properties:
+          format: date-time
+          description: The date and time at which the file was created.
+        createdBy:
+          type: integer
+          description: The user ID of the user that created the file.
+        id:
+          type: string
+          description: The file's ID.
+        path:
+          type: string
+          description: The file's path.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was updated.
+        updatedBy:
+          type: integer
+          description: The ID of the user who updated the file.
         type:
-          type: string
-          description: The type of error.
-        title:
-          type: string
-          description: A short summary of the problem.
-        message:
-          type: string
-          description: The error message.
-        detail:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Information about the error.
-      title: commonErrorTypeTitleMessageDetail
-    migrateApiToSpecHubExistingWorkspace:
+          $ref: '#/components/schemas/CreateUpdateSpecFileResponseType'
+          default: DEFAULT
+          description: 'The type of file:
+
+            - `ROOT` — The file containing the full OpenAPI structure. This serves as the entry point for the API spec and references other (`DEFAULT`) spec files. Multi-file specs can only have one root file.
+
+            - `DEFAULT` — A file referenced by the `ROOT` file.
+
+            '
+      description: Information about the API specification file.
+      title: createUpdateSpecFileResponse
+    createSpecVersionTag:
       type: object
       properties:
-        workspaceId:
+        name:
           type: string
-          description: The ID of an existing workspace to migrate the definition to.
+          description: The version tag's name.
       required:
-      - workspaceId
-      title: migrateApiToSpecHubExistingWorkspace
-    getMigrationStatusDetails:
+      - name
+      title: createSpecVersionTag
+    migrateApiToSpecHub:
       oneOf:
-      - $ref: '#/components/schemas/GetMigrationStatusDetails0'
-      - $ref: '#/components/schemas/GetMigrationStatusDetails1'
-      title: getMigrationStatusDetails
+      - $ref: '#/components/schemas/migrateApiToSpecHubExistingWorkspace'
+      - $ref: '#/components/schemas/migrateApiToSpecHubNewWorkspace'
+      - $ref: '#/components/schemas/migrateGitConnectedApiToSpecHub'
+      title: migrateApiToSpecHub
+    CreateSpecFilesItemsOneOf0Type:
+      type: string
+      enum:
+      - DEFAULT
+      - ROOT
+      description: 'The type of file. This property is required when creating multi-file specifications:
+
+        - `ROOT` — The file containing the full OpenAPI structure. This serves as the entry point for the API spec and references other (`DEFAULT`) spec files. Multi-file specs can only have one root file.
+
+        - `DEFAULT` — A file referenced by the `ROOT` file.
+
+        '
+      title: CreateSpecFilesItemsOneOf0Type
   securitySchemes:
     PostmanApiKey:
       type: apiKey

@@ -530,106 +530,11 @@ components:
           $ref: '#/components/schemas/CreateUpdateMonitorResponseMonitor'
           description: Information about the monitor.
       title: createUpdateMonitorResponse
-    GetRunnerInstancesRequestUnauthorizedError:
+    GetMonitorRequestUnauthorizedError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetRunnerInstancesRequestUnauthorizedError
-    monitorRunRequests:
-      type: object
-      properties:
-        method:
-          type: string
-          description: The HTTP request method.
-        url:
-          type: string
-          format: url
-          description: The request's URL.
-        body:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Information about the request body, such as Content-Length.
-        headers:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Information about the request headers, such as Content-Type, Accept, encoding, and other information.
-        timestamp:
-          type: string
-          description: The date and time of the request.
-      description: Information about the monitor run's requests.
-      title: monitorRunRequests
-    DeleteMonitorRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteMonitorRequestUnauthorizedError
-    limitDefault25:
-      type: integer
-      default: 25
-      title: limitDefault25
-    MonitorNotificationsOnErrorItems:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-          description: The email address of the user to notify on monitor error.
-      title: MonitorNotificationsOnErrorItems
-    UpdateMonitorRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateMonitorRequestForbiddenError
-    CreateUpdateMonitorResponseMonitor:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The monitor's ID.
-        name:
-          type: string
-          description: The monitor's name.
-        active:
-          type: boolean
-          default: true
-          description: If true, the monitor is active and makes calls to the specified URL.
-        uid:
-          type: string
-          format: uid
-          description: The monitor's unique ID.
-      description: Information about the monitor.
-      title: CreateUpdateMonitorResponseMonitor
-    monitorRetry:
-      type: object
-      properties:
-        attempts:
-          type: number
-          format: double
-          description: The number of times to reattempt a monitor run if it fails or errors. This may impact your [monitor usage](https://learning.postman.com/docs/monitoring-your-api/monitor-usage/#view-monitor-usage).
-      description: Information about the monitor's retry settings.
-      title: monitorRetry
-    GetRunnerInstancesRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetRunnerInstancesRequestInternalServerError
-    DeleteMonitorRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteMonitorRequestInternalServerError
-    CommonErrorTypeTitleDetailDetail:
-      oneOf:
-      - type: string
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
+      title: GetMonitorRequestUnauthorizedError
     monitorRunStats:
       type: object
       properties:
@@ -656,42 +561,6 @@ components:
           description: The total response size. This includes the runs in all the selected regions.
       description: Information about the monitor run's stats.
       title: monitorRunStats
-    UpdateMonitorRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateMonitorRequestInternalServerError
-    RunMonitorRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: RunMonitorRequestForbiddenError
-    monitorRunErrors:
-      type: array
-      items:
-        $ref: '#/components/schemas/MonitorRunErrorsItems'
-      description: If the execution encounter errors, a list of errors and their information.
-      title: monitorRunErrors
-    getRunnerInstances:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/runnerMeta'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/runnerInstance'
-          description: A list of all runner instances.
-      title: getRunnerInstances
-    MonitorNotificationsOnFailureItems:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-          description: The email address of the user to notify on monitor failure.
-      title: MonitorNotificationsOnFailureItems
     updateMonitor:
       type: object
       properties:
@@ -699,83 +568,30 @@ components:
           $ref: '#/components/schemas/UpdateMonitorMonitor'
           description: Information about the monitor.
       title: updateMonitor
-    runnerInstance:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The runner instance's ID.
-        hostname:
-          type: string
-          description: The hostname of the machine where the runner instance is running.
-        uniqueId:
-          type: string
-          description: The runner instance's unique ID.
-        cliVersion:
-          type: string
-          description: The version of the [Postman CLI](https://learning.postman.com/docs/postman-cli/postman-cli-overview/) used to start the runner instance.
-        osType:
-          type: string
-          description: The operating system of the machine where the runner instance is running.
-        runnerId:
-          type: string
-          description: The runner's ID.
-        lastPingedAt:
-          type: string
-          format: date-time
-          description: The last date and time the runner instance sent results to the Postman cloud.
-      description: Information about the runner instance.
-      title: runnerInstance
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    MonitorRunStatsAssertions:
-      type: object
-      properties:
-        total:
-          type: number
-          format: double
-          description: The total number of tests performed.
-        failed:
-          type: number
-          format: double
-          description: The total number of test failures.
-      description: Information about the monitor's tests.
-      title: MonitorRunStatsAssertions
-    workspaceId:
-      type: string
-      title: workspaceId
-    GetRunnerMetricsRequestInternalServerError:
+    GetRunnerInstancesRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetRunnerMetricsRequestInternalServerError
-    commonErrorTypeTitleDetailStatus:
+      title: GetRunnerInstancesRequestInternalServerError
+    monitorLastRun:
       type: object
       properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
         status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
-    deleteMonitor:
-      type: object
-      properties:
-        monitor:
-          $ref: '#/components/schemas/DeleteMonitorMonitor'
-          description: Information about the monitor.
-      title: deleteMonitor
+          type: string
+          description: The monitor's status after its last run.
+        startedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the monitor's previous run started.
+        finishedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the monitor's previous run completed.
+        stats:
+          $ref: '#/components/schemas/monitorRunStats'
+      description: Information about the monitor's previous run.
+      title: monitorLastRun
     monitorRunInfo:
       type: object
       properties:
@@ -809,29 +625,44 @@ components:
           description: The date and time at which the monitor's run completed.
       description: Information about the monitor.
       title: monitorRunInfo
-    GetMonitorsRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
-      title: GetMonitorsRequestBadRequestError
-    createMonitor:
-      type: object
-      properties:
-        monitor:
-          $ref: '#/components/schemas/CreateMonitorMonitor'
-          description: Information about the monitor.
-      title: createMonitor
-    CreateMonitorRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateMonitorRequestUnauthorizedError
-    GetMonitorsRequestInternalServerError:
+    GetRunnerMetricsRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetMonitorsRequestInternalServerError
+      title: GetRunnerMetricsRequestInternalServerError
+    DeleteMonitorRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteMonitorRequestForbiddenError
+    GetMonitorsMonitorsItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The monitor's ID.
+        name:
+          type: string
+          description: The monitor's name.
+        active:
+          type: boolean
+          description: Whether the monitor is active (`true`) or inactive (`false`).
+        uid:
+          type: string
+          format: uid
+          description: The monitor's unique ID.
+        owner:
+          type: integer
+          description: The ID of the user that created the monitor.
+        collectionUid:
+          type: string
+          description: The unique ID of the monitor's associated collection.
+        environmentUid:
+          type: string
+          description: The unique ID of the monitor's associated environment.
+      description: Information about the monitor.
+      title: GetMonitorsMonitorsItems
     CommonErrorNameMessageDetailsErrorDetails:
       oneOf:
       - type: object
@@ -842,57 +673,23 @@ components:
           type: string
       description: Information about the error.
       title: CommonErrorNameMessageDetailsErrorDetails
-    commonErrorNameMessageDetails:
+    MonitorRunExecutionsItems:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageDetailsError'
-      title: commonErrorNameMessageDetails
-    GetMonitorRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetMonitorRequestForbiddenError
-    monitorRunExecutions:
-      type: array
-      items:
-        $ref: '#/components/schemas/MonitorRunExecutionsItems'
-      description: Information about the monitor run's executions.
-      title: monitorRunExecutions
-    getMonitors:
-      type: object
-      properties:
-        monitors:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetMonitorsMonitorsItems'
-          description: A list of monitors.
-        meta:
-          $ref: '#/components/schemas/GetMonitorsMeta'
-          description: The response's meta information for paginated results.
-      title: getMonitors
-    CreateMonitorRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
-      title: CreateMonitorRequestBadRequestError
-    MonitorRunStatsRequests:
-      type: object
-      properties:
-        total:
+        id:
           type: number
           format: double
-          description: The total number of requests.
-        failed:
-          type: number
-          format: double
-          description: The number of request failures.
-      description: Information about the monitor's requests.
-      title: MonitorRunStatsRequests
-    environmentUid:
-      type: string
-      format: uid
-      title: environmentUid
+          description: The execution ID.
+        item:
+          $ref: '#/components/schemas/MonitorRunExecutionsItemsItem'
+          description: Information about the executed item.
+        request:
+          $ref: '#/components/schemas/monitorRunRequests'
+        response:
+          $ref: '#/components/schemas/monitorRunResponses'
+        errors:
+          $ref: '#/components/schemas/monitorRunErrors'
+      title: MonitorRunExecutionsItems
     runnerMeta:
       type: object
       properties:
@@ -911,63 +708,6 @@ components:
           description: The pagination cursor that points to the next record in the results set.
       description: The response's meta information for paginated results.
       title: runnerMeta
-    commonErrorNameMessage:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
-    MonitorRunExecutionsItems:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-          description: The execution ID.
-        item:
-          $ref: '#/components/schemas/MonitorRunExecutionsItemsItem'
-          description: Information about the executed item.
-        request:
-          $ref: '#/components/schemas/monitorRunRequests'
-        response:
-          $ref: '#/components/schemas/monitorRunResponses'
-        errors:
-          $ref: '#/components/schemas/monitorRunErrors'
-      title: MonitorRunExecutionsItems
-    UpdateMonitorMonitor:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The monitor's name.
-        active:
-          type: boolean
-          default: true
-          description: If true, the monitor is active and makes calls to the specified URL.
-        notificationLimit:
-          type: number
-          format: double
-          description: Stop email notifications after the given number consecutive failures.
-        retry:
-          $ref: '#/components/schemas/monitorRetry'
-        options:
-          $ref: '#/components/schemas/monitorOptions'
-        schedule:
-          $ref: '#/components/schemas/monitorSchedule'
-        distribution:
-          $ref: '#/components/schemas/monitorDistribution'
-        notifications:
-          $ref: '#/components/schemas/monitorNotifications'
-      description: Information about the monitor.
-      title: UpdateMonitorMonitor
-    MonitorDistributionItems:
-      type: object
-      properties:
-        region:
-          $ref: '#/components/schemas/MonitorDistributionItemsRegion'
-          description: The assigned distribution region.
-      title: MonitorDistributionItems
     monitorSchedule:
       type: object
       properties:
@@ -995,6 +735,97 @@ components:
           description: The monitor's [timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
       description: Information about the monitor's schedule.
       title: monitorSchedule
+    runnerId:
+      type: string
+      title: runnerId
+    GetRunnerInstancesRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetRunnerInstancesRequestForbiddenError
+    MonitorRunStatsRequests:
+      type: object
+      properties:
+        total:
+          type: number
+          format: double
+          description: The total number of requests.
+        failed:
+          type: number
+          format: double
+          description: The number of request failures.
+      description: Information about the monitor's requests.
+      title: MonitorRunStatsRequests
+    CreateMonitorRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
+      title: CreateMonitorRequestBadRequestError
+    GetRunnerInstancesRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetRunnerInstancesRequestUnauthorizedError
+    CreateUpdateMonitorResponseMonitor:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The monitor's ID.
+        name:
+          type: string
+          description: The monitor's name.
+        active:
+          type: boolean
+          default: true
+          description: If true, the monitor is active and makes calls to the specified URL.
+        uid:
+          type: string
+          format: uid
+          description: The monitor's unique ID.
+      description: Information about the monitor.
+      title: CreateUpdateMonitorResponseMonitor
+    getMonitor:
+      type: object
+      properties:
+        monitor:
+          $ref: '#/components/schemas/GetMonitorMonitor'
+          description: Information about the monitor.
+      title: getMonitor
+    MonitorRunExecutionsItemsItem:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The executed item's name.
+      description: Information about the executed item.
+      title: MonitorRunExecutionsItemsItem
+    CommonErrorNameMessageDetailsError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+        details:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsErrorDetails'
+          description: Information about the error.
+      title: CommonErrorNameMessageDetailsError
+    monitorNotifications:
+      type: object
+      properties:
+        onError:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonitorNotificationsOnErrorItems'
+        onFailure:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonitorNotificationsOnFailureItems'
+      description: Information about the monitor's notification settings.
+      title: monitorNotifications
     GetMonitorsMeta:
       type: object
       properties:
@@ -1008,11 +839,6 @@ components:
           description: The maximum number of records in the paginated response.
       description: The response's meta information for paginated results.
       title: GetMonitorsMeta
-    GetMonitorsRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetMonitorsRequestUnauthorizedError
     getRunnerMetrics:
       type: object
       properties:
@@ -1027,27 +853,56 @@ components:
           description: The number of pending Postman monitor runs in the runner's queue.
       description: The runner instance's metrics information.
       title: getRunnerMetrics
-    CommonErrorNameMessageError:
+    GetMonitorsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetMonitorsRequestInternalServerError
+    RunMonitorRunFailuresItems:
+      type: object
+      properties: {}
+      title: RunMonitorRunFailuresItems
+    monitorRetry:
       type: object
       properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
-    RunMonitorRequestUnauthorizedError:
+        attempts:
+          type: number
+          format: double
+          description: The number of times to reattempt a monitor run if it fails or errors. This may impact your [monitor usage](https://learning.postman.com/docs/monitoring-your-api/monitor-usage/#view-monitor-usage).
+      description: Information about the monitor's retry settings.
+      title: monitorRetry
+    GetMonitorRequestForbiddenError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: RunMonitorRequestUnauthorizedError
-    UpdateMonitorRequestBadRequestError:
+      title: GetMonitorRequestForbiddenError
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    DeleteMonitorRequestInternalServerError:
       oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
-      title: UpdateMonitorRequestBadRequestError
+      title: DeleteMonitorRequestInternalServerError
+    UpdateMonitorRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateMonitorRequestUnauthorizedError
     CreateMonitorMonitor:
       type: object
       properties:
@@ -1084,27 +939,181 @@ components:
       - schedule
       description: Information about the monitor.
       title: CreateMonitorMonitor
-    runMonitor:
+    runnerInstance:
       type: object
       properties:
-        run:
-          $ref: '#/components/schemas/RunMonitorRun'
-          description: Information about the monitor run. If you pass the `async=true` query parameter, the response does not return the `stats`, `executions`, and `failures` responses. To get this information for an asynchronous run, call the GET `/monitors/{id}` endpoint.
-      title: runMonitor
-    MonitorDistributionItemsRegion:
+        id:
+          type: string
+          description: The runner instance's ID.
+        hostname:
+          type: string
+          description: The hostname of the machine where the runner instance is running.
+        uniqueId:
+          type: string
+          description: The runner instance's unique ID.
+        cliVersion:
+          type: string
+          description: The version of the [Postman CLI](https://learning.postman.com/docs/postman-cli/postman-cli-overview/) used to start the runner instance.
+        osType:
+          type: string
+          description: The operating system of the machine where the runner instance is running.
+        runnerId:
+          type: string
+          description: The runner's ID.
+        lastPingedAt:
+          type: string
+          format: date-time
+          description: The last date and time the runner instance sent results to the Postman cloud.
+      description: Information about the runner instance.
+      title: runnerInstance
+    monitorRunResponses:
+      type: object
+      properties:
+        body:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Information about the request body, such as Content-Length.
+        code:
+          type: number
+          format: double
+          description: The response's HTTP status code.
+        headers:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Information about the response headers, such as Content-Type, Accept, encoding, and other information.
+        responseSize:
+          type: number
+          format: double
+          description: The response size, in bytes.
+        responseTime:
+          type: number
+          format: double
+          description: The response time, in milliseconds.
+      description: Information about the monitor run's response.
+      title: monitorRunResponses
+    CreateMonitorRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateMonitorRequestInternalServerError
+    GetRunnerMetricsRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetRunnerMetricsRequestUnauthorizedError
+    monitorId:
       type: string
-      enum:
-      - us-east
-      - us-west
-      - ap-southeast
-      - ca-central
-      - eu-central
-      - sa-east
-      - uk
-      - us-east-staticip
-      - us-west-staticip
-      description: The assigned distribution region.
-      title: MonitorDistributionItemsRegion
+      title: monitorId
+    active:
+      type: boolean
+      default: false
+      title: active
+    getMonitors:
+      type: object
+      properties:
+        monitors:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetMonitorsMonitorsItems'
+          description: A list of monitors.
+        meta:
+          $ref: '#/components/schemas/GetMonitorsMeta'
+          description: The response's meta information for paginated results.
+      title: getMonitors
+    GetMonitorMonitorSchedule:
+      type: object
+      properties:
+        cron:
+          type: string
+          description: The monitor's POSIX cron frequency value.
+        nextRun:
+          type: string
+          format: date-time
+          description: The date and time of monitor's next scheduled run.
+        timezone:
+          type: string
+          description: The monitor's timezone.
+      description: Information about the monitor's schedule.
+      title: GetMonitorMonitorSchedule
+    environmentUid:
+      type: string
+      format: uid
+      title: environmentUid
+    collectionUidQuery:
+      type: string
+      format: uid
+      title: collectionUidQuery
+    GetRunnerMetricsRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetRunnerMetricsRequestForbiddenError
+    DeleteMonitorRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteMonitorRequestUnauthorizedError
+    createMonitor:
+      type: object
+      properties:
+        monitor:
+          $ref: '#/components/schemas/CreateMonitorMonitor'
+          description: Information about the monitor.
+      title: createMonitor
+    RunMonitorRun:
+      type: object
+      properties:
+        info:
+          $ref: '#/components/schemas/monitorRunInfo'
+        stats:
+          $ref: '#/components/schemas/monitorRunStats'
+        executions:
+          $ref: '#/components/schemas/monitorRunExecutions'
+        failures:
+          type: array
+          items:
+            $ref: '#/components/schemas/RunMonitorRunFailuresItems'
+          description: If the monitor run failed, information about the run's failures.
+      description: Information about the monitor run. If you pass the `async=true` query parameter, the response does not return the `stats`, `executions`, and `failures` responses. To get this information for an asynchronous run, call the GET `/monitors/{id}` endpoint.
+      title: RunMonitorRun
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    GetMonitorsRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetMonitorsRequestUnauthorizedError
+    getRunnerInstances:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/runnerMeta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/runnerInstance'
+          description: A list of all runner instances.
+      title: getRunnerInstances
+    GetMonitorRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetMonitorRequestInternalServerError
     GetMonitorMonitor:
       type: object
       properties:
@@ -1155,24 +1164,80 @@ components:
           $ref: '#/components/schemas/monitorLastRun'
       description: Information about the monitor.
       title: GetMonitorMonitor
-    monitorLastRun:
+    GetMonitorsRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
+      title: GetMonitorsRequestBadRequestError
+    monitorRunErrors:
+      type: array
+      items:
+        $ref: '#/components/schemas/MonitorRunErrorsItems'
+      description: If the execution encounter errors, a list of errors and their information.
+      title: monitorRunErrors
+    owner:
+      type: integer
+      title: owner
+    CreateMonitorRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateMonitorRequestUnauthorizedError
+    cursor:
+      type: string
+      title: cursor
+    CreateMonitorRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateMonitorRequestForbiddenError
+    monitorRunExecutions:
+      type: array
+      items:
+        $ref: '#/components/schemas/MonitorRunExecutionsItems'
+      description: Information about the monitor run's executions.
+      title: monitorRunExecutions
+    RunMonitorRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: RunMonitorRequestUnauthorizedError
+    GetMonitorsRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetMonitorsRequestForbiddenError
+    UpdateMonitorRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
+      title: UpdateMonitorRequestBadRequestError
+    MonitorNotificationsOnErrorItems:
       type: object
       properties:
-        status:
+        email:
           type: string
-          description: The monitor's status after its last run.
-        startedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the monitor's previous run started.
-        finishedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the monitor's previous run completed.
-        stats:
-          $ref: '#/components/schemas/monitorRunStats'
-      description: Information about the monitor's previous run.
-      title: monitorLastRun
+          format: email
+          description: The email address of the user to notify on monitor error.
+      title: MonitorNotificationsOnErrorItems
+    MonitorDistributionItemsRegion:
+      type: string
+      enum:
+      - us-east
+      - us-west
+      - ap-southeast
+      - ca-central
+      - eu-central
+      - sa-east
+      - uk
+      - us-east-staticip
+      - us-west-staticip
+      description: The assigned distribution region.
+      title: MonitorDistributionItemsRegion
+    limitDefault25:
+      type: integer
+      default: 25
+      title: limitDefault25
     DeleteMonitorMonitor:
       type: object
       properties:
@@ -1185,11 +1250,7 @@ components:
           description: The monitor's unique ID.
       description: Information about the monitor.
       title: DeleteMonitorMonitor
-    RunMonitorRunFailuresItems:
-      type: object
-      properties: {}
-      title: RunMonitorRunFailuresItems
-    CommonErrorNameMessageDetailsError:
+    CommonErrorNameMessageError:
       type: object
       properties:
         name:
@@ -1198,13 +1259,8 @@ components:
         message:
           type: string
           description: The error message.
-        details:
-          $ref: '#/components/schemas/CommonErrorNameMessageDetailsErrorDetails'
-          description: Information about the error.
-      title: CommonErrorNameMessageDetailsError
-    monitorId:
-      type: string
-      title: monitorId
+      description: Information about the error.
+      title: CommonErrorNameMessageError
     MonitorRunErrorsItems:
       type: object
       properties:
@@ -1215,32 +1271,157 @@ components:
           type: string
           description: The error message.
       title: MonitorRunErrorsItems
-    GetMonitorRequestInternalServerError:
+    monitorDistribution:
+      type: array
+      items:
+        $ref: '#/components/schemas/MonitorDistributionItems'
+      description: A list of the monitor's [geographic regions](https://learning.postman.com/docs/monitoring-your-api/setting-up-monitor/#add-regions).
+      title: monitorDistribution
+    RunMonitorRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetMonitorRequestInternalServerError
-    GetMonitorMonitorSchedule:
+      title: RunMonitorRequestInternalServerError
+    commonErrorNameMessageDetails:
       type: object
       properties:
-        cron:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsError'
+      title: commonErrorNameMessageDetails
+    workspaceId:
+      type: string
+      title: workspaceId
+    deleteMonitor:
+      type: object
+      properties:
+        monitor:
+          $ref: '#/components/schemas/DeleteMonitorMonitor'
+          description: Information about the monitor.
+      title: deleteMonitor
+    MonitorRunStatsAssertions:
+      type: object
+      properties:
+        total:
+          type: number
+          format: double
+          description: The total number of tests performed.
+        failed:
+          type: number
+          format: double
+          description: The total number of test failures.
+      description: Information about the monitor's tests.
+      title: MonitorRunStatsAssertions
+    UpdateMonitorMonitor:
+      type: object
+      properties:
+        name:
           type: string
-          description: The monitor's POSIX cron frequency value.
-        nextRun:
+          description: The monitor's name.
+        active:
+          type: boolean
+          default: true
+          description: If true, the monitor is active and makes calls to the specified URL.
+        notificationLimit:
+          type: number
+          format: double
+          description: Stop email notifications after the given number consecutive failures.
+        retry:
+          $ref: '#/components/schemas/monitorRetry'
+        options:
+          $ref: '#/components/schemas/monitorOptions'
+        schedule:
+          $ref: '#/components/schemas/monitorSchedule'
+        distribution:
+          $ref: '#/components/schemas/monitorDistribution'
+        notifications:
+          $ref: '#/components/schemas/monitorNotifications'
+      description: Information about the monitor.
+      title: UpdateMonitorMonitor
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
           type: string
-          format: date-time
-          description: The date and time of monitor's next scheduled run.
-        timezone:
+          description: The type of error.
+        title:
           type: string
-          description: The monitor's timezone.
-      description: Information about the monitor's schedule.
-      title: GetMonitorMonitorSchedule
-    CreateMonitorRequestForbiddenError:
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    MonitorNotificationsOnFailureItems:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: The email address of the user to notify on monitor failure.
+      title: MonitorNotificationsOnFailureItems
+    runMonitor:
+      type: object
+      properties:
+        run:
+          $ref: '#/components/schemas/RunMonitorRun'
+          description: Information about the monitor run. If you pass the `async=true` query parameter, the response does not return the `stats`, `executions`, and `failures` responses. To get this information for an asynchronous run, call the GET `/monitors/{id}` endpoint.
+      title: runMonitor
+    UpdateMonitorRequestInternalServerError:
       oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateMonitorRequestForbiddenError
+      title: UpdateMonitorRequestInternalServerError
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    runnerErrorTypeTitleDetailCreatedAt:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri-reference
+          description: The [URI reference](https://www.rfc-editor.org/rfc/rfc3986) that identifies the type of problem.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        createdAt:
+          type: string
+          description: The date and time at which the error occurred.
+      title: runnerErrorTypeTitleDetailCreatedAt
+    monitorRunRequests:
+      type: object
+      properties:
+        method:
+          type: string
+          description: The HTTP request method.
+        url:
+          type: string
+          format: url
+          description: The request's URL.
+        body:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Information about the request body, such as Content-Length.
+        headers:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Information about the request headers, such as Content-Type, Accept, encoding, and other information.
+        timestamp:
+          type: string
+          description: The date and time of the request.
+      description: Information about the monitor run's requests.
+      title: monitorRunRequests
     monitorOptions:
       type: object
       properties:
@@ -1260,208 +1441,27 @@ components:
           description: If true, strict SSL enabled.
       description: Information about the monitor's option settings.
       title: monitorOptions
-    monitorDistribution:
-      type: array
-      items:
-        $ref: '#/components/schemas/MonitorDistributionItems'
-      description: A list of the monitor's [geographic regions](https://learning.postman.com/docs/monitoring-your-api/setting-up-monitor/#add-regions).
-      title: monitorDistribution
-    active:
-      type: boolean
-      default: false
-      title: active
-    DeleteMonitorRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteMonitorRequestForbiddenError
-    owner:
-      type: integer
-      title: owner
-    GetMonitorsRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetMonitorsRequestForbiddenError
-    monitorNotifications:
+    MonitorDistributionItems:
       type: object
       properties:
-        onError:
-          type: array
-          items:
-            $ref: '#/components/schemas/MonitorNotificationsOnErrorItems'
-        onFailure:
-          type: array
-          items:
-            $ref: '#/components/schemas/MonitorNotificationsOnFailureItems'
-      description: Information about the monitor's notification settings.
-      title: monitorNotifications
-    GetMonitorRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetMonitorRequestUnauthorizedError
-    RunMonitorRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: RunMonitorRequestInternalServerError
-    GetRunnerMetricsRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetRunnerMetricsRequestForbiddenError
-    CreateMonitorRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateMonitorRequestInternalServerError
-    MonitorRunExecutionsItemsItem:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The executed item's name.
-      description: Information about the executed item.
-      title: MonitorRunExecutionsItemsItem
-    GetMonitorsMonitorsItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The monitor's ID.
-        name:
-          type: string
-          description: The monitor's name.
-        active:
-          type: boolean
-          description: Whether the monitor is active (`true`) or inactive (`false`).
-        uid:
-          type: string
-          format: uid
-          description: The monitor's unique ID.
-        owner:
-          type: integer
-          description: The ID of the user that created the monitor.
-        collectionUid:
-          type: string
-          description: The unique ID of the monitor's associated collection.
-        environmentUid:
-          type: string
-          description: The unique ID of the monitor's associated environment.
-      description: Information about the monitor.
-      title: GetMonitorsMonitorsItems
-    UpdateMonitorRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateMonitorRequestUnauthorizedError
-    commonErrorTypeTitleDetail:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of error.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
-          description: Information about the error.
-      title: commonErrorTypeTitleDetail
-    cursor:
-      type: string
-      title: cursor
-    monitorRunResponses:
-      type: object
-      properties:
-        body:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Information about the request body, such as Content-Length.
-        code:
-          type: number
-          format: double
-          description: The response's HTTP status code.
-        headers:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Information about the response headers, such as Content-Type, Accept, encoding, and other information.
-        responseSize:
-          type: number
-          format: double
-          description: The response size, in bytes.
-        responseTime:
-          type: number
-          format: double
-          description: The response time, in milliseconds.
-      description: Information about the monitor run's response.
-      title: monitorRunResponses
-    runnerId:
-      type: string
-      title: runnerId
-    GetRunnerInstancesRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetRunnerInstancesRequestForbiddenError
-    runnerErrorTypeTitleDetailCreatedAt:
-      type: object
-      properties:
-        type:
-          type: string
-          format: uri-reference
-          description: The [URI reference](https://www.rfc-editor.org/rfc/rfc3986) that identifies the type of problem.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        createdAt:
-          type: string
-          description: The date and time at which the error occurred.
-      title: runnerErrorTypeTitleDetailCreatedAt
-    GetRunnerMetricsRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetRunnerMetricsRequestUnauthorizedError
+        region:
+          $ref: '#/components/schemas/MonitorDistributionItemsRegion'
+          description: The assigned distribution region.
+      title: MonitorDistributionItems
     async:
       type: boolean
       default: false
       title: async
-    collectionUidQuery:
-      type: string
-      format: uid
-      title: collectionUidQuery
-    RunMonitorRun:
-      type: object
-      properties:
-        info:
-          $ref: '#/components/schemas/monitorRunInfo'
-        stats:
-          $ref: '#/components/schemas/monitorRunStats'
-        executions:
-          $ref: '#/components/schemas/monitorRunExecutions'
-        failures:
-          type: array
-          items:
-            $ref: '#/components/schemas/RunMonitorRunFailuresItems'
-          description: If the monitor run failed, information about the run's failures.
-      description: Information about the monitor run. If you pass the `async=true` query parameter, the response does not return the `stats`, `executions`, and `failures` responses. To get this information for an asynchronous run, call the GET `/monitors/{id}` endpoint.
-      title: RunMonitorRun
-    getMonitor:
-      type: object
-      properties:
-        monitor:
-          $ref: '#/components/schemas/GetMonitorMonitor'
-          description: Information about the monitor.
-      title: getMonitor
+    RunMonitorRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: RunMonitorRequestForbiddenError
+    UpdateMonitorRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateMonitorRequestForbiddenError
   securitySchemes:
     PostmanApiKey:
       type: apiKey

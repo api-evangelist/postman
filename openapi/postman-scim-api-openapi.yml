@@ -730,112 +730,6 @@ paths:
               $ref: '#/components/schemas/updateScimUserPatch'
 components:
   schemas:
-    ScimUserResourceResponseMeta:
-      type: object
-      properties:
-        resourceType:
-          type: string
-          description: The resource type.
-        created:
-          type: string
-          format: date-time
-          description: The date and time at which the team member was created.
-        lastModified:
-          type: string
-          format: date-time
-          description: The date and time at which the team member was last modified.
-      description: The response's non-standard meta information.
-      title: ScimUserResourceResponseMeta
-    scimId:
-      type: string
-      title: scimId
-    ScimGroupResourceMembersItems:
-      type: object
-      properties:
-        value:
-          type: string
-          description: The resource value.
-        display:
-          type: string
-          description: The resource's display name.
-      description: Information about the group's members.
-      title: ScimGroupResourceMembersItems
-    ScimUserResourceName:
-      type: object
-      properties:
-        givenName:
-          type: string
-          description: The team member's first name.
-        familyName:
-          type: string
-          description: The team member's last name.
-      description: Information about the Postman team member.
-      title: ScimUserResourceName
-    UpdateScimUserPatchOneOf1OperationsItemsPath:
-      type: string
-      enum:
-      - userName
-      description: The operation's path. Accepts the `userName` value.
-      title: UpdateScimUserPatchOneOf1OperationsItemsPath
-    UpdateScimUserPatch0:
-      type: object
-      properties:
-        schemas:
-          type: array
-          items:
-            type: string
-          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
-        Operations:
-          type: array
-          items:
-            $ref: '#/components/schemas/UpdateScimUserPatchOneOf0OperationsItems'
-          description: Information about the user update operation.
-      title: UpdateScimUserPatch0
-    GetScimServiceProviderConfigMeta:
-      type: object
-      properties:
-        resourceType:
-          type: string
-        location:
-          type: string
-          format: url
-      description: The response's non-standard meta information.
-      title: GetScimServiceProviderConfigMeta
-    UpdateScimUserPatchOneOf1OperationsItems:
-      type: object
-      properties:
-        op:
-          $ref: '#/components/schemas/UpdateScimUserPatchOneOf1OperationsItemsOp'
-          description: The operation to perform. Accepts the `replace` value.
-        path:
-          $ref: '#/components/schemas/UpdateScimUserPatchOneOf1OperationsItemsPath'
-          description: The operation's path. Accepts the `userName` value.
-        value:
-          type: string
-          format: email
-          description: The user's email address.
-      title: UpdateScimUserPatchOneOf1OperationsItems
-    GetScimGroupResourceMembersItems:
-      type: object
-      properties:
-        value:
-          type: string
-          description: The member's SCIM ID.
-        display:
-          type: string
-          description: The member's display name.
-      description: Information about the group's members.
-      title: GetScimGroupResourceMembersItems
-    UpdateScimUserRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/scimError'
-      - $ref: '#/components/schemas/scimErrorScimType'
-      title: UpdateScimUserRequestBadRequestError
-    UpdateScimUserPatchRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/scimError'
-      - $ref: '#/components/schemas/scimErrorScimType'
-      title: UpdateScimUserPatchRequestBadRequestError
     GetScimResourceTypesItems:
       type: object
       properties:
@@ -865,23 +759,99 @@ components:
             $ref: '#/components/schemas/GetScimResourceTypesItemsSchemaExtensionsItems'
           description: Information about the resource's schema extensions.
       title: GetScimResourceTypesItems
-    UpdateScimUserPatchOneOf1OperationsItemsOp:
-      type: string
-      enum:
-      - replace
-      description: The operation to perform. Accepts the `replace` value.
-      title: UpdateScimUserPatchOneOf1OperationsItemsOp
-    ScimUserResourceResponseName:
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    createScimUserResponse:
       type: object
       properties:
-        givenName:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        id:
           type: string
-          description: The team member's first name.
-        familyName:
+          description: The user's SCIM ID.
+        userName:
           type: string
-          description: The team member's last name.
-      description: Information about the Postman team member.
-      title: ScimUserResourceResponseName
+          format: email
+          description: The user's username.
+        name:
+          $ref: '#/components/schemas/CreateScimUserResponseName'
+        externalId:
+          type: string
+          description: The user's external ID.
+        active:
+          type: boolean
+          description: If true, the user is active.
+        meta:
+          $ref: '#/components/schemas/CreateScimUserResponseMeta'
+          description: The response's non-standard meta information.
+      title: createScimUserResponse
+    UpdateScimUserRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/scimError'
+      - $ref: '#/components/schemas/scimErrorScimType'
+      title: UpdateScimUserRequestBadRequestError
+    scimUserFilter:
+      type: string
+      title: scimUserFilter
+    createScimGroup:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        displayName:
+          type: string
+          description: The group's display name.
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateScimGroupMembersItems'
+          description: A list of the group's members.
+      title: createScimGroup
+    ScimGroupResourceMeta:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          description: The resource type.
+        created:
+          type: string
+          format: date-time
+          description: The date and time at which the group was created.
+        lastModified:
+          type: string
+          format: date-time
+          description: The date and time at which the group was last modified.
+      description: The response's non-standard meta information.
+      title: ScimGroupResourceMeta
+    GetScimGroupResourceMeta:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          description: The resource type.
+        created:
+          type: string
+          format: date-time
+          description: The date and time at which the group was created.
+        lastModified:
+          type: string
+          format: date-time
+          description: The date and time at which the group was last modified.
+      description: The response's non-standard meta information.
+      title: GetScimGroupResourceMeta
+    scimGroupFilter:
+      type: string
+      title: scimGroupFilter
     getScimGroupResource:
       type: object
       properties:
@@ -908,169 +878,18 @@ components:
           $ref: '#/components/schemas/GetScimGroupResourceMeta'
           description: The response's non-standard meta information.
       title: getScimGroupResource
-    GetScimResourceTypesRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetScimResourceTypesRequestUnauthorizedError
-    scimUserResources:
-      type: object
-      properties:
-        Resources:
-          type: array
-          items:
-            $ref: '#/components/schemas/scimUserResource'
-          description: A list of user resources.
-        itemsPerPage:
-          type: number
-          format: double
-          description: The number of items per response page.
-        schemas:
-          type: array
-          items:
-            type: string
-          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
-        startIndex:
-          type: number
-          format: double
-          description: The index entry by which the returned results begin.
-        totalResults:
-          type: number
-          format: double
-          description: The total number of results found.
-      title: scimUserResources
-    scimUserResourceResponse:
-      type: object
-      properties:
-        schemas:
-          type: array
-          items:
-            type: string
-          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
-        id:
-          type: string
-          description: The team member's SCIM ID.
-        userName:
-          type: string
-          description: The team member's SCIM username.
-        name:
-          $ref: '#/components/schemas/ScimUserResourceResponseName'
-          description: Information about the Postman team member.
-        externalId:
-          type: string
-          description: The team member's external ID.
-        active:
-          type: boolean
-          description: If true, the team member is active.
-        meta:
-          $ref: '#/components/schemas/ScimUserResourceResponseMeta'
-          description: The response's non-standard meta information.
-      title: scimUserResourceResponse
-    CreateScimGroupMembersItems:
+    GetScimGroupResourceMembersItems:
       type: object
       properties:
         value:
           type: string
-          description: The user's SCIM ID.
+          description: The member's SCIM ID.
         display:
           type: string
-          description: The user's display name.
+          description: The member's display name.
       description: Information about the group's members.
-      title: CreateScimGroupMembersItems
-    UpdateScimUserName:
-      type: object
-      properties:
-        givenName:
-          type: string
-          description: The user's first name.
-        familyName:
-          type: string
-          description: The user's last name.
-      description: Information about the user's name.
-      title: UpdateScimUserName
-    GetScimServiceProviderConfigEtag:
-      type: object
-      properties:
-        supported:
-          type: boolean
-          description: If true, the feature is supported.
-      description: Information about the [entity tag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) (Etag) HTTP response header configuration.
-      title: GetScimServiceProviderConfigEtag
-    GetScimServiceProviderConfigAuthenticationSchemesItems:
-      type: object
-      properties:
-        description:
-          type: string
-          description: The scheme's description.
-        name:
-          type: string
-          description: The scheme's friendly name.
-        specUri:
-          type: string
-          format: url
-          description: A link to the scheme's specification documentation.
-        type:
-          type: string
-          description: The scheme's type.
-      description: Information about the scheme.
-      title: GetScimServiceProviderConfigAuthenticationSchemesItems
-    CommonErrorNameMessageError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
-    ScimUpdateGroupResponseMeta:
-      type: object
-      properties:
-        resourceType:
-          type: string
-          description: The resource type.
-        created:
-          type: string
-          format: date-time
-          description: The date and time at which the group was created.
-        lastModified:
-          type: string
-          format: date-time
-          description: The date and time at which the group was last modified.
-      description: The response's non-standard meta information.
-      title: ScimUpdateGroupResponseMeta
-    scimError:
-      type: object
-      properties:
-        schemas:
-          type: array
-          items:
-            type: string
-          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: string
-          format: http-status-code
-          description: The HTTP status code.
-      title: scimError
-    updateScimUserPatch:
-      oneOf:
-      - $ref: '#/components/schemas/UpdateScimUserPatch0'
-      - $ref: '#/components/schemas/UpdateScimUserPatch1'
-      title: updateScimUserPatch
-    GetScimServiceProviderConfigSort:
-      type: object
-      properties:
-        supported:
-          type: boolean
-          description: If true, the feature is supported.
-      description: Information about the sort configuration.
-      title: GetScimServiceProviderConfigSort
-    ScimUserResourceMeta:
+      title: GetScimGroupResourceMembersItems
+    ScimUserResourceResponseMeta:
       type: object
       properties:
         resourceType:
@@ -1085,80 +904,18 @@ components:
           format: date-time
           description: The date and time at which the team member was last modified.
       description: The response's non-standard meta information.
-      title: ScimUserResourceMeta
-    scimUserFilter:
-      type: string
-      title: scimUserFilter
-    ScimGroupResourceMeta:
+      title: ScimUserResourceResponseMeta
+    CreateScimGroupResponseMembersItems:
       type: object
       properties:
-        resourceType:
-          type: string
-          description: The resource type.
-        created:
-          type: string
-          format: date-time
-          description: The date and time at which the group was created.
-        lastModified:
-          type: string
-          format: date-time
-          description: The date and time at which the group was last modified.
-      description: The response's non-standard meta information.
-      title: ScimGroupResourceMeta
-    UpdateScimUserPatchOneOf0OperationsItems:
-      type: object
-      properties:
-        op:
-          $ref: '#/components/schemas/UpdateScimUserPatchOneOf0OperationsItemsOp'
-          description: The operation to perform.
         value:
-          $ref: '#/components/schemas/UpdateScimUserPatchOneOf0OperationsItemsValue'
-          description: The performed operation's value.
-      title: UpdateScimUserPatchOneOf0OperationsItems
-    ScimUpdateGroupOperationsItems:
-      type: object
-      properties:
-        op:
-          $ref: '#/components/schemas/ScimUpdateGroupOperationsItemsOp'
-          description: The operation to perform.
-        path:
           type: string
-          description: The operation's path. Include this value when you update a group's members.
-        value:
-          $ref: '#/components/schemas/ScimUpdateGroupOperationsItemsValue'
-          description: The performed operation's value.
-      title: ScimUpdateGroupOperationsItems
-    createScimGroup:
-      type: object
-      properties:
-        schemas:
-          type: array
-          items:
-            type: string
-          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
-        displayName:
+          description: The user's SCIM ID.
+        display:
           type: string
-          description: The group's display name.
-        members:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateScimGroupMembersItems'
-          description: A list of the group's members.
-      title: createScimGroup
-    UpdateScimUserPatch1:
-      type: object
-      properties:
-        schemas:
-          type: array
-          items:
-            type: string
-          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
-        Operations:
-          type: array
-          items:
-            $ref: '#/components/schemas/UpdateScimUserPatchOneOf1OperationsItems'
-          description: Information about the user update operation.
-      title: UpdateScimUserPatch1
+          description: The user's display name.
+      description: Information about the group's members.
+      title: CreateScimGroupResponseMembersItems
     scimUpdateGroup:
       type: object
       properties:
@@ -1173,127 +930,27 @@ components:
             $ref: '#/components/schemas/ScimUpdateGroupOperationsItems'
           description: Information about the group update operation.
       title: scimUpdateGroup
-    scimGroupResource:
+    startIndex:
+      type: number
+      format: double
+      default: 1
+      title: startIndex
+    GetScimServiceProviderConfigBulk:
       type: object
       properties:
-        schemas:
-          type: array
-          items:
-            type: string
-          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
-        id:
-          type: string
-          description: The group's SCIM ID.
-        displayName:
-          type: string
-          description: The group's display name.
-        members:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScimGroupResourceMembersItems'
-          description: A list of the group's members.
-        externalId:
-          type: string
-          description: The group's external ID.
-        meta:
-          $ref: '#/components/schemas/ScimGroupResourceMeta'
-          description: The response's non-standard meta information.
-      description: The SCIM group resource object.
-      title: scimGroupResource
-    getScimResourceTypes:
-      type: array
-      items:
-        $ref: '#/components/schemas/GetScimResourceTypesItems'
-      title: getScimResourceTypes
-    scimGroupFilter:
-      type: string
-      title: scimGroupFilter
-    createScimGroupResponse:
-      type: object
-      properties:
-        schemas:
-          type: array
-          items:
-            type: string
-          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
-        id:
-          type: string
-          description: The group's SCIM ID.
-        displayName:
-          type: string
-          description: The group's display name.
-        externalId:
-          type: string
-          description: The group's external ID.
-        members:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateScimGroupResponseMembersItems'
-          description: A list of the group's members.
-        meta:
-          $ref: '#/components/schemas/CreateScimGroupResponseMeta'
-          description: The response's non-standard meta information.
-      title: createScimGroupResponse
-    GetScimGroupResourceMeta:
-      type: object
-      properties:
-        resourceType:
-          type: string
-          description: The resource type.
-        created:
-          type: string
-          format: date-time
-          description: The date and time at which the group was created.
-        lastModified:
-          type: string
-          format: date-time
-          description: The date and time at which the group was last modified.
-      description: The response's non-standard meta information.
-      title: GetScimGroupResourceMeta
-    updateScimUser:
-      type: object
-      properties:
-        schemas:
-          type: array
-          items:
-            type: string
-          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
-        userName:
-          type: string
-          format: email
-          description: The user's email address.
-        name:
-          $ref: '#/components/schemas/UpdateScimUserName'
-          description: Information about the user's name.
-        active:
-          type: boolean
-          description: 'Sets the user''s `active` state:
-
-            - `true` — Activates the user. This lets them authenticate in to your Postman team.
-
-            - `false` — Removes the user from your Postman team and deactivates the account. This blocks the user from authenticating in to Postman.
-
-            '
-      title: updateScimUser
-    GetScimServiceProviderConfigChangePassword:
-      type: object
-      properties:
+        maxOperations:
+          type: number
+          format: double
+          description: The total number of maximum operations allowed for bulk operations.
+        maxPayloadSize:
+          type: number
+          format: double
+          description: The maximum payload allowed for bulk operations.
         supported:
           type: boolean
           description: If true, the feature is supported.
-      description: Information about the change password configuration.
-      title: GetScimServiceProviderConfigChangePassword
-    ScimUpdateGroupOperationsItemsValue:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The group's ID.
-        displayName:
-          type: string
-          description: The group's name.
-      description: The performed operation's value.
-      title: ScimUpdateGroupOperationsItemsValue
+      description: Information about bulk configuration.
+      title: GetScimServiceProviderConfigBulk
     createScimUser:
       type: object
       properties:
@@ -1323,7 +980,15 @@ components:
           $ref: '#/components/schemas/CreateScimUserName'
           description: Information about the user's name.
       title: createScimUser
-    scimErrorScimType:
+    GetScimServiceProviderConfigSort:
+      type: object
+      properties:
+        supported:
+          type: boolean
+          description: If true, the feature is supported.
+      description: Information about the sort configuration.
+      title: GetScimServiceProviderConfigSort
+    scimError:
       type: object
       properties:
         schemas:
@@ -1331,9 +996,6 @@ components:
           items:
             type: string
           description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
-        scimType:
-          type: string
-          description: The SCIM error type.
         detail:
           type: string
           description: Information about the error.
@@ -1341,73 +1003,27 @@ components:
           type: string
           format: http-status-code
           description: The HTTP status code.
-      title: scimErrorScimType
-    CreateScimUserResponseMetaResourceType:
-      type: string
-      enum:
-      - User
-      description: The SCIM resource type.
-      title: CreateScimUserResponseMetaResourceType
-    CreateScimUserResponseMeta:
+      title: scimError
+    ScimUpdateGroupOperationsItemsValue:
       type: object
       properties:
-        created:
-          type: string
-          format: date-time
-          description: The date and time at which the user was created.
-        lastModified:
-          type: string
-          format: date-time
-          description: The date and time at which the user was last modified.
-        resourceType:
-          $ref: '#/components/schemas/CreateScimUserResponseMetaResourceType'
-          description: The SCIM resource type.
-      description: The response's non-standard meta information.
-      title: CreateScimUserResponseMeta
-    createScimUserResponse:
-      type: object
-      properties:
-        schemas:
-          type: array
-          items:
-            type: string
-          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
         id:
           type: string
-          description: The user's SCIM ID.
-        userName:
+          description: The group's ID.
+        displayName:
           type: string
-          format: email
-          description: The user's username.
-        name:
-          $ref: '#/components/schemas/CreateScimUserResponseName'
-        externalId:
-          type: string
-          description: The user's external ID.
-        active:
-          type: boolean
-          description: If true, the user is active.
-        meta:
-          $ref: '#/components/schemas/CreateScimUserResponseMeta'
-          description: The response's non-standard meta information.
-      title: createScimUserResponse
-    CreateScimGroupResponseMeta:
+          description: The group's name.
+      description: The performed operation's value.
+      title: ScimUpdateGroupOperationsItemsValue
+    GetScimServiceProviderConfigEtag:
       type: object
       properties:
-        created:
-          type: string
-          format: date-time
-          description: The date and time at which the group was created.
-        lastModified:
-          type: string
-          format: date-time
-          description: The date and time at which the group was last modified.
-        resourceType:
-          type: string
-          description: The SCIM resource type.
-      description: The response's non-standard meta information.
-      title: CreateScimGroupResponseMeta
-    CreateScimGroupResponseMembersItems:
+        supported:
+          type: boolean
+          description: If true, the feature is supported.
+      description: Information about the [entity tag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) (Etag) HTTP response header configuration.
+      title: GetScimServiceProviderConfigEtag
+    CreateScimGroupMembersItems:
       type: object
       properties:
         value:
@@ -1417,18 +1033,116 @@ components:
           type: string
           description: The user's display name.
       description: Information about the group's members.
-      title: CreateScimGroupResponseMembersItems
-    CommonErrorTypeTitleDetailStatusType:
+      title: CreateScimGroupMembersItems
+    UpdateScimUserPatch1:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        Operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateScimUserPatchOneOf1OperationsItems'
+          description: Information about the user update operation.
+      title: UpdateScimUserPatch1
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    ScimUserResourceResponseName:
+      type: object
+      properties:
+        givenName:
+          type: string
+          description: The team member's first name.
+        familyName:
+          type: string
+          description: The team member's last name.
+      description: Information about the Postman team member.
+      title: ScimUserResourceResponseName
+    updateScimUser:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        userName:
+          type: string
+          format: email
+          description: The user's email address.
+        name:
+          $ref: '#/components/schemas/UpdateScimUserName'
+          description: Information about the user's name.
+        active:
+          type: boolean
+          description: 'Sets the user''s `active` state:
+
+            - `true` — Activates the user. This lets them authenticate in to your Postman team.
+
+            - `false` — Removes the user from your Postman team and deactivates the account. This blocks the user from authenticating in to Postman.
+
+            '
+      title: updateScimUser
+    GetScimServiceProviderConfigFilter:
+      type: object
+      properties:
+        maxResults:
+          type: number
+          format: double
+          description: The total number of maximum results allowed for filter operations.
+        supported:
+          type: boolean
+          description: If true, the feature is supported.
+      description: Information about the filter configuration.
+      title: GetScimServiceProviderConfigFilter
+    CreateScimUserResponseName:
+      type: object
+      properties:
+        givenName:
+          type: string
+          description: The user's first name.
+        familyName:
+          type: string
+          description: The user's last name.
+      title: CreateScimUserResponseName
+    UpdateScimUserPatch0:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        Operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateScimUserPatchOneOf0OperationsItems'
+          description: Information about the user update operation.
+      title: UpdateScimUserPatch0
+    scimId:
+      type: string
+      title: scimId
+    GetScimResourceTypesRequestUnauthorizedError:
       oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    count:
-      type: number
-      format: double
-      default: 100
-      title: count
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetScimResourceTypesRequestUnauthorizedError
     scimUpdateGroupResponse:
       type: object
       properties:
@@ -1450,105 +1164,143 @@ components:
           $ref: '#/components/schemas/ScimUpdateGroupResponseMeta'
           description: The response's non-standard meta information.
       title: scimUpdateGroupResponse
-    startIndex:
-      type: number
-      format: double
-      default: 1
-      title: startIndex
-    GetScimServiceProviderConfigBulk:
-      type: object
-      properties:
-        maxOperations:
-          type: number
-          format: double
-          description: The total number of maximum operations allowed for bulk operations.
-        maxPayloadSize:
-          type: number
-          format: double
-          description: The maximum payload allowed for bulk operations.
-        supported:
-          type: boolean
-          description: If true, the feature is supported.
-      description: Information about bulk configuration.
-      title: GetScimServiceProviderConfigBulk
-    ScimUpdateGroupOperationsItemsOp:
+    UpdateScimUserPatchOneOf1OperationsItemsOp:
       type: string
       enum:
       - replace
-      - remove
-      - add
-      description: The operation to perform.
-      title: ScimUpdateGroupOperationsItemsOp
+      description: The operation to perform. Accepts the `replace` value.
+      title: UpdateScimUserPatchOneOf1OperationsItemsOp
     UpdateScimUserPatchOneOf0OperationsItemsOp:
       type: string
       enum:
       - replace
       description: The operation to perform.
       title: UpdateScimUserPatchOneOf0OperationsItemsOp
-    getScimGroupResources:
+    GetScimServiceProviderConfigAuthenticationSchemesItems:
       type: object
       properties:
-        Resources:
-          type: array
-          items:
-            $ref: '#/components/schemas/scimGroupResource'
-          description: A list of group resources.
-        itemsPerPage:
-          type: number
-          format: double
-          description: The number of items per response page.
+        description:
+          type: string
+          description: The scheme's description.
+        name:
+          type: string
+          description: The scheme's friendly name.
+        specUri:
+          type: string
+          format: url
+          description: A link to the scheme's specification documentation.
+        type:
+          type: string
+          description: The scheme's type.
+      description: Information about the scheme.
+      title: GetScimServiceProviderConfigAuthenticationSchemesItems
+    scimGroupResource:
+      type: object
+      properties:
         schemas:
           type: array
           items:
             type: string
-        startIndex:
-          type: number
-          format: double
-          description: The index entry by which the returned results begin.
-        totalResults:
-          type: number
-          format: double
-          description: The total number of results found.
-      title: getScimGroupResources
-    commonErrorTypeTitleDetailStatus:
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        id:
+          type: string
+          description: The group's SCIM ID.
+        displayName:
+          type: string
+          description: The group's display name.
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScimGroupResourceMembersItems'
+          description: A list of the group's members.
+        externalId:
+          type: string
+          description: The group's external ID.
+        meta:
+          $ref: '#/components/schemas/ScimGroupResourceMeta'
+          description: The response's non-standard meta information.
+      description: The SCIM group resource object.
+      title: scimGroupResource
+    CreateScimGroupResponseMeta:
       type: object
       properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
+        created:
           type: string
-          description: A short summary of the problem.
-        detail:
+          format: date-time
+          description: The date and time at which the group was created.
+        lastModified:
           type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
-    CreateScimUserResponseName:
+          format: date-time
+          description: The date and time at which the group was last modified.
+        resourceType:
+          type: string
+          description: The SCIM resource type.
+      description: The response's non-standard meta information.
+      title: CreateScimGroupResponseMeta
+    createScimGroupResponse:
       type: object
       properties:
-        givenName:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        id:
           type: string
-          description: The user's first name.
-        familyName:
+          description: The group's SCIM ID.
+        displayName:
           type: string
-          description: The user's last name.
-      title: CreateScimUserResponseName
-    UpdateScimUserPatchOneOf0OperationsItemsValue:
+          description: The group's display name.
+        externalId:
+          type: string
+          description: The group's external ID.
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateScimGroupResponseMembersItems'
+          description: A list of the group's members.
+        meta:
+          $ref: '#/components/schemas/CreateScimGroupResponseMeta'
+          description: The response's non-standard meta information.
+      title: createScimGroupResponse
+    scimUserResourceResponse:
       type: object
       properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        id:
+          type: string
+          description: The team member's SCIM ID.
+        userName:
+          type: string
+          description: The team member's SCIM username.
+        name:
+          $ref: '#/components/schemas/ScimUserResourceResponseName'
+          description: Information about the Postman team member.
+        externalId:
+          type: string
+          description: The team member's external ID.
         active:
           type: boolean
-          description: 'Sets the user''s `active` state:
-
-            - `true` — Activates the user. This lets them authenticate in to your Postman team.
-
-            - `false` — Removes the user from your Postman team and deactivates the account. This blocks the user from authenticating in to Postman.
-
-            '
-      description: The performed operation's value.
-      title: UpdateScimUserPatchOneOf0OperationsItemsValue
+          description: If true, the team member is active.
+        meta:
+          $ref: '#/components/schemas/ScimUserResourceResponseMeta'
+          description: The response's non-standard meta information.
+      title: scimUserResourceResponse
+    UpdateScimUserPatchRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/scimError'
+      - $ref: '#/components/schemas/scimErrorScimType'
+      title: UpdateScimUserPatchRequestBadRequestError
+    UpdateScimUserPatchOneOf1OperationsItemsPath:
+      type: string
+      enum:
+      - userName
+      description: The operation's path. Accepts the `userName` value.
+      title: UpdateScimUserPatchOneOf1OperationsItemsPath
     scimUserResource:
       type: object
       properties:
@@ -1577,6 +1329,142 @@ components:
           description: The response's non-standard meta information.
       description: The SCIM user resource object.
       title: scimUserResource
+    ScimUserResourceMeta:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          description: The resource type.
+        created:
+          type: string
+          format: date-time
+          description: The date and time at which the team member was created.
+        lastModified:
+          type: string
+          format: date-time
+          description: The date and time at which the team member was last modified.
+      description: The response's non-standard meta information.
+      title: ScimUserResourceMeta
+    ScimUpdateGroupOperationsItems:
+      type: object
+      properties:
+        op:
+          $ref: '#/components/schemas/ScimUpdateGroupOperationsItemsOp'
+          description: The operation to perform.
+        path:
+          type: string
+          description: The operation's path. Include this value when you update a group's members.
+        value:
+          $ref: '#/components/schemas/ScimUpdateGroupOperationsItemsValue'
+          description: The performed operation's value.
+      title: ScimUpdateGroupOperationsItems
+    ScimUpdateGroupOperationsItemsOp:
+      type: string
+      enum:
+      - replace
+      - remove
+      - add
+      description: The operation to perform.
+      title: ScimUpdateGroupOperationsItemsOp
+    CreateScimUserResponseMeta:
+      type: object
+      properties:
+        created:
+          type: string
+          format: date-time
+          description: The date and time at which the user was created.
+        lastModified:
+          type: string
+          format: date-time
+          description: The date and time at which the user was last modified.
+        resourceType:
+          $ref: '#/components/schemas/CreateScimUserResponseMetaResourceType'
+          description: The SCIM resource type.
+      description: The response's non-standard meta information.
+      title: CreateScimUserResponseMeta
+    scimUserResources:
+      type: object
+      properties:
+        Resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/scimUserResource'
+          description: A list of user resources.
+        itemsPerPage:
+          type: number
+          format: double
+          description: The number of items per response page.
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        startIndex:
+          type: number
+          format: double
+          description: The index entry by which the returned results begin.
+        totalResults:
+          type: number
+          format: double
+          description: The total number of results found.
+      title: scimUserResources
+    getScimGroupResources:
+      type: object
+      properties:
+        Resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/scimGroupResource'
+          description: A list of group resources.
+        itemsPerPage:
+          type: number
+          format: double
+          description: The number of items per response page.
+        schemas:
+          type: array
+          items:
+            type: string
+        startIndex:
+          type: number
+          format: double
+          description: The index entry by which the returned results begin.
+        totalResults:
+          type: number
+          format: double
+          description: The total number of results found.
+      title: getScimGroupResources
+    UpdateScimUserName:
+      type: object
+      properties:
+        givenName:
+          type: string
+          description: The user's first name.
+        familyName:
+          type: string
+          description: The user's last name.
+      description: Information about the user's name.
+      title: UpdateScimUserName
+    CreateScimUserName:
+      type: object
+      properties:
+        givenName:
+          type: string
+          description: The user's first name.
+        familyName:
+          type: string
+          description: The user's last name.
+      description: Information about the user's name.
+      title: CreateScimUserName
+    UpdateScimUserPatchOneOf0OperationsItems:
+      type: object
+      properties:
+        op:
+          $ref: '#/components/schemas/UpdateScimUserPatchOneOf0OperationsItemsOp'
+          description: The operation to perform.
+        value:
+          $ref: '#/components/schemas/UpdateScimUserPatchOneOf0OperationsItemsValue'
+          description: The performed operation's value.
+      title: UpdateScimUserPatchOneOf0OperationsItems
     GetScimServiceProviderConfigPatch:
       type: object
       properties:
@@ -1585,18 +1473,68 @@ components:
           description: If true, the feature is supported.
       description: Information about patch configuration.
       title: GetScimServiceProviderConfigPatch
-    GetScimServiceProviderConfigFilter:
+    UpdateScimUserPatchOneOf0OperationsItemsValue:
       type: object
       properties:
-        maxResults:
-          type: number
-          format: double
-          description: The total number of maximum results allowed for filter operations.
-        supported:
+        active:
           type: boolean
-          description: If true, the feature is supported.
-      description: Information about the filter configuration.
-      title: GetScimServiceProviderConfigFilter
+          description: 'Sets the user''s `active` state:
+
+            - `true` — Activates the user. This lets them authenticate in to your Postman team.
+
+            - `false` — Removes the user from your Postman team and deactivates the account. This blocks the user from authenticating in to Postman.
+
+            '
+      description: The performed operation's value.
+      title: UpdateScimUserPatchOneOf0OperationsItemsValue
+    GetScimServiceProviderConfigMeta:
+      type: object
+      properties:
+        resourceType:
+          type: string
+        location:
+          type: string
+          format: url
+      description: The response's non-standard meta information.
+      title: GetScimServiceProviderConfigMeta
+    updateScimUserPatch:
+      oneOf:
+      - $ref: '#/components/schemas/UpdateScimUserPatch0'
+      - $ref: '#/components/schemas/UpdateScimUserPatch1'
+      title: updateScimUserPatch
+    count:
+      type: number
+      format: double
+      default: 100
+      title: count
+    ScimGroupResourceMembersItems:
+      type: object
+      properties:
+        value:
+          type: string
+          description: The resource value.
+        display:
+          type: string
+          description: The resource's display name.
+      description: Information about the group's members.
+      title: ScimGroupResourceMembersItems
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    CreateScimUserResponseMetaResourceType:
+      type: string
+      enum:
+      - User
+      description: The SCIM resource type.
+      title: CreateScimUserResponseMetaResourceType
     getScimServiceProviderConfig:
       type: object
       properties:
@@ -1637,13 +1575,25 @@ components:
           description: The response's non-standard meta information.
       description: Information about Postman's SCIM API configurations and supported operations.
       title: getScimServiceProviderConfig
-    commonErrorNameMessage:
+    UpdateScimUserPatchOneOf1OperationsItems:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
+        op:
+          $ref: '#/components/schemas/UpdateScimUserPatchOneOf1OperationsItemsOp'
+          description: The operation to perform. Accepts the `replace` value.
+        path:
+          $ref: '#/components/schemas/UpdateScimUserPatchOneOf1OperationsItemsPath'
+          description: The operation's path. Accepts the `userName` value.
+        value:
+          type: string
+          format: email
+          description: The user's email address.
+      title: UpdateScimUserPatchOneOf1OperationsItems
+    getScimResourceTypes:
+      type: array
+      items:
+        $ref: '#/components/schemas/GetScimResourceTypesItems'
+      title: getScimResourceTypes
     GetScimResourceTypesItemsSchemaExtensionsItems:
       type: object
       properties:
@@ -1654,17 +1604,67 @@ components:
           type: boolean
           description: If true, the resource must include this schema extension.
       title: GetScimResourceTypesItemsSchemaExtensionsItems
-    CreateScimUserName:
+    ScimUserResourceName:
       type: object
       properties:
         givenName:
           type: string
-          description: The user's first name.
+          description: The team member's first name.
         familyName:
           type: string
-          description: The user's last name.
-      description: Information about the user's name.
-      title: CreateScimUserName
+          description: The team member's last name.
+      description: Information about the Postman team member.
+      title: ScimUserResourceName
+    GetScimServiceProviderConfigChangePassword:
+      type: object
+      properties:
+        supported:
+          type: boolean
+          description: If true, the feature is supported.
+      description: Information about the change password configuration.
+      title: GetScimServiceProviderConfigChangePassword
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    scimErrorScimType:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          description: The [SCIM schema URI](https://www.iana.org/assignments/scim/scim.xhtml).
+        scimType:
+          type: string
+          description: The SCIM error type.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: string
+          format: http-status-code
+          description: The HTTP status code.
+      title: scimErrorScimType
+    ScimUpdateGroupResponseMeta:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          description: The resource type.
+        created:
+          type: string
+          format: date-time
+          description: The date and time at which the group was created.
+        lastModified:
+          type: string
+          format: date-time
+          description: The date and time at which the group was last modified.
+      description: The response's non-standard meta information.
+      title: ScimUpdateGroupResponseMeta
   securitySchemes:
     PostmanApiKey:
       type: apiKey

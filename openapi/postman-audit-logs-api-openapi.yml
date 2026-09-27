@@ -138,6 +138,47 @@ paths:
                 $ref: '#/components/schemas/GetAuditLogEventActionsRequestInternalServerError'
 components:
   schemas:
+    getAuditLogEventActions:
+      type: array
+      items:
+        $ref: '#/components/schemas/auditLogAction'
+      description: A list of available audit log event actions.
+      title: getAuditLogEventActions
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    auditLogData:
+      type: object
+      properties:
+        actor:
+          $ref: '#/components/schemas/auditLogActor'
+        user:
+          $ref: '#/components/schemas/auditLogUser'
+        team:
+          $ref: '#/components/schemas/auditLogTeam'
+        variables:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Additional information about the performed action.
+      description: Information about the audit log.
+      title: auditLogData
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
     auditLogTeam:
       type: object
       properties:
@@ -150,18 +191,63 @@ components:
           description: The team's ID.
       description: The user's team information.
       title: auditLogTeam
-    GetAuditLogEventActionsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetAuditLogEventActionsRequestInternalServerError
-    getAuditLogEventActions:
-      type: array
-      items:
-        $ref: '#/components/schemas/auditLogAction'
-      description: A list of available audit log event actions.
-      title: getAuditLogEventActions
+    untilDateQuery:
+      type: string
+      format: date
+      title: untilDateQuery
+    getAuditLogs:
+      type: object
+      properties:
+        trails:
+          type: array
+          items:
+            $ref: '#/components/schemas/auditLogEvent'
+          description: A list of audit log events.
+      title: getAuditLogs
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    sinceDateQuery:
+      type: string
+      format: date
+      title: sinceDateQuery
+    auditLogsLimitQuery:
+      type: integer
+      title: auditLogsLimitQuery
+    auditLogActor:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The user's name.
+        username:
+          type: string
+          description: The user's username.
+        email:
+          type: string
+          format: email
+          description: The user's email address.
+        id:
+          type: number
+          format: double
+          description: The user's ID.
+        active:
+          type: boolean
+          description: If true, the user is active. If false, the user is deactivated.
+      description: Information about the user who preformed the audit event.
+      title: auditLogActor
     ascDescDefaultDesc:
       type: string
       enum:
@@ -169,20 +255,17 @@ components:
       - desc
       default: desc
       title: ascDescDefaultDesc
+    GetAuditLogsRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAuditLogsRequestUnauthorizedError
+    cursor:
+      type: string
+      title: cursor
     auditLogsActionQuery:
       type: string
       title: auditLogsActionQuery
-    CommonErrorNameMessageError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
     auditLogAction:
       type: object
       properties:
@@ -194,13 +277,6 @@ components:
           description: The audit log event's display name as it appears in Postman's Audit Logs dashboard.
       description: Information about the audit log event action.
       title: auditLogAction
-    auditLogsUserIdQuery:
-      type: integer
-      title: auditLogsUserIdQuery
-    sinceDateQuery:
-      type: string
-      format: date
-      title: sinceDateQuery
     CommonErrorTypeTitleDetailDetail:
       oneOf:
       - type: string
@@ -209,6 +285,12 @@ components:
           description: Any type
       description: Information about the error.
       title: CommonErrorTypeTitleDetailDetail
+    GetAuditLogEventActionsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAuditLogEventActionsRequestInternalServerError
     auditLogEvent:
       type: object
       properties:
@@ -236,80 +318,33 @@ components:
           $ref: '#/components/schemas/auditLogData'
       description: Information about the audit log event.
       title: auditLogEvent
-    GetAuditLogsRequestUnauthorizedError:
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    GetAuditLogsRequestInternalServerError:
       oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetAuditLogsRequestUnauthorizedError
-    commonErrorTypeTitleDetail:
+      title: GetAuditLogsRequestInternalServerError
+    commonErrorNameMessage:
       type: object
       properties:
-        type:
-          type: string
-          description: The type of error.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
           description: Information about the error.
-      title: commonErrorTypeTitleDetail
-    cursor:
-      type: string
-      title: cursor
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    getAuditLogs:
-      type: object
-      properties:
-        trails:
-          type: array
-          items:
-            $ref: '#/components/schemas/auditLogEvent'
-          description: A list of audit log events.
-      title: getAuditLogs
-    auditLogData:
-      type: object
-      properties:
-        actor:
-          $ref: '#/components/schemas/auditLogActor'
-        user:
-          $ref: '#/components/schemas/auditLogUser'
-        team:
-          $ref: '#/components/schemas/auditLogTeam'
-        variables:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Additional information about the performed action.
-      description: Information about the audit log.
-      title: auditLogData
-    untilDateQuery:
-      type: string
-      format: date
-      title: untilDateQuery
-    auditLogsLimitQuery:
+      title: commonErrorNameMessage
+    auditLogsUserIdQuery:
       type: integer
-      title: auditLogsLimitQuery
-    commonErrorTypeTitleDetailStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
+      title: auditLogsUserIdQuery
     auditLogUser:
       type: object
       properties:
@@ -329,41 +364,6 @@ components:
           description: The user's ID.
       description: Information about the user.
       title: auditLogUser
-    GetAuditLogsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetAuditLogsRequestInternalServerError
-    auditLogActor:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The user's name.
-        username:
-          type: string
-          description: The user's username.
-        email:
-          type: string
-          format: email
-          description: The user's email address.
-        id:
-          type: number
-          format: double
-          description: The user's ID.
-        active:
-          type: boolean
-          description: If true, the user is active. If false, the user is deactivated.
-      description: Information about the user who preformed the audit event.
-      title: auditLogActor
-    commonErrorNameMessage:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
   securitySchemes:
     PostmanApiKey:
       type: apiKey

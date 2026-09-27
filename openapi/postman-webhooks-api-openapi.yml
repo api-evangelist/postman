@@ -67,24 +67,16 @@ paths:
               $ref: '#/components/schemas/createWebhook'
 components:
   schemas:
-    commonErrorTypeTitleDetail:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of error.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
-          description: Information about the error.
-      title: commonErrorTypeTitleDetail
-    CreateWebhookRequestUnauthorizedError:
+    CommonErrorNameMessageDetailsErrorDetails:
       oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateWebhookRequestUnauthorizedError
+      - type: object
+        additionalProperties:
+          description: Any type
+      - type: array
+        items:
+          type: string
+      description: Information about the error.
+      title: CommonErrorNameMessageDetailsErrorDetails
     commonErrorTypeTitleDetailStatus:
       type: object
       properties:
@@ -100,6 +92,63 @@ components:
           type: integer
           description: The error's HTTP status code.
       title: commonErrorTypeTitleDetailStatus
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    CreateWebhookWebhook:
+      type: object
+      properties:
+        collection:
+          type: string
+          format: uid
+          description: The unique ID of the collection to trigger when calling this webhook.
+        environment:
+          type: string
+          format: uid
+          description: The unique ID of the environment to trigger when calling this webhook.
+        name:
+          type: string
+          description: The webhook's name. On success, the system creates a new monitor with this name in the **Monitors** tab.
+      required:
+      - collection
+      - name
+      title: CreateWebhookWebhook
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    CommonErrorNameMessageDetailsError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+        details:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsErrorDetails'
+          description: Information about the error.
+      title: CommonErrorNameMessageDetailsError
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
     CommonErrorNameMessageError:
       type: object
       properties:
@@ -111,12 +160,25 @@ components:
           description: The error message.
       description: Information about the error.
       title: CommonErrorNameMessageError
-    CreateWebhookRequestInternalServerError:
+    CommonErrorTypeTitleDetailDetail:
       oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    createWebhookResponse:
+      type: object
+      properties:
+        webhook:
+          $ref: '#/components/schemas/CreateWebhookResponseWebhook'
+      title: createWebhookResponse
+    CreateWebhookRequestUnauthorizedError:
+      oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateWebhookRequestInternalServerError
+      title: CreateWebhookRequestUnauthorizedError
     CreateWebhookResponseWebhook:
       type: object
       properties:
@@ -138,74 +200,18 @@ components:
           format: uid
           description: The webhook's unique ID.
       title: CreateWebhookResponseWebhook
+    CreateWebhookRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateWebhookRequestInternalServerError
     createWebhook:
       type: object
       properties:
         webhook:
           $ref: '#/components/schemas/CreateWebhookWebhook'
       title: createWebhook
-    CreateWebhookWebhook:
-      type: object
-      properties:
-        collection:
-          type: string
-          format: uid
-          description: The unique ID of the collection to trigger when calling this webhook.
-        environment:
-          type: string
-          format: uid
-          description: The unique ID of the environment to trigger when calling this webhook.
-        name:
-          type: string
-          description: The webhook's name. On success, the system creates a new monitor with this name in the **Monitors** tab.
-      required:
-      - collection
-      - name
-      title: CreateWebhookWebhook
-    CommonErrorNameMessageDetailsError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-        details:
-          $ref: '#/components/schemas/CommonErrorNameMessageDetailsErrorDetails'
-          description: Information about the error.
-      title: CommonErrorNameMessageDetailsError
-    CommonErrorNameMessageDetailsErrorDetails:
-      oneOf:
-      - type: object
-        additionalProperties:
-          description: Any type
-      - type: array
-        items:
-          type: string
-      description: Information about the error.
-      title: CommonErrorNameMessageDetailsErrorDetails
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    CommonErrorTypeTitleDetailDetail:
-      oneOf:
-      - type: string
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
-    commonErrorNameMessage:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
     commonErrorNameMessageDetails:
       type: object
       properties:
@@ -215,12 +221,6 @@ components:
     workspaceId:
       type: string
       title: workspaceId
-    createWebhookResponse:
-      type: object
-      properties:
-        webhook:
-          $ref: '#/components/schemas/CreateWebhookResponseWebhook'
-      title: createWebhookResponse
   securitySchemes:
     PostmanApiKey:
       type: apiKey

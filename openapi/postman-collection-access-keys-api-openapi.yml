@@ -130,6 +130,84 @@ paths:
                 $ref: '#/components/schemas/DeleteCollectionAccessKeyRequestInternalServerError'
 components:
   schemas:
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    GetCollectionAccessKeysRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetCollectionAccessKeysRequestForbiddenError
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    DeleteCollectionAccessKeyRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteCollectionAccessKeyRequestUnauthorizedError
+    CommonErrorNameMessageDetailsError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+        details:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsErrorDetails'
+          description: Information about the error.
+      title: CommonErrorNameMessageDetailsError
+    collectionAccessKeyId:
+      type: string
+      title: collectionAccessKeyId
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    getCollectionAccessKeys:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetCollectionAccessKeysDataItems'
+          description: A list of collection access keys.
+        meta:
+          $ref: '#/components/schemas/GetCollectionAccessKeysMeta'
+          description: The response's non-standard metadata information.
+      title: getCollectionAccessKeys
+    DeleteCollectionAccessKeyRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteCollectionAccessKeyRequestInternalServerError
     GetCollectionAccessKeysDataItems:
       type: object
       properties:
@@ -175,17 +253,46 @@ components:
           description: The date and time at which the collection access key was revoked.
       description: Information about the collection access key.
       title: GetCollectionAccessKeysDataItems
-    GetCollectionAccessKeysRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetCollectionAccessKeysRequestForbiddenError
+    GetCollectionAccessKeysDataItemsStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+      description: The token's active status.
+      title: GetCollectionAccessKeysDataItemsStatus
     GetCollectionAccessKeysRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
       title: GetCollectionAccessKeysRequestInternalServerError
+    GetCollectionAccessKeysRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetCollectionAccessKeysRequestUnauthorizedError
+    cursor:
+      type: string
+      title: cursor
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    GetCollectionAccessKeysMeta:
+      type: object
+      properties:
+        nextCursor:
+          type: string
+          description: The pagination cursor that points to the next record in the results set.
+        prevCursor:
+          type: string
+          description: The pagination cursor to previous set of response data.
+      description: The response's non-standard metadata information.
+      title: GetCollectionAccessKeysMeta
     CommonErrorNameMessageDetailsErrorDetails:
       oneOf:
       - type: object
@@ -196,12 +303,17 @@ components:
           type: string
       description: Information about the error.
       title: CommonErrorNameMessageDetailsErrorDetails
-    DeleteCollectionAccessKeyRequestInternalServerError:
+    DeleteCollectionAccessKeyRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteCollectionAccessKeyRequestForbiddenError
+    GetCollectionAccessKeysRequestBadRequestError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteCollectionAccessKeyRequestInternalServerError
+      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
+      title: GetCollectionAccessKeysRequestBadRequestError
     common404Error:
       type: object
       properties:
@@ -219,128 +331,6 @@ components:
           type: string
           description: An explanation about the problem.
       title: common404Error
-    CommonErrorNameMessageError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
-    DeleteCollectionAccessKeyRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteCollectionAccessKeyRequestForbiddenError
-    getCollectionAccessKeys:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetCollectionAccessKeysDataItems'
-          description: A list of collection access keys.
-        meta:
-          $ref: '#/components/schemas/GetCollectionAccessKeysMeta'
-          description: The response's non-standard metadata information.
-      title: getCollectionAccessKeys
-    CommonErrorTypeTitleDetailDetail:
-      oneOf:
-      - type: string
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
-    commonErrorNameMessageDetails:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageDetailsError'
-      title: commonErrorNameMessageDetails
-    commonErrorTypeTitleDetail:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of error.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
-          description: Information about the error.
-      title: commonErrorTypeTitleDetail
-    cursor:
-      type: string
-      title: cursor
-    collectionAccessKeyId:
-      type: string
-      title: collectionAccessKeyId
-    GetCollectionAccessKeysMeta:
-      type: object
-      properties:
-        nextCursor:
-          type: string
-          description: The pagination cursor that points to the next record in the results set.
-        prevCursor:
-          type: string
-          description: The pagination cursor to previous set of response data.
-      description: The response's non-standard metadata information.
-      title: GetCollectionAccessKeysMeta
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    CommonErrorNameMessageDetailsError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-        details:
-          $ref: '#/components/schemas/CommonErrorNameMessageDetailsErrorDetails'
-          description: Information about the error.
-      title: CommonErrorNameMessageDetailsError
-    GetCollectionAccessKeysRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
-      title: GetCollectionAccessKeysRequestBadRequestError
-    commonErrorTypeTitleDetailStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
-    GetCollectionAccessKeysRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetCollectionAccessKeysRequestUnauthorizedError
-    DeleteCollectionAccessKeyRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteCollectionAccessKeyRequestUnauthorizedError
     collectionUidQuery:
       type: string
       format: uid
@@ -352,13 +342,23 @@ components:
           $ref: '#/components/schemas/CommonErrorNameMessageError'
           description: Information about the error.
       title: commonErrorNameMessage
-    GetCollectionAccessKeysDataItemsStatus:
-      type: string
-      enum:
-      - ACTIVE
-      - INACTIVE
-      description: The token's active status.
-      title: GetCollectionAccessKeysDataItemsStatus
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    commonErrorNameMessageDetails:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsError'
+      title: commonErrorNameMessageDetails
   securitySchemes:
     PostmanApiKey:
       type: apiKey

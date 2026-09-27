@@ -764,23 +764,185 @@ paths:
                 $ref: '#/components/schemas/GetSdkGitConnectionPullRequestsRequestInternalServerError'
 components:
   schemas:
-    sdkSource:
+    sdkAuthorData:
       type: object
       properties:
-        type:
-          $ref: '#/components/schemas/elementType-2'
-        id:
+        name:
           type: string
-          description: The ID of the Postman Collection or specification in Postman.
+          description: The author's name.
+        email:
+          type: string
+          format: email
+          description: The author's email address.
       required:
-      - type
-      - id
-      description: The collection or specification that the SDK is generated from.
-      title: sdkSource
-    sdkGitConnectionId:
+      - name
+      description: Information about the author of the generated SDK.
+      title: sdkAuthorData
+    DeleteSdkRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteSdkRequestInternalServerError
+    GetSdkGitConnectionPullRequestsRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetSdkGitConnectionPullRequestsRequestForbiddenError
+    CreateSdkGitConnectionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateSdkGitConnectionRequestInternalServerError
+    sdkErrorBuildStatusFailure:
+      type: object
+      properties:
+        code:
+          type: string
+          description: The build failure's error code.
+        message:
+          type: string
+          description: Information about the build failure.
+      required:
+      - code
+      - message
+      description: Information about the SDK build's status when `buildStatus` is `failed`.
+      title: sdkErrorBuildStatusFailure
+    GetSdkGitConnectionsRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetSdkGitConnectionsRequestForbiddenError
+    sdkPullRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: The pull request's URL.
+        status:
+          $ref: '#/components/schemas/sdkGitConnectionPRStatus'
+        sdkId:
+          $ref: '#/components/schemas/sdkId'
+      required:
+      - url
+      - status
+      - sdkId
+      description: If the SDK was shipped (or proposed for shipping) through a Git connection, this is a compact representation of the pull request that shipped it. Otherwise, this returns a `null` value.
+      title: sdkPullRequest
+    GetSdkGitConnectionRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetSdkGitConnectionRequestUnauthorizedError
+    sdkGitConnectionPullRequestList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/sdkGitConnectionPullRequest'
+          description: A list of SDK update pull requests on the Git connection.
+        meta:
+          $ref: '#/components/schemas/metaNextCursorTotal'
+      required:
+      - data
+      - meta
+      title: sdkGitConnectionPullRequestList
+    GetSdkGitConnectionsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetSdkGitConnectionsRequestInternalServerError
+    sdkBuildStatus:
       type: string
-      description: The Git connection's ID.
-      title: sdkGitConnectionId
+      enum:
+      - queued
+      - in_progress
+      - succeeded
+      - failed
+      description: 'The SDK''s build lifecycle:
+
+        - `queued` — Accepted but not yet started.
+
+        - `in_progress` — The SDK generation is running and in progress.
+
+        - `succeeded` — The archive is built and available for download.
+
+        - `failed` — The SDK generation failed. For information, check the `error` response.
+
+        '
+      title: sdkBuildStatus
+    CreateSdkRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateSdkRequestForbiddenError
+    phpOptions:
+      type: object
+      properties:
+        packageName:
+          type: string
+          description: The composer package name, in `vendor/package` format.
+      description: PHP-specific SDK generation options.
+      title: phpOptions
+    updateSdkGitConnection:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/UpdateSdkGitConnectionStatus'
+          description: The updated SDK Git connection lifecycle state.
+        autoUpdatePullRequestsEnabled:
+          $ref: '#/components/schemas/autoUpdatePullRequestsEnabled'
+      required:
+      - status
+      title: updateSdkGitConnection
+    GetSdksRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetSdksRequestForbiddenError
+    DeleteSdkRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteSdkRequestUnauthorizedError
+    GetSdkDownloadUrlRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetSdkDownloadUrlRequestUnauthorizedError
+    sdkSourceId:
+      type: string
+      title: sdkSourceId
+    SDKs_createSdk_Response_202:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: SDKs_createSdk_Response_202
+    sdkLanguage:
+      type: string
+      enum:
+      - typescript
+      - python
+      - go
+      - java
+      - csharp
+      - ruby
+      - php
+      - kotlin
+      - rust
+      - cli
+      description: The target output language for the generated SDK.
+      title: sdkLanguage
+    UpdateSdkGitConnectionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateSdkGitConnectionRequestInternalServerError
     sdkError:
       type: object
       properties:
@@ -808,159 +970,22 @@ components:
       - title
       - status
       title: sdkError
-    CreateSdkRequestForbiddenError:
+    GetSdksRequestInternalServerError:
       oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateSdkRequestForbiddenError
-    limitDefault25:
-      type: integer
-      default: 25
-      title: limitDefault25
+      title: GetSdksRequestInternalServerError
     CreateSdkRequestUnauthorizedError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
       title: CreateSdkRequestUnauthorizedError
-    javaOptions:
-      type: object
-      properties:
-        groupId:
-          type: string
-          description: The Maven group ID written into the `pom.xml` dependencies file.
-        artifactId:
-          type: string
-          description: The Maven artifact ID written into the `pom.xml` dependencies file.
-      description: Java-specific SDK generation options.
-      title: javaOptions
-    sdkGitConnectionStatus:
-      type: string
-      enum:
-      - active
-      - disconnected
-      - inaccessible
-      description: 'The lifecycle status of the Git connection:
-
-        - `active` — The connection is live and all opened pull requests ship SDK updates into the repository.
-
-        - `disconnected` — The connection was explicitly disconnected by the owner, and no pull requests can be opened. The historical record is preserved.
-
-        - `inaccessible` — Access to the repository was revoked or its no longer reachable.
-
-        '
-      title: sdkGitConnectionStatus
-    autoUpdatePullRequestsEnabled:
-      type: boolean
-      description: 'If true, pull requests are opened automatically whenever the source changes or a new version of the SDK generator is released. If false, pull requests are opened automatically, but only for manually-triggered SDK regeneration. If `autoUpdatePullRequestsEnabled` isn''t set, the default behavior depends on the user''s Postman plan:
-
-
-        - **Enterprise** plan users — Defaults to the `true` value.
-
-        - **Team** plan users and read only — Defaults to the `false` value.
-
-        '
-      title: autoUpdatePullRequestsEnabled
-    DeleteSdkRequestUnauthorizedError:
+    GetSdkGitConnectionsRequestUnauthorizedError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteSdkRequestUnauthorizedError
-    cliOptions:
-      type: object
-      properties:
-        goModuleName:
-          type: string
-          description: The Go module's path for the generated CLI.
-      description: CLI-specific SDK generation options.
-      title: cliOptions
-    CommonErrorTypeTitleDetailDetail:
-      oneOf:
-      - type: string
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
-    CreateSdkGitConnectionRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateSdkGitConnectionRequestForbiddenError
-    sdk:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/sdkId'
-        language:
-          $ref: '#/components/schemas/sdkLanguage'
-        source:
-          $ref: '#/components/schemas/sdkSource'
-        workspaceId:
-          type: string
-          description: The ID of the workspace that owns the SDK, derived from the source entity.
-        version:
-          type: string
-          description: The generated SDK's semantic version ID. This value is automatically assigned by the release/changelog pipeline.
-        buildStatus:
-          $ref: '#/components/schemas/sdkBuildStatus'
-        error:
-          $ref: '#/components/schemas/sdkErrorBuildStatusFailure'
-        pullRequest:
-          $ref: '#/components/schemas/sdkPullRequest'
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the SDK was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the SDK was last updated.
-      required:
-      - id
-      - language
-      - source
-      - workspaceId
-      - buildStatus
-      - createdAt
-      - updatedAt
-      description: Information about the generated SDK.
-      title: sdk
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    GetSdkGitConnectionPullRequestsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSdkGitConnectionPullRequestsRequestInternalServerError
-    workspaceId:
-      type: string
-      title: workspaceId
-    simpleSdkGitConnectionPullRequest:
-      type: object
-      properties:
-        url:
-          type: string
-          format: uri
-          description: The pull request's URL.
-        status:
-          $ref: '#/components/schemas/sdkGitConnectionPRStatus'
-        sdkId:
-          $ref: '#/components/schemas/sdkId'
-      required:
-      - url
-      - status
-      - sdkId
-      title: simpleSdkGitConnectionPullRequest
-    DeleteSdkRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteSdkRequestForbiddenError
+      title: GetSdkGitConnectionsRequestUnauthorizedError
     commonErrorTypeTitleDetailStatus:
       type: object
       properties:
@@ -976,195 +1001,6 @@ components:
           type: integer
           description: The error's HTTP status code.
       title: commonErrorTypeTitleDetailStatus
-    UpdateSdkGitConnectionRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateSdkGitConnectionRequestInternalServerError
-    GetSdkGitConnectionRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSdkGitConnectionRequestForbiddenError
-    GetSdkRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSdkRequestForbiddenError
-    GetSdkGitConnectionsRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSdkGitConnectionsRequestForbiddenError
-    CreateSdkRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateSdkRequestInternalServerError
-    GetSdkRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSdkRequestUnauthorizedError
-    pythonOptions:
-      type: object
-      properties:
-        pypiPackageName:
-          type: string
-          description: The PyPI package's name.
-      description: Python-specific SDK generation options.
-      title: pythonOptions
-    GetSdkGitConnectionRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSdkGitConnectionRequestInternalServerError
-    sdkErrorBuildStatusFailure:
-      type: object
-      properties:
-        code:
-          type: string
-          description: The build failure's error code.
-        message:
-          type: string
-          description: Information about the build failure.
-      required:
-      - code
-      - message
-      description: Information about the SDK build's status when `buildStatus` is `failed`.
-      title: sdkErrorBuildStatusFailure
-    kotlinOptions:
-      type: object
-      properties:
-        groupId:
-          type: string
-          description: The Maven group ID written into the `pom.xml` dependencies file.
-        artifactId:
-          type: string
-          description: The Maven artifact ID written into the `pom.xml` dependencies file.
-      description: Kotlin-specific SDK generation options.
-      title: kotlinOptions
-    csharpOptions:
-      type: object
-      properties:
-        packageId:
-          type: string
-          description: The NuGet package's ID.
-      description: C#-specific SDK generation options.
-      title: csharpOptions
-    createSdkGitConnection:
-      type: object
-      properties:
-        source:
-          $ref: '#/components/schemas/sdkSource'
-        language:
-          $ref: '#/components/schemas/sdkLanguage'
-        repositoryUrl:
-          type: string
-          format: uri
-          description: The canonical URL of the target Git repository.
-        targetBranch:
-          type: string
-          default: main
-          description: The branch the SDK is published to. Defaults to `main`.
-        autoUpdatePullRequestsEnabled:
-          $ref: '#/components/schemas/autoUpdatePullRequestsEnabled'
-      required:
-      - source
-      - language
-      - repositoryUrl
-      title: createSdkGitConnection
-    httpCodesToRetry:
-      type: integer
-      description: An HTTP status code.
-      title: httpCodesToRetry
-    sdkGitConnectionPRStatus:
-      type: string
-      enum:
-      - open
-      - merged
-      - closed
-      description: The lifecycle status of a pull request.
-      title: sdkGitConnectionPRStatus
-    sdkGitConnectionRepositoryUrl:
-      type: string
-      format: uri
-      description: Filter results by the canonical URL of the target Git repository.
-      title: sdkGitConnectionRepositoryUrl
-    sdkDownload:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/sdkId'
-        language:
-          $ref: '#/components/schemas/sdkLanguage'
-        url:
-          type: string
-          format: uri
-          description: A short-lived signed URL to the generated SDK archive (zip).
-        expiresAt:
-          type: string
-          format: date-time
-          description: The date and time at which the signed URL expires.
-      required:
-      - id
-      - language
-      - url
-      - expiresAt
-      title: sdkDownload
-    CreateSdkGitConnectionRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateSdkGitConnectionRequestInternalServerError
-    GetSdkGitConnectionRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSdkGitConnectionRequestUnauthorizedError
-    sdkPullRequest:
-      type: object
-      properties:
-        url:
-          type: string
-          format: uri
-          description: The pull request's URL.
-        status:
-          $ref: '#/components/schemas/sdkGitConnectionPRStatus'
-        sdkId:
-          $ref: '#/components/schemas/sdkId'
-      required:
-      - url
-      - status
-      - sdkId
-      description: If the SDK was shipped (or proposed for shipping) through a Git connection, this is a compact representation of the pull request that shipped it. Otherwise, this returns a `null` value.
-      title: sdkPullRequest
-    goOptions:
-      type: object
-      properties:
-        goModuleName:
-          type: string
-          description: The Go module path written into the `go.mod` definition file.
-      description: Go-specific SDK generation options.
-      title: goOptions
-    elementType-2:
-      type: string
-      enum:
-      - collection
-      - spec
-      description: The type of Postman element.
-      title: elementType-2
-    commonErrorNameMessage:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
     SdkRetryOptionsHttpMethodsToRetryItems:
       type: string
       enum:
@@ -1178,240 +1014,21 @@ components:
       - CONNECT
       - TRACE
       title: SdkRetryOptionsHttpMethodsToRetryItems
-    GetSdksRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSdksRequestUnauthorizedError
-    GetSdkDownloadUrlRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSdkDownloadUrlRequestInternalServerError
-    sdkGitConnectionPullRequest:
-      type: object
-      properties:
-        number:
-          type: integer
-          description: The pull request's ID.
-        url:
-          type: string
-          format: uri
-          description: The pull request's URL.
-        status:
-          $ref: '#/components/schemas/sdkGitConnectionPRStatus'
-        sdk:
-          $ref: '#/components/schemas/sdk'
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the pull request was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the pull request was last updated.
-      required:
-      - number
-      - url
-      - status
-      - createdAt
-      - updatedAt
-      description: Information about a pull request that shipped the SDK update.
-      title: sdkGitConnectionPullRequest
-    sdkAuthorData:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The author's name.
-        email:
-          type: string
-          format: email
-          description: The author's email address.
-      required:
-      - name
-      description: Information about the author of the generated SDK.
-      title: sdkAuthorData
-    DeleteSdkRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteSdkRequestInternalServerError
-    CommonErrorNameMessageError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
-    GetSdkGitConnectionsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSdkGitConnectionsRequestInternalServerError
-    rustOptions:
-      type: object
-      properties:
-        packageName:
-          type: string
-          description: The crates.io package's name.
-      description: Rust-specific SDK generation options.
-      title: rustOptions
-    metaNextCursorTotal:
-      type: object
-      properties:
-        nextCursor:
-          type:
-          - string
-          - 'null'
-          description: The pagination cursor that points to the next record in the results set.
-        total:
-          type: integer
-          description: The number of records found.
-      description: The response's meta information for paginated results.
-      title: metaNextCursorTotal
-    GetSdkGitConnectionsRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSdkGitConnectionsRequestUnauthorizedError
+    sdkId:
+      type: string
+      description: The SDK's ID.
+      title: sdkId
     CreateSdkGitConnectionRequestUnauthorizedError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
       title: CreateSdkGitConnectionRequestUnauthorizedError
-    sdkList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/sdk'
-          description: A list of SDKs.
-        meta:
-          $ref: '#/components/schemas/metaNextCursorTotal'
-      required:
-      - data
-      - meta
-      title: sdkList
-    GetSdkGitConnectionPullRequestsRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSdkGitConnectionPullRequestsRequestUnauthorizedError
-    sdkSourceId:
-      type: string
-      title: sdkSourceId
-    GetSdkGitConnectionPullRequestsRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSdkGitConnectionPullRequestsRequestForbiddenError
-    rubyOptions:
-      type: object
-      properties:
-        gemName:
-          type: string
-          description: The RubyGems gem's name.
-      description: Ruby-specific generation options.
-      title: rubyOptions
-    sdkGitConnectionList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/sdkGitConnection'
-          description: A list of SDK Git connections.
-        meta:
-          $ref: '#/components/schemas/metaNextCursorTotal'
-      required:
-      - data
-      - meta
-      title: sdkGitConnectionList
-    GetSdkDownloadUrlRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSdkDownloadUrlRequestUnauthorizedError
-    GetSdksRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSdksRequestForbiddenError
-    sdkGitConnectionPullRequestList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/sdkGitConnectionPullRequest'
-          description: A list of SDK update pull requests on the Git connection.
-        meta:
-          $ref: '#/components/schemas/metaNextCursorTotal'
-      required:
-      - data
-      - meta
-      title: sdkGitConnectionPullRequestList
-    UpdateSdkGitConnectionRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateSdkGitConnectionRequestForbiddenError
-    SDKs_getSdks_Response_200:
-      oneOf:
-      - $ref: '#/components/schemas/sdkList'
-      title: SDKs_getSdks_Response_200
-    GetSdkDownloadUrlRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSdkDownloadUrlRequestForbiddenError
-    GetSdkRequestInternalServerError:
+    CreateSdkRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSdkRequestInternalServerError
-    SDKs_createSdk_Response_202:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: SDKs_createSdk_Response_202
-    typescriptOptions:
-      type: object
-      properties:
-        npmOrg:
-          type: string
-          description: An npm organization's scope. Don't include a trailing slash.
-        npmName:
-          type: string
-          description: The unscoped npm package's name.
-      description: TypeScript-specific SDK generation options.
-      title: typescriptOptions
-    commonErrorTypeTitleDetail:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of error.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
-          description: Information about the error.
-      title: commonErrorTypeTitleDetail
-    cursor:
-      type: string
-      title: cursor
+      title: CreateSdkRequestInternalServerError
     sdkGitConnection:
       type: object
       properties:
@@ -1461,55 +1078,299 @@ components:
       - updatedAt
       description: Information about the SDK's Git connection to a Postman element.
       title: sdkGitConnection
-    phpOptions:
+    GetSdkGitConnectionPullRequestsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetSdkGitConnectionPullRequestsRequestInternalServerError
+    GetSdkDownloadUrlRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetSdkDownloadUrlRequestInternalServerError
+    commonErrorNameMessage:
       type: object
       properties:
-        packageName:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    csharpOptions:
+      type: object
+      properties:
+        packageId:
           type: string
-          description: The composer package name, in `vendor/package` format.
-      description: PHP-specific SDK generation options.
-      title: phpOptions
-    sdkBuildStatus:
-      type: string
-      enum:
-      - queued
-      - in_progress
-      - succeeded
-      - failed
-      description: 'The SDK''s build lifecycle:
-
-        - `queued` — Accepted but not yet started.
-
-        - `in_progress` — The SDK generation is running and in progress.
-
-        - `succeeded` — The archive is built and available for download.
-
-        - `failed` — The SDK generation failed. For information, check the `error` response.
-
-        '
-      title: sdkBuildStatus
-    UpdateSdkGitConnectionStatus:
+          description: The NuGet package's ID.
+      description: C#-specific SDK generation options.
+      title: csharpOptions
+    sdkGitConnectionStatus:
       type: string
       enum:
       - active
       - disconnected
-      description: The updated SDK Git connection lifecycle state.
-      title: UpdateSdkGitConnectionStatus
-    updateSdkGitConnection:
+      - inaccessible
+      description: 'The lifecycle status of the Git connection:
+
+        - `active` — The connection is live and all opened pull requests ship SDK updates into the repository.
+
+        - `disconnected` — The connection was explicitly disconnected by the owner, and no pull requests can be opened. The historical record is preserved.
+
+        - `inaccessible` — Access to the repository was revoked or its no longer reachable.
+
+        '
+      title: sdkGitConnectionStatus
+    GetSdkGitConnectionPullRequestsRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetSdkGitConnectionPullRequestsRequestUnauthorizedError
+    goOptions:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/UpdateSdkGitConnectionStatus'
-          description: The updated SDK Git connection lifecycle state.
-        autoUpdatePullRequestsEnabled:
-          $ref: '#/components/schemas/autoUpdatePullRequestsEnabled'
-      required:
-      - status
-      title: updateSdkGitConnection
-    sdkId:
+        goModuleName:
+          type: string
+          description: The Go module path written into the `go.mod` definition file.
+      description: Go-specific SDK generation options.
+      title: goOptions
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    GetSdkRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetSdkRequestInternalServerError
+    sdkGitConnectionPRStatus:
       type: string
-      description: The SDK's ID.
-      title: sdkId
+      enum:
+      - open
+      - merged
+      - closed
+      description: The lifecycle status of a pull request.
+      title: sdkGitConnectionPRStatus
+    rubyOptions:
+      type: object
+      properties:
+        gemName:
+          type: string
+          description: The RubyGems gem's name.
+      description: Ruby-specific generation options.
+      title: rubyOptions
+    simpleSdkGitConnectionPullRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: The pull request's URL.
+        status:
+          $ref: '#/components/schemas/sdkGitConnectionPRStatus'
+        sdkId:
+          $ref: '#/components/schemas/sdkId'
+      required:
+      - url
+      - status
+      - sdkId
+      title: simpleSdkGitConnectionPullRequest
+    rustOptions:
+      type: object
+      properties:
+        packageName:
+          type: string
+          description: The crates.io package's name.
+      description: Rust-specific SDK generation options.
+      title: rustOptions
+    pythonOptions:
+      type: object
+      properties:
+        pypiPackageName:
+          type: string
+          description: The PyPI package's name.
+      description: Python-specific SDK generation options.
+      title: pythonOptions
+    sdk:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/sdkId'
+        language:
+          $ref: '#/components/schemas/sdkLanguage'
+        source:
+          $ref: '#/components/schemas/sdkSource'
+        workspaceId:
+          type: string
+          description: The ID of the workspace that owns the SDK, derived from the source entity.
+        version:
+          type: string
+          description: The generated SDK's semantic version ID. This value is automatically assigned by the release/changelog pipeline.
+        buildStatus:
+          $ref: '#/components/schemas/sdkBuildStatus'
+        error:
+          $ref: '#/components/schemas/sdkErrorBuildStatusFailure'
+        pullRequest:
+          $ref: '#/components/schemas/sdkPullRequest'
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the SDK was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the SDK was last updated.
+      required:
+      - id
+      - language
+      - source
+      - workspaceId
+      - buildStatus
+      - createdAt
+      - updatedAt
+      description: Information about the generated SDK.
+      title: sdk
+    GetSdkDownloadUrlRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetSdkDownloadUrlRequestForbiddenError
+    cursor:
+      type: string
+      title: cursor
+    DeleteSdkRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteSdkRequestForbiddenError
+    sdkDownload:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/sdkId'
+        language:
+          $ref: '#/components/schemas/sdkLanguage'
+        url:
+          type: string
+          format: uri
+          description: A short-lived signed URL to the generated SDK archive (zip).
+        expiresAt:
+          type: string
+          format: date-time
+          description: The date and time at which the signed URL expires.
+      required:
+      - id
+      - language
+      - url
+      - expiresAt
+      title: sdkDownload
+    UpdateSdkGitConnectionRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateSdkGitConnectionRequestUnauthorizedError
+    GetSdkGitConnectionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetSdkGitConnectionRequestInternalServerError
+    cliOptions:
+      type: object
+      properties:
+        goModuleName:
+          type: string
+          description: The Go module's path for the generated CLI.
+      description: CLI-specific SDK generation options.
+      title: cliOptions
+    httpCodesToRetry:
+      type: integer
+      description: An HTTP status code.
+      title: httpCodesToRetry
+    sdkGitConnectionPullRequest:
+      type: object
+      properties:
+        number:
+          type: integer
+          description: The pull request's ID.
+        url:
+          type: string
+          format: uri
+          description: The pull request's URL.
+        status:
+          $ref: '#/components/schemas/sdkGitConnectionPRStatus'
+        sdk:
+          $ref: '#/components/schemas/sdk'
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the pull request was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the pull request was last updated.
+      required:
+      - number
+      - url
+      - status
+      - createdAt
+      - updatedAt
+      description: Information about a pull request that shipped the SDK update.
+      title: sdkGitConnectionPullRequest
+    sdkGitConnectionId:
+      type: string
+      description: The Git connection's ID.
+      title: sdkGitConnectionId
+    GetSdkGitConnectionRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetSdkGitConnectionRequestForbiddenError
+    sdkSource:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/elementType-2'
+        id:
+          type: string
+          description: The ID of the Postman Collection or specification in Postman.
+      required:
+      - type
+      - id
+      description: The collection or specification that the SDK is generated from.
+      title: sdkSource
+    limitDefault25:
+      type: integer
+      default: 25
+      title: limitDefault25
+    sdkGitConnectionList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/sdkGitConnection'
+          description: A list of SDK Git connections.
+        meta:
+          $ref: '#/components/schemas/metaNextCursorTotal'
+      required:
+      - data
+      - meta
+      title: sdkGitConnectionList
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
     sdkRetryOptions:
       type: object
       properties:
@@ -1549,6 +1410,44 @@ components:
       - retryDelay
       description: Retry behavior baked into the generated SDK's HTTP client. A power-user option; sensible defaults apply for any field left unset.
       title: sdkRetryOptions
+    workspaceId:
+      type: string
+      title: workspaceId
+    UpdateSdkGitConnectionRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateSdkGitConnectionRequestForbiddenError
+    sdkGitConnectionRepositoryUrl:
+      type: string
+      format: uri
+      description: Filter results by the canonical URL of the target Git repository.
+      title: sdkGitConnectionRepositoryUrl
+    elementType-2:
+      type: string
+      enum:
+      - collection
+      - spec
+      description: The type of Postman element.
+      title: elementType-2
+    GetSdkRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetSdkRequestForbiddenError
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
     createSdk:
       type: object
       properties:
@@ -1598,32 +1497,133 @@ components:
 
         '
       title: createSdk
-    UpdateSdkGitConnectionRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateSdkGitConnectionRequestUnauthorizedError
-    sdkLanguage:
+    createSdkGitConnection:
+      type: object
+      properties:
+        source:
+          $ref: '#/components/schemas/sdkSource'
+        language:
+          $ref: '#/components/schemas/sdkLanguage'
+        repositoryUrl:
+          type: string
+          format: uri
+          description: The canonical URL of the target Git repository.
+        targetBranch:
+          type: string
+          default: main
+          description: The branch the SDK is published to. Defaults to `main`.
+        autoUpdatePullRequestsEnabled:
+          $ref: '#/components/schemas/autoUpdatePullRequestsEnabled'
+      required:
+      - source
+      - language
+      - repositoryUrl
+      title: createSdkGitConnection
+    sdkList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/sdk'
+          description: A list of SDKs.
+        meta:
+          $ref: '#/components/schemas/metaNextCursorTotal'
+      required:
+      - data
+      - meta
+      title: sdkList
+    UpdateSdkGitConnectionStatus:
       type: string
       enum:
-      - typescript
-      - python
-      - go
-      - java
-      - csharp
-      - ruby
-      - php
-      - kotlin
-      - rust
-      - cli
-      description: The target output language for the generated SDK.
-      title: sdkLanguage
-    GetSdksRequestInternalServerError:
+      - active
+      - disconnected
+      description: The updated SDK Git connection lifecycle state.
+      title: UpdateSdkGitConnectionStatus
+    CommonErrorTypeTitleDetailDetail:
       oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    kotlinOptions:
+      type: object
+      properties:
+        groupId:
+          type: string
+          description: The Maven group ID written into the `pom.xml` dependencies file.
+        artifactId:
+          type: string
+          description: The Maven artifact ID written into the `pom.xml` dependencies file.
+      description: Kotlin-specific SDK generation options.
+      title: kotlinOptions
+    metaNextCursorTotal:
+      type: object
+      properties:
+        nextCursor:
+          type:
+          - string
+          - 'null'
+          description: The pagination cursor that points to the next record in the results set.
+        total:
+          type: integer
+          description: The number of records found.
+      description: The response's meta information for paginated results.
+      title: metaNextCursorTotal
+    javaOptions:
+      type: object
+      properties:
+        groupId:
+          type: string
+          description: The Maven group ID written into the `pom.xml` dependencies file.
+        artifactId:
+          type: string
+          description: The Maven artifact ID written into the `pom.xml` dependencies file.
+      description: Java-specific SDK generation options.
+      title: javaOptions
+    SDKs_getSdks_Response_200:
+      oneOf:
+      - $ref: '#/components/schemas/sdkList'
+      title: SDKs_getSdks_Response_200
+    CreateSdkGitConnectionRequestForbiddenError:
+      oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetSdksRequestInternalServerError
+      title: CreateSdkGitConnectionRequestForbiddenError
+    GetSdksRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetSdksRequestUnauthorizedError
+    GetSdkRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetSdkRequestUnauthorizedError
+    typescriptOptions:
+      type: object
+      properties:
+        npmOrg:
+          type: string
+          description: An npm organization's scope. Don't include a trailing slash.
+        npmName:
+          type: string
+          description: The unscoped npm package's name.
+      description: TypeScript-specific SDK generation options.
+      title: typescriptOptions
+    autoUpdatePullRequestsEnabled:
+      type: boolean
+      description: 'If true, pull requests are opened automatically whenever the source changes or a new version of the SDK generator is released. If false, pull requests are opened automatically, but only for manually-triggered SDK regeneration. If `autoUpdatePullRequestsEnabled` isn''t set, the default behavior depends on the user''s Postman plan:
+
+
+        - **Enterprise** plan users — Defaults to the `true` value.
+
+        - **Team** plan users and read only — Defaults to the `false` value.
+
+        '
+      title: autoUpdatePullRequestsEnabled
   securitySchemes:
     PostmanApiKey:
       type: apiKey
