@@ -101,27 +101,12 @@ paths:
               $ref: '#/components/schemas/revokeOauthToken'
 components:
   schemas:
-    commonErrorTypeTitleDetailStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
-    CommonErrorTypeTitleDetailStatusType:
+    RevokeOauthTokenRequestInternalServerError:
       oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: RevokeOauthTokenRequestInternalServerError
     GenerateOauthTokenResponseTokenType:
       type: string
       enum:
@@ -141,6 +126,45 @@ components:
           $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
           description: Information about the error.
       title: commonErrorTypeTitleDetail
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    generateOauthTokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: A Postman OAuth 2.0 access token.
+        expires_in:
+          type: integer
+          description: The time the token expires, in milliseconds.
+        token_type:
+          $ref: '#/components/schemas/GenerateOauthTokenResponseTokenType'
+          description: The `Bearer` token type.
+      title: generateOauthTokenResponse
+    GenerateOauthTokenRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GenerateOauthTokenRequestInternalServerError
+    revokeOauthToken:
+      type: object
+      properties:
+        token:
+          type: string
+          description: The Postman OAuth 2.0 access token to revoke.
+      required:
+      - token
+      title: revokeOauthToken
     generateOauthToken:
       type: object
       properties:
@@ -158,51 +182,6 @@ components:
       - installationAuthId
       - jwt
       title: generateOauthToken
-    GenerateOauthTokenRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GenerateOauthTokenRequestInternalServerError
-    generateOauthTokenResponse:
-      type: object
-      properties:
-        access_token:
-          type: string
-          description: A Postman OAuth 2.0 access token.
-        expires_in:
-          type: integer
-          description: The time the token expires, in milliseconds.
-        token_type:
-          $ref: '#/components/schemas/GenerateOauthTokenResponseTokenType'
-          description: The `Bearer` token type.
-      title: generateOauthTokenResponse
-    revokeOauthToken:
-      type: object
-      properties:
-        token:
-          type: string
-          description: The Postman OAuth 2.0 access token to revoke.
-      required:
-      - token
-      title: revokeOauthToken
-    CommonErrorNameMessageError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
-    RevokeOauthTokenRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: RevokeOauthTokenRequestInternalServerError
     revokeOauthTokenResponse:
       type: object
       properties:
@@ -210,6 +189,42 @@ components:
           type: string
           description: The `true` value.
       title: revokeOauthTokenResponse
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
     oauthTokenError:
       type: object
       properties:
@@ -220,21 +235,6 @@ components:
           type: string
           description: Information about the error.
       title: oauthTokenError
-    commonErrorNameMessage:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
-    CommonErrorTypeTitleDetailDetail:
-      oneOf:
-      - type: string
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
   securitySchemes:
     PostmanApiKey:
       type: apiKey

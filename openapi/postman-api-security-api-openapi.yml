@@ -69,6 +69,32 @@ paths:
               $ref: '#/components/schemas/schemaSecurityValidationRequest'
 components:
   schemas:
+    schemaSecurityValidationResponse:
+      type: object
+      properties:
+        warnings:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              description: Any type
+          description: 'Information about each issue discovered in the analysis. Each object includes the violation''s severity and category, the location of the issue, data paths, and other information. This returns an empty object if there are no issues present in the schema.
+
+
+            If there are issues, this returns the `possibleFixUrl` response in each warning object. This provides a link to documentation you can use to resolve the warning.
+
+            '
+      title: schemaSecurityValidationResponse
+    SchemaSecurityValidationRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: SchemaSecurityValidationRequestForbiddenError
+    SchemaSecurityValidationRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: SchemaSecurityValidationRequestUnauthorizedError
     SchemaSecurityValidationRequestSchemaType:
       type: string
       enum:
@@ -76,46 +102,6 @@ components:
       - openapi2
       description: The definition type.
       title: SchemaSecurityValidationRequestSchemaType
-    commonErrorTypeTitleDetailStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    SchemaSecurityValidationRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: SchemaSecurityValidationRequestInternalServerError
-    commonErrorTypeTitleDetail:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of error.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
-          description: Information about the error.
-      title: commonErrorTypeTitleDetail
     CommonErrorNameObjectNameMessageErrorName:
       type: object
       properties:
@@ -126,11 +112,6 @@ components:
           type: string
           description: The error message.
       title: CommonErrorNameObjectNameMessageErrorName
-    SchemaSecurityValidationRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: SchemaSecurityValidationRequestForbiddenError
     SchemaSecurityValidationRequestSchema:
       type: object
       properties:
@@ -148,13 +129,19 @@ components:
       - schema
       - type
       title: SchemaSecurityValidationRequestSchema
-    commonErrorNameObjectNameMessage:
+    commonErrorTypeTitleDetail:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameObjectNameMessageError'
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
           description: Information about the error.
-      title: commonErrorNameObjectNameMessage
+      title: commonErrorTypeTitleDetail
     CommonErrorNameMessageError:
       type: object
       properties:
@@ -166,6 +153,13 @@ components:
           description: The error message.
       description: Information about the error.
       title: CommonErrorNameMessageError
+    commonErrorNameObjectNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameObjectNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameObjectNameMessage
     CommonErrorNameObjectNameMessageError:
       type: object
       properties:
@@ -173,36 +167,18 @@ components:
           $ref: '#/components/schemas/CommonErrorNameObjectNameMessageErrorName'
       description: Information about the error.
       title: CommonErrorNameObjectNameMessageError
-    SchemaSecurityValidationRequestSchemaLanguage:
-      type: string
-      enum:
-      - json
-      - yaml
-      description: The definition format.
-      title: SchemaSecurityValidationRequestSchemaLanguage
-    schemaSecurityValidationResponse:
-      type: object
-      properties:
-        warnings:
-          type: array
-          items:
-            type: object
-            additionalProperties:
-              description: Any type
-          description: 'Information about each issue discovered in the analysis. Each object includes the violation''s severity and category, the location of the issue, data paths, and other information. This returns an empty object if there are no issues present in the schema.
-
-
-            If there are issues, this returns the `possibleFixUrl` response in each warning object. This provides a link to documentation you can use to resolve the warning.
-
-            '
-      title: schemaSecurityValidationResponse
-    commonErrorNameMessage:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    SchemaSecurityValidationRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: SchemaSecurityValidationRequestInternalServerError
     schemaSecurityValidationRequest:
       type: object
       properties:
@@ -217,11 +193,35 @@ components:
           description: Any type
       description: Information about the error.
       title: CommonErrorTypeTitleDetailDetail
-    SchemaSecurityValidationRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: SchemaSecurityValidationRequestUnauthorizedError
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    SchemaSecurityValidationRequestSchemaLanguage:
+      type: string
+      enum:
+      - json
+      - yaml
+      description: The definition format.
+      title: SchemaSecurityValidationRequestSchemaLanguage
   securitySchemes:
     PostmanApiKey:
       type: apiKey

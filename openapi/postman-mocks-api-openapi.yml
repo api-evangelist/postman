@@ -792,414 +792,46 @@ paths:
       description: https://api.eu.postman.com
 components:
   schemas:
-    UpdateMockRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
-      title: UpdateMockRequestBadRequestError
-    ascDesc:
-      type: string
-      enum:
-      - asc
-      - desc
-      title: ascDesc
-    UpdateMockRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateMockRequestUnauthorizedError
-    DeleteMockServerResponseRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteMockServerResponseRequestInternalServerError
-    mockResponseType:
-      type: string
-      title: mockResponseType
-    getMock:
+    GetMockCallLogsCallLogsItemsRequest:
       type: object
       properties:
-        mock:
-          $ref: '#/components/schemas/GetMockMock'
-          description: Information about the mock server.
-      title: getMock
-    GetMocksRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetMocksRequestUnauthorizedError
-    GetMockMockConfigDelayPreset:
-      type: string
-      enum:
-      - '1'
-      - '2'
-      description: 'The simulated fixed network delay value:
-
-        - `1` — 2G (300 ms).
-
-        - `2` — 3G (100 ms).
-
-        The object does not return this value for custom delay values.
-
-        '
-      title: GetMockMockConfigDelayPreset
-    GetMockServerResponsesRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetMockServerResponsesRequestUnauthorizedError
-    publishUnpublishMockResponse:
-      type: object
-      properties:
-        mock:
-          $ref: '#/components/schemas/PublishUnpublishMockResponseMock'
-          description: Information about the mock server.
-      title: publishUnpublishMockResponse
-    CreateMockRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateMockRequestUnauthorizedError
-    CreateMockServerResponseRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
-      title: CreateMockServerResponseRequestBadRequestError
-    CreateMockRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
-      title: CreateMockRequestBadRequestError
-    DeleteMockServerResponseLanguage:
-      type: string
-      enum:
-      - text
-      - javascript
-      - json
-      - html
-      - xml
-      description: The server response's body language type.
-      title: DeleteMockServerResponseLanguage
-    getMockServerResponses:
-      type: array
-      items:
-        $ref: '#/components/schemas/GetMockServerResponsesItems'
-      description: A list of the mock server's responses.
-      title: getMockServerResponses
-    deleteMockServerResponse:
-      type: object
-      properties:
-        id:
+        method:
           type: string
-          description: The server response's ID.
-        name:
+          description: The request method.
+        path:
           type: string
-          description: The server response's name.
-        statusCode:
-          type: number
-          format: double
-          description: The server response's 5xx HTTP response code.
+          description: The request's path.
         headers:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeleteMockServerResponseHeadersItems'
-          description: The server response's request headers, such as Content-Type, Accept, encoding, and other information.
-        language:
-          oneOf:
-          - $ref: '#/components/schemas/DeleteMockServerResponseLanguage'
-          - type: 'null'
-          description: The server response's body language type.
+          $ref: '#/components/schemas/GetMockCallLogsCallLogsItemsRequestHeaders'
+          description: The request's headers.
         body:
-          type: string
-          description: The server response's body that returns when calling the mock server.
-        createdBy:
-          type: string
-          description: The user ID of the user who created the server response.
-        updatedBy:
-          type: string
-          description: The user ID of the user who last updated the server response.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the server response was created.
-      description: Information about the deleted server response.
-      title: deleteMockServerResponse
-    CommonErrorNameMessageDetailsErrorDetails:
-      oneOf:
-      - type: object
-        additionalProperties:
-          description: Any type
-      - type: array
-        items:
-          type: string
-      description: Information about the error.
-      title: CommonErrorNameMessageDetailsErrorDetails
-    mockId:
+          $ref: '#/components/schemas/GetMockCallLogsCallLogsItemsRequestBody'
+          description: The request's body information.
+      description: The server response's request information.
+      title: GetMockCallLogsCallLogsItemsRequest
+    mockServerResponse404Error:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/MockServerResponse404ErrorError'
+      title: mockServerResponse404Error
+    teamIdResultsQuery:
       type: string
-      title: mockId
-    DeleteMockRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteMockRequestUnauthorizedError
-    serverResponseId:
+      title: teamIdResultsQuery
+    sinceDateTime:
       type: string
-      title: serverResponseId
-    GetMockCallLogsCallLogsItemsRequestBody:
-      type: object
-      properties:
-        mode:
-          type: string
-          description: The request body's media type (mode).
-        data:
-          type: string
-          description: The request body's contents.
-      description: The request's body information.
-      title: GetMockCallLogsCallLogsItemsRequestBody
-    GetMockMockConfigDelayType:
-      type: string
-      enum:
-      - fixed
-      description: 'The type of simulated delay value:
-
-        - `fixed` — The delay value is a fixed value.
-
-        '
-      title: GetMockMockConfigDelayType
-    updateMockServerResponse:
-      type: object
-      properties:
-        serverResponse:
-          $ref: '#/components/schemas/UpdateMockServerResponseServerResponse'
-      title: updateMockServerResponse
-    UpdateMockServerResponseServerResponseLanguage:
-      type: string
-      enum:
-      - text
-      - javascript
-      - json
-      - html
-      - xml
-      description: The server response's body language type.
-      title: UpdateMockServerResponseServerResponseLanguage
-    getMocks:
-      type: object
-      properties:
-        mocks:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetMocksMocksItems'
-          description: A list of mock servers.
-      title: getMocks
-    GetMocksMocksItemsConfigDelay:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/GetMocksMocksItemsConfigDelayType'
-          description: 'The type of simulated delay value:
-
-            - `fixed` — The delay value is a fixed value.
-
-            '
-        preset:
-          $ref: '#/components/schemas/GetMocksMocksItemsConfigDelayPreset'
-          description: 'The simulated fixed network delay value:
-
-            - `1` — 2G (300 ms).
-
-            - `2` — 3G (100 ms).
-
-            The object does not return this value for custom delay values.
-
-            '
-        duration:
-          type: integer
-          description: The configured delay, in milliseconds.
-      description: Information about the mock server's simulated network delay settings. This returns a null value if there are no configured network delay settings.
-      title: GetMocksMocksItemsConfigDelay
-    DeleteMockMock:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The mock server's ID.
-        uid:
-          type: string
-          format: uid
-          description: The mock server's unique ID.
-      description: Information about the mock server.
-      title: DeleteMockMock
-    deleteMock:
-      type: object
-      properties:
-        mock:
-          $ref: '#/components/schemas/DeleteMockMock'
-          description: Information about the mock server.
-      title: deleteMock
-    UpdateMockServerResponseServerResponse:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The server response's name.
-        statusCode:
-          type: integer
-          description: The server response's 5xx HTTP response code. This property only accepts [5xx values](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml).
-        headers:
-          type: array
-          items:
-            $ref: '#/components/schemas/UpdateMockServerResponseServerResponseHeadersItems'
-          description: The server response's request headers, such as Content-Type, Accept, encoding, and other information.
-        language:
-          oneOf:
-          - $ref: '#/components/schemas/UpdateMockServerResponseServerResponseLanguage'
-          - type: 'null'
-          description: The server response's body language type.
-        body:
-          type: string
-          description: The server response's body that returns when you call the mock server.
-      title: UpdateMockServerResponseServerResponse
-    GetMockServerResponsesItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The server response's ID.
-        name:
-          type: string
-          description: The server response's name.
-        statusCode:
-          type: number
-          format: double
-          description: The server response's 5xx HTTP response code.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the server response was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the server response was last updated.
-        createdBy:
-          type: string
-          description: The user ID of the user who created the server response.
-        updatedBy:
-          type: string
-          description: The user ID of the user who last updated the server response.
-      description: Information about the server response.
-      title: GetMockServerResponsesItems
-    CreateMockServerResponseRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateMockServerResponseRequestInternalServerError
+      format: date-time
+      title: sinceDateTime
     untilDateTime:
       type: string
       format: date-time
       title: untilDateTime
-    GetMockMock:
+    commonErrorNameMessageDetails:
       type: object
       properties:
-        id:
-          type: string
-          description: The mock server's ID.
-        owner:
-          type: string
-          description: The ID of mock server's owner.
-        uid:
-          type: string
-          format: uid
-          description: The mock server's unique ID.
-        collection:
-          type: string
-          description: The unique ID of the mock's associated collection.
-        mockUrl:
-          type: string
-          format: url
-          description: The mock server URL.
-        name:
-          type: string
-          description: The mock server's name.
-        config:
-          $ref: '#/components/schemas/GetMockMockConfig'
-          description: Information about the mock server's configuration.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the mock server was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the mock server was last updated.
-        isPublic:
-          type: boolean
-          description: If true, the mock server is public and visible to all users. This field does not indicate the mock server's access control status.
-        deactivated:
-          type: boolean
-          description: If true, the mock server is not active. Mock servers deactivate when a linked collection or environment is deleted.
-        environment:
-          type: string
-          description: The mock server's associated environment ID.
-      description: Information about the mock server.
-      title: GetMockMock
-    CreateMockMock:
-      type: object
-      properties:
-        collection:
-          type: string
-          format: uid
-          description: The unique ID of the mock's associated collection.
-        environment:
-          type: string
-          format: uid
-          description: The unique ID of the mock's associated environment.
-        name:
-          type: string
-          description: The mock server's name.
-        private:
-          type: boolean
-          default: false
-          description: If true, the mock server is set private. By default, mock servers are public and can receive requests from anyone and anywhere.
-      required:
-      - collection
-      title: CreateMockMock
-    GetMockCallLogsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetMockCallLogsRequestInternalServerError
-    PublishUnpublishMockResponseMock:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The mock server's ID.
-      description: Information about the mock server.
-      title: PublishUnpublishMockResponseMock
-    CommonErrorNameMessageDetailsError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-        details:
-          $ref: '#/components/schemas/CommonErrorNameMessageDetailsErrorDetails'
-          description: Information about the error.
-      title: CommonErrorNameMessageDetailsError
-    MockCreateUpdateResponseMockConfigDelayType:
-      type: string
-      enum:
-      - fixed
-      description: The `fixed` value.
-      title: MockCreateUpdateResponseMockConfigDelayType
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsError'
+      title: commonErrorNameMessageDetails
     Mock500ErrorError:
       type: object
       properties:
@@ -1210,83 +842,12 @@ components:
           type: string
           description: The error message.
       title: Mock500ErrorError
-    GetMocksMocksItemsConfigDelayType:
-      type: string
-      enum:
-      - fixed
-      description: 'The type of simulated delay value:
-
-        - `fixed` — The delay value is a fixed value.
-
-        '
-      title: GetMocksMocksItemsConfigDelayType
-    commonErrorTypeTitleDetailStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
-    createMock:
-      type: object
-      properties:
-        mock:
-          $ref: '#/components/schemas/CreateMockMock'
-      title: createMock
-    CreateMockServerResponseServerResponseLanguage:
-      type: string
-      enum:
-      - text
-      - javascript
-      - json
-      - html
-      - xml
-      description: The server response's body language type.
-      title: CreateMockServerResponseServerResponseLanguage
-    mockServerResponse404Error:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/MockServerResponse404ErrorError'
-      title: mockServerResponse404Error
-    PublishMockRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: PublishMockRequestUnauthorizedError
-    UpdateMockServerResponseRequestInternalServerError:
+    GetMockCallLogsRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateMockServerResponseRequestInternalServerError
-    sinceDateTime:
-      type: string
-      format: date-time
-      title: sinceDateTime
-    GetMockCallLogsCallLogsItemsResponseHeadersDescription:
-      type: object
-      properties:
-        content:
-          type: string
-          description: The response header description's content.
-        type:
-          type: string
-          description: The response header description's media type.
-      description: The response header's description information.
-      title: GetMockCallLogsCallLogsItemsResponseHeadersDescription
-    mockResponseStatusCode:
-      type: number
-      format: double
-      title: mockResponseStatusCode
+      title: GetMockCallLogsRequestInternalServerError
     CreateMockServerResponseServerResponse:
       type: object
       properties:
@@ -1313,183 +874,52 @@ components:
       - name
       - statusCode
       title: CreateMockServerResponseServerResponse
-    GetMockCallLogsCallLogsItemsResponseHeaders:
-      type: object
-      properties:
-        description:
-          $ref: '#/components/schemas/GetMockCallLogsCallLogsItemsResponseHeadersDescription'
-          description: The response header's description information.
-        key:
-          type: string
-          description: The response header's name.
-        value:
-          type: string
-          description: The response header's value.
-      description: The response's headers.
-      title: GetMockCallLogsCallLogsItemsResponseHeaders
-    MockCreateUpdateResponseMockConfig:
-      type: object
-      properties:
-        matchBody:
-          type: boolean
-          description: If true, the mock server matches the request's body to the body of the saved examples.
-        matchHeader:
-          type: boolean
-          description: If true, the mock server matches the request's headers in the `header` array to the headers of the saved examples.
-        headers:
-          type: array
-          items:
-            type: string
-          description: A list of header key values.
-        matchQueryParams:
-          type: boolean
-          description: If true, match query parameters to the saved examples.
-        matchWildcards:
-          type: boolean
-          description: If true, use wildcard variable matching.
-        delay:
-          oneOf:
-          - $ref: '#/components/schemas/MockCreateUpdateResponseMockConfigDelay'
-          - type: 'null'
-          description: Information about the mock server's simulated network delay settings. This returns a null value if there are no configured network delay settings.
-        serverResponseId:
-          type:
-          - string
-          - 'null'
-          description: The ID of mock server's default response for requests. All calls to the mock server will return the defined response.
-      description: Information about the mock server's configuration.
-      title: MockCreateUpdateResponseMockConfig
-    UnpublishMockRequestUnauthorizedError:
+    UnpublishMockRequestBadRequestError:
       oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UnpublishMockRequestUnauthorizedError
-    commonErrorNameMessage:
+      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
+      title: UnpublishMockRequestBadRequestError
+    updateMock:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    MockServerResponse404ErrorError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        header:
-          type: string
-          description: Information about the error.
-        message:
-          type: string
-          description: The error message.
-      title: MockServerResponse404ErrorError
-    UpdateMockMock:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The mock server's name.
-        environment:
-          type: string
-          format: uid
-          description: The associated environment's unique ID.
-        description:
-          type: string
-          description: The mock server's description.
-        private:
-          type: boolean
-          default: false
-          description: If true, the mock server is set private. By default, mock servers are public and can receive requests from anyone and anywhere.
-        versionTag:
-          type: string
-          description: The API's version tag ID.
-        collection:
-          type: string
-          description: The ID of the collection associated with the mock server.
-        config:
-          $ref: '#/components/schemas/UpdateMockMockConfig'
-          description: The mock server's configuration settings.
-      title: UpdateMockMock
-    GetMockServerResponseRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetMockServerResponseRequestUnauthorizedError
-    CreateMockServerResponseRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateMockServerResponseRequestUnauthorizedError
-    teamIdResultsQuery:
-      type: string
-      title: teamIdResultsQuery
-    limitDefault100:
-      type: number
-      format: double
-      default: 100
-      title: limitDefault100
-    mockServerResponse:
-      type: object
-      properties:
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the server response was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the server response was last updated.
-        id:
-          type: string
-          description: The server response's ID.
-        name:
-          type: string
-          description: The server response's name.
-        statusCode:
-          type: number
-          format: double
-          description: The server response's 5xx HTTP response code.
-        headers:
-          type: array
-          items:
-            $ref: '#/components/schemas/MockServerResponseHeadersItems'
-          description: The server response's request headers key-value pairs, such as Content-Type, Accept, encoding, and other information.
-        language:
-          type: string
-          description: The server response's body language type.
-        body:
-          type: string
-          description: The server response's body that returns when calling the mock server.
-        createdBy:
-          type: string
-          description: The user ID of the user who created the server response.
-        updatedBy:
-          type: string
-          description: The user ID of the user who last updated the server response.
         mock:
-          type: string
-          description: The associated mock server's ID.
-      description: Information about the mock server's response.
-      title: mockServerResponse
+          $ref: '#/components/schemas/UpdateMockMock'
+      title: updateMock
+    PublishMockRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
+      title: PublishMockRequestBadRequestError
+    mockResponseType:
+      type: string
+      title: mockResponseType
     createMockServerResponse:
       type: object
       properties:
         serverResponse:
           $ref: '#/components/schemas/CreateMockServerResponseServerResponse'
       title: createMockServerResponse
-    mockInclude:
-      type: string
-      title: mockInclude
-    cursor:
-      type: string
-      title: cursor
+    GetMockCallLogsCallLogsItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The server response's ID.
+        responseName:
+          type: string
+          description: The server response's name.
+        servedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the server response was served.
+        request:
+          $ref: '#/components/schemas/GetMockCallLogsCallLogsItemsRequest'
+          description: The server response's request information.
+        response:
+          $ref: '#/components/schemas/GetMockCallLogsCallLogsItemsResponse'
+          description: The server response's response information.
+      description: Information about the mock server's server response.
+      title: GetMockCallLogsCallLogsItems
     MockCreateUpdateResponseMock:
       type: object
       properties:
@@ -1529,16 +959,39 @@ components:
           description: The unique ID of the mock's associated environment.
       description: Information about the mock server.
       title: MockCreateUpdateResponseMock
-    UpdateMockMockConfig:
+    DeleteMockServerResponseRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteMockServerResponseRequestInternalServerError
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    GetMockCallLogsCallLogsItemsResponseHeaders:
       type: object
       properties:
-        serverResponseId:
-          type:
-          - string
-          - 'null'
-          description: The server response ID. This sets the given server response as the default response for each request. To deactivate a server response, pass a null value.
-      description: The mock server's configuration settings.
-      title: UpdateMockMockConfig
+        description:
+          $ref: '#/components/schemas/GetMockCallLogsCallLogsItemsResponseHeadersDescription'
+          description: The response header's description information.
+        key:
+          type: string
+          description: The response header's name.
+        value:
+          type: string
+          description: The response header's value.
+      description: The response's headers.
+      title: GetMockCallLogsCallLogsItemsResponseHeaders
+    DeleteMockRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteMockRequestUnauthorizedError
     GetMocksMocksItems:
       type: object
       properties:
@@ -1584,16 +1037,98 @@ components:
           description: The date and time at which the mock server was last updated.
       description: Information about the mock server.
       title: GetMocksMocksItems
-    DeleteMockServerResponseRequestUnauthorizedError:
+    UpdateMockRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
+      title: UpdateMockRequestBadRequestError
+    CreateMockMock:
+      type: object
+      properties:
+        collection:
+          type: string
+          format: uid
+          description: The unique ID of the mock's associated collection.
+        environment:
+          type: string
+          format: uid
+          description: The unique ID of the mock's associated environment.
+        name:
+          type: string
+          description: The mock server's name.
+        private:
+          type: boolean
+          default: false
+          description: If true, the mock server is set private. By default, mock servers are public and can receive requests from anyone and anywhere.
+      required:
+      - collection
+      title: CreateMockMock
+    GetMocksRequestUnauthorizedError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteMockServerResponseRequestUnauthorizedError
-    GetMockCallLogsRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetMockCallLogsRequestUnauthorizedError
+      title: GetMocksRequestUnauthorizedError
+    MockServerResponse404ErrorError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        header:
+          type: string
+          description: Information about the error.
+        message:
+          type: string
+          description: The error message.
+      title: MockServerResponse404ErrorError
+    mockResponseStatusCode:
+      type: number
+      format: double
+      title: mockResponseStatusCode
+    deleteMockServerResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The server response's ID.
+        name:
+          type: string
+          description: The server response's name.
+        statusCode:
+          type: number
+          format: double
+          description: The server response's 5xx HTTP response code.
+        headers:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeleteMockServerResponseHeadersItems'
+          description: The server response's request headers, such as Content-Type, Accept, encoding, and other information.
+        language:
+          oneOf:
+          - $ref: '#/components/schemas/DeleteMockServerResponseLanguage'
+          - type: 'null'
+          description: The server response's body language type.
+        body:
+          type: string
+          description: The server response's body that returns when calling the mock server.
+        createdBy:
+          type: string
+          description: The user ID of the user who created the server response.
+        updatedBy:
+          type: string
+          description: The user ID of the user who last updated the server response.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the server response was created.
+      description: Information about the deleted server response.
+      title: deleteMockServerResponse
+    mock500Error:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Mock500ErrorError'
+      title: mock500Error
     GetMockCallLogsCallLogsItemsResponse:
       type: object
       properties:
@@ -1612,59 +1147,19 @@ components:
           description: The response's body information.
       description: The server response's response information.
       title: GetMockCallLogsCallLogsItemsResponse
-    MockServerResponseHeadersItems:
+    deleteMock:
       type: object
       properties:
-        key:
-          type: string
-          description: The request header's key value.
-        value:
-          type: string
-          description: The request header's value.
-      title: MockServerResponseHeadersItems
-    GetMocksMocksItemsConfigDelayPreset:
-      type: string
-      enum:
-      - '1'
-      - '2'
-      description: 'The simulated fixed network delay value:
-
-        - `1` — 2G (300 ms).
-
-        - `2` — 3G (100 ms).
-
-        The object does not return this value for custom delay values.
-
-        '
-      title: GetMocksMocksItemsConfigDelayPreset
-    CreateMockServerResponseServerResponseHeadersItems:
-      type: object
-      properties:
-        key:
-          type: string
-          description: The request header's key value.
-        value:
-          type: string
-          description: The request header's value.
-      title: CreateMockServerResponseServerResponseHeadersItems
-    UpdateMockServerResponseRequestBadRequestError:
+        mock:
+          $ref: '#/components/schemas/DeleteMockMock'
+          description: Information about the mock server.
+      title: deleteMock
+    UpdateMockServerResponseRequestUnauthorizedError:
       oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
-      title: UpdateMockServerResponseRequestBadRequestError
-    GetMockCallLogsCallLogsItemsRequestHeaders:
-      type: object
-      properties:
-        key:
-          type: string
-          description: The request header's name.
-        value:
-          type: string
-          description: The request header's value.
-      description: The request's headers.
-      title: GetMockCallLogsCallLogsItemsRequestHeaders
-    CommonErrorNameMessageError:
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateMockServerResponseRequestUnauthorizedError
+    CommonErrorNameMessageDetailsError:
       type: object
       properties:
         name:
@@ -1673,20 +1168,36 @@ components:
         message:
           type: string
           description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
-    updateMock:
+        details:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsErrorDetails'
+          description: Information about the error.
+      title: CommonErrorNameMessageDetailsError
+    GetMockCallLogsCallLogsItemsResponseBody:
       type: object
       properties:
-        mock:
-          $ref: '#/components/schemas/UpdateMockMock'
-      title: updateMock
-    mock500Error:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Mock500ErrorError'
-      title: mock500Error
+        data:
+          type: string
+          description: The response body's contents.
+      description: The response's body information.
+      title: GetMockCallLogsCallLogsItemsResponseBody
+    GetMockServerResponseRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetMockServerResponseRequestUnauthorizedError
+    UnpublishMockRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UnpublishMockRequestUnauthorizedError
+    PublishMockRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: PublishMockRequestUnauthorizedError
+    mockRequestPath:
+      type: string
+      title: mockRequestPath
     DeleteMockServerResponseHeadersItems:
       type: object
       properties:
@@ -1697,31 +1208,17 @@ components:
           type: string
           description: The request header's value.
       title: DeleteMockServerResponseHeadersItems
-    commonErrorNameMessageDetails:
+    createMock:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageDetailsError'
-      title: commonErrorNameMessageDetails
-    workspaceId:
-      type: string
-      title: workspaceId
-    PublishMockRequestBadRequestError:
+        mock:
+          $ref: '#/components/schemas/CreateMockMock'
+      title: createMock
+    GetMockCallLogsRequestUnauthorizedError:
       oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
-      title: PublishMockRequestBadRequestError
-    UpdateMockServerResponseServerResponseHeadersItems:
-      type: object
-      properties:
-        key:
-          type: string
-          description: The request header's key value.
-        value:
-          type: string
-          description: The request header's value. This value defines the corresponding value for the header key.
-      description: Information about the key-value pair.
-      title: UpdateMockServerResponseServerResponseHeadersItems
+      title: GetMockCallLogsRequestUnauthorizedError
     commonErrorTypeTitleDetail:
       type: object
       properties:
@@ -1735,6 +1232,73 @@ components:
           $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
           description: Information about the error.
       title: commonErrorTypeTitleDetail
+    DeleteMockMock:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The mock server's ID.
+        uid:
+          type: string
+          format: uid
+          description: The mock server's unique ID.
+      description: Information about the mock server.
+      title: DeleteMockMock
+    GetMocksMocksItemsConfig:
+      type: object
+      properties:
+        delay:
+          oneOf:
+          - $ref: '#/components/schemas/GetMocksMocksItemsConfigDelay'
+          - type: 'null'
+          description: Information about the mock server's simulated network delay settings. This returns a null value if there are no configured network delay settings.
+        headers:
+          type: array
+          items:
+            type: string
+          description: A list of the mock server's headers.
+        matchBody:
+          type: boolean
+          description: If true, match the request body.
+        matchQueryParams:
+          type: boolean
+          description: If true, match query parameters.
+        matchWildcards:
+          type: boolean
+          description: If true, use wildcard variable matching.
+        serverResponseId:
+          type: string
+          description: The ID of mock server's default response for requests. All calls to the mock server will return the defined response.
+      description: Information about the mock server's configuration.
+      title: GetMocksMocksItemsConfig
+    getMockCallLogs:
+      type: object
+      properties:
+        call-logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetMockCallLogsCallLogsItems'
+          description: A list of call logs.
+        meta:
+          $ref: '#/components/schemas/GetMockCallLogsMeta'
+          description: The response's non-standard meta information.
+      title: getMockCallLogs
+    CreateMockRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateMockRequestUnauthorizedError
+    GetMockCallLogsCallLogsItemsRequestBody:
+      type: object
+      properties:
+        mode:
+          type: string
+          description: The request body's media type (mode).
+        data:
+          type: string
+          description: The request body's contents.
+      description: The request's body information.
+      title: GetMockCallLogsCallLogsItemsRequestBody
     MockCreateUpdateResponseMockConfigDelayPreset:
       type: string
       enum:
@@ -1776,23 +1340,6 @@ components:
           description: The configured delay, in milliseconds.
       description: Information about the mock server's simulated network delay settings. This returns a null value if there are no configured network delay settings.
       title: GetMockMockConfigDelay
-    GetMockCallLogsRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
-      title: GetMockCallLogsRequestBadRequestError
-    getMockCallLogs:
-      type: object
-      properties:
-        call-logs:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetMockCallLogsCallLogsItems'
-          description: A list of call logs.
-        meta:
-          $ref: '#/components/schemas/GetMockCallLogsMeta'
-          description: The response's non-standard meta information.
-      title: getMockCallLogs
     mockSortServedAt:
       type: string
       enum:
@@ -1820,6 +1367,79 @@ components:
             '
       description: Information about the mock server's simulated network delay settings. This returns a null value if there are no configured network delay settings.
       title: MockCreateUpdateResponseMockConfigDelay
+    publishUnpublishMockResponse:
+      type: object
+      properties:
+        mock:
+          $ref: '#/components/schemas/PublishUnpublishMockResponseMock'
+          description: Information about the mock server.
+      title: publishUnpublishMockResponse
+    GetMockServerResponsesRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetMockServerResponsesRequestUnauthorizedError
+    ascDesc:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: ascDesc
+    GetMocksMocksItemsConfigDelayType:
+      type: string
+      enum:
+      - fixed
+      description: 'The type of simulated delay value:
+
+        - `fixed` — The delay value is a fixed value.
+
+        '
+      title: GetMocksMocksItemsConfigDelayType
+    mockRequestMethod:
+      type: string
+      title: mockRequestMethod
+    MockCreateUpdateResponseMockConfigDelayType:
+      type: string
+      enum:
+      - fixed
+      description: The `fixed` value.
+      title: MockCreateUpdateResponseMockConfigDelayType
+    UpdateMockServerResponseServerResponseHeadersItems:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The request header's key value.
+        value:
+          type: string
+          description: The request header's value. This value defines the corresponding value for the header key.
+      description: Information about the key-value pair.
+      title: UpdateMockServerResponseServerResponseHeadersItems
+    UpdateMockMockConfig:
+      type: object
+      properties:
+        serverResponseId:
+          type:
+          - string
+          - 'null'
+          description: The server response ID. This sets the given server response as the default response for each request. To deactivate a server response, pass a null value.
+      description: The mock server's configuration settings.
+      title: UpdateMockMockConfig
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
     GetMockMockConfig:
       type: object
       properties:
@@ -1849,77 +1469,173 @@ components:
           description: The ID of mock server's default response for requests. All calls to the mock server will return the defined response.
       description: Information about the mock server's configuration.
       title: GetMockMockConfig
-    GetMockCallLogsCallLogsItemsRequest:
+    MockServerResponseHeadersItems:
       type: object
       properties:
-        method:
+        key:
           type: string
-          description: The request method.
-        path:
+          description: The request header's key value.
+        value:
           type: string
-          description: The request's path.
-        headers:
-          $ref: '#/components/schemas/GetMockCallLogsCallLogsItemsRequestHeaders'
-          description: The request's headers.
-        body:
-          $ref: '#/components/schemas/GetMockCallLogsCallLogsItemsRequestBody'
-          description: The request's body information.
-      description: The server response's request information.
-      title: GetMockCallLogsCallLogsItemsRequest
-    CommonErrorTypeTitleDetailDetail:
+          description: The request header's value.
+      title: MockServerResponseHeadersItems
+    GetMockCallLogsCallLogsItemsRequestHeaders:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The request header's name.
+        value:
+          type: string
+          description: The request header's value.
+      description: The request's headers.
+      title: GetMockCallLogsCallLogsItemsRequestHeaders
+    DeleteMockServerResponseLanguage:
+      type: string
+      enum:
+      - text
+      - javascript
+      - json
+      - html
+      - xml
+      description: The server response's body language type.
+      title: DeleteMockServerResponseLanguage
+    cursor:
+      type: string
+      title: cursor
+    UpdateMockMock:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The mock server's name.
+        environment:
+          type: string
+          format: uid
+          description: The associated environment's unique ID.
+        description:
+          type: string
+          description: The mock server's description.
+        private:
+          type: boolean
+          default: false
+          description: If true, the mock server is set private. By default, mock servers are public and can receive requests from anyone and anywhere.
+        versionTag:
+          type: string
+          description: The API's version tag ID.
+        collection:
+          type: string
+          description: The ID of the collection associated with the mock server.
+        config:
+          $ref: '#/components/schemas/UpdateMockMockConfig'
+          description: The mock server's configuration settings.
+      title: UpdateMockMock
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    mockId:
+      type: string
+      title: mockId
+    GetMockMockConfigDelayPreset:
+      type: string
+      enum:
+      - '1'
+      - '2'
+      description: 'The simulated fixed network delay value:
+
+        - `1` — 2G (300 ms).
+
+        - `2` — 3G (100 ms).
+
+        The object does not return this value for custom delay values.
+
+        '
+      title: GetMockMockConfigDelayPreset
+    CreateMockServerResponseServerResponseLanguage:
+      type: string
+      enum:
+      - text
+      - javascript
+      - json
+      - html
+      - xml
+      description: The server response's body language type.
+      title: CreateMockServerResponseServerResponseLanguage
+    GetMockCallLogsCallLogsItemsResponseHeadersDescription:
+      type: object
+      properties:
+        content:
+          type: string
+          description: The response header description's content.
+        type:
+          type: string
+          description: The response header description's media type.
+      description: The response header's description information.
+      title: GetMockCallLogsCallLogsItemsResponseHeadersDescription
+    GetMockMockConfigDelayType:
+      type: string
+      enum:
+      - fixed
+      description: 'The type of simulated delay value:
+
+        - `fixed` — The delay value is a fixed value.
+
+        '
+      title: GetMockMockConfigDelayType
+    UpdateMockServerResponseServerResponseLanguage:
+      type: string
+      enum:
+      - text
+      - javascript
+      - json
+      - html
+      - xml
+      description: The server response's body language type.
+      title: UpdateMockServerResponseServerResponseLanguage
+    limitDefault100:
+      type: number
+      format: double
+      default: 100
+      title: limitDefault100
+    CommonErrorTypeTitleDetailStatusType:
       oneOf:
       - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    GetMocksMocksItemsConfigDelayPreset:
+      type: string
+      enum:
+      - '1'
+      - '2'
+      description: 'The simulated fixed network delay value:
+
+        - `1` — 2G (300 ms).
+
+        - `2` — 3G (100 ms).
+
+        The object does not return this value for custom delay values.
+
+        '
+      title: GetMocksMocksItemsConfigDelayPreset
+    CommonErrorNameMessageDetailsErrorDetails:
+      oneOf:
       - type: object
         additionalProperties:
           description: Any type
+      - type: array
+        items:
+          type: string
       description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
-    UpdateMockServerResponseRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateMockServerResponseRequestUnauthorizedError
-    GetMocksMocksItemsConfig:
-      type: object
-      properties:
-        delay:
-          oneOf:
-          - $ref: '#/components/schemas/GetMocksMocksItemsConfigDelay'
-          - type: 'null'
-          description: Information about the mock server's simulated network delay settings. This returns a null value if there are no configured network delay settings.
-        headers:
-          type: array
-          items:
-            type: string
-          description: A list of the mock server's headers.
-        matchBody:
-          type: boolean
-          description: If true, match the request body.
-        matchQueryParams:
-          type: boolean
-          description: If true, match query parameters.
-        matchWildcards:
-          type: boolean
-          description: If true, use wildcard variable matching.
-        serverResponseId:
-          type: string
-          description: The ID of mock server's default response for requests. All calls to the mock server will return the defined response.
-      description: Information about the mock server's configuration.
-      title: GetMocksMocksItemsConfig
-    GetMockCallLogsCallLogsItemsResponseBody:
-      type: object
-      properties:
-        data:
-          type: string
-          description: The response body's contents.
-      description: The response's body information.
-      title: GetMockCallLogsCallLogsItemsResponseBody
-    GetMockServerResponsesRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetMockServerResponsesRequestInternalServerError
+      title: CommonErrorNameMessageDetailsErrorDetails
     mockCreateUpdateResponse:
       type: object
       properties:
@@ -1927,35 +1643,182 @@ components:
           $ref: '#/components/schemas/MockCreateUpdateResponseMock'
           description: Information about the mock server.
       title: mockCreateUpdateResponse
-    UnpublishMockRequestBadRequestError:
+    UpdateMockRequestUnauthorizedError:
       oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
-      title: UnpublishMockRequestBadRequestError
-    mockRequestMethod:
-      type: string
-      title: mockRequestMethod
-    GetMockCallLogsCallLogsItems:
+      title: UpdateMockRequestUnauthorizedError
+    CreateMockServerResponseRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateMockServerResponseRequestUnauthorizedError
+    GetMockServerResponsesItems:
       type: object
       properties:
         id:
           type: string
           description: The server response's ID.
-        responseName:
+        name:
           type: string
           description: The server response's name.
-        servedAt:
+        statusCode:
+          type: number
+          format: double
+          description: The server response's 5xx HTTP response code.
+        createdAt:
           type: string
           format: date-time
-          description: The date and time at which the server response was served.
-        request:
-          $ref: '#/components/schemas/GetMockCallLogsCallLogsItemsRequest'
-          description: The server response's request information.
-        response:
-          $ref: '#/components/schemas/GetMockCallLogsCallLogsItemsResponse'
-          description: The server response's response information.
-      description: Information about the mock server's server response.
-      title: GetMockCallLogsCallLogsItems
+          description: The date and time at which the server response was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the server response was last updated.
+        createdBy:
+          type: string
+          description: The user ID of the user who created the server response.
+        updatedBy:
+          type: string
+          description: The user ID of the user who last updated the server response.
+      description: Information about the server response.
+      title: GetMockServerResponsesItems
+    UpdateMockServerResponseServerResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The server response's name.
+        statusCode:
+          type: integer
+          description: The server response's 5xx HTTP response code. This property only accepts [5xx values](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml).
+        headers:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateMockServerResponseServerResponseHeadersItems'
+          description: The server response's request headers, such as Content-Type, Accept, encoding, and other information.
+        language:
+          oneOf:
+          - $ref: '#/components/schemas/UpdateMockServerResponseServerResponseLanguage'
+          - type: 'null'
+          description: The server response's body language type.
+        body:
+          type: string
+          description: The server response's body that returns when you call the mock server.
+      title: UpdateMockServerResponseServerResponse
+    CreateMockRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
+      title: CreateMockRequestBadRequestError
+    CreateMockServerResponseRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
+      title: CreateMockServerResponseRequestBadRequestError
+    PublishUnpublishMockResponseMock:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The mock server's ID.
+      description: Information about the mock server.
+      title: PublishUnpublishMockResponseMock
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    workspaceId:
+      type: string
+      title: workspaceId
+    GetMocksMocksItemsConfigDelay:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/GetMocksMocksItemsConfigDelayType'
+          description: 'The type of simulated delay value:
+
+            - `fixed` — The delay value is a fixed value.
+
+            '
+        preset:
+          $ref: '#/components/schemas/GetMocksMocksItemsConfigDelayPreset'
+          description: 'The simulated fixed network delay value:
+
+            - `1` — 2G (300 ms).
+
+            - `2` — 3G (100 ms).
+
+            The object does not return this value for custom delay values.
+
+            '
+        duration:
+          type: integer
+          description: The configured delay, in milliseconds.
+      description: Information about the mock server's simulated network delay settings. This returns a null value if there are no configured network delay settings.
+      title: GetMocksMocksItemsConfigDelay
+    UpdateMockServerResponseRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
+      title: UpdateMockServerResponseRequestBadRequestError
+    updateMockServerResponse:
+      type: object
+      properties:
+        serverResponse:
+          $ref: '#/components/schemas/UpdateMockServerResponseServerResponse'
+      title: updateMockServerResponse
+    mockInclude:
+      type: string
+      title: mockInclude
+    mockServerResponse:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the server response was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the server response was last updated.
+        id:
+          type: string
+          description: The server response's ID.
+        name:
+          type: string
+          description: The server response's name.
+        statusCode:
+          type: number
+          format: double
+          description: The server response's 5xx HTTP response code.
+        headers:
+          type: array
+          items:
+            $ref: '#/components/schemas/MockServerResponseHeadersItems'
+          description: The server response's request headers key-value pairs, such as Content-Type, Accept, encoding, and other information.
+        language:
+          type: string
+          description: The server response's body language type.
+        body:
+          type: string
+          description: The server response's body that returns when calling the mock server.
+        createdBy:
+          type: string
+          description: The user ID of the user who created the server response.
+        updatedBy:
+          type: string
+          description: The user ID of the user who last updated the server response.
+        mock:
+          type: string
+          description: The associated mock server's ID.
+      description: Information about the mock server's response.
+      title: mockServerResponse
     GetMockCallLogsMeta:
       type: object
       properties:
@@ -1967,6 +1830,62 @@ components:
           description: The pagination cursor that points to the next record in the results set.
       description: The response's non-standard meta information.
       title: GetMockCallLogsMeta
+    getMock:
+      type: object
+      properties:
+        mock:
+          $ref: '#/components/schemas/GetMockMock'
+          description: Information about the mock server.
+      title: getMock
+    getMockServerResponses:
+      type: array
+      items:
+        $ref: '#/components/schemas/GetMockServerResponsesItems'
+      description: A list of the mock server's responses.
+      title: getMockServerResponses
+    GetMockServerResponsesRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetMockServerResponsesRequestInternalServerError
+    MockCreateUpdateResponseMockConfig:
+      type: object
+      properties:
+        matchBody:
+          type: boolean
+          description: If true, the mock server matches the request's body to the body of the saved examples.
+        matchHeader:
+          type: boolean
+          description: If true, the mock server matches the request's headers in the `header` array to the headers of the saved examples.
+        headers:
+          type: array
+          items:
+            type: string
+          description: A list of header key values.
+        matchQueryParams:
+          type: boolean
+          description: If true, match query parameters to the saved examples.
+        matchWildcards:
+          type: boolean
+          description: If true, use wildcard variable matching.
+        delay:
+          oneOf:
+          - $ref: '#/components/schemas/MockCreateUpdateResponseMockConfigDelay'
+          - type: 'null'
+          description: Information about the mock server's simulated network delay settings. This returns a null value if there are no configured network delay settings.
+        serverResponseId:
+          type:
+          - string
+          - 'null'
+          description: The ID of mock server's default response for requests. All calls to the mock server will return the defined response.
+      description: Information about the mock server's configuration.
+      title: MockCreateUpdateResponseMockConfig
+    DeleteMockServerResponseRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteMockServerResponseRequestUnauthorizedError
     GetMockRequestUnauthorizedError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
@@ -1978,9 +1897,90 @@ components:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
       title: GetMockServerResponseRequestInternalServerError
-    mockRequestPath:
+    UpdateMockServerResponseRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateMockServerResponseRequestInternalServerError
+    GetMockCallLogsRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
+      title: GetMockCallLogsRequestBadRequestError
+    GetMockMock:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The mock server's ID.
+        owner:
+          type: string
+          description: The ID of mock server's owner.
+        uid:
+          type: string
+          format: uid
+          description: The mock server's unique ID.
+        collection:
+          type: string
+          description: The unique ID of the mock's associated collection.
+        mockUrl:
+          type: string
+          format: url
+          description: The mock server URL.
+        name:
+          type: string
+          description: The mock server's name.
+        config:
+          $ref: '#/components/schemas/GetMockMockConfig'
+          description: Information about the mock server's configuration.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the mock server was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the mock server was last updated.
+        isPublic:
+          type: boolean
+          description: If true, the mock server is public and visible to all users. This field does not indicate the mock server's access control status.
+        deactivated:
+          type: boolean
+          description: If true, the mock server is not active. Mock servers deactivate when a linked collection or environment is deleted.
+        environment:
+          type: string
+          description: The mock server's associated environment ID.
+      description: Information about the mock server.
+      title: GetMockMock
+    serverResponseId:
       type: string
-      title: mockRequestPath
+      title: serverResponseId
+    getMocks:
+      type: object
+      properties:
+        mocks:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetMocksMocksItems'
+          description: A list of mock servers.
+      title: getMocks
+    CreateMockServerResponseRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateMockServerResponseRequestInternalServerError
+    CreateMockServerResponseServerResponseHeadersItems:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The request header's key value.
+        value:
+          type: string
+          description: The request header's value.
+      title: CreateMockServerResponseServerResponseHeadersItems
     MockServerInput:
       type: object
       description: Input format for creating or updating a mock server.
@@ -2122,35 +2122,15 @@ components:
               - default
               - serverResponse
               - collectionExample
+  parameters:
+    MockIdParam:
+      name: mockId
+      in: path
+      required: true
+      description: The mock server's unique ID or UID.
+      schema:
+        type: string
   responses:
-    InternalServerError:
-      description: An unexpected error occurred on the server
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-    NotFoundError:
-      description: The requested resource was not found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
     BadRequestError:
       description: Bad request - invalid input
       content:
@@ -2179,6 +2159,20 @@ components:
                     type: string
                   message:
                     type: string
+    NotFoundError:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
     RateLimitError:
       description: Too many requests - rate limit exceeded
       content:
@@ -2190,14 +2184,20 @@ components:
                 type: string
               message:
                 type: string
-  parameters:
-    MockIdParam:
-      name: mockId
-      in: path
-      required: true
-      description: The mock server's unique ID or UID.
-      schema:
-        type: string
+    InternalServerError:
+      description: An unexpected error occurred on the server
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
   securitySchemes:
     PostmanApiKey:
       type: apiKey

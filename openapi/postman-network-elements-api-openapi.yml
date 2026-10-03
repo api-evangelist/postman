@@ -161,8 +161,8 @@ paths:
           $ref: '#/components/responses/RateLimitError'
 components:
   responses:
-    NotFoundError:
-      description: The requested resource was not found
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
       content:
         application/json:
           schema:
@@ -189,22 +189,8 @@ components:
                     type: string
                   message:
                     type: string
-    UnauthorizedError:
-      description: Authentication credentials are missing or invalid
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-    ForbiddenError:
-      description: Insufficient permissions to perform this operation
+    NotFoundError:
+      description: The requested resource was not found
       content:
         application/json:
           schema:
@@ -228,6 +214,20 @@ components:
                 type: string
               message:
                 type: string
+    ForbiddenError:
+      description: Insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
   schemas:
     NetworkElement:
       type: object

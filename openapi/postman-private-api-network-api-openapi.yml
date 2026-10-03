@@ -456,89 +456,213 @@ paths:
               $ref: '#/components/schemas/respondPanElementAddRequestBody'
 components:
   schemas:
-    Private_API_Network_respondPrivateNetworkAddRequest_Response_200:
-      oneOf:
-      - $ref: '#/components/schemas/respondPanElementAddRequestApprove'
-      - $ref: '#/components/schemas/respondPanElementAddRequestDeny'
-      title: Private API Network_respondPrivateNetworkAddRequest_Response_200
-    panSummary:
-      type: string
-      title: panSummary
-    AddWorkspaceToPrivateNetworkRequestInternalServerError:
+    UpdatePanElementOrFolderRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: AddWorkspaceToPrivateNetworkRequestInternalServerError
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    panRequestStatus:
-      type: string
-      enum:
-      - pending
-      - denied
-      title: panRequestStatus
-    AddWorkspaceToPrivateNetworkRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: AddWorkspaceToPrivateNetworkRequestForbiddenError
-    commonErrorTypeTitleDetail:
+      title: UpdatePanElementOrFolderRequestInternalServerError
+    limitDefault1000:
+      type: integer
+      default: 1000
+      title: limitDefault1000
+    RespondPanElementAddRequestApproveRequestItemsElement:
       type: object
       properties:
+        id:
+          type: string
+          description: The element's ID.
+        name:
+          type: string
+          description: The element's name.
+        summary:
+          type:
+          - string
+          - 'null'
+          description: The element's short summary.
+        description:
+          type:
+          - string
+          - 'null'
+          description: The element's description.
         type:
+          $ref: '#/components/schemas/RespondPanElementAddRequestApproveRequestItemsElementType'
+          description: The `workspace` element type.
+        createdBy:
+          type: integer
+          description: The ID of the user who added the element to the Private API Network.
+        createdAt:
           type: string
-          description: The type of error.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
-          description: Information about the error.
-      title: commonErrorTypeTitleDetail
-    RespondPrivateNetworkAddRequestRequestUnauthorizedError:
+          format: date-time
+          description: The date and time the element was added to the Private API Network.
+      description: Information about the requested element.
+      title: RespondPanElementAddRequestApproveRequestItemsElement
+    RemoveWorkspaceFromPrivateNetworkRequestForbiddenError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: RespondPrivateNetworkAddRequestRequestUnauthorizedError
-    ascDesc:
-      type: string
-      enum:
-      - asc
-      - desc
-      title: ascDesc
-    panRequestId:
-      type: integer
-      title: panRequestId
-    sortCreatedUpdatedAt:
-      type: string
-      enum:
-      - createdAt
-      - updatedAt
-      title: sortCreatedUpdatedAt
-    updatePanWorkspace:
+      title: RemoveWorkspaceFromPrivateNetworkRequestForbiddenError
+    deletePanElement:
       type: object
       properties:
         workspace:
-          $ref: '#/components/schemas/UpdatePanWorkspaceWorkspace'
-      title: updatePanWorkspace
-    UpdatePanElementOrFolderRequestForbiddenError:
+          $ref: '#/components/schemas/DeletePanElementWorkspace'
+          description: The Private API Network `workspace` element type.
+      title: deletePanElement
+    ListPrivateNetworkAddRequestsRequestForbiddenError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdatePanElementOrFolderRequestForbiddenError
-    elementTypeQuery:
+      title: ListPrivateNetworkAddRequestsRequestForbiddenError
+    ListPrivateNetworkWorkspacesRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: ListPrivateNetworkWorkspacesRequestForbiddenError
+    sinceDateTime:
+      type: string
+      format: date-time
+      title: sinceDateTime
+    untilDateTime:
+      type: string
+      format: date-time
+      title: untilDateTime
+    panRequestedBy:
+      type: integer
+      title: panRequestedBy
+    GetPanElementsElementsItems:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the element was created.
+        createdBy:
+          type: integer
+          description: The user who created the element.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the element was last updated.
+        updatedBy:
+          type: integer
+          description: The user ID of the user who updated the element.
+        addedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the element was published to your team's Private API Network. This value is the same as the `updatedAt` value.
+        addedBy:
+          type: integer
+          description: The user ID of the user who published the element.
+        description:
+          type:
+          - string
+          - 'null'
+          description: The element's description.
+        id:
+          type: string
+          description: The element's ID.
+        name:
+          type: string
+          description: The element's name.
+        summary:
+          type:
+          - string
+          - 'null'
+          description: The element's summary.
+        type:
+          type: string
+          description: The `workspace` element type.
+        parentFolderId:
+          type: integer
+          description: The `0` value.
+        href:
+          type: string
+          format: url
+          description: The element's HREF.
+      description: Information about the Private API Network element.
+      title: GetPanElementsElementsItems
+    RespondPanElementAddRequestBodyStatus:
+      type: string
+      enum:
+      - denied
+      - approved
+      description: The request's approval status.
+      title: RespondPanElementAddRequestBodyStatus
+    Private_API_Network_updatePanElementOrFolder_Response_200:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Private API Network_updatePanElementOrFolder_Response_200
+    RespondPanElementAddRequestBodyResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message that details why the user's request was denied.
+      description: If the request is denied, the response to the user's request.
+      title: RespondPanElementAddRequestBodyResponse
+    panRequestResponse:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which request was denied.
+        createdBy:
+          type: integer
+          description: The ID of the user who denied the request.
+        message:
+          type: string
+          description: The request's response message.
+      description: Information about the response to the element's request. This object only returns when the request is denied with a message.
+      title: panRequestResponse
+    panError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      title: panError
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    PanElementCreatedType:
       type: string
       enum:
       - workspace
-      title: elementTypeQuery
-    panElementDescription:
+      description: The `workspace` element.
+      title: PanElementCreatedType
+    RespondPanElementAddRequestApproveRequestItemsElementType:
       type: string
-      title: panElementDescription
+      enum:
+      - workspace
+      description: The `workspace` element type.
+      title: RespondPanElementAddRequestApproveRequestItemsElementType
+    UpdatePanWorkspaceWorkspace:
+      type: object
+      properties:
+        parentFolderId:
+          type: integer
+          description: The workspace's new parent folder ID.
+      title: UpdatePanWorkspaceWorkspace
+    RemoveWorkspaceFromPrivateNetworkRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/panError'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: RemoveWorkspaceFromPrivateNetworkRequestBadRequestError
+    ListPrivateNetworkAddRequestsRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/panError'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: ListPrivateNetworkAddRequestsRequestBadRequestError
     getPanElements:
       type: object
       properties:
@@ -555,10 +679,113 @@ components:
         meta:
           $ref: '#/components/schemas/panMetadata'
       title: getPanElements
-    offset:
-      type: integer
-      default: 0
-      title: offset
+    RespondPrivateNetworkAddRequestRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/panError'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: RespondPrivateNetworkAddRequestRequestBadRequestError
+    RespondPrivateNetworkAddRequestRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: RespondPrivateNetworkAddRequestRequestForbiddenError
+    elementTypeQuery:
+      type: string
+      enum:
+      - workspace
+      title: elementTypeQuery
+    RespondPanElementAddRequestApproveRequestItemsStatus:
+      type: string
+      enum:
+      - approved
+      - denied
+      description: The request's status.
+      title: RespondPanElementAddRequestApproveRequestItemsStatus
+    workspaceId:
+      type: string
+      title: workspaceId
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    ListPrivateNetworkWorkspacesRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: ListPrivateNetworkWorkspacesRequestUnauthorizedError
+    RespondPrivateNetworkAddRequestRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: RespondPrivateNetworkAddRequestRequestInternalServerError
+    AddWorkspaceToPrivateNetworkRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: AddWorkspaceToPrivateNetworkRequestInternalServerError
+    UpdatePanElementOrFolderRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdatePanElementOrFolderRequestForbiddenError
+    panSummary:
+      type: string
+      title: panSummary
+    RespondPanElementAddRequestDenyRequestItemsStatus:
+      type: string
+      enum:
+      - approved
+      - denied
+      description: The request's status.
+      title: RespondPanElementAddRequestDenyRequestItemsStatus
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    PanCreateWorkspaceWorkspace:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The workspace's ID.
+        parentFolderId:
+          type: integer
+          default: 0
+          description: The `0` value.
+      required:
+      - id
+      title: PanCreateWorkspaceWorkspace
+    RemoveWorkspaceFromPrivateNetworkRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: RemoveWorkspaceFromPrivateNetworkRequestUnauthorizedError
     getAllPanAddElementRequests:
       type: object
       properties:
@@ -570,94 +797,117 @@ components:
         meta:
           $ref: '#/components/schemas/panMetadata'
       title: getAllPanAddElementRequests
-    respondPanElementAddRequestDeny:
-      type: object
-      properties:
-        request:
-          type: array
-          items:
-            $ref: '#/components/schemas/RespondPanElementAddRequestDenyRequestItems'
-          description: A list of Private API Network requests.
-      title: respondPanElementAddRequestDeny
-    RespondPanElementAddRequestBodyResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A message that details why the user's request was denied.
-      description: If the request is denied, the response to the user's request.
-      title: RespondPanElementAddRequestBodyResponse
-    respondPanElementAddRequestBody:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/RespondPanElementAddRequestBodyStatus'
-          description: The request's approval status.
-        response:
-          $ref: '#/components/schemas/RespondPanElementAddRequestBodyResponse'
-          description: If the request is denied, the response to the user's request.
-      required:
-      - status
-      title: respondPanElementAddRequestBody
+    panParentFolderId:
+      type: integer
+      default: 0
+      title: panParentFolderId
+    panAddedBy:
+      type: integer
+      title: panAddedBy
+    panElementName:
+      type: string
+      title: panElementName
+    panElementDescription:
+      type: string
+      title: panElementDescription
     UpdatePanElementOrFolderRequestUnauthorizedError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
       title: UpdatePanElementOrFolderRequestUnauthorizedError
-    commonErrorTypeTitleDetailStatus:
+    sortCreatedUpdatedAt:
+      type: string
+      enum:
+      - createdAt
+      - updatedAt
+      title: sortCreatedUpdatedAt
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    ListPrivateNetworkAddRequestsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: ListPrivateNetworkAddRequestsRequestInternalServerError
+    createdBy:
+      type: integer
+      title: createdBy
+    RespondPrivateNetworkAddRequestRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: RespondPrivateNetworkAddRequestRequestUnauthorizedError
+    ascDesc:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: ascDesc
+    Private_API_Network_respondPrivateNetworkAddRequest_Response_200:
+      oneOf:
+      - $ref: '#/components/schemas/respondPanElementAddRequestApprove'
+      - $ref: '#/components/schemas/respondPanElementAddRequestDeny'
+      title: Private API Network_respondPrivateNetworkAddRequest_Response_200
+    RespondPanElementAddRequestApproveRequestItems:
       type: object
       properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
+        id:
           type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
-    AddWorkspaceToPrivateNetworkRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: AddWorkspaceToPrivateNetworkRequestUnauthorizedError
-    ListPrivateNetworkAddRequestsRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: ListPrivateNetworkAddRequestsRequestForbiddenError
-    panRequestResponse:
-      type: object
-      properties:
+          description: The request's ID.
         createdAt:
           type: string
           format: date-time
-          description: The date and time at which request was denied.
+          description: The date and time at which the request was created.
         createdBy:
           type: integer
-          description: The ID of the user who denied the request.
+          description: The ID of the user who created the request.
         message:
           type: string
-          description: The request's response message.
-      description: Information about the response to the element's request. This object only returns when the request is denied with a message.
-      title: panRequestResponse
-    panMetadata:
+          description: The user's optional message included in the request.
+        status:
+          $ref: '#/components/schemas/RespondPanElementAddRequestApproveRequestItemsStatus'
+          description: The request's status.
+        element:
+          $ref: '#/components/schemas/RespondPanElementAddRequestApproveRequestItemsElement'
+          description: Information about the requested element.
+      description: Information about the Private API Network request.
+      title: RespondPanElementAddRequestApproveRequestItems
+    panCreateWorkspace:
       type: object
       properties:
-        limit:
-          type: integer
-          description: The maximum number of elements returned. If the value exceeds the maximum value of `1000`, then the system uses the `1000` value.
-        offset:
-          type: integer
-          description: The zero-based offset of the first item returned.
-        totalCount:
-          type: integer
-          description: The total number of elements.
-      description: The response's non-standard meta information.
-      title: panMetadata
+        workspace:
+          $ref: '#/components/schemas/PanCreateWorkspaceWorkspace'
+      required:
+      - workspace
+      title: panCreateWorkspace
+    panRequestElement:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The element's ID.
+        type:
+          $ref: '#/components/schemas/PanRequestElementType'
+          description: The `workspace` element type.
+        name:
+          type: string
+          description: The element's name.
+        summary:
+          type:
+          - string
+          - 'null'
+          description: The element's short summary.
+        description:
+          type:
+          - string
+          - 'null'
+          description: The element's description.
+      description: Information about the requested element.
+      title: panRequestElement
     panElementCreated:
       type: object
       properties:
@@ -712,103 +962,63 @@ components:
           description: This property is deprecated.
       description: Information about the Private API Network element.
       title: panElementCreated
-    RespondPrivateNetworkAddRequestRequestForbiddenError:
+    panMetadata:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: The maximum number of elements returned. If the value exceeds the maximum value of `1000`, then the system uses the `1000` value.
+        offset:
+          type: integer
+          description: The zero-based offset of the first item returned.
+        totalCount:
+          type: integer
+          description: The total number of elements.
+      description: The response's non-standard meta information.
+      title: panMetadata
+    ListPrivateNetworkAddRequestsRequestUnauthorizedError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: RespondPrivateNetworkAddRequestRequestForbiddenError
-    RemoveWorkspaceFromPrivateNetworkRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: RemoveWorkspaceFromPrivateNetworkRequestForbiddenError
-    RemoveWorkspaceFromPrivateNetworkRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: RemoveWorkspaceFromPrivateNetworkRequestUnauthorizedError
-    RespondPanElementAddRequestApproveRequestItemsStatus:
+      title: ListPrivateNetworkAddRequestsRequestUnauthorizedError
+    GetAllPanAddElementRequestsRequestsItemsStatus:
       type: string
       enum:
-      - approved
+      - pending
       - denied
       description: The request's status.
-      title: RespondPanElementAddRequestApproveRequestItemsStatus
-    ListPrivateNetworkWorkspacesRequestInternalServerError:
+      title: GetAllPanAddElementRequestsRequestsItemsStatus
+    panRequestStatus:
+      type: string
+      enum:
+      - pending
+      - denied
+      title: panRequestStatus
+    AddWorkspaceToPrivateNetworkRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: AddWorkspaceToPrivateNetworkRequestUnauthorizedError
+    RemoveWorkspaceFromPrivateNetworkRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: ListPrivateNetworkWorkspacesRequestInternalServerError
-    CommonErrorTypeTitleDetailDetail:
-      oneOf:
-      - type: string
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
-    panError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      title: panError
-    RespondPanElementAddRequestDenyRequestItems:
+      title: RemoveWorkspaceFromPrivateNetworkRequestInternalServerError
+    PanRequestElementType:
+      type: string
+      enum:
+      - workspace
+      description: The `workspace` element type.
+      title: PanRequestElementType
+    DeletePanElementWorkspace:
       type: object
       properties:
         id:
-          type: integer
-          description: The request's ID.
-        createdAt:
           type: string
-          format: date-time
-          description: The date and time at which the request was created.
-        createdBy:
-          type: integer
-          description: The ID of the user who created the request.
-        message:
-          type: string
-          description: The user's optional message included in the request.
-        status:
-          $ref: '#/components/schemas/RespondPanElementAddRequestDenyRequestItemsStatus'
-          description: The request's status.
-        element:
-          $ref: '#/components/schemas/panRequestElement'
-        response:
-          $ref: '#/components/schemas/panRequestResponse'
-      description: Information about the Private API Network request.
-      title: RespondPanElementAddRequestDenyRequestItems
-    panAddedBy:
-      type: integer
-      title: panAddedBy
-    RespondPanElementAddRequestDenyRequestItemsStatus:
-      type: string
-      enum:
-      - approved
-      - denied
-      description: The request's status.
-      title: RespondPanElementAddRequestDenyRequestItemsStatus
-    ListPrivateNetworkAddRequestsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: ListPrivateNetworkAddRequestsRequestInternalServerError
-    createdBy:
-      type: integer
-      title: createdBy
-    RespondPanElementAddRequestBodyStatus:
-      type: string
-      enum:
-      - denied
-      - approved
-      description: The request's approval status.
-      title: RespondPanElementAddRequestBodyStatus
+          description: The element's ID.
+      description: The Private API Network `workspace` element type.
+      title: DeletePanElementWorkspace
     respondPanElementAddRequestApprove:
       type: object
       properties:
@@ -818,66 +1028,26 @@ components:
             $ref: '#/components/schemas/RespondPanElementAddRequestApproveRequestItems'
           description: A list of Private API Network requests.
       title: respondPanElementAddRequestApprove
-    ListPrivateNetworkWorkspacesRequestForbiddenError:
+    AddWorkspaceToPrivateNetworkRequestForbiddenError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: ListPrivateNetworkWorkspacesRequestForbiddenError
-    DeletePanElementWorkspace:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The element's ID.
-      description: The Private API Network `workspace` element type.
-      title: DeletePanElementWorkspace
-    RespondPanElementAddRequestApproveRequestItemsElementType:
-      type: string
-      enum:
-      - workspace
-      description: The `workspace` element type.
-      title: RespondPanElementAddRequestApproveRequestItemsElementType
-    RespondPanElementAddRequestApproveRequestItemsElement:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The element's ID.
-        name:
-          type: string
-          description: The element's name.
-        summary:
-          type:
-          - string
-          - 'null'
-          description: The element's short summary.
-        description:
-          type:
-          - string
-          - 'null'
-          description: The element's description.
-        type:
-          $ref: '#/components/schemas/RespondPanElementAddRequestApproveRequestItemsElementType'
-          description: The `workspace` element type.
-        createdBy:
-          type: integer
-          description: The ID of the user who added the element to the Private API Network.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time the element was added to the Private API Network.
-      description: Information about the requested element.
-      title: RespondPanElementAddRequestApproveRequestItemsElement
-    RespondPrivateNetworkAddRequestRequestInternalServerError:
+      title: AddWorkspaceToPrivateNetworkRequestForbiddenError
+    ListPrivateNetworkWorkspacesRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: RespondPrivateNetworkAddRequestRequestInternalServerError
-    sinceDateTime:
-      type: string
-      format: date-time
-      title: sinceDateTime
+      title: ListPrivateNetworkWorkspacesRequestInternalServerError
+    respondPanElementAddRequestDeny:
+      type: object
+      properties:
+        request:
+          type: array
+          items:
+            $ref: '#/components/schemas/RespondPanElementAddRequestDenyRequestItems'
+          description: A list of Private API Network requests.
+      title: respondPanElementAddRequestDeny
     GetAllPanAddElementRequestsRequestsItems:
       type: object
       properties:
@@ -903,199 +1073,20 @@ components:
           $ref: '#/components/schemas/panRequestResponse'
       description: Information about the request.
       title: GetAllPanAddElementRequestsRequestsItems
-    ListPrivateNetworkAddRequestsRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: ListPrivateNetworkAddRequestsRequestUnauthorizedError
-    PanElementCreatedType:
-      type: string
-      enum:
-      - workspace
-      description: The `workspace` element.
-      title: PanElementCreatedType
-    limitDefault1000:
-      type: integer
-      default: 1000
-      title: limitDefault1000
-    UpdatePanElementOrFolderRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdatePanElementOrFolderRequestInternalServerError
-    ListPrivateNetworkWorkspacesRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: ListPrivateNetworkWorkspacesRequestUnauthorizedError
-    PanCreateWorkspaceWorkspace:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The workspace's ID.
-        parentFolderId:
-          type: integer
-          default: 0
-          description: The `0` value.
-      required:
-      - id
-      title: PanCreateWorkspaceWorkspace
-    panParentFolderId:
-      type: integer
-      default: 0
-      title: panParentFolderId
-    ListPrivateNetworkAddRequestsRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/panError'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: ListPrivateNetworkAddRequestsRequestBadRequestError
-    panRequestedBy:
-      type: integer
-      title: panRequestedBy
-    PanRequestElementType:
-      type: string
-      enum:
-      - workspace
-      description: The `workspace` element type.
-      title: PanRequestElementType
-    RespondPrivateNetworkAddRequestRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/panError'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: RespondPrivateNetworkAddRequestRequestBadRequestError
-    RemoveWorkspaceFromPrivateNetworkRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/panError'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: RemoveWorkspaceFromPrivateNetworkRequestBadRequestError
-    panCreateWorkspace:
+    updatePanWorkspace:
       type: object
       properties:
         workspace:
-          $ref: '#/components/schemas/PanCreateWorkspaceWorkspace'
-      required:
-      - workspace
-      title: panCreateWorkspace
-    Private_API_Network_updatePanElementOrFolder_Response_200:
+          $ref: '#/components/schemas/UpdatePanWorkspaceWorkspace'
+      title: updatePanWorkspace
+    panRequestId:
+      type: integer
+      title: panRequestId
+    GetPanElementsFoldersItems:
       type: object
       properties: {}
-      description: Empty response body
-      title: Private API Network_updatePanElementOrFolder_Response_200
-    panRequestElement:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The element's ID.
-        type:
-          $ref: '#/components/schemas/PanRequestElementType'
-          description: The `workspace` element type.
-        name:
-          type: string
-          description: The element's name.
-        summary:
-          type:
-          - string
-          - 'null'
-          description: The element's short summary.
-        description:
-          type:
-          - string
-          - 'null'
-          description: The element's description.
-      description: Information about the requested element.
-      title: panRequestElement
-    GetAllPanAddElementRequestsRequestsItemsStatus:
-      type: string
-      enum:
-      - pending
-      - denied
-      description: The request's status.
-      title: GetAllPanAddElementRequestsRequestsItemsStatus
-    deletePanElement:
-      type: object
-      properties:
-        workspace:
-          $ref: '#/components/schemas/DeletePanElementWorkspace'
-          description: The Private API Network `workspace` element type.
-      title: deletePanElement
-    untilDateTime:
-      type: string
-      format: date-time
-      title: untilDateTime
-    CommonErrorNameMessageError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
-    UpdatePanWorkspaceWorkspace:
-      type: object
-      properties:
-        parentFolderId:
-          type: integer
-          description: The workspace's new parent folder ID.
-      title: UpdatePanWorkspaceWorkspace
-    GetPanElementsElementsItems:
-      type: object
-      properties:
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the element was created.
-        createdBy:
-          type: integer
-          description: The user who created the element.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the element was last updated.
-        updatedBy:
-          type: integer
-          description: The user ID of the user who updated the element.
-        addedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the element was published to your team's Private API Network. This value is the same as the `updatedAt` value.
-        addedBy:
-          type: integer
-          description: The user ID of the user who published the element.
-        description:
-          type:
-          - string
-          - 'null'
-          description: The element's description.
-        id:
-          type: string
-          description: The element's ID.
-        name:
-          type: string
-          description: The element's name.
-        summary:
-          type:
-          - string
-          - 'null'
-          description: The element's summary.
-        type:
-          type: string
-          description: The `workspace` element type.
-        parentFolderId:
-          type: integer
-          description: The `0` value.
-        href:
-          type: string
-          format: url
-          description: The element's HREF.
-      description: Information about the Private API Network element.
-      title: GetPanElementsElementsItems
-    RespondPanElementAddRequestApproveRequestItems:
+      title: GetPanElementsFoldersItems
+    RespondPanElementAddRequestDenyRequestItems:
       type: object
       properties:
         id:
@@ -1112,36 +1103,45 @@ components:
           type: string
           description: The user's optional message included in the request.
         status:
-          $ref: '#/components/schemas/RespondPanElementAddRequestApproveRequestItemsStatus'
+          $ref: '#/components/schemas/RespondPanElementAddRequestDenyRequestItemsStatus'
           description: The request's status.
         element:
-          $ref: '#/components/schemas/RespondPanElementAddRequestApproveRequestItemsElement'
-          description: Information about the requested element.
+          $ref: '#/components/schemas/panRequestElement'
+        response:
+          $ref: '#/components/schemas/panRequestResponse'
       description: Information about the Private API Network request.
-      title: RespondPanElementAddRequestApproveRequestItems
-    panElementName:
-      type: string
-      title: panElementName
-    commonErrorNameMessage:
+      title: RespondPanElementAddRequestDenyRequestItems
+    offset:
+      type: integer
+      default: 0
+      title: offset
+    commonErrorTypeTitleDetailStatus:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
           description: Information about the error.
-      title: commonErrorNameMessage
-    GetPanElementsFoldersItems:
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    respondPanElementAddRequestBody:
       type: object
-      properties: {}
-      title: GetPanElementsFoldersItems
-    workspaceId:
-      type: string
-      title: workspaceId
-    RemoveWorkspaceFromPrivateNetworkRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: RemoveWorkspaceFromPrivateNetworkRequestInternalServerError
+      properties:
+        status:
+          $ref: '#/components/schemas/RespondPanElementAddRequestBodyStatus'
+          description: The request's approval status.
+        response:
+          $ref: '#/components/schemas/RespondPanElementAddRequestBodyResponse'
+          description: If the request is denied, the response to the user's request.
+      required:
+      - status
+      title: respondPanElementAddRequestBody
   securitySchemes:
     PostmanApiKey:
       type: apiKey

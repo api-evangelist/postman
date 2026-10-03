@@ -610,48 +610,38 @@ paths:
               $ref: '#/components/schemas/pullEnvironment'
 components:
   schemas:
-    forkEnvironmentResponse:
-      type: object
-      properties:
-        environment:
-          $ref: '#/components/schemas/ForkEnvironmentResponseEnvironment'
-          description: Information about the forked environment.
-      title: forkEnvironmentResponse
-    ascDesc:
-      type: string
-      enum:
-      - asc
-      - desc
-      title: ascDesc
-    getEnvironment:
-      type: object
-      properties:
-        environment:
-          $ref: '#/components/schemas/getEnvironmentInfo'
-      title: getEnvironment
-    PutEnvironmentEnvironmentValuesItems:
+    PatchEnvironment400ErrorDetail:
       oneOf:
-      - $ref: '#/components/schemas/environmentVariables'
-      - $ref: '#/components/schemas/environmentVaultVariables'
-      title: PutEnvironmentEnvironmentValuesItems
-    PutEnvironmentRequestUnauthorizedError:
+      - type: string
+      - type: array
+        items:
+          type: string
+      description: Details about the occurrence of the error.
+      title: PatchEnvironment400ErrorDetail
+    mergeEnvironmentForkResponse:
+      type: object
+      properties:
+        environment:
+          $ref: '#/components/schemas/MergeEnvironmentForkResponseEnvironment'
+          description: Information about the merged environment.
+      title: mergeEnvironmentForkResponse
+    putEnvironment:
+      type: object
+      properties:
+        environment:
+          $ref: '#/components/schemas/PutEnvironmentEnvironment'
+          description: Information about the environment.
+      title: putEnvironment
+    patchEnvironmentAdd:
+      type: array
+      items:
+        $ref: '#/components/schemas/PatchEnvironmentAddItems'
+      title: patchEnvironmentAdd
+    ForkEnvironmentRequestUnauthorizedError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: PutEnvironmentRequestUnauthorizedError
-    deleteEnvironment:
-      type: object
-      properties:
-        environment:
-          $ref: '#/components/schemas/DeleteEnvironmentEnvironment'
-          description: Information about the environment.
-      title: deleteEnvironment
-    EnvironmentVariableSourceProvider:
-      type: string
-      enum:
-      - postman
-      description: The secret's provider.
-      title: EnvironmentVariableSourceProvider
+      title: ForkEnvironmentRequestUnauthorizedError
     ForkEnvironmentResponseEnvironment:
       type: object
       properties:
@@ -667,6 +657,43 @@ components:
           description: The forked environment's label.
       description: Information about the forked environment.
       title: ForkEnvironmentResponseEnvironment
+    environmentSecret:
+      type: boolean
+      description: If true, the variable is marked as secret and its value is retrieved from the mentioned provider in the source field.
+      title: environmentSecret
+    forkEnvironment:
+      type: object
+      properties:
+        forkName:
+          type: string
+          description: The forked environment's label.
+      required:
+      - forkName
+      title: forkEnvironment
+    ForkEnvironmentRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: ForkEnvironmentRequestInternalServerError
+    forkEnvironmentResponse:
+      type: object
+      properties:
+        environment:
+          $ref: '#/components/schemas/ForkEnvironmentResponseEnvironment'
+          description: Information about the forked environment.
+      title: forkEnvironmentResponse
+    commonErrorNameMessageDetails:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsError'
+      title: commonErrorNameMessageDetails
+    CreateEnvironmentEnvironmentValuesItems:
+      oneOf:
+      - $ref: '#/components/schemas/environmentVariables'
+      - $ref: '#/components/schemas/environmentVaultVariables'
+      title: CreateEnvironmentEnvironmentValuesItems
     getEnvironments:
       type: object
       properties:
@@ -676,184 +703,11 @@ components:
             $ref: '#/components/schemas/getEnvironmentsInfo'
           description: A list of environments.
       title: getEnvironments
-    MergeEnvironmentForkResponseEnvironment:
-      type: object
-      properties:
-        uid:
-          type: string
-          format: uid
-          description: The merged environment's ID.
-      description: Information about the merged environment.
-      title: MergeEnvironmentForkResponseEnvironment
-    EnvironmentVariablesType:
-      type: string
-      enum:
-      - secret
-      - default
-      description: 'The variable''s type:
-
-        - `secret` — The variable value is masked.
-
-        - `default` — The variable value is visible in plain text.
-
-        '
-      title: EnvironmentVariablesType
-    CommonErrorNameMessageDetailsErrorDetails:
-      oneOf:
-      - type: object
-        additionalProperties:
-          description: Any type
-      - type: array
-        items:
-          type: string
-      description: Information about the error.
-      title: CommonErrorNameMessageDetailsErrorDetails
-    sortByCreatedAt:
-      type: string
-      enum:
-      - createdAt
-      title: sortByCreatedAt
-    PatchEnvironmentRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: PatchEnvironmentRequestInternalServerError
-    pullEnvironment:
-      type: object
-      properties:
-        source:
-          type: string
-          format: uid
-          description: The source environment's unique ID to pull data from.
-      required:
-      - source
-      title: pullEnvironment
-    EnvironmentVariableSourcePostman:
-      type: object
-      properties:
-        secretId:
-          type: string
-          description: The variable's secret ID.
-        type:
-          $ref: '#/components/schemas/EnvironmentVariableSourcePostmanType'
-          description: 'The variable''s type:
-
-            - `cloud` — The variable value is synced and stored in the Postman Cloud.
-
-            '
-        vaultId:
-          type: string
-          description: The variable's ID in the Postman Vault.
-      description: Information about the Postman-specific source of the variable's value.
-      title: EnvironmentVariableSourcePostman
-    patchEnvironmentName:
-      type: array
-      items:
-        $ref: '#/components/schemas/PatchEnvironmentNameItems'
-      title: patchEnvironmentName
-    PatchEnvironmentRemoveItems:
-      type: object
-      properties:
-        op:
-          type: string
-          description: The `remove` operation.
-        path:
-          type: string
-          description: The [JSON Pointer syntax](https://datatracker.ietf.org/doc/html/rfc6901) that indicates the entry to update, in `/values/#` format, where `#` is the entry ID. The first record begins at the `0` value.
-      required:
-      - op
-      - path
-      title: PatchEnvironmentRemoveItems
-    CreateEnvironmentResponseEnvironment:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The environment's ID.
-        name:
-          type: string
-          description: The environment's name.
-        uid:
-          type: string
-          format: uid
-          description: The environment's unique ID.
-      description: Information about the environment.
-      title: CreateEnvironmentResponseEnvironment
-    putEnvironmentResponse:
-      type: object
-      properties:
-        environment:
-          $ref: '#/components/schemas/PutEnvironmentResponseEnvironment'
-          description: Information about the environment.
-      title: putEnvironmentResponse
-    PatchEnvironmentAddItemsValue:
-      oneOf:
-      - $ref: '#/components/schemas/environmentVariables'
-      - $ref: '#/components/schemas/environmentVaultVariables'
-      title: PatchEnvironmentAddItemsValue
-    CommonErrorNameMessageDetailsError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-        details:
-          $ref: '#/components/schemas/CommonErrorNameMessageDetailsErrorDetails'
-          description: Information about the error.
-      title: CommonErrorNameMessageDetailsError
-    createEnvironment:
-      type: object
-      properties:
-        environment:
-          $ref: '#/components/schemas/CreateEnvironmentEnvironment'
-          description: Information about the environment.
-      title: createEnvironment
-    GetEnvironmentRequestUnauthorizedError:
+    GetEnvironmentsRequestUnauthorizedError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetEnvironmentRequestUnauthorizedError
-    EnvironmentVaultVariablesType:
-      type: string
-      enum:
-      - secret
-      - default
-      description: 'The variable''s type:
-
-        - `secret` — The variable value is masked.
-
-        - `default` — The variable value is visible in plain text.
-
-        '
-      title: EnvironmentVaultVariablesType
-    limit:
-      type: integer
-      default: 10
-      title: limit
-    DeleteEnvironmentRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteEnvironmentRequestUnauthorizedError
-    commonErrorTypeTitleDetailStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
+      title: GetEnvironmentsRequestUnauthorizedError
     PutEnvironmentResponseEnvironment:
       type: object
       properties:
@@ -869,20 +723,27 @@ components:
           description: The environment's unique ID.
       description: Information about the environment.
       title: PutEnvironmentResponseEnvironment
-    mergeEnvironmentFork:
+    createEnvironmentResponse:
       type: object
       properties:
-        source:
-          type: string
-          format: uid
-          description: The source environment's unique ID to merge data from.
-        deleteSource:
-          type: boolean
-          default: false
-          description: If true, the forked environment will be deleted.
-      required:
-      - source
-      title: mergeEnvironmentFork
+        environment:
+          $ref: '#/components/schemas/CreateEnvironmentResponseEnvironment'
+          description: Information about the environment.
+      title: createEnvironmentResponse
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    GetEnvironmentRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetEnvironmentRequestInternalServerError
     environmentVaultVariables:
       type: object
       properties:
@@ -913,28 +774,69 @@ components:
           description: The variable's description.
       description: Information about the variable stored in the Postman Vault. This property only returns when a variable is defined as secret.
       title: environmentVaultVariables
-    mergeEnvironmentForkResponse:
+    EnvironmentVaultVariablesType:
+      type: string
+      enum:
+      - secret
+      - default
+      description: 'The variable''s type:
+
+        - `secret` — The variable value is masked.
+
+        - `default` — The variable value is visible in plain text.
+
+        '
+      title: EnvironmentVaultVariablesType
+    sortByCreatedAt:
+      type: string
+      enum:
+      - createdAt
+      title: sortByCreatedAt
+    PutEnvironmentEnvironmentValuesItems:
+      oneOf:
+      - $ref: '#/components/schemas/environmentVariables'
+      - $ref: '#/components/schemas/environmentVaultVariables'
+      title: PutEnvironmentEnvironmentValuesItems
+    environmentVariables:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: If true, the variable is enabled.
+        key:
+          type: string
+          description: The variable's name.
+        value:
+          type: string
+          description: The variable's value.
+        type:
+          $ref: '#/components/schemas/EnvironmentVariablesType'
+          description: 'The variable''s type:
+
+            - `secret` — The variable value is masked.
+
+            - `default` — The variable value is visible in plain text.
+
+            '
+        description:
+          type: string
+          description: The variable's description.
+      description: Information about the variable.
+      title: environmentVariables
+    getEnvironment:
       type: object
       properties:
         environment:
-          $ref: '#/components/schemas/MergeEnvironmentForkResponseEnvironment'
-          description: Information about the merged environment.
-      title: mergeEnvironmentForkResponse
-    environmentForksMeta:
+          $ref: '#/components/schemas/getEnvironmentInfo'
+      title: getEnvironment
+    createEnvironment:
       type: object
       properties:
-        total:
-          type: number
-          format: double
-          description: The total number of forked environments.
-        nextCursor:
-          type:
-          - string
-          - 'null'
-          description: The pagination cursor that points to the next record in the results set.
-      description: The response's meta information for paginated results.
-      title: environmentForksMeta
-    getEnvironmentsInfo:
+        environment:
+          $ref: '#/components/schemas/CreateEnvironmentEnvironment'
+          description: Information about the environment.
+      title: createEnvironment
+    CreateEnvironmentResponseEnvironment:
       type: object
       properties:
         id:
@@ -943,49 +845,190 @@ components:
         name:
           type: string
           description: The environment's name.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the environment was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the environment was last updated.
-        owner:
-          type: string
-          description: The environment owner's ID.
         uid:
           type: string
           format: uid
           description: The environment's unique ID.
-        isPublic:
-          type: boolean
-          description: If true, the environment is public and visible to all users.
       description: Information about the environment.
-      title: getEnvironmentsInfo
-    environmentUid:
-      type: string
-      format: uid
-      title: environmentUid
-    commonErrorNameMessage:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
+      title: CreateEnvironmentResponseEnvironment
     GetEnvironmentsRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
       title: GetEnvironmentsRequestInternalServerError
+    EnvironmentVariablesType:
+      type: string
+      enum:
+      - secret
+      - default
+      description: 'The variable''s type:
+
+        - `secret` — The variable value is masked.
+
+        - `default` — The variable value is visible in plain text.
+
+        '
+      title: EnvironmentVariablesType
+    EnvironmentVariableSourceProvider:
+      type: string
+      enum:
+      - postman
+      description: The secret's provider.
+      title: EnvironmentVariableSourceProvider
+    CommonErrorNameMessageDetailsError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+        details:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsErrorDetails'
+          description: Information about the error.
+      title: CommonErrorNameMessageDetailsError
+    EnvironmentVariableSourcePostman:
+      type: object
+      properties:
+        secretId:
+          type: string
+          description: The variable's secret ID.
+        type:
+          $ref: '#/components/schemas/EnvironmentVariableSourcePostmanType'
+          description: 'The variable''s type:
+
+            - `cloud` — The variable value is synced and stored in the Postman Cloud.
+
+            '
+        vaultId:
+          type: string
+          description: The variable's ID in the Postman Vault.
+      description: Information about the Postman-specific source of the variable's value.
+      title: EnvironmentVariableSourcePostman
+    DeleteEnvironmentRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteEnvironmentRequestInternalServerError
+    MergeEnvironmentForkResponseEnvironment:
+      type: object
+      properties:
+        uid:
+          type: string
+          format: uid
+          description: The merged environment's ID.
+      description: Information about the merged environment.
+      title: MergeEnvironmentForkResponseEnvironment
+    GetEnvironmentRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetEnvironmentRequestUnauthorizedError
+    PullEnvironmentRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: PullEnvironmentRequestUnauthorizedError
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    PutEnvironmentRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: PutEnvironmentRequestUnauthorizedError
+    GetEnvironmentForksRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetEnvironmentForksRequestUnauthorizedError
+    PatchEnvironmentNameItems:
+      type: object
+      properties:
+        op:
+          type: string
+          description: The `replace` operation.
+        path:
+          type: string
+          description: The `/name` value.
+        value:
+          type: string
+          description: The environment's updated name.
+      required:
+      - op
+      - path
+      - value
+      description: Information about the environment.
+      title: PatchEnvironmentNameItems
+    mergeEnvironmentFork:
+      type: object
+      properties:
+        source:
+          type: string
+          format: uid
+          description: The source environment's unique ID to merge data from.
+        deleteSource:
+          type: boolean
+          default: false
+          description: If true, the forked environment will be deleted.
+      required:
+      - source
+      title: mergeEnvironmentFork
+    pullEnvironmentResponse:
+      type: object
+      properties:
+        environment:
+          $ref: '#/components/schemas/PullEnvironmentResponseEnvironment'
+          description: Information about the merged environment.
+      title: pullEnvironmentResponse
+    PullEnvironmentRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: PullEnvironmentRequestInternalServerError
+    ascDesc:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: ascDesc
+    CreateEnvironmentRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateEnvironmentRequestInternalServerError
+    PatchEnvironmentInfoValuesItems:
+      oneOf:
+      - $ref: '#/components/schemas/environmentVariables'
+      - $ref: '#/components/schemas/environmentVaultVariables'
+      title: PatchEnvironmentInfoValuesItems
+    GetEnvironmentRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetEnvironmentRequestBadRequestError
+    putEnvironmentResponse:
+      type: object
+      properties:
+        environment:
+          $ref: '#/components/schemas/PutEnvironmentResponseEnvironment'
+          description: Information about the environment.
+      title: putEnvironmentResponse
     getEnvironmentInfo:
       type: object
       properties:
@@ -1016,13 +1059,126 @@ components:
           description: If true, the environment is public and visible to all users.
       description: Information about the environment.
       title: getEnvironmentInfo
-    pullEnvironmentResponse:
+    CreateEnvironmentRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateEnvironmentRequestUnauthorizedError
+    getEnvironmentsInfo:
       type: object
       properties:
-        environment:
-          $ref: '#/components/schemas/PullEnvironmentResponseEnvironment'
-          description: Information about the merged environment.
-      title: pullEnvironmentResponse
+        id:
+          type: string
+          description: The environment's ID.
+        name:
+          type: string
+          description: The environment's name.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the environment was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the environment was last updated.
+        owner:
+          type: string
+          description: The environment owner's ID.
+        uid:
+          type: string
+          format: uid
+          description: The environment's unique ID.
+        isPublic:
+          type: boolean
+          description: If true, the environment is public and visible to all users.
+      description: Information about the environment.
+      title: getEnvironmentsInfo
+    PutEnvironmentRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: PutEnvironmentRequestBadRequestError
+    commonErrorTypeTitleDetailStatusInstance:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri-reference
+          description: The [URI reference](https://www.rfc-editor.org/rfc/rfc3986) that identifies the type of problem.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: An explanation about the problem.
+        status:
+          type: integer
+          description: The HTTP status code generated by the origin server.
+        instance:
+          type: string
+          description: The URI reference that identifies the specific occurrence of the problem.
+      title: commonErrorTypeTitleDetailStatusInstance
+    DeleteEnvironmentRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteEnvironmentRequestNotFoundError
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    environmentUid:
+      type: string
+      format: uid
+      title: environmentUid
+    getEnvironmentForks:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/environmentForkInfo'
+          description: A list of the environment's forks.
+        meta:
+          $ref: '#/components/schemas/environmentForksMeta'
+      title: getEnvironmentForks
+    MergeEnvironmentForkRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: MergeEnvironmentForkRequestUnauthorizedError
+    cursor:
+      type: string
+      title: cursor
+    pullEnvironment:
+      type: object
+      properties:
+        source:
+          type: string
+          format: uid
+          description: The source environment's unique ID to pull data from.
+      required:
+      - source
+      title: pullEnvironment
+    environmentId:
+      type: string
+      title: environmentId
+    DeleteEnvironmentRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteEnvironmentRequestUnauthorizedError
     patchEnvironmentInfo:
       type: object
       properties:
@@ -1054,74 +1210,22 @@ components:
           description: The environment's unique ID.
       description: Information about the environment.
       title: patchEnvironmentInfo
-    patchEnvironment400Error:
-      type: object
-      properties:
-        title:
-          type: string
-          description: A short summary of the error.
-        status:
-          type: number
-          format: double
-          description: The error's HTTP status code.
-        detail:
-          $ref: '#/components/schemas/PatchEnvironment400ErrorDetail'
-          description: Details about the occurrence of the error.
-        type:
-          type: string
-          format: uri
-          description: The error type.
-        instance:
-          type: string
-          description: The URI reference that identifies the specific occurrence of the problem.
-      title: patchEnvironment400Error
-    GetEnvironmentRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetEnvironmentRequestInternalServerError
-    DeleteEnvironmentEnvironment:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The deleted environment's ID.
-        uid:
-          type: string
-          format: uid
-          description: The deleted environment's unique ID.
-      description: Information about the environment.
-      title: DeleteEnvironmentEnvironment
-    PutEnvironmentEnvironment:
+    CommonErrorNameMessageError:
       type: object
       properties:
         name:
           type: string
-          description: The environment's name.
-        values:
-          type: array
-          items:
-            $ref: '#/components/schemas/PutEnvironmentEnvironmentValuesItems'
-          description: Information about the environment's variables.
-      description: Information about the environment.
-      title: PutEnvironmentEnvironment
-    createEnvironmentResponse:
-      type: object
-      properties:
-        environment:
-          $ref: '#/components/schemas/CreateEnvironmentResponseEnvironment'
-          description: Information about the environment.
-      title: createEnvironmentResponse
-    cursor:
-      type: string
-      title: cursor
-    MergeEnvironmentForkRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: MergeEnvironmentForkRequestInternalServerError
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    patchEnvironmentReplace:
+      type: array
+      items:
+        $ref: '#/components/schemas/PatchEnvironmentReplaceItems'
+      title: patchEnvironmentReplace
     PatchEnvironmentAddItems:
       type: object
       properties:
@@ -1138,263 +1242,7 @@ components:
       - path
       - value
       title: PatchEnvironmentAddItems
-    PatchEnvironmentReplaceItems:
-      type: object
-      properties:
-        op:
-          type: string
-          description: The `replace` operation.
-        path:
-          type: string
-          description: 'The [JSON Pointer syntax](https://datatracker.ietf.org/doc/html/rfc6901) that indicates the entry to update, in `/values/#/{value}` format, where:
-
-            - `#` — The entry ID. The first record begins at the `0` value.
-
-            - `{value}` — The variable property to update. Accepts `key`, `value`, `type`, and `enable`.
-
-            '
-        value:
-          type: string
-          description: The variable's value.
-      required:
-      - op
-      - path
-      - value
-      title: PatchEnvironmentReplaceItems
-    GetEnvironmentsRequestNotFoundError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetEnvironmentsRequestNotFoundError
-    PullEnvironmentRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: PullEnvironmentRequestUnauthorizedError
-    environmentVariableSource:
-      type: object
-      properties:
-        postman:
-          $ref: '#/components/schemas/EnvironmentVariableSourcePostman'
-          description: Information about the Postman-specific source of the variable's value.
-        provider:
-          $ref: '#/components/schemas/EnvironmentVariableSourceProvider'
-          description: The secret's provider.
-      description: Information about the source of the variable's value.
-      title: environmentVariableSource
-    CommonErrorNameMessageError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
-    environmentSecret:
-      type: boolean
-      description: If true, the variable is marked as secret and its value is retrieved from the mentioned provider in the source field.
-      title: environmentSecret
-    CreateEnvironmentRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateEnvironmentRequestInternalServerError
-    commonErrorNameMessageDetails:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageDetailsError'
-      title: commonErrorNameMessageDetails
-    workspaceId:
-      type: string
-      title: workspaceId
-    GetEnvironmentForksRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetEnvironmentForksRequestUnauthorizedError
-    GetEnvironmentsRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetEnvironmentsRequestUnauthorizedError
-    CreateEnvironmentRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateEnvironmentRequestForbiddenError
-    CreateEnvironmentEnvironmentValuesItems:
-      oneOf:
-      - $ref: '#/components/schemas/environmentVariables'
-      - $ref: '#/components/schemas/environmentVaultVariables'
-      title: CreateEnvironmentEnvironmentValuesItems
-    commonErrorTypeTitleDetail:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of error.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
-          description: Information about the error.
-      title: commonErrorTypeTitleDetail
-    PatchEnvironmentInfoValuesItems:
-      oneOf:
-      - $ref: '#/components/schemas/environmentVariables'
-      - $ref: '#/components/schemas/environmentVaultVariables'
-      title: PatchEnvironmentInfoValuesItems
-    PullEnvironmentRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: PullEnvironmentRequestInternalServerError
-    GetEnvironmentRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetEnvironmentRequestBadRequestError
-    patchEnvironmentResponse:
-      type: object
-      properties:
-        environment:
-          $ref: '#/components/schemas/patchEnvironmentInfo'
-      title: patchEnvironmentResponse
-    PutEnvironmentRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: PutEnvironmentRequestInternalServerError
-    EnvironmentVariableSourcePostmanType:
-      type: string
-      enum:
-      - cloud
-      description: 'The variable''s type:
-
-        - `cloud` — The variable value is synced and stored in the Postman Cloud.
-
-        '
-      title: EnvironmentVariableSourcePostmanType
-    CreateEnvironmentRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateEnvironmentRequestBadRequestError
-    GetEnvironmentForksRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetEnvironmentForksRequestInternalServerError
-    PatchEnvironmentNameItems:
-      type: object
-      properties:
-        op:
-          type: string
-          description: The `replace` operation.
-        path:
-          type: string
-          description: The `/name` value.
-        value:
-          type: string
-          description: The environment's updated name.
-      required:
-      - op
-      - path
-      - value
-      description: Information about the environment.
-      title: PatchEnvironmentNameItems
-    PatchEnvironmentRequestNotFoundError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: PatchEnvironmentRequestNotFoundError
-    DeleteEnvironmentRequestNotFoundError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteEnvironmentRequestNotFoundError
-    PullEnvironmentResponseEnvironment:
-      type: object
-      properties:
-        uid:
-          type: string
-          format: uid
-          description: The merged environment's unique ID.
-      description: Information about the merged environment.
-      title: PullEnvironmentResponseEnvironment
-    patchEnvironmentReplace:
-      type: array
-      items:
-        $ref: '#/components/schemas/PatchEnvironmentReplaceItems'
-      title: patchEnvironmentReplace
-    CommonErrorTypeTitleDetailDetail:
-      oneOf:
-      - type: string
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
-    GetEnvironmentInfoValuesItems:
-      oneOf:
-      - $ref: '#/components/schemas/environmentVariables'
-      - $ref: '#/components/schemas/environmentVaultVariables'
-      title: GetEnvironmentInfoValuesItems
-    environmentId:
-      type: string
-      title: environmentId
-    forkEnvironment:
-      type: object
-      properties:
-        forkName:
-          type: string
-          description: The forked environment's label.
-      required:
-      - forkName
-      title: forkEnvironment
-    ForkEnvironmentRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: ForkEnvironmentRequestUnauthorizedError
-    patchEnvironmentRemove:
-      type: array
-      items:
-        $ref: '#/components/schemas/PatchEnvironmentRemoveItems'
-      title: patchEnvironmentRemove
-    putEnvironment:
-      type: object
-      properties:
-        environment:
-          $ref: '#/components/schemas/PutEnvironmentEnvironment'
-          description: Information about the environment.
-      title: putEnvironment
-    patchEnvironmentAdd:
-      type: array
-      items:
-        $ref: '#/components/schemas/PatchEnvironmentAddItems'
-      title: patchEnvironmentAdd
-    getEnvironmentForks:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/environmentForkInfo'
-          description: A list of the environment's forks.
-        meta:
-          $ref: '#/components/schemas/environmentForksMeta'
-      title: getEnvironmentForks
-    CreateEnvironmentEnvironment:
+    PutEnvironmentEnvironment:
       type: object
       properties:
         name:
@@ -1403,94 +1251,20 @@ components:
         values:
           type: array
           items:
-            $ref: '#/components/schemas/CreateEnvironmentEnvironmentValuesItems'
+            $ref: '#/components/schemas/PutEnvironmentEnvironmentValuesItems'
           description: Information about the environment's variables.
-      required:
-      - name
       description: Information about the environment.
-      title: CreateEnvironmentEnvironment
-    PutEnvironmentRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: PutEnvironmentRequestBadRequestError
-    commonErrorTypeTitleDetailStatusInstance:
-      type: object
-      properties:
-        type:
-          type: string
-          format: uri-reference
-          description: The [URI reference](https://www.rfc-editor.org/rfc/rfc3986) that identifies the type of problem.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: An explanation about the problem.
-        status:
-          type: integer
-          description: The HTTP status code generated by the origin server.
-        instance:
-          type: string
-          description: The URI reference that identifies the specific occurrence of the problem.
-      title: commonErrorTypeTitleDetailStatusInstance
-    CreateEnvironmentRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateEnvironmentRequestUnauthorizedError
-    PatchEnvironment400ErrorDetail:
-      oneOf:
-      - type: string
-      - type: array
-        items:
-          type: string
-      description: Details about the occurrence of the error.
-      title: PatchEnvironment400ErrorDetail
-    MergeEnvironmentForkRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: MergeEnvironmentForkRequestUnauthorizedError
-    environmentVariables:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: If true, the variable is enabled.
-        key:
-          type: string
-          description: The variable's name.
-        value:
-          type: string
-          description: The variable's value.
-        type:
-          $ref: '#/components/schemas/EnvironmentVariablesType'
-          description: 'The variable''s type:
-
-            - `secret` — The variable value is masked.
-
-            - `default` — The variable value is visible in plain text.
-
-            '
-        description:
-          type: string
-          description: The variable's description.
-      description: Information about the variable.
-      title: environmentVariables
-    DeleteEnvironmentRequestInternalServerError:
+      title: PutEnvironmentEnvironment
+    limit:
+      type: integer
+      default: 10
+      title: limit
+    GetEnvironmentForksRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteEnvironmentRequestInternalServerError
-    Environments_patchEnvironment_Request:
-      oneOf:
-      - $ref: '#/components/schemas/patchEnvironmentAdd'
-      - $ref: '#/components/schemas/patchEnvironmentName'
-      - $ref: '#/components/schemas/patchEnvironmentReplace'
-      - $ref: '#/components/schemas/patchEnvironmentRemove'
-      title: Environments_patchEnvironment_Request
+      title: GetEnvironmentForksRequestInternalServerError
     environmentForkInfo:
       type: object
       properties:
@@ -1514,12 +1288,238 @@ components:
           description: The date and time at which the fork was last updated.
       description: Information about the forked environment.
       title: environmentForkInfo
-    ForkEnvironmentRequestInternalServerError:
+    CreateEnvironmentRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateEnvironmentRequestBadRequestError
+    GetEnvironmentsRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetEnvironmentsRequestNotFoundError
+    patchEnvironment400Error:
+      type: object
+      properties:
+        title:
+          type: string
+          description: A short summary of the error.
+        status:
+          type: number
+          format: double
+          description: The error's HTTP status code.
+        detail:
+          $ref: '#/components/schemas/PatchEnvironment400ErrorDetail'
+          description: Details about the occurrence of the error.
+        type:
+          type: string
+          format: uri
+          description: The error type.
+        instance:
+          type: string
+          description: The URI reference that identifies the specific occurrence of the problem.
+      title: patchEnvironment400Error
+    PullEnvironmentResponseEnvironment:
+      type: object
+      properties:
+        uid:
+          type: string
+          format: uid
+          description: The merged environment's unique ID.
+      description: Information about the merged environment.
+      title: PullEnvironmentResponseEnvironment
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    patchEnvironmentRemove:
+      type: array
+      items:
+        $ref: '#/components/schemas/PatchEnvironmentRemoveItems'
+      title: patchEnvironmentRemove
+    CommonErrorNameMessageDetailsErrorDetails:
+      oneOf:
+      - type: object
+        additionalProperties:
+          description: Any type
+      - type: array
+        items:
+          type: string
+      description: Information about the error.
+      title: CommonErrorNameMessageDetailsErrorDetails
+    CreateEnvironmentRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateEnvironmentRequestForbiddenError
+    PatchEnvironmentRemoveItems:
+      type: object
+      properties:
+        op:
+          type: string
+          description: The `remove` operation.
+        path:
+          type: string
+          description: The [JSON Pointer syntax](https://datatracker.ietf.org/doc/html/rfc6901) that indicates the entry to update, in `/values/#` format, where `#` is the entry ID. The first record begins at the `0` value.
+      required:
+      - op
+      - path
+      title: PatchEnvironmentRemoveItems
+    patchEnvironmentName:
+      type: array
+      items:
+        $ref: '#/components/schemas/PatchEnvironmentNameItems'
+      title: patchEnvironmentName
+    EnvironmentVariableSourcePostmanType:
+      type: string
+      enum:
+      - cloud
+      description: 'The variable''s type:
+
+        - `cloud` — The variable value is synced and stored in the Postman Cloud.
+
+        '
+      title: EnvironmentVariableSourcePostmanType
+    deleteEnvironment:
+      type: object
+      properties:
+        environment:
+          $ref: '#/components/schemas/DeleteEnvironmentEnvironment'
+          description: Information about the environment.
+      title: deleteEnvironment
+    PutEnvironmentRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: ForkEnvironmentRequestInternalServerError
+      title: PutEnvironmentRequestInternalServerError
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    CreateEnvironmentEnvironment:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The environment's name.
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateEnvironmentEnvironmentValuesItems'
+          description: Information about the environment's variables.
+      required:
+      - name
+      description: Information about the environment.
+      title: CreateEnvironmentEnvironment
+    workspaceId:
+      type: string
+      title: workspaceId
+    PatchEnvironmentReplaceItems:
+      type: object
+      properties:
+        op:
+          type: string
+          description: The `replace` operation.
+        path:
+          type: string
+          description: 'The [JSON Pointer syntax](https://datatracker.ietf.org/doc/html/rfc6901) that indicates the entry to update, in `/values/#/{value}` format, where:
+
+            - `#` — The entry ID. The first record begins at the `0` value.
+
+            - `{value}` — The variable property to update. Accepts `key`, `value`, `type`, and `enable`.
+
+            '
+        value:
+          type: string
+          description: The variable's value.
+      required:
+      - op
+      - path
+      - value
+      title: PatchEnvironmentReplaceItems
+    DeleteEnvironmentEnvironment:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The deleted environment's ID.
+        uid:
+          type: string
+          format: uid
+          description: The deleted environment's unique ID.
+      description: Information about the environment.
+      title: DeleteEnvironmentEnvironment
+    GetEnvironmentInfoValuesItems:
+      oneOf:
+      - $ref: '#/components/schemas/environmentVariables'
+      - $ref: '#/components/schemas/environmentVaultVariables'
+      title: GetEnvironmentInfoValuesItems
+    PatchEnvironmentRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatusInstance'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: PatchEnvironmentRequestNotFoundError
+    environmentVariableSource:
+      type: object
+      properties:
+        postman:
+          $ref: '#/components/schemas/EnvironmentVariableSourcePostman'
+          description: Information about the Postman-specific source of the variable's value.
+        provider:
+          $ref: '#/components/schemas/EnvironmentVariableSourceProvider'
+          description: The secret's provider.
+      description: Information about the source of the variable's value.
+      title: environmentVariableSource
+    patchEnvironmentResponse:
+      type: object
+      properties:
+        environment:
+          $ref: '#/components/schemas/patchEnvironmentInfo'
+      title: patchEnvironmentResponse
+    PatchEnvironmentAddItemsValue:
+      oneOf:
+      - $ref: '#/components/schemas/environmentVariables'
+      - $ref: '#/components/schemas/environmentVaultVariables'
+      title: PatchEnvironmentAddItemsValue
+    environmentForksMeta:
+      type: object
+      properties:
+        total:
+          type: number
+          format: double
+          description: The total number of forked environments.
+        nextCursor:
+          type:
+          - string
+          - 'null'
+          description: The pagination cursor that points to the next record in the results set.
+      description: The response's meta information for paginated results.
+      title: environmentForksMeta
+    Environments_patchEnvironment_Request:
+      oneOf:
+      - $ref: '#/components/schemas/patchEnvironmentAdd'
+      - $ref: '#/components/schemas/patchEnvironmentName'
+      - $ref: '#/components/schemas/patchEnvironmentReplace'
+      - $ref: '#/components/schemas/patchEnvironmentRemove'
+      title: Environments_patchEnvironment_Request
+    MergeEnvironmentForkRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: MergeEnvironmentForkRequestInternalServerError
+    PatchEnvironmentRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: PatchEnvironmentRequestInternalServerError
   securitySchemes:
     PostmanApiKey:
       type: apiKey

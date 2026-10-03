@@ -612,62 +612,58 @@ paths:
                 $ref: '#/components/schemas/GetComponentVersionRequestInternalServerError'
 components:
   schemas:
-    CreateComponentVersionSource:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CreateComponentVersionSourceType'
-          description: The `draft` value.
-      description: The source to publish the version from. Defaults to the component's current draft.
-      title: CreateComponentVersionSource
-    GetComponentVersionRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetComponentVersionRequestForbiddenError
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    GetComponentRequestInternalServerError:
+    componentIncludeFields:
+      type: string
+      title: componentIncludeFields
+    componentHasVersions:
+      type: boolean
+      title: componentHasVersions
+    GetAllComponentsRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetComponentRequestInternalServerError
-    commonErrorTypeTitleDetail:
+      title: GetAllComponentsRequestInternalServerError
+    getComponentDraft:
       type: object
       properties:
-        type:
+        content:
           type: string
-          description: The type of error.
-        title:
+          description: The component's draft content.
+        format:
           type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
-          description: Information about the error.
-      title: commonErrorTypeTitleDetail
-    updateComponent:
-      oneOf:
-      - description: Any type
-      - description: Any type
-      title: updateComponent
-    createComponentResponse:
+          description: The component draft's content format.
+      title: getComponentDraft
+    CreateComponentVersionSourceType:
+      type: string
+      enum:
+      - draft
+      description: The `draft` value.
+      title: CreateComponentVersionSourceType
+    componentVersionData:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/componentId'
-      description: Information about the component.
-      title: createComponentResponse
-    UpdateComponentRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateComponentRequestInternalServerError
+          $ref: '#/components/schemas/componentVersionId'
+        label:
+          type: string
+          description: The component version's label.
+        url:
+          type: string
+          format: uri
+          description: The URL where the component version can be accessed.
+        format:
+          type: string
+          description: The component version's content format.
+        publishedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the component version was published.
+        content:
+          type: string
+          description: The version's content. This returns when you include the `include` parameter.
+      description: Information about a component's version.
+      title: componentVersionData
     ComponentDataLatestVersion:
       oneOf:
       - type: string
@@ -679,37 +675,13 @@ components:
 
         '
       title: ComponentDataLatestVersion
-    componentIncludeFields:
-      type: string
-      title: componentIncludeFields
-    UpdateComponentDraftRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateComponentDraftRequestUnauthorizedError
-    updateComponentResponse:
+    createComponentResponse:
       type: object
       properties:
         id:
           $ref: '#/components/schemas/componentId'
-        name:
-          type: string
-          description: The component's name.
-        status:
-          $ref: '#/components/schemas/componentStatus'
       description: Information about the component.
-      title: updateComponentResponse
-    GetComponentDraftRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetComponentDraftRequestUnauthorizedError
-    UpdateComponentDraftRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateComponentDraftRequestInternalServerError
+      title: createComponentResponse
     commonErrorTypeTitleDetailStatus:
       type: object
       properties:
@@ -725,49 +697,130 @@ components:
           type: integer
           description: The error's HTTP status code.
       title: commonErrorTypeTitleDetailStatus
-    GetComponentRequestForbiddenError:
+    UpdateComponentDraftRequestInternalServerError:
       oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetComponentRequestForbiddenError
-    GetAllComponentsRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetAllComponentsRequestUnauthorizedError
-    UpdateComponentDraftRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateComponentDraftRequestForbiddenError
+      title: UpdateComponentDraftRequestInternalServerError
     componentVersionId:
       type: string
       description: The component version's ID.
       title: componentVersionId
-    componentStatus:
-      type: string
-      enum:
-      - active
-      - archived
-      description: 'The component''s lifecycle state:
-
-        - `active` — The component is active and can be edited and published.
-
-        - `archived` — The component is archived and read-only. Archived components can''t be edited or published, but their existing versions remain accessible.
-
-        '
-      title: componentStatus
-    getAllComponents:
+    commonErrorNameMessage:
       type: object
       properties:
-        meta:
-          $ref: '#/components/schemas/meta'
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    UpdateComponentRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateComponentRequestInternalServerError
+    GetComponentDraftRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentDraftRequestForbiddenError
+    createComponentVersionResponse:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/componentVersionId'
+      description: Information about the component version.
+      title: createComponentVersionResponse
+    componentLibraryInclude:
+      type: string
+      title: componentLibraryInclude
+    componentId:
+      type: string
+      description: The component's ID.
+      title: componentId
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    GetComponentRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentRequestInternalServerError
+    GetComponentVersionsRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentVersionsRequestUnauthorizedError
+    componentType:
+      type: string
+      enum:
+      - OAS2
+      - OAS3
+      - OAS3_1
+      description: The component's type. Corresponds to the specification that the component's content adheres to.
+      title: componentType
+    meta:
+      type: object
+      properties:
+        nextCursor:
+          type:
+          - string
+          - 'null'
+          description: The pagination cursor that points to the next record in the results set.
+      title: meta
+    updateComponentResponse:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/componentId'
+        name:
+          type: string
+          description: The component's name.
+        status:
+          $ref: '#/components/schemas/componentStatus'
+      description: Information about the component.
+      title: updateComponentResponse
+    GetComponentVersionRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentVersionRequestForbiddenError
+    componentContentFormatData:
+      type: string
+      enum:
+      - JSON
+      - YAML
+      description: The component's content format.
+      title: componentContentFormatData
+    getComponent:
+      type: object
+      properties:
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/componentData'
-          description: A list of components.
-      title: getAllComponents
+          $ref: '#/components/schemas/componentData'
+      title: getComponent
     CommonErrorTypeTitleDetailDetail:
       oneOf:
       - type: string
@@ -776,76 +829,19 @@ components:
           description: Any type
       description: Information about the error.
       title: CommonErrorTypeTitleDetailDetail
-    GetAllComponentsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetAllComponentsRequestInternalServerError
-    CreateComponentVersionSourceType:
-      type: string
-      enum:
-      - draft
-      description: The `draft` value.
-      title: CreateComponentVersionSourceType
-    CreateComponentRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateComponentRequestUnauthorizedError
-    CreateComponentVersionRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateComponentVersionRequestUnauthorizedError
-    GetComponentVersionsRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetComponentVersionsRequestUnauthorizedError
-    createComponentVersionResponse:
+    updateComponentDraftResponse:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/componentVersionId'
-      description: Information about the component version.
-      title: createComponentVersionResponse
+          type: string
+          description: The component draft's ID.
+      description: Information about the component draft.
+      title: updateComponentDraftResponse
     UpdateComponentRequestForbiddenError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
       title: UpdateComponentRequestForbiddenError
-    getComponent:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/componentData'
-      title: getComponent
-    createComponent:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The component's name. This must be unique within the team and can only contain letters, digits, hyphens, underscores, and periods and can't exceed 60 characters.
-        type:
-          $ref: '#/components/schemas/componentType'
-        content:
-          type: string
-          description: The component's content, up to a maximum of 500 KB (UTF-8).
-        format:
-          $ref: '#/components/schemas/componentContentFormatData'
-          default: YAML
-          description: The component's content format. Defaults to YAML.
-      required:
-      - name
-      - type
-      - content
-      title: createComponent
-    GetComponentVersionsRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetComponentVersionsRequestForbiddenError
     getComponentVersions:
       type: object
       properties:
@@ -857,6 +853,16 @@ components:
             $ref: '#/components/schemas/componentVersionData'
           description: A list of the component's versions.
       title: getComponentVersions
+    updateComponentDraft:
+      type: object
+      properties:
+        content:
+          type: string
+          description: The component's contents, up to a maximum of 500 KB (UTF-8).
+        format:
+          $ref: '#/components/schemas/componentContentFormatData'
+      description: Information about the component draft.
+      title: updateComponentDraft
     componentData:
       type: object
       properties:
@@ -897,129 +903,85 @@ components:
             '
       description: Information about the component.
       title: componentData
-    componentHasVersions:
-      type: boolean
-      title: componentHasVersions
-    componentContentFormatData:
-      type: string
-      enum:
-      - JSON
-      - YAML
-      description: The component's content format.
-      title: componentContentFormatData
-    componentVersionData:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/componentVersionId'
-        label:
-          type: string
-          description: The component version's label.
-        url:
-          type: string
-          format: uri
-          description: The URL where the component version can be accessed.
-        format:
-          type: string
-          description: The component version's content format.
-        publishedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the component version was published.
-        content:
-          type: string
-          description: The version's content. This returns when you include the `include` parameter.
-      description: Information about a component's version.
-      title: componentVersionData
     GetComponentDraftRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
       title: GetComponentDraftRequestInternalServerError
-    updateComponentDraftResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The component draft's ID.
-      description: Information about the component draft.
-      title: updateComponentDraftResponse
     componentExpandLatestVersion:
       type: string
       title: componentExpandLatestVersion
-    GetComponentVersionRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetComponentVersionRequestInternalServerError
-    CreateComponentVersionRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateComponentVersionRequestForbiddenError
-    getComponentDraft:
-      type: object
-      properties:
-        content:
-          type: string
-          description: The component's draft content.
-        format:
-          type: string
-          description: The component draft's content format.
-      title: getComponentDraft
-    GetComponentRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetComponentRequestUnauthorizedError
-    componentId:
+    componentStatus:
       type: string
-      description: The component's ID.
-      title: componentId
-    meta:
-      type: object
-      properties:
-        nextCursor:
-          type:
-          - string
-          - 'null'
-          description: The pagination cursor that points to the next record in the results set.
-      title: meta
-    CreateComponentRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateComponentRequestInternalServerError
+      enum:
+      - active
+      - archived
+      description: 'The component''s lifecycle state:
+
+        - `active` — The component is active and can be edited and published.
+
+        - `archived` — The component is archived and read-only. Archived components can''t be edited or published, but their existing versions remain accessible.
+
+        '
+      title: componentStatus
     GetComponentVersionsRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
       title: GetComponentVersionsRequestInternalServerError
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    GetComponentVersionsRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentVersionsRequestForbiddenError
+    GetComponentRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentRequestForbiddenError
+    CreateComponentVersionRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateComponentVersionRequestUnauthorizedError
+    GetComponentRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentRequestUnauthorizedError
     UpdateComponentRequestUnauthorizedError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
       title: UpdateComponentRequestUnauthorizedError
-    CommonErrorNameMessageError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
+    GetAllComponentsRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAllComponentsRequestUnauthorizedError
+    UpdateComponentDraftRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateComponentDraftRequestForbiddenError
     GetComponentVersionRequestUnauthorizedError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
       title: GetComponentVersionRequestUnauthorizedError
+    CreateComponentVersionRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateComponentVersionRequestForbiddenError
     createComponentVersion:
       type: object
       properties:
@@ -1032,50 +994,88 @@ components:
       required:
       - label
       title: createComponentVersion
+    CreateComponentRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateComponentRequestUnauthorizedError
+    CreateComponentVersionSource:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CreateComponentVersionSourceType'
+          description: The `draft` value.
+      description: The source to publish the version from. Defaults to the component's current draft.
+      title: CreateComponentVersionSource
+    updateComponent:
+      oneOf:
+      - description: Any type
+      - description: Any type
+      title: updateComponent
     CreateComponentVersionRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
       title: CreateComponentVersionRequestInternalServerError
-    componentType:
-      type: string
-      enum:
-      - OAS2
-      - OAS3
-      - OAS3_1
-      description: The component's type. Corresponds to the specification that the component's content adheres to.
-      title: componentType
+    GetComponentDraftRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentDraftRequestUnauthorizedError
+    GetComponentVersionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetComponentVersionRequestInternalServerError
+    createComponent:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The component's name. This must be unique within the team and can only contain letters, digits, hyphens, underscores, and periods and can't exceed 60 characters.
+        type:
+          $ref: '#/components/schemas/componentType'
+        content:
+          type: string
+          description: The component's content, up to a maximum of 500 KB (UTF-8).
+        format:
+          $ref: '#/components/schemas/componentContentFormatData'
+          default: YAML
+          description: The component's content format. Defaults to YAML.
+      required:
+      - name
+      - type
+      - content
+      title: createComponent
     CreateComponentRequestForbiddenError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
       title: CreateComponentRequestForbiddenError
-    updateComponentDraft:
-      type: object
-      properties:
-        content:
-          type: string
-          description: The component's contents, up to a maximum of 500 KB (UTF-8).
-        format:
-          $ref: '#/components/schemas/componentContentFormatData'
-      description: Information about the component draft.
-      title: updateComponentDraft
-    GetComponentDraftRequestForbiddenError:
+    CreateComponentRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateComponentRequestInternalServerError
+    UpdateComponentDraftRequestUnauthorizedError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetComponentDraftRequestForbiddenError
-    commonErrorNameMessage:
+      title: UpdateComponentDraftRequestUnauthorizedError
+    getAllComponents:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
-    componentLibraryInclude:
-      type: string
-      title: componentLibraryInclude
+        meta:
+          $ref: '#/components/schemas/meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/componentData'
+          description: A list of components.
+      title: getAllComponents
   securitySchemes:
     PostmanApiKey:
       type: apiKey

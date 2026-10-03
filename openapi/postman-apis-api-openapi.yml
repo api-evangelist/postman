@@ -2162,24 +2162,121 @@ paths:
                 $ref: '#/components/schemas/DeleteApiVersionRequestInternalServerError'
 components:
   schemas:
-    copyCollectionToApi:
+    GetApiSchemaFilesFilesItems:
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/CopyCollectionToApiData'
-        operationType:
-          $ref: '#/components/schemas/CopyCollectionToApiOperationType'
-          description: The `COPY_COLLECTION` method.
-      title: copyCollectionToApi
-    apiTaskId:
-      type: string
-      title: apiTaskId
-    SyncCollectionWithSchemaRequestBadRequestError:
+        id:
+          type: string
+          description: The schema file's ID.
+        name:
+          type: string
+          description: The schema file's name.
+        path:
+          type: string
+          description: The file system path to the schema file.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was created.
+        createdBy:
+          type: integer
+          format: int64
+          description: The user ID of the user that created the file.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was last updated.
+        updatedBy:
+          type: integer
+          description: The user ID of the user that last updated the file.
+      description: Information about the schema file.
+      title: GetApiSchemaFilesFilesItems
+    GetApiSchemaFilesMeta:
+      type: object
+      properties:
+        nextCursor:
+          type: string
+          description: The pointer to the next record in the set of paginated results.
+      description: The schema's non-standard meta information.
+      title: GetApiSchemaFilesMeta
+    GetApisRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApisRequestInternalServerError
+    GetStatusOfAnAsyncApiTaskRequestBadRequestError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/apiErrorNameMessage'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: SyncCollectionWithSchemaRequestBadRequestError
+      title: GetStatusOfAnAsyncApiTaskRequestBadRequestError
+    CreateUpdateApiSchemaFileResponseRoot:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: If true, the file is the schema's the root file.
+      description: Information about the schema's root file.
+      title: CreateUpdateApiSchemaFileResponseRoot
+    CreateApiCollectionDataInfoSchema:
+      type: string
+      enum:
+      - https://schema.postman.com/json/collection/v2.1.0/collection.json
+      description: The collection's schema format.
+      title: CreateApiCollectionDataInfoSchema
+    GetApiVersionsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiVersionsRequestInternalServerError
+    GetApiSchemaFilesRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiSchemaFilesRequestForbiddenError
+    GenerateApiFromSchemaOperationType:
+      type: string
+      enum:
+      - GENERATE_FROM_SCHEMA
+      description: The `GENERATE_FROM_SCHEMA` method.
+      title: GenerateApiFromSchemaOperationType
+    GetApiSchemaFilesRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/apiErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiSchemaFilesRequestBadRequestError
+    GetApiCollectionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiCollectionRequestInternalServerError
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    CreateApiSchemaRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/apiErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateApiSchemaRequestBadRequestError
+    CommentTaggedUsersUserNameType:
+      type: string
+      enum:
+      - user
+      description: The `user` value.
+      title: CommentTaggedUsersUserNameType
+    commentId:
+      type: integer
+      title: commentId
     getApiVersion:
       type: object
       properties:
@@ -2187,22 +2284,284 @@ components:
           $ref: '#/components/schemas/GetApiVersionVersion'
           description: Information about the API version.
       title: getApiVersion
-    createUpdateApi:
+    createUpdateApiSchemaFile:
       type: object
       properties:
+        name:
+          type: string
+          description: The schema file's name.
+        root:
+          $ref: '#/components/schemas/CreateUpdateApiSchemaFileRoot'
+          description: Information about the schema's root file.
+        content:
+          type: string
+          description: The schema file's stringified contents.
+      description: Information about schema file.
+      title: createUpdateApiSchemaFile
+    CommonErrorErrorObjTypeTitleDetailError:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Details about the error.
+      description: Information about the error.
+      title: CommonErrorErrorObjTypeTitleDetailError
+    CreateUpdateApiSchemaFileRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/apiErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateUpdateApiSchemaFileRequestBadRequestError
+    CreateApiVersionRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: CreateApiVersionRequestNotFoundError
+    SyncCollectionWithSchemaRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: SyncCollectionWithSchemaRequestInternalServerError
+    getStatusOfAnAsyncApiTask:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The task's ID.
+        meta:
+          $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskMeta'
+          description: The response's non-standard meta information.
+        status:
+          $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskStatus'
+          description: The task's current status.
+        details:
+          $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskDetails'
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the task was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the task was last updated.
+      title: getStatusOfAnAsyncApiTask
+    apiErrorNameMessage:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      title: apiErrorNameMessage
+    DeleteApiVersionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteApiVersionRequestInternalServerError
+    DeleteApiSchemaFileRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/apiErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteApiSchemaFileRequestBadRequestError
+    getApiCollection:
+      type: object
+      properties:
+        item:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              description: Any type
+          description: A list of the collection's contents.
+        info:
+          $ref: '#/components/schemas/GetApiCollectionInfo'
+          description: Information about the collection.
+        auth:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: The collection's auth information. For a complete list of values, refer to the **Auth** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+        variable:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              description: Any type
+          description: A list of the collection's variables.
+      title: getApiCollection
+    GetApiSchemaRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiSchemaRequestInternalServerError
+    DeleteApiRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: DeleteApiRequestNotFoundError
+    UpdateApiVersionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateApiVersionRequestInternalServerError
+    UpdateApiRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: UpdateApiRequestNotFoundError
+    getApi:
+      oneOf:
+      - $ref: '#/components/schemas/GetApi0'
+      - $ref: '#/components/schemas/GetApi1'
+      title: getApi
+    createApiSchemaResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The schema's ID.
+        type:
+          $ref: '#/components/schemas/CreateApiSchemaResponseType'
+          description: The schema's type.
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateApiSchemaResponseFilesItems'
+          description: A list of the schema's files.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the schema was created.
+        createdBy:
+          type: string
+          description: The user ID of the user that created the schema.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the schema was last updated.
+        updatedBy:
+          type: string
+          description: The user ID of the user that updated the schema.
+      description: Information about the API schema.
+      title: createApiSchemaResponse
+    CommentDataStatus:
+      type: string
+      enum:
+      - Open
+      - Resolved
+      description: The comment's current status.
+      title: CommentDataStatus
+    updateApiVersionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The version's ID.
+        name:
+          type: string
+          description: The version's name.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the version was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the version was last updated.
+        releaseNotes:
+          type: string
+          description: The version's release notes.
+      description: Information about the API version.
+      title: updateApiVersionResponse
+    GetApiSchemaFileContentsRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiSchemaFileContentsRequestInternalServerError
+    GetApiRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiRequestInternalServerError
+    GetApiVersionsMeta:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: The maximum number of records in the paginated response.
+        total:
+          type: integer
+          description: The number of records that match the defined criteria.
+        nextCursor:
+          type: string
+          format: base64
+          description: The pagination cursor that points to the next record in the results set.
+      description: The response's meta information for paginated results.
+      title: GetApiVersionsMeta
+    apiVersionId:
+      type: string
+      title: apiVersionId
+    DeleteApiSchemaFileRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: DeleteApiSchemaFileRequestNotFoundError
+    CreateUpdateApiSchemaFileRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: CreateUpdateApiSchemaFileRequestNotFoundError
+    createApiResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The API's ID.
         name:
           type: string
           description: The API's name.
         summary:
           type: string
           description: The API's short summary.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the API was created.
+        createdBy:
+          type: integer
+          description: The Postman ID of the user that created the API.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the API was updated.
+        updatedBy:
+          type: integer
+          description: The Postman ID of the user that updated the API.
         description:
           type: string
-          description: The API's description. This supports Markdown formatting.
-      required:
-      - name
-      description: Information about the API.
-      title: createUpdateApi
+          description: The API's description.
+      title: createApiResponse
+    AddApiCollectionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: AddApiCollectionRequestInternalServerError
     generateApiFromSchema:
       type: object
       properties:
@@ -2218,20 +2577,278 @@ components:
             description: Any type
           description: The advanced creation options for collections and their values. For a complete list of properties and their values, see Postman's [OpenAPI to Postman Collection Converter OPTIONS documentation](https://github.com/postmanlabs/openapi-to-postman/blob/develop/OPTIONS.md). These properties are case-sensitive.
       title: generateApiFromSchema
-    CommentTaggedUsersUserName:
+    GetApiVersionVersionCollectionsItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The collection's ID.
+        type:
+          type: string
+          description: The collection's name.
+      description: Information about the collection.
+      title: GetApiVersionVersionCollectionsItems
+    createGitUnlinkedVersionSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The version's name.
+        schemas:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateGitUnlinkedVersionSchemaSchemasItems'
+          description: A list of the version's schemas.
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateGitUnlinkedVersionSchemaCollectionsItems'
+          description: A list of the version's collections.
+        releaseNotes:
+          type: string
+          description: Information about the API version release. For example, changelog notes.
+      required:
+      - name
+      - schemas
+      - collections
+      description: Information about the API version.
+      title: createGitUnlinkedVersionSchema
+    GetApiCollectionRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: GetApiCollectionRequestForbiddenError
+    commentData:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The comment's ID.
+        threadId:
+          type: integer
+          description: The comment's thread ID.
+        status:
+          $ref: '#/components/schemas/CommentDataStatus'
+          description: The comment's current status.
+        createdBy:
+          type: integer
+          description: The user ID of the user who created the comment.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the comment was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time when the comment was last updated.
+        body:
+          type: string
+          description: The contents of the comment.
+      description: Information about the comment.
+      title: commentData
+    GetApiSchema1:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The schema's ID.
+        type:
+          type: string
+          description: The schema's type.
+        createdBy:
+          type: string
+          description: The user ID of the user that created the schema.
+        updatedBy:
+          type: string
+          description: The user ID of the user that last updated the schema.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the schema was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the schema was last updated.
+        content:
+          type: string
+          description: The schema file, in a bundled format.
+      description: Information about the schema.
+      title: GetApiSchema1
+    createGitLinkedVersionRootFile:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The version's name.
+        branch:
+          type: string
+          description: The branch ID.
+        schemas:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateGitLinkedVersionRootFileSchemasItems'
+          description: A list of the version's schemas.
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateGitLinkedVersionRootFileCollectionsItems'
+          description: A list of the version's collections.
+        releaseNotes:
+          type: string
+          description: Information about the API version release. For example, changelog notes.
+      required:
+      - name
+      - branch
+      - schemas
+      - collections
+      description: Information about the API version.
+      title: createGitLinkedVersionRootFile
+    GetApiSchemaFilesRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiSchemaFilesRequestInternalServerError
+    DeleteApiSchemaFileRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteApiSchemaFileRequestInternalServerError
+    CreateGitLinkedVersionRootFileSchemasItems:
+      type: object
+      properties:
+        filePath:
+          type: string
+          description: The path to the schema root file in the Git repository.
+      description: Information about the schema.
+      title: CreateGitLinkedVersionRootFileSchemasItems
+    GetApiSchemaOneOf0FilesMeta:
+      type: object
+      properties:
+        nextPath:
+          type: string
+          description: The URL path to the next file.
+      description: The response's non-standard meta information.
+      title: GetApiSchemaOneOf0FilesMeta
+    createApiVersionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The version's ID.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the version was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the version was last updated.
+        name:
+          type: string
+          description: The version's name.
+        releaseNotes:
+          type: string
+          description: Information about the API version release. For example, changelog notes.
+      title: createApiVersionResponse
+    GetApiVersionVersionSchemasItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The schema's ID.
+        type:
+          type: string
+          description: The schema type.
+      description: Information about the schema.
+      title: GetApiVersionVersionSchemasItems
+    createUpdateApiSchemaFileResponse:
+      type: object
+      properties:
+        createdBy:
+          type: string
+          description: The user ID of the user that created the file.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was created.
+        root:
+          $ref: '#/components/schemas/CreateUpdateApiSchemaFileResponseRoot'
+          description: Information about the schema's root file.
+        name:
+          type: string
+          description: The schema file's name.
+        path:
+          type: string
+          description: The file system path to the schema file.
+        updatedBy:
+          type: string
+          description: The user ID of the user that last updated the file.
+        id:
+          type: string
+          description: The schema file's ID.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was last updated.
+      description: Information about the schema file.
+      title: createUpdateApiSchemaFileResponse
+    commonErrorTypeTitleDetail:
       type: object
       properties:
         type:
-          $ref: '#/components/schemas/CommentTaggedUsersUserNameType'
-          description: The `user` value.
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    CreateGitUnlinkedVersionSchemaCollectionsItems:
+      type: object
+      properties:
         id:
           type: string
-          description: The user's ID.
-      required:
-      - type
-      - id
-      description: An object that contains information about the tagged user. The object's name is the user's Postman username. For example, `@user-postman`.
-      title: CommentTaggedUsersUserName
+          description: The collection's ID.
+      description: Information about the collection.
+      title: CreateGitUnlinkedVersionSchemaCollectionsItems
+    GetApiRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiRequestForbiddenError
+    createApiCollection:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CreateApiCollectionData'
+          description: Information about the collection's contents, such as requests and responses. For a complete list of values, refer to the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
+        operationType:
+          $ref: '#/components/schemas/CreateApiCollectionOperationType'
+          description: The `CREATE_NEW` method.
+      title: createApiCollection
+    file-path:
+      type: string
+      title: file-path
+    GetApiCollectionRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: GetApiCollectionRequestNotFoundError
+    commonErrorErrorObjTypeTitleDetail:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorErrorObjTypeTitleDetailError'
+          description: Information about the error.
+      title: commonErrorErrorObjTypeTitleDetail
+    apiDescription:
+      type: string
+      title: apiDescription
     GetStatusOfAnAsyncApiTaskMeta:
       type: object
       properties:
@@ -2247,40 +2864,50 @@ components:
           description: The task's action.
       description: The response's non-standard meta information.
       title: GetStatusOfAnAsyncApiTaskMeta
-    createUpdateApiSchemaFile:
+    commentCreatedUpdated:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CommentCreatedUpdatedData'
+      title: commentCreatedUpdated
+    GetApiOneOf1SchemasItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The schema's ID.
+      description: Information about the schema.
+      title: GetApiOneOf1SchemasItems
+    GetApiCollectionInfo:
       type: object
       properties:
         name:
           type: string
-          description: The schema file's name.
-        root:
-          $ref: '#/components/schemas/CreateUpdateApiSchemaFileRoot'
-          description: Information about the schema's root file.
-        content:
+          description: The collection's name.
+        schema:
           type: string
-          description: The schema file's stringified contents.
-      description: Information about schema file.
-      title: createUpdateApiSchemaFile
-    GetApisRequestInternalServerError:
+          format: url
+          description: A URL to the collection's schema.
+        _postman_id:
+          type: string
+          description: The collection's Postman ID.
+        description:
+          type: string
+          description: The collection's description.
+      description: Information about the collection.
+      title: GetApiCollectionInfo
+    DeleteApiVersionRequestForbiddenError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: DeleteApiVersionRequestForbiddenError
+    GetApiCollectionRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/apiErrorNameMessage'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApisRequestInternalServerError
-    CommonErrorErrorObjTypeTitleDetailError:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of error.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Details about the error.
-      description: Information about the error.
-      title: CommonErrorErrorObjTypeTitleDetailError
+      title: GetApiCollectionRequestBadRequestError
     GetApi0:
       type: object
       properties:
@@ -2313,6 +2940,297 @@ components:
           type: string
           description: The API's description.
       title: GetApi0
+    CreateGitLinkedVersionCollectionsItems:
+      type: object
+      properties:
+        filePath:
+          type: string
+          description: The path to the collection in the Git repository.
+      description: Information about the collection.
+      title: CreateGitLinkedVersionCollectionsItems
+    createdBy:
+      type: integer
+      title: createdBy
+    v10Accept:
+      type: string
+      enum:
+      - application/vnd.api.v10+json
+      title: v10Accept
+    getApiSchemaFiles:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/GetApiSchemaFilesMeta'
+          description: The schema's non-standard meta information.
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetApiSchemaFilesFilesItems'
+          description: A list of the schema's files.
+      title: getApiSchemaFiles
+    GetStatusOfAnAsyncApiTaskMetaAction:
+      type: string
+      enum:
+      - update
+      - create
+      description: The task's action.
+      title: GetStatusOfAnAsyncApiTaskMetaAction
+    commonErrorTypeTitleMessageDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        message:
+          type: string
+          description: The error message.
+        detail:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Information about the error.
+      title: commonErrorTypeTitleMessageDetail
+    GetApisRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApisRequestUnauthorizedError
+    DeleteApiSchemaFileRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: DeleteApiSchemaFileRequestForbiddenError
+    apiSchemaOutput:
+      type: boolean
+      default: false
+      title: apiSchemaOutput
+    CopyCollectionToApiOperationType:
+      type: string
+      enum:
+      - COPY_COLLECTION
+      description: The `COPY_COLLECTION` method.
+      title: CopyCollectionToApiOperationType
+    CreateApiCollectionOperationType:
+      type: string
+      enum:
+      - CREATE_NEW
+      description: The `CREATE_NEW` method.
+      title: CreateApiCollectionOperationType
+    CreateUpdateApiSchemaFileRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: CreateUpdateApiSchemaFileRequestForbiddenError
+    SyncCollectionWithSchemaRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/apiErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: SyncCollectionWithSchemaRequestBadRequestError
+    CreateApiSchemaRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: CreateApiSchemaRequestForbiddenError
+    commonErrorTypeTitleDetailStatusInstance:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri-reference
+          description: The [URI reference](https://www.rfc-editor.org/rfc/rfc3986) that identifies the type of problem.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: An explanation about the problem.
+        status:
+          type: integer
+          description: The HTTP status code generated by the origin server.
+        instance:
+          type: string
+          description: The URI reference that identifies the specific occurrence of the problem.
+      title: commonErrorTypeTitleDetailStatusInstance
+    updateApiResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The API's ID.
+        name:
+          type: string
+          description: The API's name.
+        summary:
+          type: string
+          description: The API's summary.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the API was created.
+        createdBy:
+          type: string
+          description: The user ID of the user that created the API.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the API was last updated.
+        updatedBy:
+          type: string
+          description: The user ID of the user that updated the API.
+        description:
+          type: string
+          description: The API's description. This supports Markdown formatting.
+      required:
+      - name
+      title: updateApiResponse
+    CreateApiRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: CreateApiRequestForbiddenError
+    GetStatusOfAnAsyncApiTaskMetaModel:
+      type: string
+      enum:
+      - collection
+      - api-version
+      description: The model for which the task is performing the operation.
+      title: GetStatusOfAnAsyncApiTaskMetaModel
+    GetStatusOfAnAsyncApiTaskDetails:
+      oneOf:
+      - $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskDetails0'
+      - $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskDetails1'
+      title: GetStatusOfAnAsyncApiTaskDetails
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    CreateApiSchemaFilesItems:
+      type: object
+      properties:
+        path:
+          type: string
+          description: The schema's file path.
+        root:
+          $ref: '#/components/schemas/CreateApiSchemaFilesItemsRoot'
+          description: Information about the schema's root file.
+        content:
+          type: string
+          description: The schema file's stringified contents.
+      title: CreateApiSchemaFilesItems
+    GetApiSchemaFileContentsRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: GetApiSchemaFileContentsRequestNotFoundError
+    GetApiSchemaOneOf0FilesDataItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The schema file's ID.
+        name:
+          type: string
+          description: The schema file's name.
+        path:
+          type: string
+          description: The file system path to the schema file.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was created.
+        createdBy:
+          type: string
+          description: The user ID of the user that created the file.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was last updated.
+        updatedBy:
+          type: string
+          description: The user ID of the user that last updated the file.
+      description: Information about the schema file.
+      title: GetApiSchemaOneOf0FilesDataItems
+    GetStatusOfAnAsyncApiTaskDetailsOneOf0ResourcesItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the assigned resource.
+        url:
+          type: string
+          description: The task's assigned resource URL.
+      title: GetStatusOfAnAsyncApiTaskDetailsOneOf0ResourcesItems
+    syncCollectionWithSchemaResponse:
+      type: object
+      properties:
+        taskId:
+          type: string
+          description: The created task ID. You can use this ID to track the status of syncing an API collection with an API schema.
+      title: syncCollectionWithSchemaResponse
+    CreateGitLinkedVersionSchemasItems:
+      type: object
+      properties:
+        directoryPath:
+          type: string
+          description: The path to the root directory where schemas are stored in the Git repository.
+      description: Information about the schema.
+      title: CreateGitLinkedVersionSchemasItems
+    CreateApiRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateApiRequestInternalServerError
+    commentCreate:
+      type: object
+      properties:
+        body:
+          type: string
+          description: The contents of the comment.
+        threadId:
+          type: integer
+          description: The comment's thread ID. To create a reply on an existing comment, include this property.
+        tags:
+          $ref: '#/components/schemas/commentTaggedUsers'
+      required:
+      - body
+      description: Information about the comment.
+      title: commentCreate
+    DeleteApiVersionRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: DeleteApiVersionRequestNotFoundError
+    CreateApiSchemaResponseFilesItemsRoot:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: If true, the file is tagged as the schema's root file. The root tag is only allowed for protobuf specifications.
+      description: An object that contains root file information.
+      title: CreateApiSchemaResponseFilesItemsRoot
+    cursor:
+      type: string
+      title: cursor
     CreateUpdateApiSchemaFileRoot:
       type: object
       properties:
@@ -2349,346 +3267,11 @@ components:
           description: The user ID of the user that last updated the schema.
       description: Information about the schema.
       title: GetApiSchema0
-    GetStatusOfAnAsyncApiTaskDetailsOneOf1Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The task's error message.
-      title: GetStatusOfAnAsyncApiTaskDetailsOneOf1Error
-    AddApiCollectionRequestNotFoundError:
+    GetApiRequestNotFoundError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
-      title: AddApiCollectionRequestNotFoundError
-    CreateApiVersionRequestNotFoundError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
-      title: CreateApiVersionRequestNotFoundError
-    getApiSchema:
-      oneOf:
-      - $ref: '#/components/schemas/GetApiSchema0'
-      - $ref: '#/components/schemas/GetApiSchema1'
-      title: getApiSchema
-    GetApiSchemaOneOf0FilesMeta:
-      type: object
-      properties:
-        nextPath:
-          type: string
-          description: The URL path to the next file.
-      description: The response's non-standard meta information.
-      title: GetApiSchemaOneOf0FilesMeta
-    GetStatusOfAnAsyncApiTaskDetailsOneOf0ResourcesItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The ID of the assigned resource.
-        url:
-          type: string
-          description: The task's assigned resource URL.
-      title: GetStatusOfAnAsyncApiTaskDetailsOneOf0ResourcesItems
-    GetApisRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApisRequestUnauthorizedError
-    CreateGitLinkedVersionRootFileSchemasItems:
-      type: object
-      properties:
-        filePath:
-          type: string
-          description: The path to the schema root file in the Git repository.
-      description: Information about the schema.
-      title: CreateGitLinkedVersionRootFileSchemasItems
-    GetApiCollectionRequestNotFoundError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
-      title: GetApiCollectionRequestNotFoundError
-    UpdateApiVersionRequestNotFoundError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
-      title: UpdateApiVersionRequestNotFoundError
-    GetApiSchemaRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiSchemaRequestInternalServerError
-    GetApiCollectionRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiCollectionRequestInternalServerError
-    DeleteApiVersionRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
-      title: DeleteApiVersionRequestForbiddenError
-    GetStatusOfAnAsyncApiTaskDetails:
-      oneOf:
-      - $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskDetails0'
-      - $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskDetails1'
-      title: GetStatusOfAnAsyncApiTaskDetails
-    GetStatusOfAnAsyncApiTaskRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetStatusOfAnAsyncApiTaskRequestInternalServerError
-    createdBy:
-      type: integer
-      title: createdBy
-    apiId:
-      type: string
-      title: apiId
-    CreateUpdateApiSchemaFileResponseRoot:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: If true, the file is the schema's the root file.
-      description: Information about the schema's root file.
-      title: CreateUpdateApiSchemaFileResponseRoot
-    GetApiVersionRequestNotFoundError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
-      title: GetApiVersionRequestNotFoundError
-    GetStatusOfAnAsyncApiTaskStatus:
-      type: string
-      enum:
-      - pending
-      - failed
-      - completed
-      description: The task's current status.
-      title: GetStatusOfAnAsyncApiTaskStatus
-    commentId:
-      type: integer
-      title: commentId
-    addApiCollectionResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The collection's ID.
-      title: addApiCollectionResponse
-    apiInclude:
-      type: array
-      items:
-        $ref: '#/components/schemas/ApiIncludeItems'
-      title: apiInclude
-    GetApiVersionRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiVersionRequestInternalServerError
-    commentCreatedUpdated:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/CommentCreatedUpdatedData'
-      title: commentCreatedUpdated
-    CommentTaggedUsersUserNameType:
-      type: string
-      enum:
-      - user
-      description: The `user` value.
-      title: CommentTaggedUsersUserNameType
-    CopyCollectionToApiOperationType:
-      type: string
-      enum:
-      - COPY_COLLECTION
-      description: The `COPY_COLLECTION` method.
-      title: CopyCollectionToApiOperationType
-    commentTaggedUsers:
-      type: object
-      properties:
-        '{{userName}}':
-          $ref: '#/components/schemas/CommentTaggedUsersUserName'
-          description: An object that contains information about the tagged user. The object's name is the user's Postman username. For example, `@user-postman`.
-      description: Information about users tagged in the `body` comment.
-      title: commentTaggedUsers
-    GetApiOneOf1SchemasItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The schema's ID.
-      description: Information about the schema.
-      title: GetApiOneOf1SchemasItems
-    GetApisRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApisRequestForbiddenError
-    GetApiSchema1:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The schema's ID.
-        type:
-          type: string
-          description: The schema's type.
-        createdBy:
-          type: string
-          description: The user ID of the user that created the schema.
-        updatedBy:
-          type: string
-          description: The user ID of the user that last updated the schema.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the schema was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the schema was last updated.
-        content:
-          type: string
-          description: The schema file, in a bundled format.
-      description: Information about the schema.
-      title: GetApiSchema1
-    DeleteApiVersionRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/apiErrorNameMessage'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteApiVersionRequestBadRequestError
-    GetApiSchemaRequestNotFoundError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
-      title: GetApiSchemaRequestNotFoundError
-    GetApiVersionVersion:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The version's ID.
-        name:
-          type: string
-          description: The version's name.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the version was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the version was last updated.
-        releaseNotes:
-          type: string
-          description: The version's release notes.
-        schemas:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetApiVersionVersionSchemasItems'
-          description: A list of the API's schemas.
-        collections:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetApiVersionVersionCollectionsItems'
-          description: A list of the API's collections.
-      description: Information about the API version.
-      title: GetApiVersionVersion
-    GetApiVersionsVersionsItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The version's ID.
-        name:
-          type: string
-          description: The version's name.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the version was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the version was last updated.
-        releaseNotes:
-          type: string
-          description: The version's release notes.
-      description: Information about the API version.
-      title: GetApiVersionsVersionsItems
-    API_addApiCollection_Request:
-      oneOf:
-      - $ref: '#/components/schemas/copyCollectionToApi'
-      - $ref: '#/components/schemas/createApiCollection'
-      - $ref: '#/components/schemas/generateApiFromSchema'
-      title: API_addApiCollection_Request
-    limit:
-      type: integer
-      default: 10
-      title: limit
-    CreateApiSchemaRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateApiSchemaRequestInternalServerError
-    GetStatusOfAnAsyncApiTaskMetaModel:
-      type: string
-      enum:
-      - collection
-      - api-version
-      description: The model for which the task is performing the operation.
-      title: GetStatusOfAnAsyncApiTaskMetaModel
-    GetApisMeta:
-      type: object
-      properties:
-        limit:
-          type: integer
-          description: The maximum number of records in the paginated response.
-        total:
-          type: integer
-          description: The number of records that match the defined criteria.
-        nextCursor:
-          type: string
-          format: base64
-          description: The pagination cursor that points to the next record in the results set.
-      description: The response's meta information for paginated results.
-      title: GetApisMeta
-    createApiResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The API's ID.
-        name:
-          type: string
-          description: The API's name.
-        summary:
-          type: string
-          description: The API's short summary.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the API was created.
-        createdBy:
-          type: integer
-          description: The Postman ID of the user that created the API.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the API was updated.
-        updatedBy:
-          type: integer
-          description: The Postman ID of the user that updated the API.
-        description:
-          type: string
-          description: The API's description.
-      title: createApiResponse
+      title: GetApiRequestNotFoundError
     GetApiSchemaOneOf0Files:
       type: object
       properties:
@@ -2702,6 +3285,35 @@ components:
           description: The response's non-standard meta information.
       description: Information about the schema's files. The response is paginated and limited to one page.
       title: GetApiSchemaOneOf0Files
+    GetApisRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: GetApisRequestNotFoundError
+    GetApiSchemaRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: GetApiSchemaRequestForbiddenError
+    GetStatusOfAnAsyncApiTaskDetails1:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskDetailsOneOf1Error'
+      description: Information about the error that occurred during the task's processing.
+      title: GetStatusOfAnAsyncApiTaskDetails1
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
     CreateApiCollectionData:
       type: object
       properties:
@@ -2715,440 +3327,6 @@ components:
           description: Information about the requests and responses in the collection. For a complete list of values, refer to the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
       description: Information about the collection's contents, such as requests and responses. For a complete list of values, refer to the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
       title: CreateApiCollectionData
-    commonErrorTypeTitleDetailStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
-    GetApisRequestNotFoundError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
-      title: GetApisRequestNotFoundError
-    commonErrorTypeTitleMessageDetail:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of error.
-        title:
-          type: string
-          description: A short summary of the problem.
-        message:
-          type: string
-          description: The error message.
-        detail:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Information about the error.
-      title: commonErrorTypeTitleMessageDetail
-    createApiSchema:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CreateApiSchemaType'
-          description: The schema's type.
-        files:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateApiSchemaFilesItems'
-          description: The list of files that are part of the schema.
-      required:
-      - type
-      - files
-      description: Information about the API schema.
-      title: createApiSchema
-    CreateApiCollectionDataInfo:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The collection's name.
-        schema:
-          $ref: '#/components/schemas/CreateApiCollectionDataInfoSchema'
-          description: The collection's schema format.
-      description: Information about the collection.
-      title: CreateApiCollectionDataInfo
-    DeleteApiRequestNotFoundError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
-      title: DeleteApiRequestNotFoundError
-    GetApiVersionRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiVersionRequestForbiddenError
-    DeleteApiVersionRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteApiVersionRequestInternalServerError
-    CreateApiSchemaFilesItemsRoot:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          default: true
-          description: If true, tag the file as the root file. You can only update the root tag for protobuf specifications.
-      description: Information about the schema's root file.
-      title: CreateApiSchemaFilesItemsRoot
-    GetStatusOfAnAsyncApiTaskMetaAction:
-      type: string
-      enum:
-      - update
-      - create
-      description: The task's action.
-      title: GetStatusOfAnAsyncApiTaskMetaAction
-    createApiCollection:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/CreateApiCollectionData'
-          description: Information about the collection's contents, such as requests and responses. For a complete list of values, refer to the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
-        operationType:
-          $ref: '#/components/schemas/CreateApiCollectionOperationType'
-          description: The `CREATE_NEW` method.
-      title: createApiCollection
-    DeleteApiVersionRequestNotFoundError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
-      title: DeleteApiVersionRequestNotFoundError
-    CopyCollectionToApiData:
-      type: object
-      properties:
-        collectionId:
-          type: string
-          description: The collection ID to copy to the API.
-      title: CopyCollectionToApiData
-    GetStatusOfAnAsyncApiTaskRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/apiErrorNameMessage'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetStatusOfAnAsyncApiTaskRequestBadRequestError
-    CommentDataStatus:
-      type: string
-      enum:
-      - Open
-      - Resolved
-      description: The comment's current status.
-      title: CommentDataStatus
-    CreateApiVersionRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateApiVersionRequestInternalServerError
-    createUpdateApiSchemaFileResponse:
-      type: object
-      properties:
-        createdBy:
-          type: string
-          description: The user ID of the user that created the file.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the file was created.
-        root:
-          $ref: '#/components/schemas/CreateUpdateApiSchemaFileResponseRoot'
-          description: Information about the schema's root file.
-        name:
-          type: string
-          description: The schema file's name.
-        path:
-          type: string
-          description: The file system path to the schema file.
-        updatedBy:
-          type: string
-          description: The user ID of the user that last updated the file.
-        id:
-          type: string
-          description: The schema file's ID.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the file was last updated.
-      description: Information about the schema file.
-      title: createUpdateApiSchemaFileResponse
-    GetApiRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiRequestForbiddenError
-    v10Accept:
-      type: string
-      enum:
-      - application/vnd.api.v10+json
-      title: v10Accept
-    ApiIncludeItems:
-      type: string
-      enum:
-      - collections
-      - versions
-      - schemas
-      - gitInfo
-      title: ApiIncludeItems
-    CreateApiSchemaFilesItems:
-      type: object
-      properties:
-        path:
-          type: string
-          description: The schema's file path.
-        root:
-          $ref: '#/components/schemas/CreateApiSchemaFilesItemsRoot'
-          description: Information about the schema's root file.
-        content:
-          type: string
-          description: The schema file's stringified contents.
-      title: CreateApiSchemaFilesItems
-    GetApiVersionsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiVersionsRequestInternalServerError
-    UpdateApiVersionRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
-      title: UpdateApiVersionRequestForbiddenError
-    updateApiVersionResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The version's ID.
-        name:
-          type: string
-          description: The version's name.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the version was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the version was last updated.
-        releaseNotes:
-          type: string
-          description: The version's release notes.
-      description: Information about the API version.
-      title: updateApiVersionResponse
-    CreateUpdateApiSchemaFileRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
-      title: CreateUpdateApiSchemaFileRequestForbiddenError
-    GetApiSchemaFileContentsRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiSchemaFileContentsRequestInternalServerError
-    GetApiRequestNotFoundError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
-      title: GetApiRequestNotFoundError
-    commonErrorNameMessage:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
-    createApiSchemaResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The schema's ID.
-        type:
-          $ref: '#/components/schemas/CreateApiSchemaResponseType'
-          description: The schema's type.
-        files:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateApiSchemaResponseFilesItems'
-          description: A list of the schema's files.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the schema was created.
-        createdBy:
-          type: string
-          description: The user ID of the user that created the schema.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the schema was last updated.
-        updatedBy:
-          type: string
-          description: The user ID of the user that updated the schema.
-      description: Information about the API schema.
-      title: createApiSchemaResponse
-    commentResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/commentData'
-          description: A list of comments.
-      title: commentResponse
-    updateApiResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The API's ID.
-        name:
-          type: string
-          description: The API's name.
-        summary:
-          type: string
-          description: The API's summary.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the API was created.
-        createdBy:
-          type: string
-          description: The user ID of the user that created the API.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the API was last updated.
-        updatedBy:
-          type: string
-          description: The user ID of the user that updated the API.
-        description:
-          type: string
-          description: The API's description. This supports Markdown formatting.
-      required:
-      - name
-      title: updateApiResponse
-    apiErrorNameMessage:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      title: apiErrorNameMessage
-    GetApiSchemaFileContentsRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/apiErrorNameMessage'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiSchemaFileContentsRequestBadRequestError
-    GetApiSchemaFilesFilesItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The schema file's ID.
-        name:
-          type: string
-          description: The schema file's name.
-        path:
-          type: string
-          description: The file system path to the schema file.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the file was created.
-        createdBy:
-          type: integer
-          format: int64
-          description: The user ID of the user that created the file.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the file was last updated.
-        updatedBy:
-          type: integer
-          description: The user ID of the user that last updated the file.
-      description: Information about the schema file.
-      title: GetApiSchemaFilesFilesItems
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    commentData:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The comment's ID.
-        threadId:
-          type: integer
-          description: The comment's thread ID.
-        status:
-          $ref: '#/components/schemas/CommentDataStatus'
-          description: The comment's current status.
-        createdBy:
-          type: integer
-          description: The user ID of the user who created the comment.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the comment was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time when the comment was last updated.
-        body:
-          type: string
-          description: The contents of the comment.
-      description: Information about the comment.
-      title: commentData
-    SyncCollectionWithSchemaRequestNotFoundError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
-      title: SyncCollectionWithSchemaRequestNotFoundError
-    GetApiSchemaRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
-      title: GetApiSchemaRequestForbiddenError
-    commentCreate:
-      type: object
-      properties:
-        body:
-          type: string
-          description: The contents of the comment.
-        threadId:
-          type: integer
-          description: The comment's thread ID. To create a reply on an existing comment, include this property.
-        tags:
-          $ref: '#/components/schemas/commentTaggedUsers'
-      required:
-      - body
-      description: Information about the comment.
-      title: commentCreate
     GetApiOneOf1GitInfo:
       type: object
       properties:
@@ -3171,187 +3349,17 @@ components:
           description: The API definition's collection repository folder location.
       description: Information about the API's Git repository integration.
       title: GetApiOneOf1GitInfo
-    GetApiOneOf1CollectionsItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The collection's ID.
-      description: Information about the collection.
-      title: GetApiOneOf1CollectionsItems
-    getApiSchemaFileContents:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The schema file's ID.
-        name:
-          type: string
-          description: The schema file's name.
-        path:
-          type: string
-          description: The file system path to the schema file.
-        content:
-          type: string
-          description: The schema file's stringified contents.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the file was created.
-        createdBy:
-          type: string
-          description: The user Id of the user that created the file.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the file was last updated.
-        updatedBy:
-          type: string
-          description: The user ID of the user that last updated the file.
-      title: getApiSchemaFileContents
-    GetStatusOfAnAsyncApiTaskRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
-      title: GetStatusOfAnAsyncApiTaskRequestForbiddenError
-    createGitUnlinkedVersionSchema:
+    CreateApiCollectionDataInfo:
       type: object
       properties:
         name:
           type: string
-          description: The version's name.
-        schemas:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateGitUnlinkedVersionSchemaSchemasItems'
-          description: A list of the version's schemas.
-        collections:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateGitUnlinkedVersionSchemaCollectionsItems'
-          description: A list of the version's collections.
-        releaseNotes:
-          type: string
-          description: Information about the API version release. For example, changelog notes.
-      required:
-      - name
-      - schemas
-      - collections
-      description: Information about the API version.
-      title: createGitUnlinkedVersionSchema
-    UpdateApiRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
-      title: UpdateApiRequestForbiddenError
-    CreateGitUnlinkedVersionSchemaCollectionsItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The collection's ID.
+          description: The collection's name.
+        schema:
+          $ref: '#/components/schemas/CreateApiCollectionDataInfoSchema'
+          description: The collection's schema format.
       description: Information about the collection.
-      title: CreateGitUnlinkedVersionSchemaCollectionsItems
-    CreateGitLinkedVersionRootFileCollectionsItems:
-      type: object
-      properties:
-        filePath:
-          type: string
-          description: Path to a collection in the Git repository.
-      description: Information about the collection.
-      title: CreateGitLinkedVersionRootFileCollectionsItems
-    GetApiCollectionRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/apiErrorNameMessage'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiCollectionRequestBadRequestError
-    cursor:
-      type: string
-      title: cursor
-    CreateUpdateApiSchemaFileRequestNotFoundError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
-      title: CreateUpdateApiSchemaFileRequestNotFoundError
-    DeleteApiSchemaFileRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
-      title: DeleteApiSchemaFileRequestForbiddenError
-    GetStatusOfAnAsyncApiTaskDetails0:
-      type: object
-      properties:
-        resources:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskDetailsOneOf0ResourcesItems'
-      description: Information about the task's resources.
-      title: GetStatusOfAnAsyncApiTaskDetails0
-    GetApiCollectionRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
-      title: GetApiCollectionRequestForbiddenError
-    CommentCreatedUpdatedData:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The comment's ID.
-        threadId:
-          type: integer
-          description: The comment's thread ID.
-        createdBy:
-          type: integer
-          description: The user ID of the user who created the comment.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the comment was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time when the comment was last updated.
-        body:
-          type: string
-          description: The contents of the comment.
-      title: CommentCreatedUpdatedData
-    CreateGitLinkedVersionCollectionsItems:
-      type: object
-      properties:
-        filePath:
-          type: string
-          description: The path to the collection in the Git repository.
-      description: Information about the collection.
-      title: CreateGitLinkedVersionCollectionsItems
-    CreateUpdateApiSchemaFileRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateUpdateApiSchemaFileRequestInternalServerError
-    GetApiSchemaFilesRequestNotFoundError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
-      title: GetApiSchemaFilesRequestNotFoundError
-    CreateApiSchemaRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
-      title: CreateApiSchemaRequestForbiddenError
-    DeleteApiRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteApiRequestInternalServerError
+      title: CreateApiCollectionDataInfo
     GetApisApisItems:
       type: object
       properties:
@@ -3383,9 +3391,96 @@ components:
           description: The API's description.
       description: The API's base data schema.
       title: GetApisApisItems
-    file-path:
+    CopyCollectionToApiData:
+      type: object
+      properties:
+        collectionId:
+          type: string
+          description: The collection ID to copy to the API.
+      title: CopyCollectionToApiData
+    limit:
+      type: integer
+      default: 10
+      title: limit
+    GetApiOneOf1VersionsItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The version's ID.
+        name:
+          type: string
+          description: The version's name.
+      description: Information about the version.
+      title: GetApiOneOf1VersionsItems
+    CreateGitLinkedVersionRootFileCollectionsItems:
+      type: object
+      properties:
+        filePath:
+          type: string
+          description: Path to a collection in the Git repository.
+      description: Information about the collection.
+      title: CreateGitLinkedVersionRootFileCollectionsItems
+    GetApiVersionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiVersionRequestInternalServerError
+    GetApiOneOf1CollectionsItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The collection's ID.
+      description: Information about the collection.
+      title: GetApiOneOf1CollectionsItems
+    apiSchemaId:
       type: string
-      title: file-path
+      title: apiSchemaId
+    DeleteApiVersionRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/apiErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteApiVersionRequestBadRequestError
+    copyCollectionToApi:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CopyCollectionToApiData'
+        operationType:
+          $ref: '#/components/schemas/CopyCollectionToApiOperationType'
+          description: The `COPY_COLLECTION` method.
+      title: copyCollectionToApi
+    collectionIdApi:
+      type: string
+      format: uid
+      title: collectionIdApi
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    API_createApiVersion_Request:
+      oneOf:
+      - $ref: '#/components/schemas/createGitUnlinkedVersionSchema'
+      - $ref: '#/components/schemas/createGitLinkedVersion'
+      - $ref: '#/components/schemas/createGitLinkedVersionRootFile'
+      title: API_createApiVersion_Request
+    getApiVersions:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/GetApiVersionsMeta'
+          description: The response's meta information for paginated results.
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetApiVersionsVersionsItems'
+          description: A list of the API's versions.
+      title: getApiVersions
     GetApi1:
       type: object
       properties:
@@ -3445,12 +3540,6 @@ components:
 
         '
       title: GetApi1
-    API_createApiVersion_Request:
-      oneOf:
-      - $ref: '#/components/schemas/createGitUnlinkedVersionSchema'
-      - $ref: '#/components/schemas/createGitLinkedVersion'
-      - $ref: '#/components/schemas/createGitLinkedVersionRootFile'
-      title: API_createApiVersion_Request
     getApis:
       type: object
       properties:
@@ -3463,29 +3552,212 @@ components:
           description: The response's meta information for paginated results.
       description: Information about the API schema.
       title: getApis
-    DeleteApiSchemaFileRequestNotFoundError:
+    GetApiVersionVersion:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The version's ID.
+        name:
+          type: string
+          description: The version's name.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the version was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the version was last updated.
+        releaseNotes:
+          type: string
+          description: The version's release notes.
+        schemas:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetApiVersionVersionSchemasItems'
+          description: A list of the API's schemas.
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetApiVersionVersionCollectionsItems'
+          description: A list of the API's collections.
+      description: Information about the API version.
+      title: GetApiVersionVersion
+    CreateUpdateApiSchemaFileRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateUpdateApiSchemaFileRequestInternalServerError
+    UpdateApiVersionRequestNotFoundError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
-      title: DeleteApiSchemaFileRequestNotFoundError
-    DeleteApiSchemaFileRequestBadRequestError:
+      title: UpdateApiVersionRequestNotFoundError
+    CommentTaggedUsersUserName:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommentTaggedUsersUserNameType'
+          description: The `user` value.
+        id:
+          type: string
+          description: The user's ID.
+      required:
+      - type
+      - id
+      description: An object that contains information about the tagged user. The object's name is the user's Postman username. For example, `@user-postman`.
+      title: CommentTaggedUsersUserName
+    CreateApiVersionRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: CreateApiVersionRequestForbiddenError
+    CreateApiSchemaType:
+      type: string
+      enum:
+      - proto:2
+      - proto:3
+      - graphql
+      - openapi:3_1
+      - openapi:3
+      - openapi:2
+      - openapi:1
+      - raml:1
+      - raml:0_8
+      - wsdl:2
+      - wsdl:1
+      - asyncapi:2
+      description: The schema's type.
+      title: CreateApiSchemaType
+    GetStatusOfAnAsyncApiTaskRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: GetStatusOfAnAsyncApiTaskRequestForbiddenError
+    UpdateApiVersionRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: UpdateApiVersionRequestForbiddenError
+    GetStatusOfAnAsyncApiTaskDetails0:
+      type: object
+      properties:
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskDetailsOneOf0ResourcesItems'
+      description: Information about the task's resources.
+      title: GetStatusOfAnAsyncApiTaskDetails0
+    createUpdateApi:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The API's name.
+        summary:
+          type: string
+          description: The API's short summary.
+        description:
+          type: string
+          description: The API's description. This supports Markdown formatting.
+      required:
+      - name
+      description: Information about the API.
+      title: createUpdateApi
+    UpdateApiRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: UpdateApiRequestForbiddenError
+    GetApiSchemaFileContentsRequestBadRequestError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/apiErrorNameMessage'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteApiSchemaFileRequestBadRequestError
-    AddApiCollectionRequestInternalServerError:
+      title: GetApiSchemaFileContentsRequestBadRequestError
+    CreateApiSchemaResponseType:
+      type: string
+      enum:
+      - proto:2
+      - proto:3
+      - graphql
+      - openapi:3_1
+      - openapi:3
+      - openapi:2
+      - openapi:1
+      - raml:1
+      - raml:0_8
+      - wsdl:2
+      - wsdl:1
+      - asyncapi:2
+      description: The schema's type.
+      title: CreateApiSchemaResponseType
+    GetApiSchemaFilesRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: GetApiSchemaFilesRequestNotFoundError
+    GetApisMeta:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: The maximum number of records in the paginated response.
+        total:
+          type: integer
+          description: The number of records that match the defined criteria.
+        nextCursor:
+          type: string
+          format: base64
+          description: The pagination cursor that points to the next record in the results set.
+      description: The response's meta information for paginated results.
+      title: GetApisMeta
+    AddApiCollectionRequestForbiddenError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: AddApiCollectionRequestInternalServerError
-    GetApiRequestInternalServerError:
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: AddApiCollectionRequestForbiddenError
+    GetApiVersionsRequestForbiddenError:
       oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiRequestInternalServerError
+      title: GetApiVersionsRequestForbiddenError
+    createGitLinkedVersion:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The version's name.
+        branch:
+          type: string
+          description: The branch ID.
+        schemas:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateGitLinkedVersionSchemasItems'
+          description: A list of the version's schemas.
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateGitLinkedVersionCollectionsItems'
+          description: A list of the version's collections.
+        releaseNotes:
+          type: string
+          description: Information about the API version release. For example, changelog notes.
+      required:
+      - name
+      - branch
+      - schemas
+      - collections
+      description: Information about the API version.
+      title: createGitLinkedVersion
     CreateApiSchemaResponseFilesItems:
       type: object
       properties:
@@ -3517,173 +3789,20 @@ components:
           description: The user ID of the user that last updated the file.
       description: Information about the schema file.
       title: CreateApiSchemaResponseFilesItems
-    CreateApiVersionRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
-      title: CreateApiVersionRequestForbiddenError
-    CreateApiSchemaResponseFilesItemsRoot:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: If true, the file is tagged as the schema's root file. The root tag is only allowed for protobuf specifications.
-      description: An object that contains root file information.
-      title: CreateApiSchemaResponseFilesItemsRoot
-    getApiCollection:
-      type: object
-      properties:
-        item:
-          type: array
-          items:
-            type: object
-            additionalProperties:
-              description: Any type
-          description: A list of the collection's contents.
-        info:
-          $ref: '#/components/schemas/GetApiCollectionInfo'
-          description: Information about the collection.
-        auth:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: The collection's auth information. For a complete list of values, refer to the **Auth** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v2.1.0/draft-07/docs/index.html).
-        variable:
-          type: array
-          items:
-            type: object
-            additionalProperties:
-              description: Any type
-          description: A list of the collection's variables.
-      title: getApiCollection
-    CommonErrorNameMessageError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
-    GetApiVersionsRequestForbiddenError:
+    GetApiVersionRequestForbiddenError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiVersionsRequestForbiddenError
-    CreateApiSchemaRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/apiErrorNameMessage'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateApiSchemaRequestBadRequestError
-    GetApiVersionVersionSchemasItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The schema's ID.
-        type:
-          type: string
-          description: The schema type.
-      description: Information about the schema.
-      title: GetApiVersionVersionSchemasItems
-    workspaceId:
-      type: string
-      title: workspaceId
-    GetApiSchemaFilesRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiSchemaFilesRequestForbiddenError
-    AddApiCollectionRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
-      title: AddApiCollectionRequestForbiddenError
-    GetStatusOfAnAsyncApiTaskDetails1:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskDetailsOneOf1Error'
-      description: Information about the error that occurred during the task's processing.
-      title: GetStatusOfAnAsyncApiTaskDetails1
-    CreateGitUnlinkedVersionSchemaSchemasItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The schema's ID.
-      description: Information about the schema.
-      title: CreateGitUnlinkedVersionSchemaSchemasItems
-    getStatusOfAnAsyncApiTask:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The task's ID.
-        meta:
-          $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskMeta'
-          description: The response's non-standard meta information.
-        status:
-          $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskStatus'
-          description: The task's current status.
-        details:
-          $ref: '#/components/schemas/GetStatusOfAnAsyncApiTaskDetails'
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the task was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the task was last updated.
-      title: getStatusOfAnAsyncApiTask
-    commonErrorErrorObjTypeTitleDetail:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorErrorObjTypeTitleDetailError'
-          description: Information about the error.
-      title: commonErrorErrorObjTypeTitleDetail
-    CreateUpdateApiSchemaFileRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/apiErrorNameMessage'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateUpdateApiSchemaFileRequestBadRequestError
-    UpdateApiRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateApiRequestInternalServerError
-    commonErrorTypeTitleDetail:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of error.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
-          description: Information about the error.
-      title: commonErrorTypeTitleDetail
-    apiSchemaOutput:
-      type: boolean
-      default: false
-      title: apiSchemaOutput
-    createApiVersionResponse:
+      title: GetApiVersionRequestForbiddenError
+    GetApiVersionsVersionsItems:
       type: object
       properties:
         id:
           type: string
           description: The version's ID.
+        name:
+          type: string
+          description: The version's name.
         createdAt:
           type: string
           format: date-time
@@ -3692,39 +3811,203 @@ components:
           type: string
           format: date-time
           description: The date and time at which the version was last updated.
-        name:
-          type: string
-          description: The version's name.
         releaseNotes:
           type: string
-          description: Information about the API version release. For example, changelog notes.
-      title: createApiVersionResponse
-    SyncCollectionWithSchemaRequestForbiddenError:
+          description: The version's release notes.
+      description: Information about the API version.
+      title: GetApiVersionsVersionsItems
+    GetStatusOfAnAsyncApiTaskRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
-      title: SyncCollectionWithSchemaRequestForbiddenError
-    CreateApiCollectionOperationType:
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetStatusOfAnAsyncApiTaskRequestInternalServerError
+    createApiSchema:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CreateApiSchemaType'
+          description: The schema's type.
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateApiSchemaFilesItems'
+          description: The list of files that are part of the schema.
+      required:
+      - type
+      - files
+      description: Information about the API schema.
+      title: createApiSchema
+    GetApiSchemaFileContentsRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiSchemaFileContentsRequestForbiddenError
+    GetApisRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApisRequestForbiddenError
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    commentResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/commentData'
+          description: A list of comments.
+      title: commentResponse
+    CreateApiVersionRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateApiVersionRequestInternalServerError
+    DeleteApiRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteApiRequestInternalServerError
+    workspaceId:
       type: string
-      enum:
-      - CREATE_NEW
-      description: The `CREATE_NEW` method.
-      title: CreateApiCollectionOperationType
-    GetApiVersionVersionCollectionsItems:
+      title: workspaceId
+    apiId:
+      type: string
+      title: apiId
+    GetApiVersionsRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: GetApiVersionsRequestNotFoundError
+    GetApiSchemaRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/apiErrorNameMessage'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetApiSchemaRequestBadRequestError
+    addApiCollectionResponse:
       type: object
       properties:
         id:
           type: string
           description: The collection's ID.
-        type:
-          type: string
-          description: The collection's name.
-      description: Information about the collection.
-      title: GetApiVersionVersionCollectionsItems
-    apiVersionId:
+      title: addApiCollectionResponse
+    apiTaskId:
       type: string
-      title: apiVersionId
+      title: apiTaskId
+    DeleteApiRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
+      title: DeleteApiRequestForbiddenError
+    GetApiSchemaRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: GetApiSchemaRequestNotFoundError
+    commentTaggedUsers:
+      type: object
+      properties:
+        '{{userName}}':
+          $ref: '#/components/schemas/CommentTaggedUsersUserName'
+          description: An object that contains information about the tagged user. The object's name is the user's Postman username. For example, `@user-postman`.
+      description: Information about users tagged in the `body` comment.
+      title: commentTaggedUsers
+    getApiSchemaFileContents:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The schema file's ID.
+        name:
+          type: string
+          description: The schema file's name.
+        path:
+          type: string
+          description: The file system path to the schema file.
+        content:
+          type: string
+          description: The schema file's stringified contents.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was created.
+        createdBy:
+          type: string
+          description: The user Id of the user that created the file.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the file was last updated.
+        updatedBy:
+          type: string
+          description: The user ID of the user that last updated the file.
+      title: getApiSchemaFileContents
+    CommentCreatedUpdatedData:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The comment's ID.
+        threadId:
+          type: integer
+          description: The comment's thread ID.
+        createdBy:
+          type: integer
+          description: The user ID of the user who created the comment.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the comment was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time when the comment was last updated.
+        body:
+          type: string
+          description: The contents of the comment.
+      title: CommentCreatedUpdatedData
+    commentUpdate:
+      type: object
+      properties:
+        body:
+          type: string
+          description: The contents of the comment.
+        tags:
+          $ref: '#/components/schemas/commentTaggedUsers'
+      required:
+      - body
+      description: Information about the comment.
+      title: commentUpdate
+    SyncCollectionWithSchemaRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: SyncCollectionWithSchemaRequestNotFoundError
+    CreateApiSchemaRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateApiSchemaRequestInternalServerError
+    CreateApiSchemaFilesItemsRoot:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          default: true
+          description: If true, tag the file as the root file. You can only update the root tag for protobuf specifications.
+      description: Information about the schema's root file.
+      title: CreateApiSchemaFilesItemsRoot
     updateApiVersion:
       type: object
       properties:
@@ -3738,363 +4021,80 @@ components:
       - name
       description: Information about the API version.
       title: updateApiVersion
-    getApiSchemaFiles:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/GetApiSchemaFilesMeta'
-          description: The schema's non-standard meta information.
-        files:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetApiSchemaFilesFilesItems'
-          description: A list of the schema's files.
-      title: getApiSchemaFiles
-    CreateApiSchemaResponseType:
-      type: string
-      enum:
-      - proto:2
-      - proto:3
-      - graphql
-      - openapi:3_1
-      - openapi:3
-      - openapi:2
-      - openapi:1
-      - raml:1
-      - raml:0_8
-      - wsdl:2
-      - wsdl:1
-      - asyncapi:2
-      description: The schema's type.
-      title: CreateApiSchemaResponseType
-    collectionIdApi:
-      type: string
-      format: uid
-      title: collectionIdApi
-    GetApiSchemaFileContentsRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiSchemaFileContentsRequestForbiddenError
-    GetApiSchemaFilesRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiSchemaFilesRequestInternalServerError
-    SyncCollectionWithSchemaRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: SyncCollectionWithSchemaRequestInternalServerError
-    apiSchemaId:
-      type: string
-      title: apiSchemaId
-    GetApiVersionsMeta:
-      type: object
-      properties:
-        limit:
-          type: integer
-          description: The maximum number of records in the paginated response.
-        total:
-          type: integer
-          description: The number of records that match the defined criteria.
-        nextCursor:
-          type: string
-          format: base64
-          description: The pagination cursor that points to the next record in the results set.
-      description: The response's meta information for paginated results.
-      title: GetApiVersionsMeta
-    CreateApiRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateApiRequestInternalServerError
-    CommonErrorTypeTitleDetailDetail:
-      oneOf:
-      - type: string
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
-    createGitLinkedVersion:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The version's name.
-        branch:
-          type: string
-          description: The branch ID.
-        schemas:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateGitLinkedVersionSchemasItems'
-          description: A list of the version's schemas.
-        collections:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateGitLinkedVersionCollectionsItems'
-          description: A list of the version's collections.
-        releaseNotes:
-          type: string
-          description: Information about the API version release. For example, changelog notes.
-      required:
-      - name
-      - branch
-      - schemas
-      - collections
-      description: Information about the API version.
-      title: createGitLinkedVersion
-    GetApiOneOf1VersionsItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The version's ID.
-        name:
-          type: string
-          description: The version's name.
-      description: Information about the version.
-      title: GetApiOneOf1VersionsItems
-    CreateApiRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
-      title: CreateApiRequestForbiddenError
-    GetApiSchemaFileContentsRequestNotFoundError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
-      title: GetApiSchemaFileContentsRequestNotFoundError
     CreateApiSchemaRequestNotFoundError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
       title: CreateApiSchemaRequestNotFoundError
-    commentUpdate:
-      type: object
-      properties:
-        body:
-          type: string
-          description: The contents of the comment.
-        tags:
-          $ref: '#/components/schemas/commentTaggedUsers'
-      required:
-      - body
-      description: Information about the comment.
-      title: commentUpdate
-    CreateApiCollectionDataInfoSchema:
+    API_addApiCollection_Request:
+      oneOf:
+      - $ref: '#/components/schemas/copyCollectionToApi'
+      - $ref: '#/components/schemas/createApiCollection'
+      - $ref: '#/components/schemas/generateApiFromSchema'
+      title: API_addApiCollection_Request
+    GetStatusOfAnAsyncApiTaskStatus:
       type: string
       enum:
-      - https://schema.postman.com/json/collection/v2.1.0/collection.json
-      description: The collection's schema format.
-      title: CreateApiCollectionDataInfoSchema
-    GetApiSchemaOneOf0FilesDataItems:
+      - pending
+      - failed
+      - completed
+      description: The task's current status.
+      title: GetStatusOfAnAsyncApiTaskStatus
+    UpdateApiRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateApiRequestInternalServerError
+    GetStatusOfAnAsyncApiTaskDetailsOneOf1Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The task's error message.
+      title: GetStatusOfAnAsyncApiTaskDetailsOneOf1Error
+    apiInclude:
+      type: array
+      items:
+        $ref: '#/components/schemas/ApiIncludeItems'
+      title: apiInclude
+    AddApiCollectionRequestNotFoundError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
+      title: AddApiCollectionRequestNotFoundError
+    CreateGitUnlinkedVersionSchemaSchemasItems:
       type: object
       properties:
         id:
           type: string
-          description: The schema file's ID.
-        name:
-          type: string
-          description: The schema file's name.
-        path:
-          type: string
-          description: The file system path to the schema file.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the file was created.
-        createdBy:
-          type: string
-          description: The user ID of the user that created the file.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the file was last updated.
-        updatedBy:
-          type: string
-          description: The user ID of the user that last updated the file.
-      description: Information about the schema file.
-      title: GetApiSchemaOneOf0FilesDataItems
-    CreateGitLinkedVersionSchemasItems:
-      type: object
-      properties:
-        directoryPath:
-          type: string
-          description: The path to the root directory where schemas are stored in the Git repository.
+          description: The schema's ID.
       description: Information about the schema.
-      title: CreateGitLinkedVersionSchemasItems
-    getApiVersions:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/GetApiVersionsMeta'
-          description: The response's meta information for paginated results.
-        versions:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetApiVersionsVersionsItems'
-          description: A list of the API's versions.
-      title: getApiVersions
-    UpdateApiVersionRequestInternalServerError:
+      title: CreateGitUnlinkedVersionSchemaSchemasItems
+    getApiSchema:
       oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateApiVersionRequestInternalServerError
-    GenerateApiFromSchemaOperationType:
+      - $ref: '#/components/schemas/GetApiSchema0'
+      - $ref: '#/components/schemas/GetApiSchema1'
+      title: getApiSchema
+    ApiIncludeItems:
       type: string
       enum:
-      - GENERATE_FROM_SCHEMA
-      description: The `GENERATE_FROM_SCHEMA` method.
-      title: GenerateApiFromSchemaOperationType
-    GetApiVersionsRequestNotFoundError:
+      - collections
+      - versions
+      - schemas
+      - gitInfo
+      title: ApiIncludeItems
+    GetApiVersionRequestNotFoundError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
-      title: GetApiVersionsRequestNotFoundError
-    GetApiSchemaRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/apiErrorNameMessage'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiSchemaRequestBadRequestError
-    commonErrorTypeTitleDetailStatusInstance:
-      type: object
-      properties:
-        type:
-          type: string
-          format: uri-reference
-          description: The [URI reference](https://www.rfc-editor.org/rfc/rfc3986) that identifies the type of problem.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: An explanation about the problem.
-        status:
-          type: integer
-          description: The HTTP status code generated by the origin server.
-        instance:
-          type: string
-          description: The URI reference that identifies the specific occurrence of the problem.
-      title: commonErrorTypeTitleDetailStatusInstance
-    GetApiSchemaFilesRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/apiErrorNameMessage'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetApiSchemaFilesRequestBadRequestError
-    GetApiCollectionInfo:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The collection's name.
-        schema:
-          type: string
-          format: url
-          description: A URL to the collection's schema.
-        _postman_id:
-          type: string
-          description: The collection's Postman ID.
-        description:
-          type: string
-          description: The collection's description.
-      description: Information about the collection.
-      title: GetApiCollectionInfo
-    CreateApiSchemaType:
-      type: string
-      enum:
-      - proto:2
-      - proto:3
-      - graphql
-      - openapi:3_1
-      - openapi:3
-      - openapi:2
-      - openapi:1
-      - raml:1
-      - raml:0_8
-      - wsdl:2
-      - wsdl:1
-      - asyncapi:2
-      description: The schema's type.
-      title: CreateApiSchemaType
-    GetApiSchemaFilesMeta:
-      type: object
-      properties:
-        nextCursor:
-          type: string
-          description: The pointer to the next record in the set of paginated results.
-      description: The schema's non-standard meta information.
-      title: GetApiSchemaFilesMeta
-    DeleteApiSchemaFileRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteApiSchemaFileRequestInternalServerError
-    getApi:
-      oneOf:
-      - $ref: '#/components/schemas/GetApi0'
-      - $ref: '#/components/schemas/GetApi1'
-      title: getApi
-    apiDescription:
-      type: string
-      title: apiDescription
-    DeleteApiRequestForbiddenError:
+      title: GetApiVersionRequestNotFoundError
+    SyncCollectionWithSchemaRequestForbiddenError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorTypeTitleMessageDetail'
-      title: DeleteApiRequestForbiddenError
-    createGitLinkedVersionRootFile:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The version's name.
-        branch:
-          type: string
-          description: The branch ID.
-        schemas:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateGitLinkedVersionRootFileSchemasItems'
-          description: A list of the version's schemas.
-        collections:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateGitLinkedVersionRootFileCollectionsItems'
-          description: A list of the version's collections.
-        releaseNotes:
-          type: string
-          description: Information about the API version release. For example, changelog notes.
-      required:
-      - name
-      - branch
-      - schemas
-      - collections
-      description: Information about the API version.
-      title: createGitLinkedVersionRootFile
-    UpdateApiRequestNotFoundError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorErrorObjTypeTitleDetail'
-      title: UpdateApiRequestNotFoundError
-    syncCollectionWithSchemaResponse:
-      type: object
-      properties:
-        taskId:
-          type: string
-          description: The created task ID. You can use this ID to track the status of syncing an API collection with an API schema.
-      title: syncCollectionWithSchemaResponse
+      title: SyncCollectionWithSchemaRequestForbiddenError
   securitySchemes:
     PostmanApiKey:
       type: apiKey

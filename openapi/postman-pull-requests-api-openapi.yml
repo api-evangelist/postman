@@ -147,56 +147,36 @@ paths:
               $ref: '#/components/schemas/pullRequestReview'
 components:
   schemas:
-    pullRequestReviewReponse:
+    PullRequestReviewReponseReviewedBy:
       type: object
       properties:
         id:
+          type: number
+          format: double
+          description: The user's ID.
+        name:
           type: string
-          description: The pull request's ID.
-        reviewedBy:
-          $ref: '#/components/schemas/PullRequestReviewReponseReviewedBy'
-          description: Information about the user who reviewed the pull request review.
-        status:
+          description: The user's name.
+        username:
           type: string
-          description: 'The pull request''s current review status:
-
-            - `open` — The pull request is still open.
-
-            - `approved` — The pull request was approved by its reviewers.
-
-            - `declined` — The pull request was not approved by its reviewers.
-
-            - `merged` — The pull request was merged.
-
-            '
-        updatedAt:
-          type: string
-          description: The date and time at which the pull request was updated.
-      title: pullRequestReviewReponse
-    pullRequestUpdate:
+          description: The user's username.
+      description: Information about the user who reviewed the pull request review.
+      title: PullRequestReviewReponseReviewedBy
+    commonErrorTypeTitleDetailStatus:
       type: object
       properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
         title:
           type: string
-          description: The pull request's updated title.
-        description:
+          description: A short summary of the problem.
+        detail:
           type: string
-          description: The updated pull request description.
-        reviewers:
-          type: array
-          items:
-            type: string
-          description: An updated list of the pull request's assigned reviewers. This replaces all existing users assigned to the pull request with those you pass in the request body.
-      required:
-      - title
-      - reviewers
-      title: pullRequestUpdate
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
     pullRequestGet:
       type: object
       properties:
@@ -253,22 +233,45 @@ components:
             $ref: '#/components/schemas/PullRequestGetReviewersItems'
           description: Information about the reviewers assigned to the pull request.
       title: pullRequestGet
-    PullRequestGetReviewersItems:
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    ReviewPullRequestRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: ReviewPullRequestRequestInternalServerError
+    pullRequestReviewReponse:
       type: object
       properties:
         id:
           type: string
-          description: The reviewer's user ID.
+          description: The pull request's ID.
+        reviewedBy:
+          $ref: '#/components/schemas/PullRequestReviewReponseReviewedBy'
+          description: Information about the user who reviewed the pull request review.
         status:
           type: string
-          description: 'The reviewer''s review status response. One of:
+          description: 'The pull request''s current review status:
 
-            - `approved`
+            - `open` — The pull request is still open.
 
-            - `declined`
+            - `approved` — The pull request was approved by its reviewers.
+
+            - `declined` — The pull request was not approved by its reviewers.
+
+            - `merged` — The pull request was merged.
 
             '
-      title: PullRequestGetReviewersItems
+        updatedAt:
+          type: string
+          description: The date and time at which the pull request was updated.
+      title: pullRequestReviewReponse
     commonErrorTypeTitleDetail:
       type: object
       properties:
@@ -282,28 +285,31 @@ components:
           $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
           description: Information about the error.
       title: commonErrorTypeTitleDetail
-    pullRequestId:
-      type: string
-      title: pullRequestId
-    PullRequestReviewAction:
-      type: string
-      enum:
-      - approve
-      - decline
-      - merge
-      - unapprove
-      description: 'The action to perform on the pull request:
-
-        - `approve` — Approve the pull request for merge.
-
-        - `decline` — Decline the pull request.
-
-        - `merge` — Merge the pull request into its parent element.
-
-        - `unapprove` — Revokes a pull request''s `approve` status. This action does not decline the pull request.
-
-        '
-      title: PullRequestReviewAction
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    GetPullRequestRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetPullRequestRequestInternalServerError
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
     pullRequestUpdated:
       type: object
       properties:
@@ -342,128 +348,6 @@ components:
           format: date-time
           description: The date and time at which the pull request was updated.
       title: pullRequestUpdated
-    PullRequestGetMerge:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/PullRequestGetMergeStatus'
-          description: 'The pull request''s current merge status:
-
-            - `inactive` — There is no merge in progress.
-
-            - `inprogress` — The pull request is currently merging.
-
-            - `failed` — The pull request''s merge failed.
-
-            '
-      description: Information about the current progress of the pull request's merge.
-      title: PullRequestGetMerge
-    PullRequestGetDestination:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The destination element's ID.
-        name:
-          type: string
-          description: The destination element's name.
-        exists:
-          type: boolean
-          description: If true, whether the element is present and not deleted.
-      description: Information about the pull request destination element.
-      title: PullRequestGetDestination
-    commonErrorTypeTitleDetailStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
-    PullRequestGetSource:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The pull request's source ID.
-        name:
-          type: string
-          description: The source element's name.
-        forkName:
-          type: string
-          description: The name of the fork created from the source element.
-        exists:
-          type: boolean
-          description: If true, whether the element is present and not deleted.
-      description: Information about the pull request's source (parent) element.
-      title: PullRequestGetSource
-    GetPullRequestRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetPullRequestRequestInternalServerError
-    CommonErrorTypeTitleDetailDetail:
-      oneOf:
-      - type: string
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
-    PullRequestUpdatedStatus:
-      type: string
-      enum:
-      - open
-      - approved
-      - declined
-      - merged
-      description: The pull request's status.
-      title: PullRequestUpdatedStatus
-    UpdatePullRequestRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdatePullRequestRequestInternalServerError
-    PullRequestGetMergeStatus:
-      type: string
-      enum:
-      - inactive
-      - inprogress
-      - failed
-      description: 'The pull request''s current merge status:
-
-        - `inactive` — There is no merge in progress.
-
-        - `inprogress` — The pull request is currently merging.
-
-        - `failed` — The pull request''s merge failed.
-
-        '
-      title: PullRequestGetMergeStatus
-    PullRequestReviewReponseReviewedBy:
-      type: object
-      properties:
-        id:
-          type: number
-          format: double
-          description: The user's ID.
-        name:
-          type: string
-          description: The user's name.
-        username:
-          type: string
-          description: The user's username.
-      description: Information about the user who reviewed the pull request review.
-      title: PullRequestReviewReponseReviewedBy
     pullRequestReview:
       type: object
       properties:
@@ -486,30 +370,146 @@ components:
       required:
       - action
       title: pullRequestReview
-    CommonErrorNameMessageError:
+    PullRequestReviewAction:
+      type: string
+      enum:
+      - approve
+      - decline
+      - merge
+      - unapprove
+      description: 'The action to perform on the pull request:
+
+        - `approve` — Approve the pull request for merge.
+
+        - `decline` — Decline the pull request.
+
+        - `merge` — Merge the pull request into its parent element.
+
+        - `unapprove` — Revokes a pull request''s `approve` status. This action does not decline the pull request.
+
+        '
+      title: PullRequestReviewAction
+    pullRequestId:
+      type: string
+      title: pullRequestId
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    PullRequestGetSource:
       type: object
       properties:
+        id:
+          type: string
+          description: The pull request's source ID.
         name:
           type: string
-          description: The error name.
-        message:
+          description: The source element's name.
+        forkName:
           type: string
-          description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
-    ReviewPullRequestRequestInternalServerError:
+          description: The name of the fork created from the source element.
+        exists:
+          type: boolean
+          description: If true, whether the element is present and not deleted.
+      description: Information about the pull request's source (parent) element.
+      title: PullRequestGetSource
+    PullRequestGetDestination:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The destination element's ID.
+        name:
+          type: string
+          description: The destination element's name.
+        exists:
+          type: boolean
+          description: If true, whether the element is present and not deleted.
+      description: Information about the pull request destination element.
+      title: PullRequestGetDestination
+    UpdatePullRequestRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: ReviewPullRequestRequestInternalServerError
-    commonErrorNameMessage:
+      title: UpdatePullRequestRequestInternalServerError
+    PullRequestUpdatedStatus:
+      type: string
+      enum:
+      - open
+      - approved
+      - declined
+      - merged
+      description: The pull request's status.
+      title: PullRequestUpdatedStatus
+    PullRequestGetMergeStatus:
+      type: string
+      enum:
+      - inactive
+      - inprogress
+      - failed
+      description: 'The pull request''s current merge status:
+
+        - `inactive` — There is no merge in progress.
+
+        - `inprogress` — The pull request is currently merging.
+
+        - `failed` — The pull request''s merge failed.
+
+        '
+      title: PullRequestGetMergeStatus
+    PullRequestGetMerge:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
+        status:
+          $ref: '#/components/schemas/PullRequestGetMergeStatus'
+          description: 'The pull request''s current merge status:
+
+            - `inactive` — There is no merge in progress.
+
+            - `inprogress` — The pull request is currently merging.
+
+            - `failed` — The pull request''s merge failed.
+
+            '
+      description: Information about the current progress of the pull request's merge.
+      title: PullRequestGetMerge
+    pullRequestUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          description: The pull request's updated title.
+        description:
+          type: string
+          description: The updated pull request description.
+        reviewers:
+          type: array
+          items:
+            type: string
+          description: An updated list of the pull request's assigned reviewers. This replaces all existing users assigned to the pull request with those you pass in the request body.
+      required:
+      - title
+      - reviewers
+      title: pullRequestUpdate
+    PullRequestGetReviewersItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The reviewer's user ID.
+        status:
+          type: string
+          description: 'The reviewer''s review status response. One of:
+
+            - `approved`
+
+            - `declined`
+
+            '
+      title: PullRequestGetReviewersItems
   securitySchemes:
     PostmanApiKey:
       type: apiKey

@@ -554,34 +554,18 @@ paths:
       description: Postman Production API Server
 components:
   schemas:
-    apiErrorNameMessage:
+    GetTaggedEntitiesData:
       type: object
       properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      title: apiErrorNameMessage
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    TagGetPutTagsItems:
-      type: object
-      properties:
-        slug:
-          type: string
-          description: The tag's ID within a team or individual (non-team) user scope.
-      description: Information about the tag.
-      title: TagGetPutTagsItems
-    tagsEntitiesLimit:
-      type: integer
-      default: 10
-      title: tagsEntitiesLimit
+        entities:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetTaggedEntitiesDataEntitiesItems'
+          description: A list of the Postman elements that contain the given tag.
+      required:
+      - entities
+      description: An object containing the paginated elements.
+      title: GetTaggedEntitiesData
     tagUpdateTags:
       type: object
       properties:
@@ -593,46 +577,10 @@ components:
       required:
       - tags
       title: tagUpdateTags
-    TagUpdateTagsTagsItems:
-      type: object
-      properties:
-        slug:
-          type: string
-          description: The tag's ID within a team or individual (non-team) user scope.
-      required:
-      - slug
-      description: Information about the tag.
-      title: TagUpdateTagsTagsItems
-    UpdateApiTagsRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/tag400Error'
-      - $ref: '#/components/schemas/apiErrorNameMessage'
-      title: UpdateApiTagsRequestBadRequestError
-    commonErrorTypeTitleDetailStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
-    tagsSlug:
+    collectionUid:
       type: string
-      title: tagsSlug
-    GetTaggedEntitiesDataEntitiesItemsEntityType:
-      type: string
-      enum:
-      - collection
-      - workspace
-      description: The type of Postman element.
-      title: GetTaggedEntitiesDataEntitiesItemsEntityType
+      format: uid
+      title: collectionUid
     tagElement400Error:
       type: object
       properties:
@@ -653,33 +601,32 @@ components:
       - desc
       default: desc
       title: ascDescDefaultDesc
-    getTaggedEntities:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/GetTaggedEntitiesData'
-          description: An object containing the paginated elements.
-        meta:
-          $ref: '#/components/schemas/GetTaggedEntitiesMeta'
-          description: The response's pagination information.
-      title: getTaggedEntities
-    tag400Error:
-      type: object
-      properties:
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: tag400Error
-    collectionUid:
+    UpdateApiTagsRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/tag400Error'
+      - $ref: '#/components/schemas/apiErrorNameMessage'
+      title: UpdateApiTagsRequestBadRequestError
+    GetTaggedEntitiesDataEntitiesItemsEntityType:
       type: string
-      format: uid
-      title: collectionUid
+      enum:
+      - collection
+      - workspace
+      description: The type of Postman element.
+      title: GetTaggedEntitiesDataEntitiesItemsEntityType
+    GetTaggedEntitiesDataEntitiesItems:
+      type: object
+      properties:
+        entityId:
+          type: string
+          format: uid
+          description: The element's unique ID.
+        entityType:
+          $ref: '#/components/schemas/GetTaggedEntitiesDataEntitiesItemsEntityType'
+          description: The type of Postman element.
+      title: GetTaggedEntitiesDataEntitiesItems
+    workspaceId:
+      type: string
+      title: workspaceId
     GetTaggedEntitiesMeta:
       type: object
       properties:
@@ -694,21 +641,88 @@ components:
       - count
       description: The response's pagination information.
       title: GetTaggedEntitiesMeta
-    GetTaggedEntitiesData:
-      type: object
-      properties:
-        entities:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetTaggedEntitiesDataEntitiesItems'
-          description: A list of the Postman elements that contain the given tag.
-      required:
-      - entities
-      description: An object containing the paginated elements.
-      title: GetTaggedEntitiesData
     apiId:
       type: string
       title: apiId
+    tagsEntityType:
+      type: string
+      enum:
+      - api
+      - collection
+      - workspace
+      title: tagsEntityType
+    tagsSlug:
+      type: string
+      title: tagsSlug
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    apiErrorNameMessage:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      title: apiErrorNameMessage
+    TagUpdateTagsTagsItems:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: The tag's ID within a team or individual (non-team) user scope.
+      required:
+      - slug
+      description: Information about the tag.
+      title: TagUpdateTagsTagsItems
+    tagGetPut:
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagGetPutTagsItems'
+          description: A list of associated tags.
+      title: tagGetPut
+    v10Accept:
+      type: string
+      enum:
+      - application/vnd.api.v10+json
+      title: v10Accept
+    tagsCursor:
+      type: string
+      format: base64
+      title: tagsCursor
+    TagGetPutTagsItems:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: The tag's ID within a team or individual (non-team) user scope.
+      description: Information about the tag.
+      title: TagGetPutTagsItems
+    tag400Error:
+      type: object
+      properties:
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: tag400Error
+    tagsEntitiesLimit:
+      type: integer
+      default: 10
+      title: tagsEntitiesLimit
     commonErrorTypeTitleDetailStatusInstance:
       type: object
       properties:
@@ -729,45 +743,31 @@ components:
           type: string
           description: The URI reference that identifies the specific occurrence of the problem.
       title: commonErrorTypeTitleDetailStatusInstance
-    v10Accept:
-      type: string
-      enum:
-      - application/vnd.api.v10+json
-      title: v10Accept
-    tagsCursor:
-      type: string
-      format: base64
-      title: tagsCursor
-    GetTaggedEntitiesDataEntitiesItems:
+    getTaggedEntities:
       type: object
       properties:
-        entityId:
+        data:
+          $ref: '#/components/schemas/GetTaggedEntitiesData'
+          description: An object containing the paginated elements.
+        meta:
+          $ref: '#/components/schemas/GetTaggedEntitiesMeta'
+          description: The response's pagination information.
+      title: getTaggedEntities
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
           type: string
-          format: uid
-          description: The element's unique ID.
-        entityType:
-          $ref: '#/components/schemas/GetTaggedEntitiesDataEntitiesItemsEntityType'
-          description: The type of Postman element.
-      title: GetTaggedEntitiesDataEntitiesItems
-    tagGetPut:
-      type: object
-      properties:
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/TagGetPutTagsItems'
-          description: A list of associated tags.
-      title: tagGetPut
-    tagsEntityType:
-      type: string
-      enum:
-      - api
-      - collection
-      - workspace
-      title: tagsEntityType
-    workspaceId:
-      type: string
-      title: workspaceId
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
     Tag:
       type: object
       description: A tag attached to a Postman entity for categorization and governance.
@@ -780,20 +780,6 @@ components:
           type: string
           description: The display name of the tag
   responses:
-    NotFoundError:
-      description: The requested resource was not found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
     BadRequestError:
       description: Bad request - invalid input
       content:
@@ -822,8 +808,8 @@ components:
                     type: string
                   message:
                     type: string
-    ForbiddenError:
-      description: Insufficient permissions
+    NotFoundError:
+      description: The requested resource was not found
       content:
         application/json:
           schema:
@@ -847,7 +833,28 @@ components:
                 type: string
               message:
                 type: string
+    ForbiddenError:
+      description: Insufficient permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
   parameters:
+    EntityIdParam:
+      name: entityId
+      in: path
+      required: true
+      description: The entity's unique ID.
+      schema:
+        type: string
     EntityTypeParam:
       name: entityType
       in: path
@@ -859,13 +866,6 @@ components:
         - apis
         - collections
         - workspaces
-    EntityIdParam:
-      name: entityId
-      in: path
-      required: true
-      description: The entity's unique ID.
-      schema:
-        type: string
   securitySchemes:
     PostmanApiKey:
       type: apiKey
