@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-pull-request-get-schema.json",
+  "title": "pullRequestGet",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-pull-requests-api-openapi.yml#/components/schemas/pullRequestGet",
+  "type": "object",
+  "properties": {
+    "createdAt": {
+      "type": "string",
+      "description": "The date and time at which the pull request was created."
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "The date and time at which the pull request was updated."
+    },
+    "id": {
+      "type": "string",
+      "description": "The pull request's ID."
+    },
+    "title": {
+      "type": "string",
+      "description": "The pull request's title."
+    },
+    "description": {
+      "type": "string",
+      "description": "The pull request's description."
+    },
+    "createdBy": {
+      "type": "string",
+      "description": "The ID of the user who created the pull request."
+    },
+    "updatedBy": {
+      "type": "string",
+      "description": "The ID of the user who last updated the pull request."
+    },
+    "comment": {
+      "type": "string",
+      "description": "If the pull request is a `decline` status, an optional comment about why the pull request was declined."
+    },
+    "fortkType": {
+      "type": "string",
+      "description": "The type of element the pull request was forked from."
+    },
+    "source": {
+      "$ref": "#/$defs/PullRequestGetSource",
+      "description": "Information about the pull request's source (parent) element."
+    },
+    "destination": {
+      "$ref": "#/$defs/PullRequestGetDestination",
+      "description": "Information about the pull request destination element."
+    },
+    "status": {
+      "type": "string",
+      "description": "The pull request's current review status:\n- `open` — The pull request is still open.\n- `approved` — The pull request was approved by its reviewers.\n- `declined` — The pull request was not approved by its reviewers.\n"
+    },
+    "merge": {
+      "$ref": "#/$defs/PullRequestGetMerge",
+      "description": "Information about the current progress of the pull request's merge."
+    },
+    "reviewers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PullRequestGetReviewersItems"
+      },
+      "description": "Information about the reviewers assigned to the pull request."
+    }
+  },
+  "$defs": {
+    "PullRequestGetDestination": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The destination element's ID."
+        },
+        "name": {
+          "type": "string",
+          "description": "The destination element's name."
+        },
+        "exists": {
+          "type": "boolean",
+          "description": "If true, whether the element is present and not deleted."
+        }
+      },
+      "description": "Information about the pull request destination element.",
+      "title": "PullRequestGetDestination"
+    },
+    "PullRequestGetMerge": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/PullRequestGetMergeStatus",
+          "description": "The pull request's current merge status:\n- `inactive` — There is no merge in progress.\n- `inprogress` — The pull request is currently merging.\n- `failed` — The pull request's merge failed.\n"
+        }
+      },
+      "description": "Information about the current progress of the pull request's merge.",
+      "title": "PullRequestGetMerge"
+    },
+    "PullRequestGetMergeStatus": {
+      "type": "string",
+      "enum": [
+        "inactive",
+        "inprogress",
+        "failed"
+      ],
+      "description": "The pull request's current merge status:\n- `inactive` — There is no merge in progress.\n- `inprogress` — The pull request is currently merging.\n- `failed` — The pull request's merge failed.\n",
+      "title": "PullRequestGetMergeStatus"
+    },
+    "PullRequestGetReviewersItems": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The reviewer's user ID."
+        },
+        "status": {
+          "type": "string",
+          "description": "The reviewer's review status response. One of:\n- `approved`\n- `declined`\n"
+        }
+      },
+      "title": "PullRequestGetReviewersItems"
+    },
+    "PullRequestGetSource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The pull request's source ID."
+        },
+        "name": {
+          "type": "string",
+          "description": "The source element's name."
+        },
+        "forkName": {
+          "type": "string",
+          "description": "The name of the fork created from the source element."
+        },
+        "exists": {
+          "type": "boolean",
+          "description": "If true, whether the element is present and not deleted."
+        }
+      },
+      "description": "Information about the pull request's source (parent) element.",
+      "title": "PullRequestGetSource"
+    }
+  }
+}

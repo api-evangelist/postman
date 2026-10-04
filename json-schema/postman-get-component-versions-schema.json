@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-get-component-versions-schema.json",
+  "title": "getComponentVersions",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-components-api-openapi.yml#/components/schemas/getComponentVersions",
+  "type": "object",
+  "properties": {
+    "meta": {
+      "$ref": "#/$defs/meta"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/componentVersionData"
+      },
+      "description": "A list of the component's versions."
+    }
+  },
+  "$defs": {
+    "componentVersionData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/componentVersionId"
+        },
+        "label": {
+          "type": "string",
+          "description": "The component version's label."
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URL where the component version can be accessed."
+        },
+        "format": {
+          "type": "string",
+          "description": "The component version's content format."
+        },
+        "publishedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the component version was published."
+        },
+        "content": {
+          "type": "string",
+          "description": "The version's content. This returns when you include the `include` parameter."
+        }
+      },
+      "description": "Information about a component's version.",
+      "title": "componentVersionData"
+    },
+    "componentVersionId": {
+      "type": "string",
+      "description": "The component version's ID.",
+      "title": "componentVersionId"
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "nextCursor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The pagination cursor that points to the next record in the results set."
+        }
+      },
+      "title": "meta"
+    }
+  }
+}

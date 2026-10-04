@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-spec-data-schema.json",
+  "title": "specData",
+  "description": "Information about the API specification.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-specs-api-openapi.yml#/components/schemas/specData",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The specification's ID."
+    },
+    "fileFormat": {
+      "$ref": "#/$defs/fileFormat"
+    },
+    "name": {
+      "type": "string",
+      "description": "The specification's name."
+    },
+    "type": {
+      "$ref": "#/$defs/specType"
+    },
+    "createdBy": {
+      "type": "integer",
+      "description": "The user ID of the user that created the specification."
+    },
+    "updatedBy": {
+      "type": "integer",
+      "description": "The ID of the user who updated the specification."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time at which the specification was created."
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time at which the specification was updated."
+    }
+  },
+  "$defs": {
+    "fileFormat": {
+      "type": "string",
+      "enum": [
+        "json",
+        "yaml",
+        "proto",
+        "graphql",
+        "smithy"
+      ],
+      "description": "The specification's file format.",
+      "title": "fileFormat"
+    },
+    "specType": {
+      "type": "string",
+      "enum": [
+        "OPENAPI:2.0",
+        "OPENAPI:3.0",
+        "OPENAPI:3.1",
+        "ASYNCAPI:2.0",
+        "ASYNCAPI:3.0",
+        "PROTOBUF:2",
+        "PROTOBUF:3",
+        "GRAPHQL",
+        "SMITHY:2.0"
+      ],
+      "description": "The type of API specification.",
+      "title": "specType"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-sdk-download-schema.json",
+  "title": "sdkDownload",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-sdks-api-openapi.yml#/components/schemas/sdkDownload",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/sdkId"
+    },
+    "language": {
+      "$ref": "#/$defs/sdkLanguage"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "A short-lived signed URL to the generated SDK archive (zip)."
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time at which the signed URL expires."
+    }
+  },
+  "required": [
+    "id",
+    "language",
+    "url",
+    "expiresAt"
+  ],
+  "$defs": {
+    "sdkId": {
+      "type": "string",
+      "description": "The SDK's ID.",
+      "title": "sdkId"
+    },
+    "sdkLanguage": {
+      "type": "string",
+      "enum": [
+        "typescript",
+        "python",
+        "go",
+        "java",
+        "csharp",
+        "ruby",
+        "php",
+        "kotlin",
+        "rust",
+        "cli"
+      ],
+      "description": "The target output language for the generated SDK.",
+      "title": "sdkLanguage"
+    }
+  }
+}

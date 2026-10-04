@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-get-authenticated-user-schema.json",
+  "title": "getAuthenticatedUser",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-users-api-openapi.yml#/components/schemas/getAuthenticatedUser",
+  "type": "object",
+  "properties": {
+    "user": {
+      "$ref": "#/$defs/GetAuthenticatedUserUser",
+      "description": "Information about the authenticated user."
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/GetAuthenticatedUserOperationsItems"
+      },
+      "description": "Information about operations and their usage limits. This object does not return for users with the [Guest and Partner role](https://learning.postman.com/docs/collaborating-in-postman/roles-and-permissions/#team-roles)."
+    }
+  },
+  "$defs": {
+    "GetAuthenticatedUserOperationsItems": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "type": "number",
+          "format": "double",
+          "description": "The operation's limit value."
+        },
+        "name": {
+          "type": "string",
+          "description": "The operation's name."
+        },
+        "overage": {
+          "type": "number",
+          "format": "double",
+          "description": "The operation's overage value."
+        },
+        "usage": {
+          "type": "number",
+          "format": "double",
+          "description": "The operation's current usage value."
+        }
+      },
+      "title": "GetAuthenticatedUserOperationsItems"
+    },
+    "GetAuthenticatedUserUser": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "format": "double",
+          "description": "The user's Postman ID."
+        },
+        "sub": {
+          "type": "string",
+          "description": "The authenticated user's ID. This ID is unique to the user and isn't associated with any Postman teams. Can return in UUID or ID format."
+        },
+        "username": {
+          "type": "string",
+          "description": "The user's username."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The user's email address."
+        },
+        "fullName": {
+          "type": "string",
+          "description": "The user's full name."
+        },
+        "avatar": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "url",
+          "description": "The user's avatar image URL."
+        },
+        "isPublic": {
+          "type": "boolean",
+          "description": "If true, the user's information is public and visible to all users."
+        },
+        "emailVerified": {
+          "type": "boolean",
+          "description": "If true, the user email address is verified by Postman."
+        },
+        "teamId": {
+          "type": "integer",
+          "description": "The team ID the user is assigned to. This returns a `0` value if the user is not assigned to a team."
+        },
+        "teamName": {
+          "type": "string",
+          "description": "The name of the team the user is assigned to."
+        },
+        "teamDomain": {
+          "type": "string",
+          "description": "The team's Postman domain ID."
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "default": "user"
+          },
+          "description": "A list of the user's assigned [roles](https://learning.postman.com/docs/collaborating-in-postman/roles-and-permissions/#team-roles)."
+        }
+      },
+      "description": "Information about the authenticated user.",
+      "title": "GetAuthenticatedUserUser"
+    }
+  }
+}

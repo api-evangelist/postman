@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-get-environment-forks-schema.json",
+  "title": "getEnvironmentForks",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-environments-api-openapi.yml#/components/schemas/getEnvironmentForks",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/environmentForkInfo"
+      },
+      "description": "A list of the environment's forks."
+    },
+    "meta": {
+      "$ref": "#/$defs/environmentForksMeta"
+    }
+  },
+  "$defs": {
+    "environmentForkInfo": {
+      "type": "object",
+      "properties": {
+        "forkId": {
+          "type": "string",
+          "format": "uid",
+          "description": "The forked environment's unique ID."
+        },
+        "forkName": {
+          "type": "string",
+          "description": "The forked environment's label."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the fork was created."
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "The user who created the environment fork."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the fork was last updated."
+        }
+      },
+      "description": "Information about the forked environment.",
+      "title": "environmentForkInfo"
+    },
+    "environmentForksMeta": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "number",
+          "format": "double",
+          "description": "The total number of forked environments."
+        },
+        "nextCursor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The pagination cursor that points to the next record in the results set."
+        }
+      },
+      "description": "The response's meta information for paginated results.",
+      "title": "environmentForksMeta"
+    }
+  }
+}

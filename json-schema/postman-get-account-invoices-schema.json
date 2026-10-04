@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-get-account-invoices-schema.json",
+  "title": "getAccountInvoices",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-billing-api-openapi.yml#/components/schemas/getAccountInvoices",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/invoiceData"
+      },
+      "description": "A list of account invoices."
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "$defs": {
+    "InvoicesLinksWeb": {
+      "type": "object",
+      "properties": {
+        "href": {
+          "type": "string",
+          "format": "url",
+          "description": "A URL where you can download the invoice in PDF and view details."
+        }
+      },
+      "description": "An object containing web-based account references.",
+      "title": "InvoicesLinksWeb"
+    },
+    "invoiceData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The invoice's ID."
+        },
+        "status": {
+          "type": "string",
+          "description": "The invoice's status."
+        },
+        "issuedAt": {
+          "type": "string",
+          "format": "date",
+          "description": "The date on which the invoice was issued."
+        },
+        "totalAmount": {
+          "$ref": "#/$defs/invoicesTotal"
+        },
+        "links": {
+          "$ref": "#/$defs/invoicesLinks"
+        }
+      },
+      "description": "Information about the invoice.",
+      "title": "invoiceData"
+    },
+    "invoicesLinks": {
+      "type": "object",
+      "properties": {
+        "web": {
+          "$ref": "#/$defs/InvoicesLinksWeb",
+          "description": "An object containing web-based account references."
+        }
+      },
+      "description": "A [JSON API spec](https://jsonapi.org/format/#document-links) object containing hypermedia links.",
+      "title": "invoicesLinks"
+    },
+    "invoicesTotal": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "integer",
+          "description": "The amount billed."
+        },
+        "currency": {
+          "type": "string",
+          "description": "The currency of the billed amount. Currently only supports the `USD` value."
+        }
+      },
+      "description": "Information about the invoice's total billed amount.",
+      "title": "invoicesTotal"
+    }
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-create-api-schema-response-schema.json",
+  "title": "createApiSchemaResponse",
+  "description": "Information about the API schema.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-apis-api-openapi.yml#/components/schemas/createApiSchemaResponse",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The schema's ID."
+    },
+    "type": {
+      "$ref": "#/$defs/CreateApiSchemaResponseType",
+      "description": "The schema's type."
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/CreateApiSchemaResponseFilesItems"
+      },
+      "description": "A list of the schema's files."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time at which the schema was created."
+    },
+    "createdBy": {
+      "type": "string",
+      "description": "The user ID of the user that created the schema."
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time at which the schema was last updated."
+    },
+    "updatedBy": {
+      "type": "string",
+      "description": "The user ID of the user that updated the schema."
+    }
+  },
+  "$defs": {
+    "CreateApiSchemaResponseFilesItems": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The schema file's ID."
+        },
+        "name": {
+          "type": "string",
+          "description": "The schema file's name."
+        },
+        "path": {
+          "type": "string",
+          "description": "The file system path to the schema file."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the file was created."
+        },
+        "root": {
+          "$ref": "#/$defs/CreateApiSchemaResponseFilesItemsRoot",
+          "description": "An object that contains root file information."
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "The user ID of the user that created the file."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the file was last updated."
+        },
+        "updatedBy": {
+          "type": "string",
+          "description": "The user ID of the user that last updated the file."
+        }
+      },
+      "description": "Information about the schema file.",
+      "title": "CreateApiSchemaResponseFilesItems"
+    },
+    "CreateApiSchemaResponseFilesItemsRoot": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "If true, the file is tagged as the schema's root file. The root tag is only allowed for protobuf specifications."
+        }
+      },
+      "description": "An object that contains root file information.",
+      "title": "CreateApiSchemaResponseFilesItemsRoot"
+    },
+    "CreateApiSchemaResponseType": {
+      "type": "string",
+      "enum": [
+        "proto:2",
+        "proto:3",
+        "graphql",
+        "openapi:3_1",
+        "openapi:3",
+        "openapi:2",
+        "openapi:1",
+        "raml:1",
+        "raml:0_8",
+        "wsdl:2",
+        "wsdl:1",
+        "asyncapi:2"
+      ],
+      "description": "The schema's type.",
+      "title": "CreateApiSchemaResponseType"
+    }
+  }
+}

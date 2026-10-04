@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-sdk-schema.json",
+  "title": "sdk",
+  "description": "Information about the generated SDK.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-sdks-api-openapi.yml#/components/schemas/sdk",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/sdkId"
+    },
+    "language": {
+      "$ref": "#/$defs/sdkLanguage"
+    },
+    "source": {
+      "$ref": "#/$defs/sdkSource"
+    },
+    "workspaceId": {
+      "type": "string",
+      "description": "The ID of the workspace that owns the SDK, derived from the source entity."
+    },
+    "version": {
+      "type": "string",
+      "description": "The generated SDK's semantic version ID. This value is automatically assigned by the release/changelog pipeline."
+    },
+    "buildStatus": {
+      "$ref": "#/$defs/sdkBuildStatus"
+    },
+    "error": {
+      "$ref": "#/$defs/sdkErrorBuildStatusFailure"
+    },
+    "pullRequest": {
+      "$ref": "#/$defs/sdkPullRequest"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time at which the SDK was created."
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time at which the SDK was last updated."
+    }
+  },
+  "required": [
+    "id",
+    "language",
+    "source",
+    "workspaceId",
+    "buildStatus",
+    "createdAt",
+    "updatedAt"
+  ],
+  "$defs": {
+    "elementType-2": {
+      "type": "string",
+      "enum": [
+        "collection",
+        "spec"
+      ],
+      "description": "The type of Postman element.",
+      "title": "elementType-2"
+    },
+    "sdkBuildStatus": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "in_progress",
+        "succeeded",
+        "failed"
+      ],
+      "description": "The SDK's build lifecycle:\n- `queued` — Accepted but not yet started.\n- `in_progress` — The SDK generation is running and in progress.\n- `succeeded` — The archive is built and available for download.\n- `failed` — The SDK generation failed. For information, check the `error` response.\n",
+      "title": "sdkBuildStatus"
+    },
+    "sdkErrorBuildStatusFailure": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "The build failure's error code."
+        },
+        "message": {
+          "type": "string",
+          "description": "Information about the build failure."
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "description": "Information about the SDK build's status when `buildStatus` is `failed`.",
+      "title": "sdkErrorBuildStatusFailure"
+    },
+    "sdkGitConnectionPRStatus": {
+      "type": "string",
+      "enum": [
+        "open",
+        "merged",
+        "closed"
+      ],
+      "description": "The lifecycle status of a pull request.",
+      "title": "sdkGitConnectionPRStatus"
+    },
+    "sdkId": {
+      "type": "string",
+      "description": "The SDK's ID.",
+      "title": "sdkId"
+    },
+    "sdkLanguage": {
+      "type": "string",
+      "enum": [
+        "typescript",
+        "python",
+        "go",
+        "java",
+        "csharp",
+        "ruby",
+        "php",
+        "kotlin",
+        "rust",
+        "cli"
+      ],
+      "description": "The target output language for the generated SDK.",
+      "title": "sdkLanguage"
+    },
+    "sdkPullRequest": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "The pull request's URL."
+        },
+        "status": {
+          "$ref": "#/$defs/sdkGitConnectionPRStatus"
+        },
+        "sdkId": {
+          "$ref": "#/$defs/sdkId"
+        }
+      },
+      "required": [
+        "url",
+        "status",
+        "sdkId"
+      ],
+      "description": "If the SDK was shipped (or proposed for shipping) through a Git connection, this is a compact representation of the pull request that shipped it. Otherwise, this returns a `null` value.",
+      "title": "sdkPullRequest"
+    },
+    "sdkSource": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/elementType-2"
+        },
+        "id": {
+          "type": "string",
+          "description": "The ID of the Postman Collection or specification in Postman."
+        }
+      },
+      "required": [
+        "type",
+        "id"
+      ],
+      "description": "The collection or specification that the SDK is generated from.",
+      "title": "sdkSource"
+    }
+  }
+}

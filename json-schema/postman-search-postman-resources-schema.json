@@ -1,0 +1,611 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-search-postman-resources-schema.json",
+  "title": "searchPostmanResources",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-search-api-openapi.yml#/components/schemas/searchPostmanResources",
+  "type": "object",
+  "properties": {
+    "q": {
+      "type": "string",
+      "description": "The search query text. This is case-insensitive."
+    },
+    "elementType": {
+      "$ref": "#/$defs/SearchPostmanResourcesElementType",
+      "description": "The type of Postman resource to search for."
+    },
+    "ownership": {
+      "$ref": "#/$defs/SearchPostmanResourcesOwnership",
+      "default": "organization",
+      "description": "The ownership scope for search results. One of:\n- `organization` (default) — Resources owned by the user's team.\n- `external` — Resources not owned by the user's team.\n- `all` — All resources regardless of ownership.\n"
+    },
+    "filters": {
+      "$ref": "#/$defs/SearchPostmanResourcesFilters",
+      "description": "The search filters to narrow results."
+    }
+  },
+  "required": [
+    "elementType"
+  ],
+  "$defs": {
+    "SearchFilterVisibilityEq": {
+      "type": "string",
+      "enum": [
+        "internal",
+        "public",
+        "partner"
+      ],
+      "description": "The visibility value to match.",
+      "title": "SearchFilterVisibilityEq"
+    },
+    "SearchFilterVisibilityNe": {
+      "type": "string",
+      "enum": [
+        "internal",
+        "public",
+        "partner"
+      ],
+      "description": "The visibility value to exclude.",
+      "title": "SearchFilterVisibilityNe"
+    },
+    "SearchPostmanResourcesElementType": {
+      "type": "string",
+      "enum": [
+        "requests",
+        "collections",
+        "workspaces",
+        "environments",
+        "flows",
+        "specs"
+      ],
+      "description": "The type of Postman resource to search for.",
+      "title": "SearchPostmanResourcesElementType"
+    },
+    "SearchPostmanResourcesFilters": {
+      "type": "object",
+      "properties": {
+        "$and": {
+          "$ref": "#/$defs/searchFilterAndOperation"
+        }
+      },
+      "required": [
+        "$and"
+      ],
+      "description": "The search filters to narrow results.",
+      "title": "SearchPostmanResourcesFilters"
+    },
+    "SearchPostmanResourcesOwnership": {
+      "type": "string",
+      "enum": [
+        "organization",
+        "external",
+        "all"
+      ],
+      "default": "organization",
+      "description": "The ownership scope for search results. One of:\n- `organization` (default) — Resources owned by the user's team.\n- `external` — Resources not owned by the user's team.\n- `all` — All resources regardless of ownership.\n",
+      "title": "SearchPostmanResourcesOwnership"
+    },
+    "collectionRequestId": {
+      "type": "string",
+      "title": "collectionRequestId"
+    },
+    "collectionRequestResourceType": {
+      "type": "string",
+      "title": "collectionRequestResourceType"
+    },
+    "collectionUid": {
+      "type": "string",
+      "format": "uid",
+      "title": "collectionUid"
+    },
+    "createdByString": {
+      "type": "string",
+      "title": "createdByString"
+    },
+    "environmentId": {
+      "type": "string",
+      "title": "environmentId"
+    },
+    "flowId": {
+      "type": "string",
+      "title": "flowId"
+    },
+    "httpMethod": {
+      "type": "string",
+      "title": "httpMethod"
+    },
+    "organizationIdString": {
+      "type": "string",
+      "title": "organizationIdString"
+    },
+    "searchFilterAndOperation": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/searchFilters"
+      },
+      "description": "A list of filter conditions that must all be true. Each item must contain exactly one filter.",
+      "title": "searchFilterAndOperation"
+    },
+    "searchFilterCollectionId": {
+      "type": "object",
+      "properties": {
+        "$eq": {
+          "type": "string",
+          "description": "The collection ID to match."
+        },
+        "$ne": {
+          "type": "string",
+          "description": "The collection ID to exclude."
+        },
+        "$in": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/collectionUid"
+          },
+          "description": "A list of collection IDs to match."
+        },
+        "$nin": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/collectionUid"
+          },
+          "description": "A list of collection IDs to exclude."
+        }
+      },
+      "description": "Filters by collection ID. Supported for `requests` and `collections` only.",
+      "title": "searchFilterCollectionId"
+    },
+    "searchFilterCreatedBy": {
+      "type": "object",
+      "properties": {
+        "$eq": {
+          "type": "string",
+          "description": "The creator ID to match."
+        },
+        "$ne": {
+          "type": "string",
+          "description": "The creator ID to exclude."
+        },
+        "$in": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/createdByString"
+          },
+          "description": "A list of creator IDs to match."
+        },
+        "$nin": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/createdByString"
+          },
+          "description": "A list of creator IDs to exclude."
+        }
+      },
+      "description": "Filters by the resource creator's user ID. Supported for all element types.",
+      "title": "searchFilterCreatedBy"
+    },
+    "searchFilterEnvironmentId": {
+      "type": "object",
+      "properties": {
+        "$eq": {
+          "type": "string",
+          "description": "The environment ID to match."
+        },
+        "$ne": {
+          "type": "string",
+          "description": "The environment ID to exclude."
+        },
+        "$in": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/environmentId"
+          },
+          "description": "A list of environment IDs to match."
+        },
+        "$nin": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/environmentId"
+          },
+          "description": "A list of environment IDs to exclude."
+        }
+      },
+      "description": "Filters by environment ID. Supported for `environments` only.",
+      "title": "searchFilterEnvironmentId"
+    },
+    "searchFilterFlowId": {
+      "type": "object",
+      "properties": {
+        "$eq": {
+          "type": "string",
+          "description": "The flow ID to match."
+        },
+        "$ne": {
+          "type": "string",
+          "description": "The flow ID to exclude."
+        },
+        "$in": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/flowId"
+          },
+          "description": "A list of flow IDs to match."
+        },
+        "$nin": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/flowId"
+          },
+          "description": "A list of flow IDs to exclude."
+        }
+      },
+      "description": "Filters by flow ID. Supported for `flows` only.",
+      "title": "searchFilterFlowId"
+    },
+    "searchFilterGitConnected": {
+      "type": "object",
+      "properties": {
+        "$eq": {
+          "type": "boolean",
+          "description": "If true, return only resources connected to Git."
+        },
+        "$ne": {
+          "type": "boolean",
+          "description": "If true, exclude resources connected to Git."
+        }
+      },
+      "description": "Filters by Git connection status. Supported for `workspaces`, `collections`, `requests`, `environments`, `specs`, and `flows`.",
+      "title": "searchFilterGitConnected"
+    },
+    "searchFilterOrgId": {
+      "type": "object",
+      "properties": {
+        "$eq": {
+          "type": "string",
+          "description": "The organization ID to match."
+        },
+        "$ne": {
+          "type": "string",
+          "description": "The organization ID to exclude."
+        },
+        "$in": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/organizationIdString"
+          },
+          "description": "A list of organization IDs to match."
+        },
+        "$nin": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/organizationIdString"
+          },
+          "description": "A list of organization IDs to exclude."
+        }
+      },
+      "description": "Filters by organization ID. Supported for all element types.",
+      "title": "searchFilterOrgId"
+    },
+    "searchFilterPrivateApiNetwork": {
+      "type": "object",
+      "properties": {
+        "$eq": {
+          "type": "boolean",
+          "description": "If true, return only resources that are part of the Private API Network."
+        },
+        "$ne": {
+          "type": "boolean",
+          "description": "If true, exclude resources that are part of the Private API Network."
+        }
+      },
+      "description": "Filters by private API network membership. Supported for all element types.",
+      "title": "searchFilterPrivateApiNetwork"
+    },
+    "searchFilterPublisherIsVerified": {
+      "type": "object",
+      "properties": {
+        "$eq": {
+          "type": "boolean",
+          "description": "If true, return only results from verified publishers."
+        },
+        "$ne": {
+          "type": "boolean",
+          "description": "If true, exclude results from verified publishers."
+        }
+      },
+      "description": "Filters by publisher verification status. Supported for all element types.",
+      "title": "searchFilterPublisherIsVerified"
+    },
+    "searchFilterRequestHttpMethod": {
+      "type": "object",
+      "properties": {
+        "$eq": {
+          "type": "string",
+          "description": "The HTTP method to match."
+        },
+        "$ne": {
+          "type": "string",
+          "description": "The HTTP method to exclude."
+        },
+        "$in": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/httpMethod"
+          },
+          "description": "A list of HTTP methods to match."
+        },
+        "$nin": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/httpMethod"
+          },
+          "description": "A list of HTTP methods to exclude."
+        }
+      },
+      "description": "Filters by HTTP method (for example, `GET` or `POST`). Supported for `requests` only.",
+      "title": "searchFilterRequestHttpMethod"
+    },
+    "searchFilterRequestId": {
+      "type": "object",
+      "properties": {
+        "$eq": {
+          "type": "string",
+          "description": "The request ID to match."
+        },
+        "$ne": {
+          "type": "string",
+          "description": "The request ID to exclude."
+        },
+        "$in": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/collectionRequestId"
+          },
+          "description": "A list of request IDs to match."
+        },
+        "$nin": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/collectionRequestId"
+          },
+          "description": "A list of request IDs to exclude."
+        }
+      },
+      "description": "Filters by request ID. Supported for `requests` only.",
+      "title": "searchFilterRequestId"
+    },
+    "searchFilterRequestResourceType": {
+      "type": "object",
+      "properties": {
+        "$eq": {
+          "type": "string",
+          "description": "The resource type to match."
+        },
+        "$ne": {
+          "type": "string",
+          "description": "The resource type to exclude."
+        },
+        "$in": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/collectionRequestResourceType"
+          },
+          "description": "A list of resource types to match."
+        },
+        "$nin": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/collectionRequestResourceType"
+          },
+          "description": "A list of resource types to exclude."
+        }
+      },
+      "description": "Filters by resource type variant (for example, `http` or `grpc`). Supported for `requests` only.",
+      "title": "searchFilterRequestResourceType"
+    },
+    "searchFilterSpecId": {
+      "type": "object",
+      "properties": {
+        "$eq": {
+          "type": "string",
+          "description": "The specification ID to match."
+        },
+        "$ne": {
+          "type": "string",
+          "description": "The specification ID to exclude."
+        },
+        "$in": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/specId"
+          },
+          "description": "A list of specification IDs to match."
+        },
+        "$nin": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/specId"
+          },
+          "description": "A list of specification IDs to exclude."
+        }
+      },
+      "description": "Filters by specification ID. Supported for `specs` only.",
+      "title": "searchFilterSpecId"
+    },
+    "searchFilterTags": {
+      "type": "object",
+      "properties": {
+        "$eq": {
+          "type": "string",
+          "description": "The tag to match."
+        },
+        "$ne": {
+          "type": "string",
+          "description": "The tag to exclude."
+        },
+        "$in": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tagName"
+          },
+          "description": "A list of tags to match."
+        },
+        "$nin": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tagName"
+          },
+          "description": "A list of tags to exclude."
+        }
+      },
+      "description": "Filters by tags. Supported for `workspaces` and `collections`.",
+      "title": "searchFilterTags"
+    },
+    "searchFilterTeamId": {
+      "type": "object",
+      "properties": {
+        "$eq": {
+          "type": "string",
+          "description": "The team ID to match."
+        },
+        "$ne": {
+          "type": "string",
+          "description": "The team ID to exclude."
+        },
+        "$in": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/teamIdString"
+          },
+          "description": "A list of team IDs to match."
+        },
+        "$nin": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/teamIdString"
+          },
+          "description": "A list of team IDs to exclude."
+        }
+      },
+      "description": "Filters by team ID. Supported for all element types.",
+      "title": "searchFilterTeamId"
+    },
+    "searchFilterVisibility": {
+      "type": "object",
+      "properties": {
+        "$eq": {
+          "$ref": "#/$defs/SearchFilterVisibilityEq",
+          "description": "The visibility value to match."
+        },
+        "$ne": {
+          "$ref": "#/$defs/SearchFilterVisibilityNe",
+          "description": "The visibility value to exclude."
+        }
+      },
+      "description": "Filters by workspace visibility. Supported for all element types. One of:\n- `internal` — Only visible to the organization's team members.\n- `public` — Visible to all Postman users.\n- `partner` — Visible to assigned external partner users.\n",
+      "title": "searchFilterVisibility"
+    },
+    "searchFilterWorkspaceId": {
+      "type": "object",
+      "properties": {
+        "$eq": {
+          "type": "string",
+          "description": "The workspace ID to match."
+        },
+        "$ne": {
+          "type": "string",
+          "description": "The workspace ID to exclude."
+        },
+        "$in": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/workspaceId"
+          },
+          "description": "A list of workspace IDs to match."
+        },
+        "$nin": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/workspaceId"
+          },
+          "description": "A list of workspace IDs to exclude."
+        }
+      },
+      "description": "Filters by workspace ID. Supported for all element types.",
+      "title": "searchFilterWorkspaceId"
+    },
+    "searchFilters": {
+      "type": "object",
+      "properties": {
+        "privateNetwork": {
+          "$ref": "#/$defs/searchFilterPrivateApiNetwork"
+        },
+        "publisherIsVerified": {
+          "$ref": "#/$defs/searchFilterPublisherIsVerified"
+        },
+        "visibility": {
+          "$ref": "#/$defs/searchFilterVisibility"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/searchFilterWorkspaceId"
+        },
+        "collectionId": {
+          "$ref": "#/$defs/searchFilterCollectionId"
+        },
+        "tags": {
+          "$ref": "#/$defs/searchFilterTags"
+        },
+        "method": {
+          "$ref": "#/$defs/searchFilterRequestHttpMethod"
+        },
+        "requestId": {
+          "$ref": "#/$defs/searchFilterRequestId"
+        },
+        "specificationId": {
+          "$ref": "#/$defs/searchFilterSpecId"
+        },
+        "flowId": {
+          "$ref": "#/$defs/searchFilterFlowId"
+        },
+        "environmentId": {
+          "$ref": "#/$defs/searchFilterEnvironmentId"
+        },
+        "createdBy": {
+          "$ref": "#/$defs/searchFilterCreatedBy"
+        },
+        "organizationId": {
+          "$ref": "#/$defs/searchFilterOrgId"
+        },
+        "teamId": {
+          "$ref": "#/$defs/searchFilterTeamId"
+        },
+        "isGitConnected": {
+          "$ref": "#/$defs/searchFilterGitConnected"
+        },
+        "type": {
+          "$ref": "#/$defs/searchFilterRequestResourceType"
+        }
+      },
+      "description": "A single filter condition.",
+      "title": "searchFilters"
+    },
+    "specId": {
+      "type": "string",
+      "title": "specId"
+    },
+    "tagName": {
+      "type": "string",
+      "title": "tagName"
+    },
+    "teamIdString": {
+      "type": "string",
+      "title": "teamIdString"
+    },
+    "workspaceId": {
+      "type": "string",
+      "title": "workspaceId"
+    }
+  }
+}

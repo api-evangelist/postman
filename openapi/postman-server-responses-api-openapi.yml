@@ -146,14 +146,6 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimitError'
 components:
-  parameters:
-    MockIdParam:
-      name: mockId
-      in: path
-      required: true
-      description: The mock server's unique ID or UID.
-      schema:
-        type: string
   responses:
     BadRequestError:
       description: Bad request - invalid input
@@ -169,8 +161,8 @@ components:
                     type: string
                   message:
                     type: string
-    UnauthorizedError:
-      description: Authentication credentials are missing or invalid
+    NotFoundError:
+      description: The requested resource was not found
       content:
         application/json:
           schema:
@@ -194,8 +186,8 @@ components:
                 type: string
               message:
                 type: string
-    NotFoundError:
-      description: The requested resource was not found
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
       content:
         application/json:
           schema:
@@ -208,6 +200,14 @@ components:
                     type: string
                   message:
                     type: string
+  parameters:
+    MockIdParam:
+      name: mockId
+      in: path
+      required: true
+      description: The mock server's unique ID or UID.
+      schema:
+        type: string
   schemas:
     ServerResponse:
       type: object

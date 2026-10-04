@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-workspace-update-data-schema.json",
+  "title": "workspaceUpdateData",
+  "description": "Information about the workspace update.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-workspaces-api-openapi.yml#/components/schemas/workspaceUpdateData",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "The workspace update's ID."
+    },
+    "topic": {
+      "type": "string",
+      "description": "The title of the workspace update."
+    },
+    "description": {
+      "type": "string",
+      "description": "The content of the workspace update."
+    },
+    "workspaceId": {
+      "type": "string",
+      "description": "The ID of the workspace in which the workspace update was created."
+    },
+    "createdBy": {
+      "$ref": "#/$defs/workspaceUpdateCreatedByData"
+    },
+    "updatedBy": {
+      "type": "integer",
+      "description": "The ID of the user who last updated the workspace update."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time at which the workspace update was created."
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time at which the workspace update was last updated."
+    },
+    "category": {
+      "$ref": "#/$defs/workspaceUpdateCategoryData"
+    },
+    "isPinned": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, the workspace update is pinned to the top of the workspace updates list."
+    },
+    "relatedResources": {
+      "$ref": "#/$defs/workspaceUpdateRelatedResourcesData"
+    }
+  },
+  "$defs": {
+    "WorkspaceUpdateRelatedResourcesDataItems": {
+      "type": "object",
+      "properties": {
+        "resource": {
+          "$ref": "#/$defs/WorkspaceUpdateRelatedResourcesDataItemsResource",
+          "description": "The type of linked resource."
+        },
+        "resourceId": {
+          "type": "string",
+          "description": "The linked resource's ID."
+        }
+      },
+      "required": [
+        "resource",
+        "resourceId"
+      ],
+      "title": "WorkspaceUpdateRelatedResourcesDataItems"
+    },
+    "WorkspaceUpdateRelatedResourcesDataItemsResource": {
+      "type": "string",
+      "enum": [
+        "collection",
+        "request",
+        "response",
+        "folder",
+        "extensibleCollection",
+        "extensibleCollectionItem"
+      ],
+      "description": "The type of linked resource.",
+      "title": "WorkspaceUpdateRelatedResourcesDataItemsResource"
+    },
+    "workspaceUpdateCategoryData": {
+      "type": "string",
+      "enum": [
+        "improvement",
+        "new_feature",
+        "bug_fix",
+        "breaking_change",
+        "announcement"
+      ],
+      "description": "The update's assigned category.",
+      "title": "workspaceUpdateCategoryData"
+    },
+    "workspaceUpdateCreatedByData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The user ID of the user that created the workspace update."
+        },
+        "name": {
+          "type": "string",
+          "description": "The display name of the user that created the workspace update."
+        },
+        "username": {
+          "type": "string",
+          "description": "The username of the user that created the workspace update."
+        }
+      },
+      "description": "Information about the user that created the workspace update.",
+      "title": "workspaceUpdateCreatedByData"
+    },
+    "workspaceUpdateRelatedResourcesData": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/WorkspaceUpdateRelatedResourcesDataItems"
+      },
+      "description": "A list containing the update's related elements. Related elements include links to collections, requests, folders, and saved examples in the update.",
+      "title": "workspaceUpdateRelatedResourcesData"
+    }
+  }
+}

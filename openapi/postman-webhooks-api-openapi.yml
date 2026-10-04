@@ -67,11 +67,58 @@ paths:
               $ref: '#/components/schemas/createWebhook'
 components:
   schemas:
-    CreateWebhookRequestUnauthorizedError:
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    CommonErrorTypeTitleDetailDetail:
       oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    commonErrorNameMessageDetails:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsError'
+      title: commonErrorNameMessageDetails
+    createWebhookResponse:
+      type: object
+      properties:
+        webhook:
+          $ref: '#/components/schemas/CreateWebhookResponseWebhook'
+      title: createWebhookResponse
+    CreateWebhookRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateWebhookRequestUnauthorizedError
+      title: CreateWebhookRequestInternalServerError
     CommonErrorNameMessageDetailsError:
       type: object
       properties:
@@ -85,12 +132,23 @@ components:
           $ref: '#/components/schemas/CommonErrorNameMessageDetailsErrorDetails'
           description: Information about the error.
       title: CommonErrorNameMessageDetailsError
-    createWebhookResponse:
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    createWebhook:
       type: object
       properties:
         webhook:
-          $ref: '#/components/schemas/CreateWebhookResponseWebhook'
-      title: createWebhookResponse
+          $ref: '#/components/schemas/CreateWebhookWebhook'
+      title: createWebhook
     CreateWebhookResponseWebhook:
       type: object
       properties:
@@ -112,61 +170,29 @@ components:
           format: uid
           description: The webhook's unique ID.
       title: CreateWebhookResponseWebhook
-    CreateWebhookRequestInternalServerError:
+    CreateWebhookRequestUnauthorizedError:
       oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateWebhookRequestInternalServerError
-    workspaceId:
-      type: string
-      title: workspaceId
-    commonErrorTypeTitleDetail:
+      title: CreateWebhookRequestUnauthorizedError
+    commonErrorTypeTitleDetailStatus:
       type: object
       properties:
         type:
-          type: string
-          description: The type of error.
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
         title:
           type: string
           description: A short summary of the problem.
         detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          type: string
           description: Information about the error.
-      title: commonErrorTypeTitleDetail
-    CommonErrorNameMessageError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
-    CommonErrorNameMessageDetailsErrorDetails:
-      oneOf:
-      - type: object
-        additionalProperties:
-          description: Any type
-      - type: array
-        items:
-          type: string
-      description: Information about the error.
-      title: CommonErrorNameMessageDetailsErrorDetails
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    createWebhook:
-      type: object
-      properties:
-        webhook:
-          $ref: '#/components/schemas/CreateWebhookWebhook'
-      title: createWebhook
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    workspaceId:
+      type: string
+      title: workspaceId
     CreateWebhookWebhook:
       type: object
       properties:
@@ -185,42 +211,16 @@ components:
       - collection
       - name
       title: CreateWebhookWebhook
-    CommonErrorTypeTitleDetailDetail:
+    CommonErrorNameMessageDetailsErrorDetails:
       oneOf:
-      - type: string
       - type: object
         additionalProperties:
           description: Any type
+      - type: array
+        items:
+          type: string
       description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
-    commonErrorNameMessageDetails:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageDetailsError'
-      title: commonErrorNameMessageDetails
-    commonErrorTypeTitleDetailStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
-    commonErrorNameMessage:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
+      title: CommonErrorNameMessageDetailsErrorDetails
   securitySchemes:
     PostmanApiKey:
       type: apiKey

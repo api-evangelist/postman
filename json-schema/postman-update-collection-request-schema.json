@@ -1,0 +1,511 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-update-collection-request-schema.json",
+  "title": "updateCollectionRequest",
+  "description": "The request properties to update. For a complete list of properties, refer to the **Request** property in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v1.0.0/draft-07/collection.json).",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-collection-items-api-openapi.yml#/components/schemas/updateCollectionRequest",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The request's name."
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The request's description."
+    },
+    "method": {
+      "$ref": "#/$defs/request-method"
+    },
+    "url": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The request's URL."
+    },
+    "headerData": {
+      "$ref": "#/$defs/request-header-data"
+    },
+    "queryParams": {
+      "$ref": "#/$defs/request-query-params"
+    },
+    "dataMode": {
+      "$ref": "#/$defs/UpdateCollectionRequestDataMode",
+      "description": "The request body's data mode."
+    },
+    "data": {
+      "$ref": "#/$defs/request-data"
+    },
+    "rawModeData": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The request body's raw mode data."
+    },
+    "graphqlModeData": {
+      "$ref": "#/$defs/request-graphql-mode-data"
+    },
+    "dataOptions": {
+      "$ref": "#/$defs/request-data-options"
+    },
+    "auth": {
+      "$ref": "#/$defs/request-auth"
+    },
+    "events": {
+      "$ref": "#/$defs/request-events"
+    }
+  },
+  "$defs": {
+    "AuthAttributeType": {
+      "type": "string",
+      "enum": [
+        "string",
+        "boolean",
+        "number",
+        "array",
+        "object",
+        "any"
+      ],
+      "description": "The value's type.",
+      "title": "AuthAttributeType"
+    },
+    "AuthAttributeValue": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/$defs/AuthAttributeValue1"
+        }
+      ],
+      "description": "The key's value.",
+      "title": "AuthAttributeValue"
+    },
+    "AuthAttributeValue1": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AuthAttributeValueOneOf1Items"
+      },
+      "title": "AuthAttributeValue1"
+    },
+    "AuthAttributeValueOneOf1Items": {
+      "type": "object",
+      "properties": {},
+      "title": "AuthAttributeValueOneOf1Items"
+    },
+    "RequestAuthType": {
+      "type": "string",
+      "enum": [
+        "basic",
+        "bearer",
+        "apikey",
+        "digest",
+        "oauth1",
+        "oauth2",
+        "hawk",
+        "awsv4",
+        "ntlm",
+        "edgegrid",
+        "jwt",
+        "asap",
+        "noauth"
+      ],
+      "description": "The authorization type.",
+      "title": "RequestAuthType"
+    },
+    "RequestDataItems": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "The form data's key."
+        },
+        "value": {
+          "type": "string",
+          "description": "The form data's value."
+        },
+        "description": {
+          "type": "string",
+          "description": "The form data's description."
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "If true, the form data entry is enabled."
+        },
+        "type": {
+          "$ref": "#/$defs/RequestDataItemsType",
+          "description": "The form data's type."
+        },
+        "uuid": {
+          "type": "string",
+          "description": "The form data entry's unique identifier."
+        }
+      },
+      "title": "RequestDataItems"
+    },
+    "RequestDataItemsType": {
+      "type": "string",
+      "enum": [
+        "text",
+        "file"
+      ],
+      "description": "The form data's type.",
+      "title": "RequestDataItemsType"
+    },
+    "RequestDataOptionsBinary": {
+      "type": "object",
+      "properties": {},
+      "description": "Options for the `binary` data mode.",
+      "title": "RequestDataOptionsBinary"
+    },
+    "RequestDataOptionsGraphql": {
+      "type": "object",
+      "properties": {},
+      "description": "Options for the `graphql` data mode.",
+      "title": "RequestDataOptionsGraphql"
+    },
+    "RequestDataOptionsParams": {
+      "type": "object",
+      "properties": {},
+      "description": "Options for the `params` data mode.",
+      "title": "RequestDataOptionsParams"
+    },
+    "RequestDataOptionsRaw": {
+      "type": "object",
+      "properties": {
+        "language": {
+          "type": "string",
+          "description": "The raw mode data's language type."
+        }
+      },
+      "description": "Options for the `raw` data mode.",
+      "title": "RequestDataOptionsRaw"
+    },
+    "RequestDataOptionsUrlencoded": {
+      "type": "object",
+      "properties": {},
+      "description": "Options for the `urlencoded` data mode.",
+      "title": "RequestDataOptionsUrlencoded"
+    },
+    "RequestEventsItems": {
+      "type": "object",
+      "properties": {
+        "listen": {
+          "$ref": "#/$defs/RequestEventsItemsListen",
+          "description": "The event type."
+        },
+        "script": {
+          "$ref": "#/$defs/script-2"
+        }
+      },
+      "title": "RequestEventsItems"
+    },
+    "RequestEventsItemsListen": {
+      "type": "string",
+      "enum": [
+        "test",
+        "prerequest"
+      ],
+      "description": "The event type.",
+      "title": "RequestEventsItemsListen"
+    },
+    "RequestHeaderDataItems": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "The header's key."
+        },
+        "value": {
+          "type": "string",
+          "description": "The header's value."
+        },
+        "description": {
+          "type": "string",
+          "description": "The header's description."
+        }
+      },
+      "title": "RequestHeaderDataItems"
+    },
+    "RequestQueryParamsItems": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "The query parameter's key."
+        },
+        "value": {
+          "type": "string",
+          "description": "The query parameter's value."
+        },
+        "description": {
+          "type": "string",
+          "description": "The query parameter's description."
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "If true, the query parameter is enabled."
+        }
+      },
+      "title": "RequestQueryParamsItems"
+    },
+    "UpdateCollectionRequestDataMode": {
+      "type": "string",
+      "enum": [
+        "raw",
+        "urlencoded",
+        "formdata",
+        "binary",
+        "graphql"
+      ],
+      "description": "The request body's data mode.",
+      "title": "UpdateCollectionRequestDataMode"
+    },
+    "auth-attribute": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "The auth method's key value."
+        },
+        "value": {
+          "$ref": "#/$defs/AuthAttributeValue",
+          "description": "The key's value."
+        },
+        "type": {
+          "$ref": "#/$defs/AuthAttributeType",
+          "description": "The value's type."
+        }
+      },
+      "required": [
+        "key"
+      ],
+      "description": "Information about the supported Postman [authorization type](https://learning.postman.com/docs/sending-requests/authorization/authorization-types/).",
+      "title": "auth-attribute"
+    },
+    "request-auth": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/RequestAuthType",
+          "description": "The authorization type."
+        },
+        "apikey": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/auth-attribute"
+          },
+          "description": "The API key's authentication information."
+        },
+        "awsv4": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/auth-attribute"
+          },
+          "description": "The attributes for AWS Signature authentication."
+        },
+        "basic": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/auth-attribute"
+          },
+          "description": "The attributes for Basic Auth."
+        },
+        "bearer": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/auth-attribute"
+          },
+          "description": "The attributes for Bearer Token authentication."
+        },
+        "digest": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/auth-attribute"
+          },
+          "description": "The attributes for Digest access authentication."
+        },
+        "edgegrid": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/auth-attribute"
+          },
+          "description": "The attributes for Akamai Edgegrid authentication."
+        },
+        "hawk": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/auth-attribute"
+          },
+          "description": "The attributes for Hawk authentication."
+        },
+        "ntlm": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/auth-attribute"
+          },
+          "description": "The attributes for NTLM authentication."
+        },
+        "oauth1": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/auth-attribute"
+          },
+          "description": "The attributes for OAuth1 authentication."
+        },
+        "oauth2": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/auth-attribute"
+          },
+          "description": "The attributes for OAuth2 authentication."
+        },
+        "jwt": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/auth-attribute"
+          },
+          "description": "The attributes for JWT authentication."
+        },
+        "asap": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/auth-attribute"
+          },
+          "description": "The attributes for ASAP authentication."
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "description": "The request's authentication information.",
+      "title": "request-auth"
+    },
+    "request-data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/RequestDataItems"
+      },
+      "description": "The request body's form data.",
+      "title": "request-data"
+    },
+    "request-data-options": {
+      "type": "object",
+      "properties": {
+        "raw": {
+          "$ref": "#/$defs/RequestDataOptionsRaw",
+          "description": "Options for the `raw` data mode."
+        },
+        "urlencoded": {
+          "$ref": "#/$defs/RequestDataOptionsUrlencoded",
+          "description": "Options for the `urlencoded` data mode."
+        },
+        "params": {
+          "$ref": "#/$defs/RequestDataOptionsParams",
+          "description": "Options for the `params` data mode."
+        },
+        "binary": {
+          "$ref": "#/$defs/RequestDataOptionsBinary",
+          "description": "Options for the `binary` data mode."
+        },
+        "graphql": {
+          "$ref": "#/$defs/RequestDataOptionsGraphql",
+          "description": "Options for the `graphql` data mode."
+        }
+      },
+      "description": "Additional configurations and options set for the request body's various data modes.",
+      "title": "request-data-options"
+    },
+    "request-events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/RequestEventsItems"
+      },
+      "description": "A list of scripts configured to run when specific events occur.",
+      "title": "request-events"
+    },
+    "request-graphql-mode-data": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "The GraphQL query."
+        },
+        "variables": {
+          "type": "string",
+          "description": "The GraphQL query variables, in JSON format."
+        }
+      },
+      "description": "The request body's GraphQL mode data.",
+      "title": "request-graphql-mode-data"
+    },
+    "request-header-data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/RequestHeaderDataItems"
+      },
+      "description": "The request's headers.",
+      "title": "request-header-data"
+    },
+    "request-method": {
+      "type": "string",
+      "enum": [
+        "GET",
+        "PUT",
+        "POST",
+        "PATCH",
+        "DELETE",
+        "COPY",
+        "HEAD",
+        "OPTIONS",
+        "LINK",
+        "UNLINK",
+        "PURGE",
+        "LOCK",
+        "UNLOCK",
+        "PROPFIND",
+        "VIEW"
+      ],
+      "description": "The request's HTTP method.",
+      "title": "request-method"
+    },
+    "request-query-params": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/RequestQueryParamsItems"
+      },
+      "description": "The request's query parameters.",
+      "title": "request-query-params"
+    },
+    "script-2": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The script's ID."
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of script. For example, `text/javascript`."
+        },
+        "exec": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "A list of script strings, where each line represents a line of code. Separate lines makes it easy to track script changes."
+        }
+      },
+      "description": "Information about the Javascript code that can be used to to perform setup or teardown operations in a response.",
+      "title": "script-2"
+    }
+  }
+}

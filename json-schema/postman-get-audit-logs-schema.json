@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-get-audit-logs-schema.json",
+  "title": "getAuditLogs",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-audit-logs-api-openapi.yml#/components/schemas/getAuditLogs",
+  "type": "object",
+  "properties": {
+    "trails": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/auditLogEvent"
+      },
+      "description": "A list of audit log events."
+    }
+  },
+  "$defs": {
+    "auditLogActor": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The user's name."
+        },
+        "username": {
+          "type": "string",
+          "description": "The user's username."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The user's email address."
+        },
+        "id": {
+          "type": "number",
+          "format": "double",
+          "description": "The user's ID."
+        },
+        "active": {
+          "type": "boolean",
+          "description": "If true, the user is active. If false, the user is deactivated."
+        }
+      },
+      "description": "Information about the user who preformed the audit event.",
+      "title": "auditLogActor"
+    },
+    "auditLogData": {
+      "type": "object",
+      "properties": {
+        "actor": {
+          "$ref": "#/$defs/auditLogActor"
+        },
+        "user": {
+          "$ref": "#/$defs/auditLogUser"
+        },
+        "team": {
+          "$ref": "#/$defs/auditLogTeam"
+        },
+        "variables": {
+          "type": "object",
+          "additionalProperties": {
+            "description": "Any type"
+          },
+          "description": "Additional information about the performed action."
+        }
+      },
+      "description": "Information about the audit log.",
+      "title": "auditLogData"
+    },
+    "auditLogEvent": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "format": "double",
+          "description": "The audit event's ID."
+        },
+        "ip": {
+          "type": "string",
+          "description": "The IP address of the user that performed the action."
+        },
+        "userAgent": {
+          "type": "string",
+          "description": "The user agent information."
+        },
+        "action": {
+          "type": "string",
+          "description": "The action performed by the user."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the event occurred."
+        },
+        "message": {
+          "type": "string",
+          "description": "The audit event's description."
+        },
+        "data": {
+          "$ref": "#/$defs/auditLogData"
+        }
+      },
+      "description": "Information about the audit log event.",
+      "title": "auditLogEvent"
+    },
+    "auditLogTeam": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The team's name."
+        },
+        "id": {
+          "type": "number",
+          "format": "double",
+          "description": "The team's ID."
+        }
+      },
+      "description": "The user's team information.",
+      "title": "auditLogTeam"
+    },
+    "auditLogUser": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The user's name."
+        },
+        "username": {
+          "type": "string",
+          "description": "The user's username."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The user's email address."
+        },
+        "id": {
+          "type": "number",
+          "format": "double",
+          "description": "The user's ID."
+        }
+      },
+      "description": "Information about the user.",
+      "title": "auditLogUser"
+    }
+  }
+}

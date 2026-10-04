@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-async-collection-fork-merge-schema.json",
+  "title": "asyncCollectionForkMerge",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-collections-api-openapi.yml#/components/schemas/asyncCollectionForkMerge",
+  "type": "object",
+  "properties": {
+    "strategy": {
+      "$ref": "#/$defs/AsyncCollectionForkMergeStrategy",
+      "description": "The fork's merge strategy:\n- `default` — Make no changes to the fork. You must have **Editor** access to the destination collection.\n- `updateSourceWithDestination` — Merge changes and apply any differences in the destination collection to the source. You must have **Editor** access to both the source and destination collection.\n- `deleteSource` — Merge the changes and delete the fork. You must have **Editor** access to both the source and destination collection.\n"
+    },
+    "source": {
+      "type": "string",
+      "format": "uid",
+      "description": "The source collection's unique ID."
+    },
+    "destination": {
+      "type": "string",
+      "format": "uid",
+      "description": "The destination collection's unique ID."
+    }
+  },
+  "required": [
+    "strategy",
+    "source",
+    "destination"
+  ],
+  "$defs": {
+    "AsyncCollectionForkMergeStrategy": {
+      "type": "string",
+      "enum": [
+        "default",
+        "updateSourceWithDestination",
+        "deleteSource"
+      ],
+      "description": "The fork's merge strategy:\n- `default` — Make no changes to the fork. You must have **Editor** access to the destination collection.\n- `updateSourceWithDestination` — Merge changes and apply any differences in the destination collection to the source. You must have **Editor** access to both the source and destination collection.\n- `deleteSource` — Merge the changes and delete the fork. You must have **Editor** access to both the source and destination collection.\n",
+      "title": "AsyncCollectionForkMergeStrategy"
+    }
+  }
+}

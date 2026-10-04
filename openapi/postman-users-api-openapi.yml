@@ -152,95 +152,6 @@ paths:
                 $ref: '#/components/schemas/GetTeamUserRequestInternalServerError'
 components:
   schemas:
-    CommonErrorNameMessageDetailsError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-        details:
-          $ref: '#/components/schemas/CommonErrorNameMessageDetailsErrorDetails'
-          description: Information about the error.
-      title: CommonErrorNameMessageDetailsError
-    GetTeamUserRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetTeamUserRequestForbiddenError
-    GetTeamUserRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetTeamUserRequestInternalServerError
-    GetAuthenticatedUserRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetAuthenticatedUserRequestUnauthorizedError
-    commonErrorTypeTitleDetailStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
-    GetTeamUserRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetTeamUserRequestUnauthorizedError
-    commonErrorNameMessageDetails:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageDetailsError'
-      title: commonErrorNameMessageDetails
-    teamUser:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The user's ID.
-        name:
-          type: string
-          description: The user's name.
-        username:
-          type: string
-          description: The user's username.
-        email:
-          type: string
-          format: email
-          description: The user's email address.
-        roles:
-          type: array
-          items:
-            type: string
-          description: The user's roles.
-        joinedAt:
-          type: string
-          format: date-time
-          description: The user's join date.
-      description: Information about the user.
-      title: teamUser
-    commonErrorNameMessage:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
     commonErrorTypeTitleDetail:
       type: object
       properties:
@@ -254,35 +165,6 @@ components:
           $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
           description: Information about the error.
       title: commonErrorTypeTitleDetail
-    CommonErrorNameMessageError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
-    getAuthenticatedUser:
-      type: object
-      properties:
-        user:
-          $ref: '#/components/schemas/GetAuthenticatedUserUser'
-          description: Information about the authenticated user.
-        operations:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetAuthenticatedUserOperationsItems'
-          description: Information about operations and their usage limits. This object does not return for users with the [Guest and Partner role](https://learning.postman.com/docs/collaborating-in-postman/roles-and-permissions/#team-roles).
-      title: getAuthenticatedUser
-    GetTeamUsersRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetTeamUsersRequestInternalServerError
     GetAuthenticatedUserUser:
       type: object
       properties:
@@ -332,6 +214,136 @@ components:
           description: A list of the user's assigned [roles](https://learning.postman.com/docs/collaborating-in-postman/roles-and-permissions/#team-roles).
       description: Information about the authenticated user.
       title: GetAuthenticatedUserUser
+    getTeamUsers:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/teamUser'
+          description: A list of users on the team.
+      title: getTeamUsers
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
+    commonErrorNameMessageDetails:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsError'
+      title: commonErrorNameMessageDetails
+    GetTeamUserRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
+      title: GetTeamUserRequestBadRequestError
+    GetTeamUserRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetTeamUserRequestInternalServerError
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    GetAuthenticatedUserRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAuthenticatedUserRequestInternalServerError
+    teamUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The user's ID.
+        name:
+          type: string
+          description: The user's name.
+        username:
+          type: string
+          description: The user's username.
+        email:
+          type: string
+          format: email
+          description: The user's email address.
+        roles:
+          type: array
+          items:
+            type: string
+          description: The user's roles.
+        joinedAt:
+          type: string
+          format: date-time
+          description: The user's join date.
+      description: Information about the user.
+      title: teamUser
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    GetTeamUsersRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetTeamUsersRequestForbiddenError
+    CommonErrorNameMessageDetailsErrorDetails:
+      oneOf:
+      - type: object
+        additionalProperties:
+          description: Any type
+      - type: array
+        items:
+          type: string
+      description: Information about the error.
+      title: CommonErrorNameMessageDetailsErrorDetails
+    GetTeamUserRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetTeamUserRequestUnauthorizedError
+    userId:
+      type: integer
+      title: userId
+    GetTeamUsersRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetTeamUsersRequestUnauthorizedError
+    GetTeamUserRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetTeamUserRequestForbiddenError
+    groupId:
+      type: integer
+      title: groupId
+    GetTeamUsersRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetTeamUsersRequestInternalServerError
     CommonErrorTypeTitleDetailDetail:
       oneOf:
       - type: string
@@ -340,9 +352,6 @@ components:
           description: Any type
       description: Information about the error.
       title: CommonErrorTypeTitleDetailDetail
-    userId:
-      type: integer
-      title: userId
     GetAuthenticatedUserOperationsItems:
       type: object
       properties:
@@ -362,56 +371,47 @@ components:
           format: double
           description: The operation's current usage value.
       title: GetAuthenticatedUserOperationsItems
-    CommonErrorTypeTitleDetailStatusType:
+    GetAuthenticatedUserRequestUnauthorizedError:
       oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    getTeamUsers:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAuthenticatedUserRequestUnauthorizedError
+    CommonErrorNameMessageDetailsError:
       type: object
       properties:
-        data:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+        details:
+          $ref: '#/components/schemas/CommonErrorNameMessageDetailsErrorDetails'
+          description: Information about the error.
+      title: CommonErrorNameMessageDetailsError
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    getAuthenticatedUser:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/GetAuthenticatedUserUser'
+          description: Information about the authenticated user.
+        operations:
           type: array
           items:
-            $ref: '#/components/schemas/teamUser'
-          description: A list of users on the team.
-      title: getTeamUsers
-    CommonErrorNameMessageDetailsErrorDetails:
-      oneOf:
-      - type: object
-        additionalProperties:
-          description: Any type
-      - type: array
-        items:
-          type: string
-      description: Information about the error.
-      title: CommonErrorNameMessageDetailsErrorDetails
-    GetTeamUserRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessageDetails'
-      title: GetTeamUserRequestBadRequestError
-    groupId:
-      type: integer
-      title: groupId
-    GetTeamUsersRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetTeamUsersRequestUnauthorizedError
-    GetTeamUsersRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetTeamUsersRequestForbiddenError
-    GetAuthenticatedUserRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetAuthenticatedUserRequestInternalServerError
+            $ref: '#/components/schemas/GetAuthenticatedUserOperationsItems'
+          description: Information about operations and their usage limits. This object does not return for users with the [Guest and Partner role](https://learning.postman.com/docs/collaborating-in-postman/roles-and-permissions/#team-roles).
+      title: getAuthenticatedUser
   securitySchemes:
     PostmanApiKey:
       type: apiKey

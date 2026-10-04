@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-import-open-api-definition-request-schema.json",
+  "title": "Import_openApiDefinition_Request",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-import-api-openapi.yml#/components/schemas/Import_openApiDefinition_Request",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/jsonSchema"
+    },
+    {
+      "$ref": "#/$defs/jsonStringified"
+    }
+  ],
+  "$defs": {
+    "GenerateCollectionOptionsFolderStrategy": {
+      "type": "string",
+      "enum": [
+        "Paths",
+        "Tags"
+      ],
+      "default": "Paths",
+      "description": "Whether to create folders based on the specification's `paths` or `tags` properties.",
+      "title": "GenerateCollectionOptionsFolderStrategy"
+    },
+    "GenerateCollectionOptionsIndentCharacter": {
+      "type": "string",
+      "enum": [
+        "Tab",
+        "Space"
+      ],
+      "default": "Space",
+      "description": "The option for setting the indentation character type.",
+      "title": "GenerateCollectionOptionsIndentCharacter"
+    },
+    "GenerateCollectionOptionsRequestNameSource": {
+      "type": "string",
+      "enum": [
+        "Fallback",
+        "URL"
+      ],
+      "default": "Fallback",
+      "description": "Determines how the generated collection's requests are named. If the `Fallback` value is passed, then the request is named after one of the following values in the schema:\n- `summary`\n- `operationId`\n- `description`\n- `url`\n",
+      "title": "GenerateCollectionOptionsRequestNameSource"
+    },
+    "JsonSchemaInput": {
+      "type": "object",
+      "properties": {},
+      "description": "An object that contains a valid JSON OpenAPI definition. For more information, read the [OpenAPI documentation](https://swagger.io/docs/specification/basic-structure/).",
+      "title": "JsonSchemaInput"
+    },
+    "JsonSchemaType": {
+      "type": "string",
+      "enum": [
+        "json"
+      ],
+      "description": "The `json` type value.",
+      "title": "JsonSchemaType"
+    },
+    "JsonStringifiedType": {
+      "type": "string",
+      "enum": [
+        "string"
+      ],
+      "description": "The `string` type value.",
+      "title": "JsonStringifiedType"
+    },
+    "generateCollectionOptions": {
+      "type": "object",
+      "properties": {
+        "requestNameSource": {
+          "$ref": "#/$defs/GenerateCollectionOptionsRequestNameSource",
+          "default": "Fallback",
+          "description": "Determines how the generated collection's requests are named. If the `Fallback` value is passed, then the request is named after one of the following values in the schema:\n- `summary`\n- `operationId`\n- `description`\n- `url`\n"
+        },
+        "indentCharacter": {
+          "$ref": "#/$defs/GenerateCollectionOptionsIndentCharacter",
+          "default": "Space",
+          "description": "The option for setting the indentation character type."
+        },
+        "parametersResolution": {
+          "type": "string",
+          "default": "Schema",
+          "description": "Generated collections use examples for parameter generation by default. Any existing collections generated using the schema parameter generation will continue to sync using their existing strategy."
+        },
+        "folderStrategy": {
+          "$ref": "#/$defs/GenerateCollectionOptionsFolderStrategy",
+          "default": "Paths",
+          "description": "Whether to create folders based on the specification's `paths` or `tags` properties."
+        },
+        "includeAuthInfoInExample": {
+          "type": "boolean",
+          "default": true,
+          "description": "If true, include the authentication parameters in the example request."
+        },
+        "enableOptionalParameters": {
+          "type": "boolean",
+          "default": true,
+          "description": "If true, enables optional parameters in the collection and its requests."
+        },
+        "keepImplicitHeaders": {
+          "type": "boolean",
+          "default": false,
+          "description": "If true, keep the implicit headers from the OpenAPI specification, which are removed by default."
+        },
+        "includeDeprecated": {
+          "type": "boolean",
+          "default": true,
+          "description": "If true, includes all deprecated operations, parameters, and properties in generated collection."
+        },
+        "alwaysInheritAuthentication": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether authentication details should be included in all requests, or always inherited from the collection."
+        },
+        "nestedFolderHierarchy": {
+          "type": "boolean",
+          "default": false,
+          "description": "If true, creates subfolders in the generated collection based on the order of the endpoints' tags."
+        }
+      },
+      "description": "The advanced creation options and their values. For more details, see Postman's [OpenAPI to Postman Collection Converter OPTIONS documentation](https://github.com/postmanlabs/openapi-to-postman/blob/develop/OPTIONS.md). These properties are case-sensitive.",
+      "title": "generateCollectionOptions"
+    },
+    "jsonSchema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/JsonSchemaType",
+          "description": "The `json` type value."
+        },
+        "input": {
+          "$ref": "#/$defs/JsonSchemaInput",
+          "description": "An object that contains a valid JSON OpenAPI definition. For more information, read the [OpenAPI documentation](https://swagger.io/docs/specification/basic-structure/)."
+        },
+        "options": {
+          "$ref": "#/$defs/generateCollectionOptions"
+        }
+      },
+      "required": [
+        "type",
+        "input"
+      ],
+      "title": "jsonSchema"
+    },
+    "jsonStringified": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/JsonStringifiedType",
+          "description": "The `string` type value."
+        },
+        "input": {
+          "type": "string",
+          "description": "The stringified OpenAPI definition."
+        },
+        "options": {
+          "$ref": "#/$defs/generateCollectionOptions"
+        }
+      },
+      "required": [
+        "type",
+        "input"
+      ],
+      "title": "jsonStringified"
+    }
+  }
+}

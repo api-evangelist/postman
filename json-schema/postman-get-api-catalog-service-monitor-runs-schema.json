@@ -1,0 +1,290 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-get-api-catalog-service-monitor-runs-schema.json",
+  "title": "getApiCatalogServiceMonitorRuns",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-apicatalog-api-openapi.yml#/components/schemas/getApiCatalogServiceMonitorRuns",
+  "type": "object",
+  "properties": {
+    "meta": {
+      "$ref": "#/$defs/GetApiCatalogServiceMonitorRunsMeta",
+      "description": "The response's meta information for paginated results."
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/GetApiCatalogServiceMonitorRunsDataItems"
+      },
+      "description": "A list of monitor runs."
+    }
+  },
+  "required": [
+    "meta",
+    "data"
+  ],
+  "$defs": {
+    "ApiCatalogServiceMetadataTimeRangeDataLabel": {
+      "type": "string",
+      "enum": [
+        "last_7_days"
+      ],
+      "description": "The time range's label.",
+      "title": "ApiCatalogServiceMetadataTimeRangeDataLabel"
+    },
+    "GetApiCatalogServiceMonitorRunsDataItems": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The monitor run's ID."
+        },
+        "status": {
+          "$ref": "#/$defs/GetApiCatalogServiceMonitorRunsDataItemsStatus",
+          "description": "Whether the monitor run passed or failed."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the run completed."
+        },
+        "collection": {
+          "$ref": "#/$defs/apiCatalogServiceCollectionData"
+        },
+        "environment": {
+          "$ref": "#/$defs/apiCatalogServiceEnvironmentData"
+        },
+        "summary": {
+          "$ref": "#/$defs/GetApiCatalogServiceMonitorRunsDataItemsSummary",
+          "description": "Information about the monitor run."
+        },
+        "performance": {
+          "$ref": "#/$defs/apiCatalogServicePerformanceData"
+        }
+      },
+      "required": [
+        "id",
+        "status",
+        "timestamp",
+        "collection",
+        "environment",
+        "summary",
+        "performance"
+      ],
+      "title": "GetApiCatalogServiceMonitorRunsDataItems"
+    },
+    "GetApiCatalogServiceMonitorRunsDataItemsStatus": {
+      "type": "string",
+      "enum": [
+        "passed",
+        "failed"
+      ],
+      "description": "Whether the monitor run passed or failed.",
+      "title": "GetApiCatalogServiceMonitorRunsDataItemsStatus"
+    },
+    "GetApiCatalogServiceMonitorRunsDataItemsSummary": {
+      "type": "object",
+      "properties": {
+        "totalRequests": {
+          "type": "integer",
+          "description": "The total number of HTTP requests executed in the run."
+        },
+        "failedRequests": {
+          "type": "integer",
+          "description": "The number of requests that failed."
+        },
+        "totalAssertions": {
+          "type": "integer",
+          "description": "The total number of test assertions evaluated."
+        },
+        "failedAssertions": {
+          "type": "integer",
+          "description": "The number of failed assertions."
+        },
+        "durationMs": {
+          "type": "integer",
+          "description": "The total execution duration, in milliseconds."
+        }
+      },
+      "required": [
+        "totalRequests",
+        "failedRequests",
+        "totalAssertions",
+        "failedAssertions",
+        "durationMs"
+      ],
+      "description": "Information about the monitor run.",
+      "title": "GetApiCatalogServiceMonitorRunsDataItemsSummary"
+    },
+    "GetApiCatalogServiceMonitorRunsMeta": {
+      "type": "object",
+      "properties": {
+        "nextCursor": {
+          "$ref": "#/$defs/apiCatalogServiceMetadataNextCursorData"
+        },
+        "limit": {
+          "$ref": "#/$defs/apiCatalogServiceMetadataLimitData"
+        },
+        "filters": {
+          "$ref": "#/$defs/apiCatalogServiceMetadataFiltersData"
+        },
+        "timeRange": {
+          "$ref": "#/$defs/apiCatalogServiceMetadataTimeRangeData"
+        },
+        "totalRuns": {
+          "$ref": "#/$defs/apiCatalogServiceMetadataTotalRunsData"
+        },
+        "passedRuns": {
+          "$ref": "#/$defs/apiCatalogServiceMetadataPassedRunsData"
+        },
+        "failedRuns": {
+          "$ref": "#/$defs/apiCatalogServiceMetadataFailedRunsData"
+        },
+        "successRatePct": {
+          "$ref": "#/$defs/apiCatalogServiceMetadataSuccessRatePctData"
+        }
+      },
+      "required": [
+        "nextCursor",
+        "limit",
+        "filters",
+        "timeRange",
+        "totalRuns",
+        "passedRuns",
+        "failedRuns",
+        "successRatePct"
+      ],
+      "description": "The response's meta information for paginated results.",
+      "title": "GetApiCatalogServiceMonitorRunsMeta"
+    },
+    "apiCatalogServiceCollectionData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The collection's ID."
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The collection's name. If the collection was deleted, this returns a null value."
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "description": "Information about the collection.",
+      "title": "apiCatalogServiceCollectionData"
+    },
+    "apiCatalogServiceEnvironmentData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The environment's ID."
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The environment's name. If the environment was deleted, this returns a null value."
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "description": "Information about the environment.",
+      "title": "apiCatalogServiceEnvironmentData"
+    },
+    "apiCatalogServiceMetadataFailedRunsData": {
+      "type": "integer",
+      "description": "The number of runs with at least one failure.",
+      "title": "apiCatalogServiceMetadataFailedRunsData"
+    },
+    "apiCatalogServiceMetadataFiltersData": {
+      "type": "object",
+      "properties": {},
+      "description": "The filters applied to the request.",
+      "title": "apiCatalogServiceMetadataFiltersData"
+    },
+    "apiCatalogServiceMetadataLimitData": {
+      "type": "integer",
+      "description": "The maximum number of records in the paginated response.",
+      "title": "apiCatalogServiceMetadataLimitData"
+    },
+    "apiCatalogServiceMetadataNextCursorData": {
+      "type": "string",
+      "description": "The pagination cursor that points to the next record in the results set.",
+      "title": "apiCatalogServiceMetadataNextCursorData"
+    },
+    "apiCatalogServiceMetadataPassedRunsData": {
+      "type": "integer",
+      "description": "The number of successful runs.",
+      "title": "apiCatalogServiceMetadataPassedRunsData"
+    },
+    "apiCatalogServiceMetadataSuccessRatePctData": {
+      "type": "number",
+      "format": "double",
+      "description": "The percentage of runs that passed, rounded to two decimal places.",
+      "title": "apiCatalogServiceMetadataSuccessRatePctData"
+    },
+    "apiCatalogServiceMetadataTimeRangeData": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The start of the time window."
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The end of the time window."
+        },
+        "label": {
+          "$ref": "#/$defs/ApiCatalogServiceMetadataTimeRangeDataLabel",
+          "description": "The time range's label."
+        }
+      },
+      "required": [
+        "start",
+        "end",
+        "label"
+      ],
+      "description": "The time window for the returned data.",
+      "title": "apiCatalogServiceMetadataTimeRangeData"
+    },
+    "apiCatalogServiceMetadataTotalRunsData": {
+      "type": "integer",
+      "description": "The total number of runs that match the given filters.",
+      "title": "apiCatalogServiceMetadataTotalRunsData"
+    },
+    "apiCatalogServicePerformanceData": {
+      "type": "object",
+      "properties": {
+        "minResponseMs": {
+          "type": "number",
+          "format": "double",
+          "description": "The fastest individual response time, in milliseconds."
+        },
+        "maxResponseMs": {
+          "type": "number",
+          "format": "double",
+          "description": "The slowest individual response time, in milliseconds."
+        }
+      },
+      "required": [
+        "minResponseMs",
+        "maxResponseMs"
+      ],
+      "description": "Information about the response time range across all requests in the run.",
+      "title": "apiCatalogServicePerformanceData"
+    }
+  }
+}

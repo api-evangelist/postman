@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-publish-documentation-schema.json",
+  "title": "publishDocumentation",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-collections-api-openapi.yml#/components/schemas/publishDocumentation",
+  "type": "object",
+  "properties": {
+    "environmentUid": {
+      "type": "string",
+      "format": "uid",
+      "description": "The unique ID of the environment to publish with the documentation. The initial values of all variables are published with the documentation. Make certain they don't contain sensitive information such as passwords or tokens."
+    },
+    "customColor": {
+      "$ref": "#/$defs/documentationColorSettings"
+    },
+    "documentationLayout": {
+      "$ref": "#/$defs/PublishDocumentationDocumentationLayout",
+      "default": "classic-single-column",
+      "description": "The documentation's default layout style:\n- `classic-single-column` — Displays sample code inline beneath each request.\n- `classic-double-column` — Displays sample code in a column next to the documentation.\n"
+    },
+    "customization": {
+      "$ref": "#/$defs/documentationCustomizationSettings"
+    }
+  },
+  "required": [
+    "customColor",
+    "customization"
+  ],
+  "$defs": {
+    "DocumentationApperanceSettingsDefault": {
+      "type": "string",
+      "enum": [
+        "light",
+        "dark"
+      ],
+      "description": "The default color theme (`light` or `dark`). Documentation uses the given theme value by default.",
+      "title": "DocumentationApperanceSettingsDefault"
+    },
+    "DocumentationThemeSettingsName": {
+      "type": "string",
+      "enum": [
+        "dark",
+        "light"
+      ],
+      "description": "The `light` or `dark` theme.",
+      "title": "DocumentationThemeSettingsName"
+    },
+    "PublishDocumentationDocumentationLayout": {
+      "type": "string",
+      "enum": [
+        "classic-single-column",
+        "classic-double-column"
+      ],
+      "default": "classic-single-column",
+      "description": "The documentation's default layout style:\n- `classic-single-column` — Displays sample code inline beneath each request.\n- `classic-double-column` — Displays sample code in a column next to the documentation.\n",
+      "title": "PublishDocumentationDocumentationLayout"
+    },
+    "documentationApperanceSettings": {
+      "type": "object",
+      "properties": {
+        "default": {
+          "$ref": "#/$defs/DocumentationApperanceSettingsDefault",
+          "description": "The default color theme (`light` or `dark`). Documentation uses the given theme value by default."
+        },
+        "themes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/documentationThemeSettings"
+          },
+          "description": "A list of theme settings for the `light` and `dark` themes."
+        }
+      },
+      "description": "Information about the documentation appearance, such as colors and theme.",
+      "title": "documentationApperanceSettings"
+    },
+    "documentationColorSettings": {
+      "type": "object",
+      "properties": {
+        "highlight": {
+          "type": "string",
+          "description": "The hexcode color code for the documentation's highlighting."
+        },
+        "rightSidebar": {
+          "type": "string",
+          "description": "The hexcode color code for the documentation's right sidebar color."
+        },
+        "topBar": {
+          "type": "string",
+          "description": "The hexcode color code for the documentation's top bar color."
+        }
+      },
+      "description": "The theme's colors, in six digit hexcode. The values in this object must match the hexcode values of either the `light` or `dark` theme defined in the `appearance` object.",
+      "title": "documentationColorSettings"
+    },
+    "documentationCustomizationSettings": {
+      "type": "object",
+      "properties": {
+        "metaTags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/documentationMetaTags"
+          },
+          "description": "The key-pair values that contain the documentation's `title` and `description` metadata information."
+        },
+        "appearance": {
+          "$ref": "#/$defs/documentationApperanceSettings"
+        }
+      },
+      "description": "Information about the documentation's customization.",
+      "title": "documentationCustomizationSettings"
+    },
+    "documentationMetaTags": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The key's name:\n  - `title` — The title of your documentation. This value appears in relevant search queries and browser tabs. By default, the system uses the collection's name for the documentation title.\n  - `description` — The documentation's description. This provides brief information about your document and lets users know what it contains. By default, the system uses the collection's description content.\n"
+        },
+        "value": {
+          "type": "string",
+          "description": "The `name` key's value."
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "title": "documentationMetaTags"
+    },
+    "documentationThemeSettings": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/DocumentationThemeSettingsName",
+          "description": "The `light` or `dark` theme."
+        },
+        "colors": {
+          "$ref": "#/$defs/documentationColorSettings"
+        },
+        "logo": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The URL to the documentation's logo image. By default, public documentation uses your team logo."
+        }
+      },
+      "title": "documentationThemeSettings"
+    }
+  }
+}

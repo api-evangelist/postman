@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-get-mock-call-logs-schema.json",
+  "title": "getMockCallLogs",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-mocks-api-openapi.yml#/components/schemas/getMockCallLogs",
+  "type": "object",
+  "properties": {
+    "call-logs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/GetMockCallLogsCallLogsItems"
+      },
+      "description": "A list of call logs."
+    },
+    "meta": {
+      "$ref": "#/$defs/GetMockCallLogsMeta",
+      "description": "The response's non-standard meta information."
+    }
+  },
+  "$defs": {
+    "GetMockCallLogsCallLogsItems": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The server response's ID."
+        },
+        "responseName": {
+          "type": "string",
+          "description": "The server response's name."
+        },
+        "servedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the server response was served."
+        },
+        "request": {
+          "$ref": "#/$defs/GetMockCallLogsCallLogsItemsRequest",
+          "description": "The server response's request information."
+        },
+        "response": {
+          "$ref": "#/$defs/GetMockCallLogsCallLogsItemsResponse",
+          "description": "The server response's response information."
+        }
+      },
+      "description": "Information about the mock server's server response.",
+      "title": "GetMockCallLogsCallLogsItems"
+    },
+    "GetMockCallLogsCallLogsItemsRequest": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "description": "The request method."
+        },
+        "path": {
+          "type": "string",
+          "description": "The request's path."
+        },
+        "headers": {
+          "$ref": "#/$defs/GetMockCallLogsCallLogsItemsRequestHeaders",
+          "description": "The request's headers."
+        },
+        "body": {
+          "$ref": "#/$defs/GetMockCallLogsCallLogsItemsRequestBody",
+          "description": "The request's body information."
+        }
+      },
+      "description": "The server response's request information.",
+      "title": "GetMockCallLogsCallLogsItemsRequest"
+    },
+    "GetMockCallLogsCallLogsItemsRequestBody": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "description": "The request body's media type (mode)."
+        },
+        "data": {
+          "type": "string",
+          "description": "The request body's contents."
+        }
+      },
+      "description": "The request's body information.",
+      "title": "GetMockCallLogsCallLogsItemsRequestBody"
+    },
+    "GetMockCallLogsCallLogsItemsRequestHeaders": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "The request header's name."
+        },
+        "value": {
+          "type": "string",
+          "description": "The request header's value."
+        }
+      },
+      "description": "The request's headers.",
+      "title": "GetMockCallLogsCallLogsItemsRequestHeaders"
+    },
+    "GetMockCallLogsCallLogsItemsResponse": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The type of response."
+        },
+        "statusCode": {
+          "type": "number",
+          "format": "double",
+          "description": "The response's status code."
+        },
+        "headers": {
+          "$ref": "#/$defs/GetMockCallLogsCallLogsItemsResponseHeaders",
+          "description": "The response's headers."
+        },
+        "body": {
+          "$ref": "#/$defs/GetMockCallLogsCallLogsItemsResponseBody",
+          "description": "The response's body information."
+        }
+      },
+      "description": "The server response's response information.",
+      "title": "GetMockCallLogsCallLogsItemsResponse"
+    },
+    "GetMockCallLogsCallLogsItemsResponseBody": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string",
+          "description": "The response body's contents."
+        }
+      },
+      "description": "The response's body information.",
+      "title": "GetMockCallLogsCallLogsItemsResponseBody"
+    },
+    "GetMockCallLogsCallLogsItemsResponseHeaders": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "$ref": "#/$defs/GetMockCallLogsCallLogsItemsResponseHeadersDescription",
+          "description": "The response header's description information."
+        },
+        "key": {
+          "type": "string",
+          "description": "The response header's name."
+        },
+        "value": {
+          "type": "string",
+          "description": "The response header's value."
+        }
+      },
+      "description": "The response's headers.",
+      "title": "GetMockCallLogsCallLogsItemsResponseHeaders"
+    },
+    "GetMockCallLogsCallLogsItemsResponseHeadersDescription": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "The response header description's content."
+        },
+        "type": {
+          "type": "string",
+          "description": "The response header description's media type."
+        }
+      },
+      "description": "The response header's description information.",
+      "title": "GetMockCallLogsCallLogsItemsResponseHeadersDescription"
+    },
+    "GetMockCallLogsMeta": {
+      "type": "object",
+      "properties": {
+        "nextCursor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "base64",
+          "description": "The pagination cursor that points to the next record in the results set."
+        }
+      },
+      "description": "The response's non-standard meta information.",
+      "title": "GetMockCallLogsMeta"
+    }
+  }
+}

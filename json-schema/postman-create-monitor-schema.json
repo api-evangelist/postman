@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-create-monitor-schema.json",
+  "title": "createMonitor",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-monitors-api-openapi.yml#/components/schemas/createMonitor",
+  "type": "object",
+  "properties": {
+    "monitor": {
+      "$ref": "#/$defs/CreateMonitorMonitor",
+      "description": "Information about the monitor."
+    }
+  },
+  "$defs": {
+    "CreateMonitorMonitor": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The monitor's name."
+        },
+        "active": {
+          "type": "boolean",
+          "default": true,
+          "description": "If true, the monitor is active and makes calls to the specified URL."
+        },
+        "notificationLimit": {
+          "type": "number",
+          "format": "double",
+          "description": "Stop email notifications after the given number consecutive failures."
+        },
+        "collection": {
+          "type": "string",
+          "description": "The unique ID of the monitor's associated collection."
+        },
+        "environment": {
+          "type": "string",
+          "description": "The unique ID of the monitor's associated environment."
+        },
+        "retry": {
+          "$ref": "#/$defs/monitorRetry"
+        },
+        "options": {
+          "$ref": "#/$defs/monitorOptions"
+        },
+        "schedule": {
+          "$ref": "#/$defs/monitorSchedule"
+        },
+        "distribution": {
+          "$ref": "#/$defs/monitorDistribution"
+        },
+        "notifications": {
+          "$ref": "#/$defs/monitorNotifications"
+        }
+      },
+      "required": [
+        "name",
+        "collection",
+        "schedule"
+      ],
+      "description": "Information about the monitor.",
+      "title": "CreateMonitorMonitor"
+    },
+    "MonitorDistributionItems": {
+      "type": "object",
+      "properties": {
+        "region": {
+          "$ref": "#/$defs/MonitorDistributionItemsRegion",
+          "description": "The assigned distribution region."
+        }
+      },
+      "title": "MonitorDistributionItems"
+    },
+    "MonitorDistributionItemsRegion": {
+      "type": "string",
+      "enum": [
+        "us-east",
+        "us-west",
+        "ap-southeast",
+        "ca-central",
+        "eu-central",
+        "sa-east",
+        "uk",
+        "us-east-staticip",
+        "us-west-staticip"
+      ],
+      "description": "The assigned distribution region.",
+      "title": "MonitorDistributionItemsRegion"
+    },
+    "MonitorNotificationsOnErrorItems": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The email address of the user to notify on monitor error."
+        }
+      },
+      "title": "MonitorNotificationsOnErrorItems"
+    },
+    "MonitorNotificationsOnFailureItems": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The email address of the user to notify on monitor failure."
+        }
+      },
+      "title": "MonitorNotificationsOnFailureItems"
+    },
+    "monitorDistribution": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/MonitorDistributionItems"
+      },
+      "description": "A list of the monitor's [geographic regions](https://learning.postman.com/docs/monitoring-your-api/setting-up-monitor/#add-regions).",
+      "title": "monitorDistribution"
+    },
+    "monitorNotifications": {
+      "type": "object",
+      "properties": {
+        "onError": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MonitorNotificationsOnErrorItems"
+          }
+        },
+        "onFailure": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MonitorNotificationsOnFailureItems"
+          }
+        }
+      },
+      "description": "Information about the monitor's notification settings.",
+      "title": "monitorNotifications"
+    },
+    "monitorOptions": {
+      "type": "object",
+      "properties": {
+        "followRedirects": {
+          "type": "boolean",
+          "description": "If true, follow redirects enabled."
+        },
+        "requestDelay": {
+          "type": "number",
+          "format": "double",
+          "description": "The monitor's request delay value, in milliseconds."
+        },
+        "requestTimeout": {
+          "type": "number",
+          "format": "double",
+          "description": "The monitor's request timeout value, in milliseconds."
+        },
+        "strictSSL": {
+          "type": "boolean",
+          "description": "If true, strict SSL enabled."
+        }
+      },
+      "description": "Information about the monitor's option settings.",
+      "title": "monitorOptions"
+    },
+    "monitorRetry": {
+      "type": "object",
+      "properties": {
+        "attempts": {
+          "type": "number",
+          "format": "double",
+          "description": "The number of times to reattempt a monitor run if it fails or errors. This may impact your [monitor usage](https://learning.postman.com/docs/monitoring-your-api/monitor-usage/#view-monitor-usage)."
+        }
+      },
+      "description": "Information about the monitor's retry settings.",
+      "title": "monitorRetry"
+    },
+    "monitorSchedule": {
+      "type": "object",
+      "properties": {
+        "cron": {
+          "type": "string",
+          "description": "The monitor's run frequency, based on the given POSIX cron pattern. For example:\n- Every 5 minutes — `*/5 * * * *`\n- Every 30 minutes — `*/30 * * * *`\n- Every hour — `0 */1 * * *`\n- Every 6 hours — `0 */6 * * *`\n- Every day at 5 pm — `0 17 * * *`\n- Every Monday at 12 pm — `0 12 * * MON`\n- Every weekday (Mon — Fri) at 6 am — `0 6 * * MON-FRI`\n"
+        },
+        "timezone": {
+          "type": "string",
+          "description": "The monitor's [timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)."
+        }
+      },
+      "description": "Information about the monitor's schedule.",
+      "title": "monitorSchedule"
+    }
+  }
+}

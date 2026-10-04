@@ -273,25 +273,66 @@ paths:
                 $ref: '#/components/schemas/GetAnalyticsMetadataRequestInternalServerError'
 components:
   schemas:
-    getAnalyticsDataRowsData:
-      type: array
-      items:
-        type: array
-        items:
-          $ref: '#/components/schemas/GetAnalyticsDataRowsDataItemsItems'
-      description: A list of data row entries. Each row is an array of values that correspond to the columns defined in the schema.
-      title: getAnalyticsDataRowsData
-    getAnalyticsMetadataResourceMetricsData:
+    commonErrorTypeTitleDetail:
       type: object
       properties:
-        metric:
+        type:
           type: string
-          description: The metric's name.
-        description:
+          description: The type of error.
+        title:
           type: string
-          description: A description of the metric.
-      description: Information about the resource's metric.
-      title: getAnalyticsMetadataResourceMetricsData
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    GetAnalyticsDataRowsDataItemsItems:
+      oneOf:
+      - type: string
+      - type: integer
+      - type: number
+        format: double
+      - type: boolean
+      title: GetAnalyticsDataRowsDataItemsItems
+    GetAnalyticsDataRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAnalyticsDataRequestInternalServerError
+    analyticsResource:
+      type: string
+      enum:
+      - user
+      - team
+      - workspace
+      - ai
+      - api_development
+      - api_testing
+      - api_production
+      - api_distribution
+      - api_management
+      title: analyticsResource
+    GetAnalyticsMetadataResourceMetricsDataSummaryDataSchema:
+      type: object
+      properties:
+        columns:
+          $ref: '#/components/schemas/getAnalyticsDataColumnsData'
+      description: The response schema for the `summary` view.
+      title: GetAnalyticsMetadataResourceMetricsDataSummaryDataSchema
+    getAnalyticsDataSchema:
+      type: object
+      properties:
+        columns:
+          $ref: '#/components/schemas/getAnalyticsDataColumnsData'
+      title: getAnalyticsDataSchema
+    commonErrorNameMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/CommonErrorNameMessageError'
+          description: Information about the error.
+      title: commonErrorNameMessage
     getAnalyticsMetadataResourceMetricsDataDetailedParametersFilters:
       oneOf:
       - type: array
@@ -299,15 +340,6 @@ components:
           type: string
       - $ref: '#/components/schemas/GetAnalyticsMetadataResourceMetricsDataDetailedParametersFilters1'
       title: getAnalyticsMetadataResourceMetricsDataDetailedParametersFilters
-    analyticsResponseStatus:
-      type: string
-      title: analyticsResponseStatus
-    getAnalyticsDataSchema:
-      type: object
-      properties:
-        columns:
-          $ref: '#/components/schemas/getAnalyticsDataColumnsData'
-      title: getAnalyticsDataSchema
     getAnalyticsMetadataResourceMetricsDataDetailedParametersFiltersData:
       type: object
       properties:
@@ -324,53 +356,94 @@ components:
           description: A list of the parameter's accepted values.
       description: Information about the filter.
       title: getAnalyticsMetadataResourceMetricsDataDetailedParametersFiltersData
-    getAnalyticsMetadata:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/GetAnalyticsMetadataData'
-          description: The Analytics API's metadata information.
-      title: getAnalyticsMetadata
-    analyticsMetadataResources:
-      type: string
-      title: analyticsMetadataResources
-    GetAnalyticsMetadataResourceMetricsDataSummaryDataSchema:
+    GetAnalyticsMetadataResourceMetricsDataDetailedDataSchema:
       type: object
       properties:
         columns:
           $ref: '#/components/schemas/getAnalyticsDataColumnsData'
-      description: The response schema for the `summary` view.
-      title: GetAnalyticsMetadataResourceMetricsDataSummaryDataSchema
-    analyticsPeriod:
+      description: The response schema for the `detailed` view.
+      title: GetAnalyticsMetadataResourceMetricsDataDetailedDataSchema
+    analyticsMetadataInclude:
       type: string
-      title: analyticsPeriod
-    getAnalyticsDataPartnerRequestSent200OK:
+      title: analyticsMetadataInclude
+    getAnalyticsDataAllPartners:
       type: object
       properties:
         schema:
-          $ref: '#/components/schemas/GetAnalyticsDataPartnerRequestSent200OkSchema'
+          $ref: '#/components/schemas/getAnalyticsDataSchema'
         rows:
           $ref: '#/components/schemas/getAnalyticsDataRowsData'
         pagination:
           $ref: '#/components/schemas/getAnalyticsDataPaginationData'
-      description: Information about partner users' successful request calls in a workspace.
-      title: getAnalyticsDataPartnerRequestSent200OK
-    GetAnalyticsDataData:
-      oneOf:
-      - $ref: '#/components/schemas/getAnalyticsDataSummary'
-      - $ref: '#/components/schemas/getAnalyticsDataPartnerEngagmentFunnel'
-      title: GetAnalyticsDataData
-    offsetMax10000:
-      type: integer
-      default: 0
-      title: offsetMax10000
-    commonErrorNameMessage:
+      description: Information about partner users and their activity.
+      title: getAnalyticsDataAllPartners
+    analyticsPeriod:
+      type: string
+      title: analyticsPeriod
+    getAnalyticsMetadataResourceMetricsDataDetailed:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/CommonErrorNameMessageError'
-          description: Information about the error.
-      title: commonErrorNameMessage
+        metric:
+          type: string
+          description: The metric's name.
+        description:
+          type: string
+          description: A description of the metric.
+        type:
+          type: string
+          description: The metric's data type.
+        isRequired:
+          type: boolean
+          description: If true, the metric is required.
+        parameters:
+          $ref: '#/components/schemas/getAnalyticsMetadataResourceMetricsDataDetailedParameters'
+        response:
+          $ref: '#/components/schemas/getAnalyticsMetadataResourceMetricsDataDetailedResponse'
+      description: Information about the resource's metric.
+      title: getAnalyticsMetadataResourceMetricsDataDetailed
+    limitDefault100Max10000:
+      type: integer
+      default: 100
+      title: limitDefault100Max10000
+    analyticsAttentionType:
+      type: string
+      title: analyticsAttentionType
+    getAnalyticsMetadataResourceMetricsData:
+      type: object
+      properties:
+        metric:
+          type: string
+          description: The metric's name.
+        description:
+          type: string
+          description: A description of the metric.
+      description: Information about the resource's metric.
+      title: getAnalyticsMetadataResourceMetricsData
+    getAnalyticsDataColumnsData:
+      type: array
+      items:
+        $ref: '#/components/schemas/GetAnalyticsDataColumnsDataItems'
+      description: A list of column entries.
+      title: getAnalyticsDataColumnsData
+    getAnalyticsData:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/GetAnalyticsDataData'
+      required:
+      - data
+      title: getAnalyticsData
+    getAnalyticsDataObject:
+      type: object
+      properties:
+        schema:
+          $ref: '#/components/schemas/getAnalyticsDataSchema'
+        rows:
+          $ref: '#/components/schemas/getAnalyticsDataRowsData'
+        pagination:
+          $ref: '#/components/schemas/getAnalyticsDataPaginationData'
+      description: Data analytics information.
+      title: getAnalyticsDataObject
     analyticsEntityType:
       type: string
       enum:
@@ -381,26 +454,112 @@ components:
       - sdk-collection
       - sdk-specification
       title: analyticsEntityType
-    getAnalyticsDataSummary:
+    getAnalyticsMetadataResourceMetricsDataSummaryData:
       type: object
       properties:
-        summary:
-          $ref: '#/components/schemas/getAnalyticsDataObject'
-      required:
-      - summary
-      title: getAnalyticsDataSummary
-    GetAnalyticsDataColumnsDataItemsType:
+        schema:
+          $ref: '#/components/schemas/GetAnalyticsMetadataResourceMetricsDataSummaryDataSchema'
+          description: The response schema for the `summary` view.
+      description: Information about the metric's `summary` parameter.
+      title: getAnalyticsMetadataResourceMetricsDataSummaryData
+    getAnalyticsMetadata:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/GetAnalyticsMetadataData'
+          description: The Analytics API's metadata information.
+      title: getAnalyticsMetadata
+    commonErrorTypeTitleDetailStatusInstance:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri-reference
+          description: The [URI reference](https://www.rfc-editor.org/rfc/rfc3986) that identifies the type of problem.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: An explanation about the problem.
+        status:
+          type: integer
+          description: The HTTP status code generated by the origin server.
+        instance:
+          type: string
+          description: The URI reference that identifies the specific occurrence of the problem.
+      title: commonErrorTypeTitleDetailStatusInstance
+    GetAnalyticsDataData:
+      oneOf:
+      - $ref: '#/components/schemas/getAnalyticsDataSummary'
+      - $ref: '#/components/schemas/getAnalyticsDataPartnerEngagmentFunnel'
+      title: GetAnalyticsDataData
+    getAnalyticsDataRowsData:
+      type: array
+      items:
+        type: array
+        items:
+          $ref: '#/components/schemas/GetAnalyticsDataRowsDataItemsItems'
+      description: A list of data row entries. Each row is an array of values that correspond to the columns defined in the schema.
+      title: getAnalyticsDataRowsData
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    GetAnalyticsDataPartnerRequestSentSchema:
+      type: object
+      properties:
+        columns:
+          $ref: '#/components/schemas/getAnalyticsDataColumnsData'
+      title: GetAnalyticsDataPartnerRequestSentSchema
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    analyticsResponseStatus:
       type: string
-      enum:
-      - DATE
-      - STRING
-      - INTEGER
-      - TIMESTAMP
-      - BOOLEAN
-      - NUMBER
-      - FLOAT
-      description: The data type of the column.
-      title: GetAnalyticsDataColumnsDataItemsType
+      title: analyticsResponseStatus
+    getAnalyticsDataPartnerEngagmentFunnel:
+      type: object
+      properties:
+        all_partners:
+          $ref: '#/components/schemas/getAnalyticsDataAllPartners'
+        workspace_visited:
+          $ref: '#/components/schemas/getAnalyticsDataPartnerWorkspaceVisited'
+        viewed_collection:
+          $ref: '#/components/schemas/getAnalyticsDataPartnersViewedCollection'
+        request_sent:
+          $ref: '#/components/schemas/getAnalyticsDataPartnerRequestSent'
+        successful_requests_200OK:
+          $ref: '#/components/schemas/getAnalyticsDataPartnerRequestSent200OK'
+      title: getAnalyticsDataPartnerEngagmentFunnel
+    GetAnalyticsDataPartnersViewedCollectionSchema:
+      type: object
+      properties:
+        columns:
+          $ref: '#/components/schemas/getAnalyticsDataColumnsData'
+      title: GetAnalyticsDataPartnersViewedCollectionSchema
+    getAnalyticsMetadataResourceMetricsDataDetailedData:
+      type: object
+      properties:
+        schema:
+          $ref: '#/components/schemas/GetAnalyticsMetadataResourceMetricsDataDetailedDataSchema'
+          description: The response schema for the `detailed` view.
+      description: Information about the metric's `detailed` parameter.
+      title: getAnalyticsMetadataResourceMetricsDataDetailedData
     getAnalyticsDataPartnerWorkspaceVisited:
       type: object
       properties:
@@ -412,48 +571,6 @@ components:
           $ref: '#/components/schemas/getAnalyticsDataPaginationData'
       description: Information about partner users' workspace visits.
       title: getAnalyticsDataPartnerWorkspaceVisited
-    analyticsDuration:
-      type: string
-      enum:
-      - last_30_days
-      - last_180_days
-      - last_month
-      - last_6_months
-      - last_7_days
-      - last_1_year
-      title: analyticsDuration
-    commonErrorTypeTitleDetail:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of error.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
-          description: Information about the error.
-      title: commonErrorTypeTitleDetail
-    CommonErrorNameMessageError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
-    getAnalyticsMetadataResourceMetricsDataDetailedData:
-      type: object
-      properties:
-        schema:
-          $ref: '#/components/schemas/GetAnalyticsMetadataResourceMetricsDataDetailedDataSchema'
-          description: The response schema for the `detailed` view.
-      description: Information about the metric's `detailed` parameter.
-      title: getAnalyticsMetadataResourceMetricsDataDetailedData
     getAnalyticsMetadataResourceData:
       type: object
       properties:
@@ -470,48 +587,84 @@ components:
           description: A list of the resource's accepted metrics values.
       description: Information about the resource.
       title: getAnalyticsMetadataResourceData
-    analyticsResource:
+    GetAnalyticsMetadataDataResourcesItems:
+      oneOf:
+      - $ref: '#/components/schemas/getAnalyticsMetadataResourceData'
+      - $ref: '#/components/schemas/getAnalyticsMetadataParametersResponseData'
+      title: GetAnalyticsMetadataDataResourcesItems
+    getAnalticsMetadataPaginationData:
+      type: object
+      properties:
+        supported:
+          type: boolean
+          description: If true, pagination is supported for this metric.
+        allowed_values:
+          type: array
+          items:
+            type: string
+          description: A list of the supported pagination parameters.
+      description: Information about the metric's pagination parameters.
+      title: getAnalticsMetadataPaginationData
+    GetAnalyticsMetadataRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAnalyticsMetadataRequestInternalServerError
+    analyticsUserType:
       type: string
       enum:
-      - user
-      - team
-      - workspace
-      - ai
-      - api_development
-      - api_testing
-      - api_production
-      - api_distribution
-      - api_management
-      title: analyticsResource
-    getAnalyticsDataPartnerEngagmentFunnel:
+      - new
+      - returning
+      title: analyticsUserType
+    analyticsView:
+      type: string
+      enum:
+      - detailed
+      - summary
+      - trend
+      title: analyticsView
+    getAnalyticsMetadataResourceMetricsDataDetailedParametersView:
       type: object
       properties:
-        all_partners:
-          $ref: '#/components/schemas/getAnalyticsDataAllPartners'
-        workspace_visited:
-          $ref: '#/components/schemas/getAnalyticsDataPartnerWorkspaceVisited'
-        viewed_collection:
-          $ref: '#/components/schemas/getAnalyticsDataPartnersViewedCollection'
-        request_sent:
-          $ref: '#/components/schemas/getAnalyticsDataPartnerRequestSent'
-        successful_requests_200OK:
-          $ref: '#/components/schemas/getAnalyticsDataPartnerRequestSent200OK'
-      title: getAnalyticsDataPartnerEngagmentFunnel
-    GetAnalyticsMetadataResourceMetricsDataDetailedDataSchema:
+        type:
+          type: string
+          description: The parameter's type.
+        isRequired:
+          type: boolean
+          description: If true, the parameter is required.
+        allowed_values:
+          type: array
+          items:
+            type: string
+          description: A list of the parameter's accepted values.
+        description:
+          type: string
+          description: The parameter's description.
+      description: Information about the `view` parameter.
+      title: getAnalyticsMetadataResourceMetricsDataDetailedParametersView
+    GetAnalyticsMetadataData:
       type: object
       properties:
-        columns:
-          $ref: '#/components/schemas/getAnalyticsDataColumnsData'
-      description: The response schema for the `detailed` view.
-      title: GetAnalyticsMetadataResourceMetricsDataDetailedDataSchema
-    CommonErrorTypeTitleDetailDetail:
-      oneOf:
-      - type: string
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
+        description:
+          type: string
+          description: A description of the endpoint.
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetAnalyticsMetadataDataResourcesItems'
+          description: A list of accepted resource values.
+      description: The Analytics API's metadata information.
+      title: GetAnalyticsMetadataData
+    getAnalyticsMetadataResourceMetricsDataDetailedResponse:
+      type: object
+      properties:
+        detailed:
+          $ref: '#/components/schemas/getAnalyticsMetadataResourceMetricsDataDetailedData'
+        summary:
+          $ref: '#/components/schemas/getAnalyticsMetadataResourceMetricsDataSummaryData'
+      description: Information about the metric's `response` parameters.
+      title: getAnalyticsMetadataResourceMetricsDataDetailedResponse
     getAnalyticsDataPaginationData:
       type: object
       properties:
@@ -529,12 +682,17 @@ components:
           description: Indicates whether more are records available.
       description: Information about the response pagination.
       title: getAnalyticsDataPaginationData
-    analyticsUserType:
-      type: string
-      enum:
-      - new
-      - returning
-      title: analyticsUserType
+    getAnalyticsDataPartnerRequestSent:
+      type: object
+      properties:
+        schema:
+          $ref: '#/components/schemas/GetAnalyticsDataPartnerRequestSentSchema'
+        rows:
+          $ref: '#/components/schemas/getAnalyticsDataRowsData'
+        pagination:
+          $ref: '#/components/schemas/getAnalyticsDataPaginationData'
+      description: Information about requests sent by partner users.
+      title: getAnalyticsDataPartnerRequestSent
     GetAnalyticsDataColumnsDataItems:
       type: object
       properties:
@@ -551,39 +709,89 @@ components:
           type: string
           description: A description of what the column represents.
       title: GetAnalyticsDataColumnsDataItems
-    limitDefault100Max10000:
+    getAnalyticsDataPartnerRequestSent200OK:
+      type: object
+      properties:
+        schema:
+          $ref: '#/components/schemas/GetAnalyticsDataPartnerRequestSent200OkSchema'
+        rows:
+          $ref: '#/components/schemas/getAnalyticsDataRowsData'
+        pagination:
+          $ref: '#/components/schemas/getAnalyticsDataPaginationData'
+      description: Information about partner users' successful request calls in a workspace.
+      title: getAnalyticsDataPartnerRequestSent200OK
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    getAnalyticsMetadataResourceMetricsDataDetailedParameters:
+      type: object
+      properties:
+        view:
+          $ref: '#/components/schemas/getAnalyticsMetadataResourceMetricsDataDetailedParametersView'
+        filters:
+          $ref: '#/components/schemas/getAnalyticsMetadataResourceMetricsDataDetailedParametersFilters'
+        pagination:
+          $ref: '#/components/schemas/getAnalticsMetadataPaginationData'
+      description: Information about the metric's parameters.
+      title: getAnalyticsMetadataResourceMetricsDataDetailedParameters
+    GetAnalyticsDataPartnerRequestSent200OkSchema:
+      type: object
+      properties:
+        columns:
+          $ref: '#/components/schemas/getAnalyticsDataColumnsData'
+      title: GetAnalyticsDataPartnerRequestSent200OkSchema
+    getAnalyticsDataPartnersViewedCollection:
+      type: object
+      properties:
+        schema:
+          $ref: '#/components/schemas/GetAnalyticsDataPartnersViewedCollectionSchema'
+        rows:
+          $ref: '#/components/schemas/getAnalyticsDataRowsData'
+        pagination:
+          $ref: '#/components/schemas/getAnalyticsDataPaginationData'
+      description: Information about partner users' views of collections in a workspace.
+      title: getAnalyticsDataPartnersViewedCollection
+    offsetMax10000:
       type: integer
-      default: 100
-      title: limitDefault100Max10000
+      default: 0
+      title: offsetMax10000
     analyticsUserId:
       type: string
       title: analyticsUserId
-    GetAnalyticsMetadataRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetAnalyticsMetadataRequestInternalServerError
-    analyticsView:
-      type: string
-      enum:
-      - detailed
-      - summary
-      - trend
-      title: analyticsView
-    GetAnalyticsMetadataData:
+    getAnalyticsDataSummary:
       type: object
       properties:
-        description:
+        summary:
+          $ref: '#/components/schemas/getAnalyticsDataObject'
+      required:
+      - summary
+      title: getAnalyticsDataSummary
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
           type: string
-          description: A description of the endpoint.
-        resources:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetAnalyticsMetadataDataResourcesItems'
-          description: A list of accepted resource values.
-      description: The Analytics API's metadata information.
-      title: GetAnalyticsMetadataData
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    analyticsDuration:
+      type: string
+      enum:
+      - last_30_days
+      - last_180_days
+      - last_month
+      - last_6_months
+      - last_7_days
+      - last_1_year
+      title: analyticsDuration
     getAnalyticsMetadataParametersResponseData:
       type: object
       properties:
@@ -615,195 +823,6 @@ components:
           $ref: '#/components/schemas/getAnalyticsMetadataResourceMetricsDataDetailedParametersFiltersData'
       description: Information about the filter parameters.
       title: GetAnalyticsMetadataResourceMetricsDataDetailedParametersFilters1
-    getAnalyticsDataAllPartners:
-      type: object
-      properties:
-        schema:
-          $ref: '#/components/schemas/getAnalyticsDataSchema'
-        rows:
-          $ref: '#/components/schemas/getAnalyticsDataRowsData'
-        pagination:
-          $ref: '#/components/schemas/getAnalyticsDataPaginationData'
-      description: Information about partner users and their activity.
-      title: getAnalyticsDataAllPartners
-    getAnalyticsDataObject:
-      type: object
-      properties:
-        schema:
-          $ref: '#/components/schemas/getAnalyticsDataSchema'
-        rows:
-          $ref: '#/components/schemas/getAnalyticsDataRowsData'
-        pagination:
-          $ref: '#/components/schemas/getAnalyticsDataPaginationData'
-      description: Data analytics information.
-      title: getAnalyticsDataObject
-    analyticsAttentionType:
-      type: string
-      title: analyticsAttentionType
-    GetAnalyticsDataRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetAnalyticsDataRequestInternalServerError
-    getAnalyticsDataPartnersViewedCollection:
-      type: object
-      properties:
-        schema:
-          $ref: '#/components/schemas/GetAnalyticsDataPartnersViewedCollectionSchema'
-        rows:
-          $ref: '#/components/schemas/getAnalyticsDataRowsData'
-        pagination:
-          $ref: '#/components/schemas/getAnalyticsDataPaginationData'
-      description: Information about partner users' views of collections in a workspace.
-      title: getAnalyticsDataPartnersViewedCollection
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    analyticsMetadataInclude:
-      type: string
-      title: analyticsMetadataInclude
-    getAnalyticsMetadataResourceMetricsDataDetailed:
-      type: object
-      properties:
-        metric:
-          type: string
-          description: The metric's name.
-        description:
-          type: string
-          description: A description of the metric.
-        type:
-          type: string
-          description: The metric's data type.
-        isRequired:
-          type: boolean
-          description: If true, the metric is required.
-        parameters:
-          $ref: '#/components/schemas/getAnalyticsMetadataResourceMetricsDataDetailedParameters'
-        response:
-          $ref: '#/components/schemas/getAnalyticsMetadataResourceMetricsDataDetailedResponse'
-      description: Information about the resource's metric.
-      title: getAnalyticsMetadataResourceMetricsDataDetailed
-    GetAnalyticsDataPartnerRequestSent200OkSchema:
-      type: object
-      properties:
-        columns:
-          $ref: '#/components/schemas/getAnalyticsDataColumnsData'
-      title: GetAnalyticsDataPartnerRequestSent200OkSchema
-    getAnalticsMetadataPaginationData:
-      type: object
-      properties:
-        supported:
-          type: boolean
-          description: If true, pagination is supported for this metric.
-        allowed_values:
-          type: array
-          items:
-            type: string
-          description: A list of the supported pagination parameters.
-      description: Information about the metric's pagination parameters.
-      title: getAnalticsMetadataPaginationData
-    getAnalyticsMetadataResourceMetricsDataDetailedResponse:
-      type: object
-      properties:
-        detailed:
-          $ref: '#/components/schemas/getAnalyticsMetadataResourceMetricsDataDetailedData'
-        summary:
-          $ref: '#/components/schemas/getAnalyticsMetadataResourceMetricsDataSummaryData'
-      description: Information about the metric's `response` parameters.
-      title: getAnalyticsMetadataResourceMetricsDataDetailedResponse
-    analyticsRequestId:
-      type: string
-      title: analyticsRequestId
-    getAnalyticsMetadataResourceMetricsDataSummaryData:
-      type: object
-      properties:
-        schema:
-          $ref: '#/components/schemas/GetAnalyticsMetadataResourceMetricsDataSummaryDataSchema'
-          description: The response schema for the `summary` view.
-      description: Information about the metric's `summary` parameter.
-      title: getAnalyticsMetadataResourceMetricsDataSummaryData
-    GetAnalyticsDataPartnerRequestSentSchema:
-      type: object
-      properties:
-        columns:
-          $ref: '#/components/schemas/getAnalyticsDataColumnsData'
-      title: GetAnalyticsDataPartnerRequestSentSchema
-    getAnalyticsDataPartnerRequestSent:
-      type: object
-      properties:
-        schema:
-          $ref: '#/components/schemas/GetAnalyticsDataPartnerRequestSentSchema'
-        rows:
-          $ref: '#/components/schemas/getAnalyticsDataRowsData'
-        pagination:
-          $ref: '#/components/schemas/getAnalyticsDataPaginationData'
-      description: Information about requests sent by partner users.
-      title: getAnalyticsDataPartnerRequestSent
-    getAnalyticsMetadataResourceMetricsDataDetailedParametersView:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The parameter's type.
-        isRequired:
-          type: boolean
-          description: If true, the parameter is required.
-        allowed_values:
-          type: array
-          items:
-            type: string
-          description: A list of the parameter's accepted values.
-        description:
-          type: string
-          description: The parameter's description.
-      description: Information about the `view` parameter.
-      title: getAnalyticsMetadataResourceMetricsDataDetailedParametersView
-    GetAnalyticsDataRowsDataItemsItems:
-      oneOf:
-      - type: string
-      - type: integer
-      - type: number
-        format: double
-      - type: boolean
-      title: GetAnalyticsDataRowsDataItemsItems
-    GetAnalyticsDataPartnersViewedCollectionSchema:
-      type: object
-      properties:
-        columns:
-          $ref: '#/components/schemas/getAnalyticsDataColumnsData'
-      title: GetAnalyticsDataPartnersViewedCollectionSchema
-    getAnalyticsMetadataResourceMetricsDataDetailedParameters:
-      type: object
-      properties:
-        view:
-          $ref: '#/components/schemas/getAnalyticsMetadataResourceMetricsDataDetailedParametersView'
-        filters:
-          $ref: '#/components/schemas/getAnalyticsMetadataResourceMetricsDataDetailedParametersFilters'
-        pagination:
-          $ref: '#/components/schemas/getAnalticsMetadataPaginationData'
-      description: Information about the metric's parameters.
-      title: getAnalyticsMetadataResourceMetricsDataDetailedParameters
-    analyticsWorkspaceType:
-      type: string
-      title: analyticsWorkspaceType
-    getAnalyticsData:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/GetAnalyticsDataData'
-      required:
-      - data
-      title: getAnalyticsData
-    getAnalyticsDataColumnsData:
-      type: array
-      items:
-        $ref: '#/components/schemas/GetAnalyticsDataColumnsDataItems'
-      description: A list of column entries.
-      title: getAnalyticsDataColumnsData
     analyticsMetrics:
       type: string
       enum:
@@ -852,46 +871,27 @@ components:
       - invites_sent
       - invites_accepted
       title: analyticsMetrics
-    commonErrorTypeTitleDetailStatusInstance:
-      type: object
-      properties:
-        type:
-          type: string
-          format: uri-reference
-          description: The [URI reference](https://www.rfc-editor.org/rfc/rfc3986) that identifies the type of problem.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: An explanation about the problem.
-        status:
-          type: integer
-          description: The HTTP status code generated by the origin server.
-        instance:
-          type: string
-          description: The URI reference that identifies the specific occurrence of the problem.
-      title: commonErrorTypeTitleDetailStatusInstance
-    GetAnalyticsMetadataDataResourcesItems:
-      oneOf:
-      - $ref: '#/components/schemas/getAnalyticsMetadataResourceData'
-      - $ref: '#/components/schemas/getAnalyticsMetadataParametersResponseData'
-      title: GetAnalyticsMetadataDataResourcesItems
-    commonErrorTypeTitleDetailStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
+    analyticsRequestId:
+      type: string
+      title: analyticsRequestId
+    GetAnalyticsDataColumnsDataItemsType:
+      type: string
+      enum:
+      - DATE
+      - STRING
+      - INTEGER
+      - TIMESTAMP
+      - BOOLEAN
+      - NUMBER
+      - FLOAT
+      description: The data type of the column.
+      title: GetAnalyticsDataColumnsDataItemsType
+    analyticsWorkspaceType:
+      type: string
+      title: analyticsWorkspaceType
+    analyticsMetadataResources:
+      type: string
+      title: analyticsMetadataResources
   securitySchemes:
     PostmanApiKey:
       type: apiKey

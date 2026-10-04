@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-create-workspace-update-schema.json",
+  "title": "createWorkspaceUpdate",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-workspaces-api-openapi.yml#/components/schemas/createWorkspaceUpdate",
+  "type": "object",
+  "properties": {
+    "description": {
+      "type": "string",
+      "description": "The content of the workspace update."
+    },
+    "topic": {
+      "type": "string",
+      "description": "The title of the workspace update."
+    },
+    "category": {
+      "$ref": "#/$defs/workspaceUpdateCategoryData"
+    },
+    "relatedResources": {
+      "$ref": "#/$defs/workspaceUpdateRelatedResourcesData"
+    }
+  },
+  "required": [
+    "description",
+    "topic",
+    "category"
+  ],
+  "$defs": {
+    "WorkspaceUpdateRelatedResourcesDataItems": {
+      "type": "object",
+      "properties": {
+        "resource": {
+          "$ref": "#/$defs/WorkspaceUpdateRelatedResourcesDataItemsResource",
+          "description": "The type of linked resource."
+        },
+        "resourceId": {
+          "type": "string",
+          "description": "The linked resource's ID."
+        }
+      },
+      "required": [
+        "resource",
+        "resourceId"
+      ],
+      "title": "WorkspaceUpdateRelatedResourcesDataItems"
+    },
+    "WorkspaceUpdateRelatedResourcesDataItemsResource": {
+      "type": "string",
+      "enum": [
+        "collection",
+        "request",
+        "response",
+        "folder",
+        "extensibleCollection",
+        "extensibleCollectionItem"
+      ],
+      "description": "The type of linked resource.",
+      "title": "WorkspaceUpdateRelatedResourcesDataItemsResource"
+    },
+    "workspaceUpdateCategoryData": {
+      "type": "string",
+      "enum": [
+        "improvement",
+        "new_feature",
+        "bug_fix",
+        "breaking_change",
+        "announcement"
+      ],
+      "description": "The update's assigned category.",
+      "title": "workspaceUpdateCategoryData"
+    },
+    "workspaceUpdateRelatedResourcesData": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/WorkspaceUpdateRelatedResourcesDataItems"
+      },
+      "description": "A list containing the update's related elements. Related elements include links to collections, requests, folders, and saved examples in the update.",
+      "title": "workspaceUpdateRelatedResourcesData"
+    }
+  }
+}

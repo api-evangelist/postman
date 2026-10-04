@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-get-pan-elements-schema.json",
+  "title": "getPanElements",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-private-api-network-api-openapi.yml#/components/schemas/getPanElements",
+  "type": "object",
+  "properties": {
+    "elements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/GetPanElementsElementsItems"
+      },
+      "description": "A list of Private API Network elements."
+    },
+    "folders": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/GetPanElementsFoldersItems"
+      },
+      "description": "This property is deprecated and only returns an empty array."
+    },
+    "meta": {
+      "$ref": "#/$defs/panMetadata"
+    }
+  },
+  "$defs": {
+    "GetPanElementsElementsItems": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the element was created."
+        },
+        "createdBy": {
+          "type": "integer",
+          "description": "The user who created the element."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the element was last updated."
+        },
+        "updatedBy": {
+          "type": "integer",
+          "description": "The user ID of the user who updated the element."
+        },
+        "addedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the element was published to your team's Private API Network. This value is the same as the `updatedAt` value."
+        },
+        "addedBy": {
+          "type": "integer",
+          "description": "The user ID of the user who published the element."
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The element's description."
+        },
+        "id": {
+          "type": "string",
+          "description": "The element's ID."
+        },
+        "name": {
+          "type": "string",
+          "description": "The element's name."
+        },
+        "summary": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The element's summary."
+        },
+        "type": {
+          "type": "string",
+          "description": "The `workspace` element type."
+        },
+        "parentFolderId": {
+          "type": "integer",
+          "description": "The `0` value."
+        },
+        "href": {
+          "type": "string",
+          "format": "url",
+          "description": "The element's HREF."
+        }
+      },
+      "description": "Information about the Private API Network element.",
+      "title": "GetPanElementsElementsItems"
+    },
+    "GetPanElementsFoldersItems": {
+      "type": "object",
+      "properties": {},
+      "title": "GetPanElementsFoldersItems"
+    },
+    "panMetadata": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "description": "The maximum number of elements returned. If the value exceeds the maximum value of `1000`, then the system uses the `1000` value."
+        },
+        "offset": {
+          "type": "integer",
+          "description": "The zero-based offset of the first item returned."
+        },
+        "totalCount": {
+          "type": "integer",
+          "description": "The total number of elements."
+        }
+      },
+      "description": "The response's non-standard meta information.",
+      "title": "panMetadata"
+    }
+  }
+}

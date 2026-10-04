@@ -1,0 +1,240 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-private-api-network-respond-private-network-add-request-response-200-schema.json",
+  "title": "Private API Network_respondPrivateNetworkAddRequest_Response_200",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-private-api-network-api-openapi.yml#/components/schemas/Private_API_Network_respondPrivateNetworkAddRequest_Response_200",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/respondPanElementAddRequestApprove"
+    },
+    {
+      "$ref": "#/$defs/respondPanElementAddRequestDeny"
+    }
+  ],
+  "$defs": {
+    "PanRequestElementType": {
+      "type": "string",
+      "enum": [
+        "workspace"
+      ],
+      "description": "The `workspace` element type.",
+      "title": "PanRequestElementType"
+    },
+    "RespondPanElementAddRequestApproveRequestItems": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The request's ID."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the request was created."
+        },
+        "createdBy": {
+          "type": "integer",
+          "description": "The ID of the user who created the request."
+        },
+        "message": {
+          "type": "string",
+          "description": "The user's optional message included in the request."
+        },
+        "status": {
+          "$ref": "#/$defs/RespondPanElementAddRequestApproveRequestItemsStatus",
+          "description": "The request's status."
+        },
+        "element": {
+          "$ref": "#/$defs/RespondPanElementAddRequestApproveRequestItemsElement",
+          "description": "Information about the requested element."
+        }
+      },
+      "description": "Information about the Private API Network request.",
+      "title": "RespondPanElementAddRequestApproveRequestItems"
+    },
+    "RespondPanElementAddRequestApproveRequestItemsElement": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The element's ID."
+        },
+        "name": {
+          "type": "string",
+          "description": "The element's name."
+        },
+        "summary": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The element's short summary."
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The element's description."
+        },
+        "type": {
+          "$ref": "#/$defs/RespondPanElementAddRequestApproveRequestItemsElementType",
+          "description": "The `workspace` element type."
+        },
+        "createdBy": {
+          "type": "integer",
+          "description": "The ID of the user who added the element to the Private API Network."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time the element was added to the Private API Network."
+        }
+      },
+      "description": "Information about the requested element.",
+      "title": "RespondPanElementAddRequestApproveRequestItemsElement"
+    },
+    "RespondPanElementAddRequestApproveRequestItemsElementType": {
+      "type": "string",
+      "enum": [
+        "workspace"
+      ],
+      "description": "The `workspace` element type.",
+      "title": "RespondPanElementAddRequestApproveRequestItemsElementType"
+    },
+    "RespondPanElementAddRequestApproveRequestItemsStatus": {
+      "type": "string",
+      "enum": [
+        "approved",
+        "denied"
+      ],
+      "description": "The request's status.",
+      "title": "RespondPanElementAddRequestApproveRequestItemsStatus"
+    },
+    "RespondPanElementAddRequestDenyRequestItems": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The request's ID."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the request was created."
+        },
+        "createdBy": {
+          "type": "integer",
+          "description": "The ID of the user who created the request."
+        },
+        "message": {
+          "type": "string",
+          "description": "The user's optional message included in the request."
+        },
+        "status": {
+          "$ref": "#/$defs/RespondPanElementAddRequestDenyRequestItemsStatus",
+          "description": "The request's status."
+        },
+        "element": {
+          "$ref": "#/$defs/panRequestElement"
+        },
+        "response": {
+          "$ref": "#/$defs/panRequestResponse"
+        }
+      },
+      "description": "Information about the Private API Network request.",
+      "title": "RespondPanElementAddRequestDenyRequestItems"
+    },
+    "RespondPanElementAddRequestDenyRequestItemsStatus": {
+      "type": "string",
+      "enum": [
+        "approved",
+        "denied"
+      ],
+      "description": "The request's status.",
+      "title": "RespondPanElementAddRequestDenyRequestItemsStatus"
+    },
+    "panRequestElement": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The element's ID."
+        },
+        "type": {
+          "$ref": "#/$defs/PanRequestElementType",
+          "description": "The `workspace` element type."
+        },
+        "name": {
+          "type": "string",
+          "description": "The element's name."
+        },
+        "summary": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The element's short summary."
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The element's description."
+        }
+      },
+      "description": "Information about the requested element.",
+      "title": "panRequestElement"
+    },
+    "panRequestResponse": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which request was denied."
+        },
+        "createdBy": {
+          "type": "integer",
+          "description": "The ID of the user who denied the request."
+        },
+        "message": {
+          "type": "string",
+          "description": "The request's response message."
+        }
+      },
+      "description": "Information about the response to the element's request. This object only returns when the request is denied with a message.",
+      "title": "panRequestResponse"
+    },
+    "respondPanElementAddRequestApprove": {
+      "type": "object",
+      "properties": {
+        "request": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RespondPanElementAddRequestApproveRequestItems"
+          },
+          "description": "A list of Private API Network requests."
+        }
+      },
+      "title": "respondPanElementAddRequestApprove"
+    },
+    "respondPanElementAddRequestDeny": {
+      "type": "object",
+      "properties": {
+        "request": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RespondPanElementAddRequestDenyRequestItems"
+          },
+          "description": "A list of Private API Network requests."
+        }
+      },
+      "title": "respondPanElementAddRequestDeny"
+    }
+  }
+}

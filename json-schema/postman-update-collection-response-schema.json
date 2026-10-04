@@ -1,0 +1,247 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-update-collection-response-schema.json",
+  "title": "updateCollectionResponse",
+  "description": "The response properties to update. For a complete list of properties, refer to the **Response** entry in the [Postman Collection Format documentation](https://schema.postman.com/collection/json/v1.0.0/draft-07/collection.json).",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-collection-items-api-openapi.yml#/components/schemas/updateCollectionResponse",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The response's name."
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The response's description."
+    },
+    "url": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The associated request's URL."
+    },
+    "method": {
+      "$ref": "#/$defs/request-method"
+    },
+    "headers": {
+      "$ref": "#/$defs/header-list-2"
+    },
+    "dataMode": {
+      "$ref": "#/$defs/UpdateCollectionResponseDataMode",
+      "description": "The associated request body's data mode."
+    },
+    "rawModeData": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The associated request body's raw mode data."
+    },
+    "dataOptions": {
+      "$ref": "#/$defs/request-data-options"
+    },
+    "responseCode": {
+      "$ref": "#/$defs/UpdateCollectionResponseResponseCode",
+      "description": "The response's HTTP response code information."
+    },
+    "status": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The response's HTTP status text."
+    },
+    "time": {
+      "type": "string",
+      "description": "The time taken by the request to complete, in milliseconds."
+    },
+    "cookies": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The response's cookie data."
+    },
+    "mime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The response's MIME type."
+    },
+    "text": {
+      "type": "string",
+      "description": "The raw text of the response body."
+    },
+    "language": {
+      "type": "string",
+      "description": "The response body's language type."
+    },
+    "rawDataType": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The response's raw data type."
+    },
+    "requestObject": {
+      "type": "string",
+      "description": "A JSON-stringified representation of the associated request."
+    }
+  },
+  "$defs": {
+    "RequestDataOptionsBinary": {
+      "type": "object",
+      "properties": {},
+      "description": "Options for the `binary` data mode.",
+      "title": "RequestDataOptionsBinary"
+    },
+    "RequestDataOptionsGraphql": {
+      "type": "object",
+      "properties": {},
+      "description": "Options for the `graphql` data mode.",
+      "title": "RequestDataOptionsGraphql"
+    },
+    "RequestDataOptionsParams": {
+      "type": "object",
+      "properties": {},
+      "description": "Options for the `params` data mode.",
+      "title": "RequestDataOptionsParams"
+    },
+    "RequestDataOptionsRaw": {
+      "type": "object",
+      "properties": {
+        "language": {
+          "type": "string",
+          "description": "The raw mode data's language type."
+        }
+      },
+      "description": "Options for the `raw` data mode.",
+      "title": "RequestDataOptionsRaw"
+    },
+    "RequestDataOptionsUrlencoded": {
+      "type": "object",
+      "properties": {},
+      "description": "Options for the `urlencoded` data mode.",
+      "title": "RequestDataOptionsUrlencoded"
+    },
+    "UpdateCollectionResponseDataMode": {
+      "type": "string",
+      "enum": [
+        "raw",
+        "urlencoded",
+        "formdata",
+        "binary",
+        "graphql"
+      ],
+      "description": "The associated request body's data mode.",
+      "title": "UpdateCollectionResponseDataMode"
+    },
+    "UpdateCollectionResponseResponseCode": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "number",
+          "format": "double",
+          "description": "The response's HTTP response status code."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the status code."
+        }
+      },
+      "description": "The response's HTTP response code information.",
+      "title": "UpdateCollectionResponseResponseCode"
+    },
+    "header-2": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "The header's key, such as `Content-Type` or `X-Custom-Header`."
+        },
+        "value": {
+          "type": "string",
+          "description": "The header key's value."
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The header's description."
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ],
+      "description": "Information about the header.",
+      "title": "header-2"
+    },
+    "header-list-2": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/header-2"
+      },
+      "description": "A list of headers.",
+      "title": "header-list-2"
+    },
+    "request-data-options": {
+      "type": "object",
+      "properties": {
+        "raw": {
+          "$ref": "#/$defs/RequestDataOptionsRaw",
+          "description": "Options for the `raw` data mode."
+        },
+        "urlencoded": {
+          "$ref": "#/$defs/RequestDataOptionsUrlencoded",
+          "description": "Options for the `urlencoded` data mode."
+        },
+        "params": {
+          "$ref": "#/$defs/RequestDataOptionsParams",
+          "description": "Options for the `params` data mode."
+        },
+        "binary": {
+          "$ref": "#/$defs/RequestDataOptionsBinary",
+          "description": "Options for the `binary` data mode."
+        },
+        "graphql": {
+          "$ref": "#/$defs/RequestDataOptionsGraphql",
+          "description": "Options for the `graphql` data mode."
+        }
+      },
+      "description": "Additional configurations and options set for the request body's various data modes.",
+      "title": "request-data-options"
+    },
+    "request-method": {
+      "type": "string",
+      "enum": [
+        "GET",
+        "PUT",
+        "POST",
+        "PATCH",
+        "DELETE",
+        "COPY",
+        "HEAD",
+        "OPTIONS",
+        "LINK",
+        "UNLINK",
+        "PURGE",
+        "LOCK",
+        "UNLOCK",
+        "PROPFIND",
+        "VIEW"
+      ],
+      "description": "The request's HTTP method.",
+      "title": "request-method"
+    }
+  }
+}

@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-get-api-catalog-service-endpoints-schema.json",
+  "title": "getApiCatalogServiceEndpoints",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-apicatalog-api-openapi.yml#/components/schemas/getApiCatalogServiceEndpoints",
+  "type": "object",
+  "properties": {
+    "meta": {
+      "$ref": "#/$defs/GetApiCatalogServiceEndpointsMeta",
+      "description": "The response's meta information for paginated results."
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/GetApiCatalogServiceEndpointsDataItems"
+      },
+      "description": "A list of observed API endpoints with traffic and performance metrics."
+    }
+  },
+  "required": [
+    "meta",
+    "data"
+  ],
+  "$defs": {
+    "ApiCatalogServiceMetadataTimeRangeDataLabel": {
+      "type": "string",
+      "enum": [
+        "last_7_days"
+      ],
+      "description": "The time range's label.",
+      "title": "ApiCatalogServiceMetadataTimeRangeDataLabel"
+    },
+    "GetApiCatalogServiceEndpointsDataItems": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "$ref": "#/$defs/GetApiCatalogServiceEndpointsDataItemsMethod",
+          "description": "The endpoint's HTTP method."
+        },
+        "path": {
+          "type": "string",
+          "description": "The endpoint's URL path template."
+        },
+        "host": {
+          "type": "string",
+          "description": "The hostname the endpoint was observed on."
+        },
+        "requestCount": {
+          "type": "integer",
+          "description": "The total number of requests to this endpoint within the time window."
+        },
+        "performance": {
+          "$ref": "#/$defs/GetApiCatalogServiceEndpointsDataItemsPerformance",
+          "description": "Information about latency percentile metrics."
+        },
+        "errors": {
+          "$ref": "#/$defs/GetApiCatalogServiceEndpointsDataItemsErrors",
+          "description": "Information about the endpoint's errors."
+        }
+      },
+      "required": [
+        "method",
+        "path",
+        "host",
+        "requestCount",
+        "performance",
+        "errors"
+      ],
+      "title": "GetApiCatalogServiceEndpointsDataItems"
+    },
+    "GetApiCatalogServiceEndpointsDataItemsErrors": {
+      "type": "object",
+      "properties": {
+        "totalErrors": {
+          "type": "integer",
+          "description": "The total number of 4xx and 5xx responses."
+        },
+        "errorRatePct": {
+          "type": "number",
+          "format": "double",
+          "description": "The percentage of requests that resulted in errors."
+        },
+        "breakdown": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "description": "The error counts, keyed by the HTTP status code."
+        }
+      },
+      "required": [
+        "totalErrors",
+        "errorRatePct",
+        "breakdown"
+      ],
+      "description": "Information about the endpoint's errors.",
+      "title": "GetApiCatalogServiceEndpointsDataItemsErrors"
+    },
+    "GetApiCatalogServiceEndpointsDataItemsMethod": {
+      "type": "string",
+      "enum": [
+        "GET",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE",
+        "HEAD",
+        "OPTIONS",
+        "TRACE"
+      ],
+      "description": "The endpoint's HTTP method.",
+      "title": "GetApiCatalogServiceEndpointsDataItemsMethod"
+    },
+    "GetApiCatalogServiceEndpointsDataItemsPerformance": {
+      "type": "object",
+      "properties": {
+        "p90LatencyMs": {
+          "type": "number",
+          "format": "double",
+          "description": "The 90th-percentile response latency, in milliseconds."
+        },
+        "p95LatencyMs": {
+          "type": "number",
+          "format": "double",
+          "description": "The 95th-percentile response latency, in milliseconds."
+        }
+      },
+      "required": [
+        "p90LatencyMs",
+        "p95LatencyMs"
+      ],
+      "description": "Information about latency percentile metrics.",
+      "title": "GetApiCatalogServiceEndpointsDataItemsPerformance"
+    },
+    "GetApiCatalogServiceEndpointsMeta": {
+      "type": "object",
+      "properties": {
+        "nextCursor": {
+          "$ref": "#/$defs/apiCatalogServiceMetadataNextCursorData"
+        },
+        "limit": {
+          "$ref": "#/$defs/apiCatalogServiceMetadataLimitData"
+        },
+        "filters": {
+          "$ref": "#/$defs/apiCatalogServiceMetadataFiltersData"
+        },
+        "timeRange": {
+          "$ref": "#/$defs/apiCatalogServiceMetadataTimeRangeData"
+        },
+        "totalEndpoints": {
+          "type": "integer",
+          "description": "The total number of endpoints that match the given filters."
+        },
+        "totalRequests": {
+          "type": "integer",
+          "description": "The total number of requests that match the given filters."
+        }
+      },
+      "required": [
+        "nextCursor",
+        "limit",
+        "filters",
+        "timeRange",
+        "totalEndpoints",
+        "totalRequests"
+      ],
+      "description": "The response's meta information for paginated results.",
+      "title": "GetApiCatalogServiceEndpointsMeta"
+    },
+    "apiCatalogServiceMetadataFiltersData": {
+      "type": "object",
+      "properties": {},
+      "description": "The filters applied to the request.",
+      "title": "apiCatalogServiceMetadataFiltersData"
+    },
+    "apiCatalogServiceMetadataLimitData": {
+      "type": "integer",
+      "description": "The maximum number of records in the paginated response.",
+      "title": "apiCatalogServiceMetadataLimitData"
+    },
+    "apiCatalogServiceMetadataNextCursorData": {
+      "type": "string",
+      "description": "The pagination cursor that points to the next record in the results set.",
+      "title": "apiCatalogServiceMetadataNextCursorData"
+    },
+    "apiCatalogServiceMetadataTimeRangeData": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The start of the time window."
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The end of the time window."
+        },
+        "label": {
+          "$ref": "#/$defs/ApiCatalogServiceMetadataTimeRangeDataLabel",
+          "description": "The time range's label."
+        }
+      },
+      "required": [
+        "start",
+        "end",
+        "label"
+      ],
+      "description": "The time window for the returned data.",
+      "title": "apiCatalogServiceMetadataTimeRangeData"
+    }
+  }
+}

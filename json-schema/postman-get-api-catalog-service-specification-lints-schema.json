@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-get-api-catalog-service-specification-lints-schema.json",
+  "title": "getApiCatalogServiceSpecificationLints",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-apicatalog-api-openapi.yml#/components/schemas/getApiCatalogServiceSpecificationLints",
+  "type": "object",
+  "properties": {
+    "meta": {
+      "$ref": "#/$defs/GetApiCatalogServiceSpecificationLintsMeta",
+      "description": "The response's meta information for paginated results."
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/GetApiCatalogServiceSpecificationLintsDataItems"
+      },
+      "description": "A list of API specification lint runs."
+    }
+  },
+  "required": [
+    "meta",
+    "data"
+  ],
+  "$defs": {
+    "ApiCatalogServiceMetadataTimeRangeDataLabel": {
+      "type": "string",
+      "enum": [
+        "last_7_days"
+      ],
+      "description": "The time range's label.",
+      "title": "ApiCatalogServiceMetadataTimeRangeDataLabel"
+    },
+    "GetApiCatalogServiceSpecificationLintsDataItems": {
+      "type": "object",
+      "properties": {
+        "specId": {
+          "type": "string",
+          "description": "The API specification's ID."
+        },
+        "specName": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The API specification's name. If the specification was deleted or its metadata is unavailable, this returns a null value."
+        },
+        "specType": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The API specification's type and version ID. If the metadata is unavailable, this returns a null value."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the run completed."
+        },
+        "status": {
+          "$ref": "#/$defs/GetApiCatalogServiceSpecificationLintsDataItemsStatus",
+          "description": "Whether the lint run passed or failed."
+        },
+        "issues": {
+          "$ref": "#/$defs/GetApiCatalogServiceSpecificationLintsDataItemsIssues",
+          "description": "Issue counts by severity level."
+        }
+      },
+      "required": [
+        "specId",
+        "specName",
+        "specType",
+        "timestamp",
+        "status",
+        "issues"
+      ],
+      "title": "GetApiCatalogServiceSpecificationLintsDataItems"
+    },
+    "GetApiCatalogServiceSpecificationLintsDataItemsIssues": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "integer",
+          "description": "The number of error level issues found."
+        },
+        "warnings": {
+          "type": "integer",
+          "description": "The number of warning level issues found."
+        },
+        "info": {
+          "type": "integer",
+          "description": "The number of info level issues found."
+        }
+      },
+      "required": [
+        "errors",
+        "warnings",
+        "info"
+      ],
+      "description": "Issue counts by severity level.",
+      "title": "GetApiCatalogServiceSpecificationLintsDataItemsIssues"
+    },
+    "GetApiCatalogServiceSpecificationLintsDataItemsStatus": {
+      "type": "string",
+      "enum": [
+        "passed",
+        "failed"
+      ],
+      "description": "Whether the lint run passed or failed.",
+      "title": "GetApiCatalogServiceSpecificationLintsDataItemsStatus"
+    },
+    "GetApiCatalogServiceSpecificationLintsMeta": {
+      "type": "object",
+      "properties": {
+        "nextCursor": {
+          "$ref": "#/$defs/apiCatalogServiceMetadataNextCursorData"
+        },
+        "limit": {
+          "$ref": "#/$defs/apiCatalogServiceMetadataLimitData"
+        },
+        "filters": {
+          "$ref": "#/$defs/apiCatalogServiceMetadataFiltersData"
+        },
+        "timeRange": {
+          "$ref": "#/$defs/apiCatalogServiceMetadataTimeRangeData"
+        },
+        "totalRuns": {
+          "$ref": "#/$defs/apiCatalogServiceMetadataTotalRunsData"
+        },
+        "passedRuns": {
+          "$ref": "#/$defs/apiCatalogServiceMetadataPassedRunsData"
+        },
+        "failedRuns": {
+          "$ref": "#/$defs/apiCatalogServiceMetadataFailedRunsData"
+        },
+        "conformanceRatePct": {
+          "$ref": "#/$defs/apiCatalogServiceMetadataConformanceRatePctData"
+        }
+      },
+      "required": [
+        "nextCursor",
+        "limit",
+        "filters",
+        "timeRange",
+        "totalRuns",
+        "passedRuns",
+        "failedRuns",
+        "conformanceRatePct"
+      ],
+      "description": "The response's meta information for paginated results.",
+      "title": "GetApiCatalogServiceSpecificationLintsMeta"
+    },
+    "apiCatalogServiceMetadataConformanceRatePctData": {
+      "type": "number",
+      "format": "double",
+      "description": "The percentage of runs that passed, rounded to two decimal places.",
+      "title": "apiCatalogServiceMetadataConformanceRatePctData"
+    },
+    "apiCatalogServiceMetadataFailedRunsData": {
+      "type": "integer",
+      "description": "The number of runs with at least one failure.",
+      "title": "apiCatalogServiceMetadataFailedRunsData"
+    },
+    "apiCatalogServiceMetadataFiltersData": {
+      "type": "object",
+      "properties": {},
+      "description": "The filters applied to the request.",
+      "title": "apiCatalogServiceMetadataFiltersData"
+    },
+    "apiCatalogServiceMetadataLimitData": {
+      "type": "integer",
+      "description": "The maximum number of records in the paginated response.",
+      "title": "apiCatalogServiceMetadataLimitData"
+    },
+    "apiCatalogServiceMetadataNextCursorData": {
+      "type": "string",
+      "description": "The pagination cursor that points to the next record in the results set.",
+      "title": "apiCatalogServiceMetadataNextCursorData"
+    },
+    "apiCatalogServiceMetadataPassedRunsData": {
+      "type": "integer",
+      "description": "The number of successful runs.",
+      "title": "apiCatalogServiceMetadataPassedRunsData"
+    },
+    "apiCatalogServiceMetadataTimeRangeData": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The start of the time window."
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The end of the time window."
+        },
+        "label": {
+          "$ref": "#/$defs/ApiCatalogServiceMetadataTimeRangeDataLabel",
+          "description": "The time range's label."
+        }
+      },
+      "required": [
+        "start",
+        "end",
+        "label"
+      ],
+      "description": "The time window for the returned data.",
+      "title": "apiCatalogServiceMetadataTimeRangeData"
+    },
+    "apiCatalogServiceMetadataTotalRunsData": {
+      "type": "integer",
+      "description": "The total number of runs that match the given filters.",
+      "title": "apiCatalogServiceMetadataTotalRunsData"
+    }
+  }
+}

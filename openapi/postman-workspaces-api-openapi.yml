@@ -1235,12 +1235,316 @@ paths:
               $ref: '#/components/schemas/updateWorkspaceUpdate'
 components:
   schemas:
+    commonErrorTypeTitleDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of error.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
+          description: Information about the error.
+      title: commonErrorTypeTitleDetail
+    updateWorkspaceGlobalVariablesResponse:
+      type: object
+      properties:
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/globalVariable'
+          description: A list of the workspace's global variables.
+      description: Information about the workspace's updated global variables.
+      title: updateWorkspaceGlobalVariablesResponse
+    GetWorkspaceWorkspaceVisibility:
+      type: string
+      enum:
+      - personal
+      - team
+      - private
+      - public
+      - partner
+      description: 'The workspace''s visibility. [Visibility](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/managing-workspaces/#changing-workspace-visibility) determines who can access the workspace:
+
+        - `personal` — Only you can access the workspace.
+
+        - `team` — All team members can access the workspace.
+
+        - `private` — Only invited team members can access the workspace ([**Team** and **Enterprise** plans only](https://www.postman.com/pricing)).
+
+        - `public` — Everyone can access the workspace.
+
+        - `partner` — Only invited team members and [partners](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/partner-workspaces/) can access the workspace ([**Team** and **Enterprise** plans only](https://www.postman.com/pricing)).
+
+        '
+      title: GetWorkspaceWorkspaceVisibility
+    DeleteWorkspaceWorkspace:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The workspace's ID.
+      description: Information about the deleted workspace.
+      title: DeleteWorkspaceWorkspace
+    UpdateWorkspaceRolesResponseRolesItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The role's ID.
+        user:
+          type: array
+          items:
+            type: string
+          description: A list of user IDs assigned to the role.
+        group:
+          type: array
+          items:
+            type: string
+          description: A list of user group IDs assigned to the role.
+        displayName:
+          type: string
+          description: The role's display name.
+      title: UpdateWorkspaceRolesResponseRolesItems
+    workspaceCreatedBy:
+      type: integer
+      title: workspaceCreatedBy
+    ManagePartnerWorkspaceInvitesRemovePartnerResponseResultsItemsStatus:
+      type: string
+      enum:
+      - REMOVED
+      - FAILED
+      description: 'The removal status:
+
+        - `REMOVED` — The partner was successfully removed.
+
+        - `FAILED` — The partner''s removal failed.
+
+        '
+      title: ManagePartnerWorkspaceInvitesRemovePartnerResponseResultsItemsStatus
+    getWorkspaceUpdates:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/workspaceUpdateData'
+          description: A list of workspace updates.
+        meta:
+          $ref: '#/components/schemas/meta'
+      title: getWorkspaceUpdates
+    DeleteWorkspaceUpdateRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteWorkspaceUpdateRequestInternalServerError
+    managePartnerWorkspaceInvitesRemovePartnerTeam:
+      type: object
+      properties:
+        targetEntity:
+          $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesRemovePartnerTeamTargetEntity'
+          description: The `team` value.
+        targetEntityId:
+          type: string
+          description: The team ID from which to remove partners.
+        action:
+          $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesRemovePartnerTeamAction'
+          description: The `remove_partner` action.
+        target:
+          $ref: '#/components/schemas/managePartnerWorkspaceInvitesTargetObjectUserId'
+      required:
+      - targetEntity
+      - targetEntityId
+      - action
+      - target
+      description: The request body for removing partners from partnership with a team.
+      title: managePartnerWorkspaceInvitesRemovePartnerTeam
     workspace403Error:
       type: object
       properties:
         error:
           $ref: '#/components/schemas/Workspace403ErrorError'
       title: workspace403Error
+    TransferWorkspaceElementResponseWorkspaceElementTransfers:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of element transferred.
+        from:
+          type: string
+          description: The ID of the workspace the element was transferred from.
+        id:
+          type: string
+          description: The element's ID.
+        to:
+          type: string
+          description: The ID of the workspace the element was transferred to.
+      description: Information about the element transfer.
+      title: TransferWorkspaceElementResponseWorkspaceElementTransfers
+    workspaceUpdateRelatedResourcesData:
+      type: array
+      items:
+        $ref: '#/components/schemas/WorkspaceUpdateRelatedResourcesDataItems'
+      description: A list containing the update's related elements. Related elements include links to collections, requests, folders, and saved examples in the update.
+      title: workspaceUpdateRelatedResourcesData
+    GetWorkspaceRolesRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetWorkspaceRolesRequestInternalServerError
+    managePartnerWorkspaceInvitesRemovePartnerResponse:
+      type: object
+      properties:
+        targetEntity:
+          type: string
+          description: The target entity type.
+        targetEntityId:
+          type: string
+          description: The target entity's ID.
+        action:
+          type: string
+          description: The action performed.
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesRemovePartnerResponseResultsItems'
+          description: A list of the action results.
+      title: managePartnerWorkspaceInvitesRemovePartnerResponse
+    partnerEmailAddress:
+      type: string
+      format: email
+      description: A partner's email address.
+      title: partnerEmailAddress
+    workspaceUpdateCategory:
+      type: string
+      title: workspaceUpdateCategory
+    GetWorkspaceRolesRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetWorkspaceRolesRequestForbiddenError
+    getWorkspaceActivityFeed:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetWorkspaceActivityFeedDataItems'
+        meta:
+          $ref: '#/components/schemas/meta'
+      title: getWorkspaceActivityFeed
+    TransferWorkspaceToTeamResponseWorkspace:
+      type: object
+      properties:
+        transfer:
+          $ref: '#/components/schemas/transferWorkspaceToTeamResponseObject'
+      title: TransferWorkspaceToTeamResponseWorkspace
+    GetWorkspaceRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetWorkspaceRequestInternalServerError
+    UpdateWorkspaceRolesRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateWorkspaceRolesRequestForbiddenError
+    GetWorkspaceWorkspaceType:
+      type: string
+      enum:
+      - personal
+      - team
+      - private
+      - public
+      - partner
+      description: The type of workspace.
+      title: GetWorkspaceWorkspaceType
+    getAllWorkspaceRoles:
+      type: object
+      properties:
+        roles:
+          $ref: '#/components/schemas/GetAllWorkspaceRolesRoles'
+          description: Information about the workspace's roles.
+      title: getAllWorkspaceRoles
+    GetWorkspaceWorkspaceScim:
+      type: object
+      properties:
+        createdBy:
+          type: string
+          description: The SCIM user ID of the user who created the workspace.
+        updatedBy:
+          type: string
+          description: The SCIM user ID of the user who last updated the workspace.
+      description: An object containing SCIM user IDs. This object only returns if you pass the `include=scim` query parameter.
+      title: GetWorkspaceWorkspaceScim
+    transferWorkspaceElement:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/TransferWorkspaceElementId'
+          description: The workspace element's ID.
+        type:
+          $ref: '#/components/schemas/TransferWorkspaceElementType'
+          description: The type of element to transfer.
+        to:
+          type: string
+          description: The workspace ID to transfer the element into.
+      required:
+      - id
+      - type
+      - to
+      title: transferWorkspaceElement
+    UpdateWorkspaceWorkspace:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The workspace's new name.
+        type:
+          $ref: '#/components/schemas/UpdateWorkspaceWorkspaceType'
+          description: 'The new workspace visibility [type](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/managing-workspaces/#changing-workspace-visibility). This property does not support the following workspace visibility changes:
+
+            - `private` to `public`, `public` to `private`, and `private` to `personal` for Free and Basic [plans](https://www.postman.com/pricing/).
+
+            - `public` to `personal` for team users.
+
+            '
+        description:
+          type: string
+          description: The new workspace description.
+        about:
+          type: string
+          description: A brief summary about the workspace.
+      title: UpdateWorkspaceWorkspace
+    TransferWorkspaceElementType:
+      type: string
+      enum:
+      - collection
+      - environment
+      - api
+      - flow
+      - mock
+      - monitor
+      description: The type of element to transfer.
+      title: TransferWorkspaceElementType
+    ManagePartnerWorkspaceInvitesTargetObjectUserId1:
+      type: object
+      properties:
+        userIds:
+          type: array
+          items:
+            $ref: '#/components/schemas/partnerUserId'
+          description: A list of partner publishers' team IDs.
+      required:
+      - userIds
+      description: The target on which to perform the action.
+      title: ManagePartnerWorkspaceInvitesTargetObjectUserId1
     UpdateWorkspaceWorkspaceType:
       type: string
       enum:
@@ -1256,144 +1560,180 @@ components:
 
         '
       title: UpdateWorkspaceWorkspaceType
-    GetWorkspacesRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetWorkspacesRequestUnauthorizedError
-    TransferWorkspaceElementType:
+    ManagePartnerWorkspaceInvitesInvitePartnerResponseRoleDisplayName:
       type: string
       enum:
-      - collection
-      - environment
-      - api
-      - flow
-      - mock
-      - monitor
-      description: The type of element to transfer.
-      title: TransferWorkspaceElementType
-    UpdateWorkspaceRolesRequestUnauthorizedError:
+      - Viewer
+      - Editor
+      - Viewer and Partner Lead
+      - Editor and Partner Lead
+      description: The assigned role's display name.
+      title: ManagePartnerWorkspaceInvitesInvitePartnerResponseRoleDisplayName
+    GetAllWorkspaceRolesRequestInternalServerError:
       oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateWorkspaceRolesRequestUnauthorizedError
-    GetWorkspaceActivityFeedDataItems:
+      title: GetAllWorkspaceRolesRequestInternalServerError
+    GetWorkspaceActivityFeedRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetWorkspaceActivityFeedRequestInternalServerError
+    CreateWorkspaceUpdateRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateWorkspaceUpdateRequestInternalServerError
+    CreateWorkspaceRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateWorkspaceRequestInternalServerError
+    ManagePartnerWorkspaceInvitesRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: ManagePartnerWorkspaceInvitesRequestInternalServerError
+    workspaceRoleData:
       type: object
       properties:
-        workspaceId:
-          type: string
-          description: The workspace's ID.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the element was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the element was updated.
         id:
-          type: integer
-          description: The activity feed's ID.
-        user:
-          $ref: '#/components/schemas/GetWorkspaceActivityFeedDataItemsUser'
-          description: Information about the user that performed the activity.
-        action:
-          $ref: '#/components/schemas/GetWorkspaceActivityFeedDataItemsAction'
-          description: The action that occurred in the workspace.
-        elementType:
           type: string
-          description: The element type.
-        trigger:
+          description: The role's ID.
+        description:
           type: string
-          description: The trigger that caused the workspace action (`create`, `update`, or `destroy`).
-        elementId:
+          description: The role's description.
+        displayName:
           type: string
-          description: The element's ID.
-        elementName:
-          type: string
-          description: The element's name.
-      description: Information about the workspace's activity.
-      title: GetWorkspaceActivityFeedDataItems
-    CreateWorkspaceWorkspaceType:
-      type: string
-      enum:
-      - personal
-      - private
-      - public
-      - team
-      - partner
-      description: 'The type of workspace:
-
-        - `personal`
-
-        - `private` — Private workspaces are available on Postman [**Team** and **Enterprise** plans](https://www.postman.com/pricing).
-
-        - `public`
-
-        - `team`
-
-        - `partner` — [Partner Workspaces](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/partner-workspaces/) are available on Postman [**Team** and **Enterprise** plans](https://www.postman.com/pricing)).
-
-        '
-      title: CreateWorkspaceWorkspaceType
-    ManagePartnerWorkspaceInvitesRemovePartnerResponseResultsItemsStatus:
-      type: string
-      enum:
-      - REMOVED
-      - FAILED
-      description: 'The removal status:
-
-        - `REMOVED` — The partner was successfully removed.
-
-        - `FAILED` — The partner''s removal failed.
-
-        '
-      title: ManagePartnerWorkspaceInvitesRemovePartnerResponseResultsItemsStatus
-    ManagePartnerWorkspaceInvitesInvitePartnerResponseResultsItems:
+          description: The role's display name.
+      description: Information about the role.
+      title: workspaceRoleData
+    DeleteWorkspaceRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteWorkspaceRequestInternalServerError
+    GetWorkspaceUpdateRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetWorkspaceUpdateRequestInternalServerError
+    GetWorkspaceActivityFeedRequestForbiddenError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetWorkspaceActivityFeedRequestForbiddenError
+    workspaceRoles422Error:
       type: object
       properties:
-        email:
+        detail:
           type: string
-          format: email
-          description: The invited user's email address.
+          description: Information about the error.
+        link:
+          type: string
+          description: The error type.
         status:
-          $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesInvitePartnerResponseResultsItemsStatus'
-          description: 'The invitation status:
-
-            - `EMAIL_SENT` — An invitation email was sent.
-
-            - `ALREADY_INVITED` — The user already has a pending invitation.
-
-            - `PARTNER_ADDED` — The existing user was added to the workspace directly.
-
-            - `FAILED` — The invitation failed.
-
-            '
-        userId:
-          type: string
-          description: The user ID. This only returns for the `PARTNER_ADDED` status.
-        message:
-          type: string
-          description: A response message.
-        invitationLink:
-          type: string
-          format: uri
-          description: An invitation link. This only returns for the `EMAIL_SENT` and `ALREADY_INVITED` statuses.
-      title: ManagePartnerWorkspaceInvitesInvitePartnerResponseResultsItems
-    Workspace404ErrorError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-        statusCode:
           type: number
           format: double
           description: The error's HTTP status code.
-      title: Workspace404ErrorError
+        title:
+          type: string
+          description: A short summary of the problem.
+      title: workspaceRoles422Error
+    transferWorkspaceToTeam:
+      type: object
+      properties:
+        destination:
+          type: string
+          description: The ID of the team to transfer the workspace to.
+        source:
+          type: string
+          description: The ID of the team to transfer the workspace from.
+      required:
+      - destination
+      - source
+      title: transferWorkspaceToTeam
+    GetWorkspaceWorkspaceCollectionsItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The collection's ID.
+        name:
+          type: string
+          description: The collection's name.
+        uid:
+          type: string
+          format: uid
+          description: The collection's unique ID.
+      description: Information about the collection.
+      title: GetWorkspaceWorkspaceCollectionsItems
+    managePartnerWorkspaceInvitesRemovePartner:
+      type: object
+      properties:
+        targetEntity:
+          $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesRemovePartnerTargetEntity'
+          description: The `workspace` value.
+        targetEntityId:
+          type: string
+          description: The Partner Workspace ID from which to remove partners.
+        action:
+          $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesRemovePartnerAction'
+          description: The `remove_partner` action.
+        target:
+          $ref: '#/components/schemas/managePartnerWorkspaceInvitesTargetObjectUserId'
+      required:
+      - targetEntity
+      - targetEntityId
+      - action
+      - target
+      description: The request body for removing partners from a Partner Workspace.
+      title: managePartnerWorkspaceInvitesRemovePartner
+    DeleteWorkspaceRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: DeleteWorkspaceRequestUnauthorizedError
+    workspaceIncludeQuery:
+      type: string
+      enum:
+      - mocks:deactivated
+      - scim
+      title: workspaceIncludeQuery
+    workspaceElementTypeQuery:
+      type: string
+      enum:
+      - collection
+      - specification
+      title: workspaceElementTypeQuery
+    ManagePartnerWorkspaceInvitesInvitePartnerTargetEntity:
+      type: string
+      enum:
+      - workspace
+      description: The `workspace` value.
+      title: ManagePartnerWorkspaceInvitesInvitePartnerTargetEntity
+    GetWorkspaceWorkspaceSpecsItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The API specification's ID.
+        name:
+          type: string
+          description: The API specification's name.
+        uid:
+          type: string
+          format: uid
+          description: The API specification's unique ID.
+      description: Information about the API specification.
+      title: GetWorkspaceWorkspaceSpecsItems
     workspaceUpdateData:
       type: object
       properties:
@@ -1432,750 +1772,31 @@ components:
           $ref: '#/components/schemas/workspaceUpdateRelatedResourcesData'
       description: Information about the workspace update.
       title: workspaceUpdateData
-    GetWorkspacesRequestBadRequestError:
-      oneOf:
-      - $ref: '#/components/schemas/workspace400Error'
-      - $ref: '#/components/schemas/commonErrorNameMessageOnly'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetWorkspacesRequestBadRequestError
-    transferWorkspaceToTeamResponse:
-      type: object
-      properties:
-        workspace:
-          $ref: '#/components/schemas/TransferWorkspaceToTeamResponseWorkspace'
-      title: transferWorkspaceToTeamResponse
-    GetWorkspaceWorkspaceScim:
+    cursor:
+      type: string
+      title: cursor
+    getWorkspacesScimObject:
       type: object
       properties:
         createdBy:
           type: string
           description: The SCIM user ID of the user who created the workspace.
-        updatedBy:
-          type: string
-          description: The SCIM user ID of the user who last updated the workspace.
       description: An object containing SCIM user IDs. This object only returns if you pass the `include=scim` query parameter.
-      title: GetWorkspaceWorkspaceScim
-    CommonErrorTypeTitleDetailDetail:
-      oneOf:
-      - type: string
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: Information about the error.
-      title: CommonErrorTypeTitleDetailDetail
-    limitMax100:
-      type: integer
-      title: limitMax100
-    GetWorkspacesWorkspaceDataVisibility:
-      type: string
-      enum:
-      - personal
-      - team
-      - private
-      - public
-      - partner
-      description: 'The workspace''s visibility. [Visibility](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/managing-workspaces/#changing-workspace-visibility) determines who can access the workspace:
-
-        - `personal` — Only you can access the workspace.
-
-        - `team` — All team members can access the workspace.
-
-        - `private` — Only invited team members can access the workspace ([**Team** and **Enterprise** plans only](https://www.postman.com/pricing)).
-
-        - `public` — Everyone can access the workspace.
-
-        - `partner` — Only invited team members and [partners](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/partner-workspaces/) can access the workspace ([**Team** and **Enterprise** plans only](https://www.postman.com/pricing)).
-
-        '
-      title: GetWorkspacesWorkspaceDataVisibility
-    TransferWorkspaceToTeamResponseWorkspace:
-      type: object
-      properties:
-        transfer:
-          $ref: '#/components/schemas/transferWorkspaceToTeamResponseObject'
-      title: TransferWorkspaceToTeamResponseWorkspace
-    elementType-3:
-      type: string
-      enum:
-      - collection
-      - workspace
-      - environment
-      - mock
-      - monitor
-      title: elementType-3
-    GetWorkspaceActivityFeedRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetWorkspaceActivityFeedRequestInternalServerError
-    UpdateWorkspaceRolesResponseRolesItems:
+      title: getWorkspacesScimObject
+    transferWorkspaceToTeamResponseObject:
       type: object
       properties:
         id:
           type: string
-          description: The role's ID.
-        user:
-          type: array
-          items:
-            type: string
-          description: A list of user IDs assigned to the role.
-        group:
-          type: array
-          items:
-            type: string
-          description: A list of user group IDs assigned to the role.
-        displayName:
+          description: The ID of the transferred workspace.
+        source:
           type: string
-          description: The role's display name.
-      title: UpdateWorkspaceRolesResponseRolesItems
-    GetAllWorkspaceRolesRoles:
-      type: object
-      properties:
-        user:
-          type: array
-          items:
-            $ref: '#/components/schemas/workspaceRoleData'
-          description: The list of user roles in the workspace.
-        usergroup:
-          type: array
-          items:
-            $ref: '#/components/schemas/workspaceRoleData'
-          description: The list of user group roles in the workspace.
-        partner:
-          type: array
-          items:
-            $ref: '#/components/schemas/workspaceRoleData'
-          description: The list of partner in the workspace.
-      description: Information about the workspace's roles.
-      title: GetAllWorkspaceRolesRoles
-    workspaceUpdatePostPatchResponseData:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The workspace update's ID.
-        topic:
+          description: The ID of the team the workspace was transferred away from.
+        destination:
           type: string
-          description: The title of the workspace update.
-        description:
-          type: string
-          description: The content of the workspace update.
-        workspaceId:
-          type: string
-          description: The ID of the workspace in which the workspace update was created.
-        createdBy:
-          type: integer
-          description: The user ID of the user that created the workspace update.
-        updatedBy:
-          type: integer
-          description: The ID of the user who last updated the workspace update.
-        createdAt:
-          type: string
-          format: date-time
-          description: The date and time at which the workspace update was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: The date and time at which the workspace update was last updated.
-        category:
-          $ref: '#/components/schemas/workspaceUpdateCategoryData'
-        isPinned:
-          type: boolean
-          default: false
-          description: If true, the workspace update is pinned to the top of the workspace updates list.
-        relatedResources:
-          $ref: '#/components/schemas/workspaceUpdateRelatedResourcesData'
-      title: workspaceUpdatePostPatchResponseData
-    DeleteWorkspaceWorkspace:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The workspace's ID.
-      description: Information about the deleted workspace.
-      title: DeleteWorkspaceWorkspace
-    GetWorkspaceActivityFeedRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetWorkspaceActivityFeedRequestForbiddenError
-    GetWorkspaceActivityFeedDataItemsUser:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The user's ID.
-        username:
-          type: string
-          description: The user's Postman username.
-        isPartner:
-          type: boolean
-          description: If true, the user is a [Partner](https://learning.postman.com/docs/collaborating-in-postman/roles-and-permissions/#partner-team-and-partner-workspace-roles) in the workspace.
-        name:
-          type: string
-          description: The user's name.
-      description: Information about the user that performed the activity.
-      title: GetWorkspaceActivityFeedDataItemsUser
-    Workspaces_managePartnerWorkspaceInvites_Response_200:
-      oneOf:
-      - $ref: '#/components/schemas/managePartnerWorkspaceInvitesInvitePartnerResponse'
-      - $ref: '#/components/schemas/managePartnerWorkspaceInvitesRemovePartnerResponse'
-      title: Workspaces_managePartnerWorkspaceInvites_Response_200
-    Workspace400ErrorError:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-      title: Workspace400ErrorError
-    ManagePartnerWorkspaceInvitesRemovePartnerTargetEntity:
-      type: string
-      enum:
-      - workspace
-      description: The `workspace` value.
-      title: ManagePartnerWorkspaceInvitesRemovePartnerTargetEntity
-    workspaceRoles422Error:
-      type: object
-      properties:
-        detail:
-          type: string
-          description: Information about the error.
-        link:
-          type: string
-          description: The error type.
-        status:
-          type: number
-          format: double
-          description: The error's HTTP status code.
-        title:
-          type: string
-          description: A short summary of the problem.
-      title: workspaceRoles422Error
-    managePartnerWorkspaceInvitesInvitePartner:
-      type: object
-      properties:
-        action:
-          $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesInvitePartnerAction'
-          description: The `invite_partner` action.
-        targetEntity:
-          $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesInvitePartnerTargetEntity'
-          description: The `workspace` value.
-        targetEntityId:
-          type: string
-          description: The Partner Workspace's ID.
-        roleId:
-          $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesInvitePartnerRoleId'
-          description: 'The role ID to assign to invited partners:
-
-            - `4` — Viewer
-
-            - `5` — Editor
-
-            - `6` — Viewer and Partner Lead
-
-            - `7` — Editor and Partner Lead
-
-            '
-        target:
-          $ref: '#/components/schemas/managePartnerWorkspaceInvitesTargetObjectEmails'
-      required:
-      - action
-      - targetEntity
-      - targetEntityId
-      - roleId
-      - target
-      description: Invite partners to a Partner Workspace.
-      title: managePartnerWorkspaceInvitesInvitePartner
-    GetAllWorkspaceRolesRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetAllWorkspaceRolesRequestUnauthorizedError
-    transferWorkspaceElement:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/TransferWorkspaceElementId'
-          description: The workspace element's ID.
-        type:
-          $ref: '#/components/schemas/TransferWorkspaceElementType'
-          description: The type of element to transfer.
-        to:
-          type: string
-          description: The workspace ID to transfer the element into.
-      required:
-      - id
-      - type
-      - to
-      title: transferWorkspaceElement
-    createWorkspaceResponse:
-      type: object
-      properties:
-        workspace:
-          $ref: '#/components/schemas/CreateWorkspaceResponseWorkspace'
-          description: Information about the created workspace.
-      title: createWorkspaceResponse
-    ManagePartnerWorkspaceInvitesInvitePartnerAction:
-      type: string
-      enum:
-      - invite_partner
-      description: The `invite_partner` action.
-      title: ManagePartnerWorkspaceInvitesInvitePartnerAction
-    workspaceElementIdQuery:
-      type: string
-      title: workspaceElementIdQuery
-    GetWorkspaceWorkspaceMocksItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The mock server's ID.
-        name:
-          type: string
-          description: The mock server's name.
-        uid:
-          type: string
-          format: uid
-          description: The mock server's unique ID.
-        deactivated:
-          type: boolean
-          description: If true, the mock server is not active. Mock servers deactivate when a linked collection or environment is deleted.
-      description: Information about the mock server.
-      title: GetWorkspaceWorkspaceMocksItems
-    getWorkspaceActivityFeed:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetWorkspaceActivityFeedDataItems'
-        meta:
-          $ref: '#/components/schemas/meta'
-      title: getWorkspaceActivityFeed
-    TransferWorkspaceElementId:
-      oneOf:
-      - type: string
-        format: uid
-      - type: string
-      description: The workspace element's ID.
-      title: TransferWorkspaceElementId
-    GetWorkspaceWorkspaceSpecsItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The API specification's ID.
-        name:
-          type: string
-          description: The API specification's name.
-        uid:
-          type: string
-          format: uid
-          description: The API specification's unique ID.
-      description: Information about the API specification.
-      title: GetWorkspaceWorkspaceSpecsItems
-    managePartnerWorkspaceInvitesTargetObjectEmails:
-      type: object
-      properties:
-        emails:
-          type: array
-          items:
-            $ref: '#/components/schemas/partnerEmailAddress'
-          description: A list of the partners' email addresses.
-      required:
-      - emails
-      description: The target on which to perform the action.
-      title: managePartnerWorkspaceInvitesTargetObjectEmails
-    GetWorkspaceRolesRequestForbiddenError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetWorkspaceRolesRequestForbiddenError
-    updateWorkspaceGlobalVariables:
-      type: object
-      properties:
-        values:
-          type: array
-          items:
-            $ref: '#/components/schemas/globalVariable'
-          description: A list of the workspace's global variables.
-      title: updateWorkspaceGlobalVariables
-    updateWorkspace:
-      type: object
-      properties:
-        workspace:
-          $ref: '#/components/schemas/UpdateWorkspaceWorkspace'
-      title: updateWorkspace
-    DeleteWorkspaceUpdateRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteWorkspaceUpdateRequestInternalServerError
-    GetWorkspaceWorkspaceType:
-      type: string
-      enum:
-      - personal
-      - team
-      - private
-      - public
-      - partner
-      description: The type of workspace.
-      title: GetWorkspaceWorkspaceType
-    WorkspaceUpdateRelatedResourcesDataItemsResource:
-      type: string
-      enum:
-      - collection
-      - request
-      - response
-      - folder
-      - extensibleCollection
-      - extensibleCollectionItem
-      description: The type of linked resource.
-      title: WorkspaceUpdateRelatedResourcesDataItemsResource
-    ManagePartnerWorkspaceInvitesRemovePartnerAction:
-      type: string
-      enum:
-      - remove_partner
-      description: The `remove_partner` action.
-      title: ManagePartnerWorkspaceInvitesRemovePartnerAction
-    commonErrorTypeTitleDetail:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of error.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailDetail'
-          description: Information about the error.
-      title: commonErrorTypeTitleDetail
-    managePartnerWorkspaceInvitesRemovePartner:
-      type: object
-      properties:
-        targetEntity:
-          $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesRemovePartnerTargetEntity'
-          description: The `workspace` value.
-        targetEntityId:
-          type: string
-          description: The Partner Workspace ID from which to remove partners.
-        action:
-          $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesRemovePartnerAction'
-          description: The `remove_partner` action.
-        target:
-          $ref: '#/components/schemas/managePartnerWorkspaceInvitesTargetObjectUserId'
-      required:
-      - targetEntity
-      - targetEntityId
-      - action
-      - target
-      description: The request body for removing partners from a Partner Workspace.
-      title: managePartnerWorkspaceInvitesRemovePartner
-    GetWorkspaceRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetWorkspaceRequestInternalServerError
-    DeleteWorkspaceRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteWorkspaceRequestInternalServerError
-    managePartnerWorkspaceInvitesRemovePartnerResponse:
-      type: object
-      properties:
-        targetEntity:
-          type: string
-          description: The target entity type.
-        targetEntityId:
-          type: string
-          description: The target entity's ID.
-        action:
-          type: string
-          description: The action performed.
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesRemovePartnerResponseResultsItems'
-          description: A list of the action results.
-      title: managePartnerWorkspaceInvitesRemovePartnerResponse
-    UpdateWorkspaceRolesRolesItemsValueItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The user, user group, or partner's ID. To use SCIM IDs for users or user groups, include the `identifierType=scim` header in the request.
-        role:
-          type: string
-          description: 'The user or user group''s role ID:
-
-            - `1` — Viewer.  Can view and collaborate on all resources.
-
-            - `2` — Editor. Can create and edit all resources.
-
-            - `3` — Admin. Can manage people and all resources.
-
-
-            For partner roles:
-
-            - `4` — Viewer. Can send requests and view workspace resources.
-
-            - `5` — Editor. Can create, edit and fork workspace resources.
-
-            - `6` — Viewer and Partner Lead. Can view, fork and export workspace resources, and invite partners.
-
-            - `7` — Editor and Partner Lead. Can create and edit workspace resources, and invite partners with Editor or Viewer access to the workspace.
-
-            '
-      required:
-      - id
-      - role
-      description: Information about the user, user group, or partner role.
-      title: UpdateWorkspaceRolesRolesItemsValueItems
-    getWorkspace:
-      type: object
-      properties:
-        workspace:
-          $ref: '#/components/schemas/GetWorkspaceWorkspace'
-          description: Information about the workspace.
-      title: getWorkspace
-    GetWorkspaceWorkspaceCollectionsItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The collection's ID.
-        name:
-          type: string
-          description: The collection's name.
-        uid:
-          type: string
-          format: uid
-          description: The collection's unique ID.
-      description: Information about the collection.
-      title: GetWorkspaceWorkspaceCollectionsItems
-    workspaceRoleData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The role's ID.
-        description:
-          type: string
-          description: The role's description.
-        displayName:
-          type: string
-          description: The role's display name.
-      description: Information about the role.
-      title: workspaceRoleData
-    workspaceRolesData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The role's ID.
-        user:
-          type: array
-          items:
-            type: string
-          description: A list of user IDs assigned to the role.
-        usergroup:
-          type: array
-          items:
-            type: string
-          description: A list of user group IDs assigned to the role.
-        partner:
-          type: array
-          items:
-            type: string
-          description: A list of partner IDs assigned to the role.
-        displayName:
-          type: string
-          description: The role's display name.
-      title: workspaceRolesData
-    createWorkspace:
-      type: object
-      properties:
-        workspace:
-          $ref: '#/components/schemas/CreateWorkspaceWorkspace'
-          description: Information about the workspace.
-      title: createWorkspace
-    GetWorkspaceWorkspaceMonitorsItems:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The monitor's ID.
-        name:
-          type: string
-          description: The monitor's name.
-        uid:
-          type: string
-          format: uid
-          description: The monitor's unique ID.
-        deactivated:
-          type: boolean
-          description: If true, the monitor is not active.
-      description: Information about the monitor.
-      title: GetWorkspaceWorkspaceMonitorsItems
-    GetWorkspaceActivityFeedRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetWorkspaceActivityFeedRequestUnauthorizedError
-    partnerUserId:
-      type: string
-      description: The partner's ID.
-      title: partnerUserId
-    CreateWorkspaceRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateWorkspaceRequestInternalServerError
-    getWorkspaceGlobalVariables:
-      type: object
-      properties:
-        values:
-          type: array
-          items:
-            $ref: '#/components/schemas/globalVariable'
-          description: A list of the workspace's global variables.
-      description: Information about the workspace's global variables.
-      title: getWorkspaceGlobalVariables
-    transferWorkspaceElementResponse:
-      type: object
-      properties:
-        workspace:
-          $ref: '#/components/schemas/TransferWorkspaceElementResponseWorkspace'
-      title: transferWorkspaceElementResponse
-    ManagePartnerWorkspaceInvitesRemovePartnerResponseResultsItems:
-      type: object
-      properties:
-        error:
-          type: string
-          description: If the endpoint returns the `FAILED` status, the error message detailing the error.
-        message:
-          type: string
-          description: A response message.
-        status:
-          $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesRemovePartnerResponseResultsItemsStatus'
-          description: 'The removal status:
-
-            - `REMOVED` — The partner was successfully removed.
-
-            - `FAILED` — The partner''s removal failed.
-
-            '
-        userId:
-          type: string
-          description: The user ID.
-      title: ManagePartnerWorkspaceInvitesRemovePartnerResponseResultsItems
-    ManagePartnerWorkspaceInvitesRemovePartnerTeamAction:
-      type: string
-      enum:
-      - remove_partner
-      description: The `remove_partner` action.
-      title: ManagePartnerWorkspaceInvitesRemovePartnerTeamAction
-    userId-2:
-      type: integer
-      title: userId-2
-    UpdateWorkspaceRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateWorkspaceRequestInternalServerError
-    GetWorkspacesRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetWorkspacesRequestInternalServerError
-    PatchWorkspaceUpdateRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: PatchWorkspaceUpdateRequestInternalServerError
-    updateWorkspaceGlobalVariablesResponse:
-      type: object
-      properties:
-        values:
-          type: array
-          items:
-            $ref: '#/components/schemas/globalVariable'
-          description: A list of the workspace's global variables.
-      description: Information about the workspace's updated global variables.
-      title: updateWorkspaceGlobalVariablesResponse
-    UpdateWorkspaceRolesRolesItemsPath:
-      type: string
-      enum:
-      - /user
-      - /usergroup
-      - /partner
-      description: The resource to perform the action on.
-      title: UpdateWorkspaceRolesRolesItemsPath
-    commonErrorTypeTitleDetailStatusInstance:
-      type: object
-      properties:
-        type:
-          type: string
-          format: uri-reference
-          description: The [URI reference](https://www.rfc-editor.org/rfc/rfc3986) that identifies the type of problem.
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: An explanation about the problem.
-        status:
-          type: integer
-          description: The HTTP status code generated by the origin server.
-        instance:
-          type: string
-          description: The URI reference that identifies the specific occurrence of the problem.
-      title: commonErrorTypeTitleDetailStatusInstance
-    UpdateWorkspaceRolesRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateWorkspaceRolesRequestInternalServerError
-    CreateWorkspaceResponseWorkspace:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The workspace's ID.
-        name:
-          type: string
-          description: The workspace's name.
-      description: Information about the created workspace.
-      title: CreateWorkspaceResponseWorkspace
-    commonErrorTypeTitleDetailStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
+          description: The ID of the team that the workspace was transferred to.
+      description: Information about the workspace transfer.
+      title: transferWorkspaceToTeamResponseObject
     CreateWorkspaceWorkspace:
       type: object
       properties:
@@ -2230,105 +1851,133 @@ components:
       - path
       - value
       title: UpdateWorkspaceRolesRolesItems
-    deleteWorkspace:
-      type: object
-      properties:
-        workspace:
-          $ref: '#/components/schemas/DeleteWorkspaceWorkspace'
-          description: Information about the deleted workspace.
-      title: deleteWorkspace
-    UpdateWorkspaceResponseWorkspace:
+    CreateWorkspaceRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: CreateWorkspaceRequestUnauthorizedError
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
+    UpdateWorkspaceRolesRolesItemsValueItems:
       type: object
       properties:
         id:
           type: string
-          description: The workspace's ID.
-        name:
+          description: The user, user group, or partner's ID. To use SCIM IDs for users or user groups, include the `identifierType=scim` header in the request.
+        role:
           type: string
-          description: The workspace's name.
-      description: Information about the updated workspace.
-      title: UpdateWorkspaceResponseWorkspace
-    GlobalVariableType:
+          description: 'The user or user group''s role ID:
+
+            - `1` — Viewer.  Can view and collaborate on all resources.
+
+            - `2` — Editor. Can create and edit all resources.
+
+            - `3` — Admin. Can manage people and all resources.
+
+
+            For partner roles:
+
+            - `4` — Viewer. Can send requests and view workspace resources.
+
+            - `5` — Editor. Can create, edit and fork workspace resources.
+
+            - `6` — Viewer and Partner Lead. Can view, fork and export workspace resources, and invite partners.
+
+            - `7` — Editor and Partner Lead. Can create and edit workspace resources, and invite partners with Editor or Viewer access to the workspace.
+
+            '
+      required:
+      - id
+      - role
+      description: Information about the user, user group, or partner role.
+      title: UpdateWorkspaceRolesRolesItemsValueItems
+    ManagePartnerWorkspaceInvitesRemovePartnerTeamAction:
       type: string
       enum:
-      - default
-      - secret
-      description: The [type](https://learning.postman.com/docs/sending-requests/variables/#variable-types) of variable.
-      title: GlobalVariableType
-    workspaceUpdateCategoryData:
-      type: string
-      enum:
-      - improvement
-      - new_feature
-      - bug_fix
-      - breaking_change
-      - announcement
-      description: The update's assigned category.
-      title: workspaceUpdateCategoryData
-    ManagePartnerWorkspaceInvitesRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: ManagePartnerWorkspaceInvitesRequestInternalServerError
-    transferWorkspaceToTeam:
-      type: object
-      properties:
-        destination:
-          type: string
-          description: The ID of the team to transfer the workspace to.
-        source:
-          type: string
-          description: The ID of the team to transfer the workspace from.
-      required:
-      - destination
-      - source
-      title: transferWorkspaceToTeam
-    updateWorkspaceResponse:
-      type: object
-      properties:
-        workspace:
-          $ref: '#/components/schemas/UpdateWorkspaceResponseWorkspace'
-          description: Information about the updated workspace.
-      title: updateWorkspaceResponse
-    workspace404Error:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Workspace404ErrorError'
-      title: workspace404Error
-    WorkspaceUpdateRelatedResourcesDataItems:
-      type: object
-      properties:
-        resource:
-          $ref: '#/components/schemas/WorkspaceUpdateRelatedResourcesDataItemsResource'
-          description: The type of linked resource.
-        resourceId:
-          type: string
-          description: The linked resource's ID.
-      required:
-      - resource
-      - resourceId
-      title: WorkspaceUpdateRelatedResourcesDataItems
-    cursor:
-      type: string
-      title: cursor
+      - remove_partner
+      description: The `remove_partner` action.
+      title: ManagePartnerWorkspaceInvitesRemovePartnerTeamAction
     limitDefault15:
       type: integer
       default: 15
       title: limitDefault15
-    GetWorkspaceRolesRequestInternalServerError:
+    workspaceIncludeScimQuery:
+      type: string
+      enum:
+      - scim
+      title: workspaceIncludeScimQuery
+    TransferWorkspaceElementRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetWorkspaceRolesRequestInternalServerError
-    GetAllWorkspaceRolesRequestInternalServerError:
+      title: TransferWorkspaceElementRequestInternalServerError
+    ManagePartnerWorkspaceInvitesTargetObjectUserId0:
+      type: object
+      properties:
+        userIds:
+          type: array
+          items:
+            $ref: '#/components/schemas/partnerUserId'
+          description: A list of partner user IDs to remove from the Partner Workspace.
+      required:
+      - userIds
+      description: The target on which to perform the action.
+      title: ManagePartnerWorkspaceInvitesTargetObjectUserId0
+    GetWorkspaceActivityFeedRequestUnauthorizedError:
       oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetAllWorkspaceRolesRequestInternalServerError
+      title: GetWorkspaceActivityFeedRequestUnauthorizedError
+    GetAllWorkspaceRolesRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetAllWorkspaceRolesRequestUnauthorizedError
+    updateWorkspaceUpdate:
+      type: object
+      properties:
+        description:
+          type: string
+          description: The content of the workspace update.
+        topic:
+          type: string
+          description: The title of the workspace update.
+        category:
+          $ref: '#/components/schemas/workspaceUpdateCategoryData'
+        isPinned:
+          type: boolean
+          default: false
+          description: If true, the workspace update is pinned to the top of the workspace updates list.
+        relatedResources:
+          $ref: '#/components/schemas/workspaceUpdateRelatedResourcesData'
+      required:
+      - description
+      - topic
+      - category
+      title: updateWorkspaceUpdate
+    workspace400Error:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Workspace400ErrorError'
+        statusCode:
+          type: integer
+          description: The error's HTTP status code.
+      title: workspace400Error
+    workspaceTypeQuery:
+      type: string
+      enum:
+      - personal
+      - team
+      - private
+      - public
+      - partner
+      title: workspaceTypeQuery
     getWorkspaces:
       type: object
       properties:
@@ -2341,86 +1990,133 @@ components:
           $ref: '#/components/schemas/GetWorkspacesMeta'
           description: The response's meta information for paginated results. This object only returns if you pass the `limit` query parameter.
       title: getWorkspaces
-    GetWorkspaceWorkspaceEnvironmentsItems:
+    GetWorkspaceWorkspaceMonitorsItems:
       type: object
       properties:
         id:
           type: string
-          description: The environment's ID.
+          description: The monitor's ID.
         name:
           type: string
-          description: The environment's name.
+          description: The monitor's name.
         uid:
           type: string
           format: uid
-          description: The environment's unique ID.
-      description: Information about the environment.
-      title: GetWorkspaceWorkspaceEnvironmentsItems
-    CommonErrorNameMessageError:
+          description: The monitor's unique ID.
+        deactivated:
+          type: boolean
+          description: If true, the monitor is not active.
+      description: Information about the monitor.
+      title: GetWorkspaceWorkspaceMonitorsItems
+    createWorkspaceUpdate:
       type: object
       properties:
-        name:
+        description:
           type: string
-          description: The error name.
-        message:
+          description: The content of the workspace update.
+        topic:
           type: string
-          description: The error message.
-      description: Information about the error.
-      title: CommonErrorNameMessageError
-    getWorkspacesWorkspaceData:
+          description: The title of the workspace update.
+        category:
+          $ref: '#/components/schemas/workspaceUpdateCategoryData'
+        relatedResources:
+          $ref: '#/components/schemas/workspaceUpdateRelatedResourcesData'
+      required:
+      - description
+      - topic
+      - category
+      title: createWorkspaceUpdate
+    UpdateWorkspaceRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateWorkspaceRequestInternalServerError
+    GetWorkspaceActivityFeedDataItems:
       type: object
       properties:
-        id:
+        workspaceId:
           type: string
           description: The workspace's ID.
-        name:
-          type: string
-          description: The workspace's name.
-        type:
-          $ref: '#/components/schemas/GetWorkspacesWorkspaceDataType'
-          description: The type of workspace.
-        visibility:
-          $ref: '#/components/schemas/GetWorkspacesWorkspaceDataVisibility'
-          description: 'The workspace''s visibility. [Visibility](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/managing-workspaces/#changing-workspace-visibility) determines who can access the workspace:
-
-            - `personal` — Only you can access the workspace.
-
-            - `team` — All team members can access the workspace.
-
-            - `private` — Only invited team members can access the workspace ([**Team** and **Enterprise** plans only](https://www.postman.com/pricing)).
-
-            - `public` — Everyone can access the workspace.
-
-            - `partner` — Only invited team members and [partners](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/partner-workspaces/) can access the workspace ([**Team** and **Enterprise** plans only](https://www.postman.com/pricing)).
-
-            '
-        createdBy:
-          type: string
-          description: The user who created the workspace. The response only returns workspaces that you have access to.
-        about:
-          type: string
-          description: A brief summary about the workspace.
         createdAt:
           type: string
           format: date-time
-          description: The date and time at which the workspace was created.
+          description: The date and time at which the element was created.
         updatedAt:
           type: string
           format: date-time
-          description: The date and time at which the workspace was last updated.
-        scim:
-          $ref: '#/components/schemas/getWorkspacesScimObject'
-      description: Information about the workspace.
-      title: getWorkspacesWorkspaceData
-    meta:
+          description: The date and time at which the element was updated.
+        id:
+          type: integer
+          description: The activity feed's ID.
+        user:
+          $ref: '#/components/schemas/GetWorkspaceActivityFeedDataItemsUser'
+          description: Information about the user that performed the activity.
+        action:
+          $ref: '#/components/schemas/GetWorkspaceActivityFeedDataItemsAction'
+          description: The action that occurred in the workspace.
+        elementType:
+          type: string
+          description: The element type.
+        trigger:
+          type: string
+          description: The trigger that caused the workspace action (`create`, `update`, or `destroy`).
+        elementId:
+          type: string
+          description: The element's ID.
+        elementName:
+          type: string
+          description: The element's name.
+      description: Information about the workspace's activity.
+      title: GetWorkspaceActivityFeedDataItems
+    CommonErrorTypeTitleDetailDetail:
+      oneOf:
+      - type: string
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: Information about the error.
+      title: CommonErrorTypeTitleDetailDetail
+    CreateWorkspaceWorkspaceType:
+      type: string
+      enum:
+      - personal
+      - private
+      - public
+      - team
+      - partner
+      description: 'The type of workspace:
+
+        - `personal`
+
+        - `private` — Private workspaces are available on Postman [**Team** and **Enterprise** plans](https://www.postman.com/pricing).
+
+        - `public`
+
+        - `team`
+
+        - `partner` — [Partner Workspaces](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/partner-workspaces/) are available on Postman [**Team** and **Enterprise** plans](https://www.postman.com/pricing)).
+
+        '
+      title: CreateWorkspaceWorkspaceType
+    getWorkspaceGlobalVariables:
+      type: object
+      properties:
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/globalVariable'
+          description: A list of the workspace's global variables.
+      description: Information about the workspace's global variables.
+      title: getWorkspaceGlobalVariables
+    GetWorkspacesMeta:
       type: object
       properties:
         nextCursor:
-          type:
-          - string
-          - 'null'
+          type: string
           description: The pagination cursor that points to the next record in the results set.
-      title: meta
+      description: The response's meta information for paginated results. This object only returns if you pass the `limit` query parameter.
+      title: GetWorkspacesMeta
     GetWorkspaceWorkspace:
       type: object
       properties:
@@ -2498,144 +2194,24 @@ components:
           description: An object containing SCIM user IDs. This object only returns if you pass the `include=scim` query parameter.
       description: Information about the workspace.
       title: GetWorkspaceWorkspace
-    UpdateWorkspaceRolesRequestForbiddenError:
+    GetWorkspacesRequestUnauthorizedError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: UpdateWorkspaceRolesRequestForbiddenError
-    GetWorkspacesMeta:
-      type: object
-      properties:
-        nextCursor:
-          type: string
-          description: The pagination cursor that points to the next record in the results set.
-      description: The response's meta information for paginated results. This object only returns if you pass the `limit` query parameter.
-      title: GetWorkspacesMeta
-    GetWorkspaceRolesRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetWorkspaceRolesRequestUnauthorizedError
-    workspaceCreatedBy:
-      type: integer
-      title: workspaceCreatedBy
-    GetWorkspaceUpdatesRequestInternalServerError:
+      title: GetWorkspacesRequestUnauthorizedError
+    UpdateWorkspaceRolesRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetWorkspaceUpdatesRequestInternalServerError
-    workspaceIncludeQuery:
-      type: string
-      enum:
-      - mocks:deactivated
-      - scim
-      title: workspaceIncludeQuery
-    updateWorkspaceRoles:
+      title: UpdateWorkspaceRolesRequestInternalServerError
+    getWorkspace:
       type: object
       properties:
-        roles:
-          type: array
-          items:
-            $ref: '#/components/schemas/UpdateWorkspaceRolesRolesItems'
-      title: updateWorkspaceRoles
-    Workspaces_managePartnerWorkspaceInvites_Request:
-      oneOf:
-      - $ref: '#/components/schemas/managePartnerWorkspaceInvitesInvitePartner'
-      - $ref: '#/components/schemas/managePartnerWorkspaceInvitesRemovePartner'
-      - $ref: '#/components/schemas/managePartnerWorkspaceInvitesRemovePartnerTeam'
-      title: Workspaces_managePartnerWorkspaceInvites_Request
-    TransferWorkspaceElementRequestInternalServerError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: TransferWorkspaceElementRequestInternalServerError
-    workspaceElementTypeQuery:
-      type: string
-      enum:
-      - collection
-      - specification
-      title: workspaceElementTypeQuery
-    updateWorkspaceUpdate:
-      type: object
-      properties:
-        description:
-          type: string
-          description: The content of the workspace update.
-        topic:
-          type: string
-          description: The title of the workspace update.
-        category:
-          $ref: '#/components/schemas/workspaceUpdateCategoryData'
-        isPinned:
-          type: boolean
-          default: false
-          description: If true, the workspace update is pinned to the top of the workspace updates list.
-        relatedResources:
-          $ref: '#/components/schemas/workspaceUpdateRelatedResourcesData'
-      required:
-      - description
-      - topic
-      - category
-      title: updateWorkspaceUpdate
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    managePartnerWorkspaceInvitesTargetObjectUserId:
-      oneOf:
-      - $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesTargetObjectUserId0'
-      - $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesTargetObjectUserId1'
-      title: managePartnerWorkspaceInvitesTargetObjectUserId
-    ManagePartnerWorkspaceInvitesTargetObjectUserId0:
-      type: object
-      properties:
-        userIds:
-          type: array
-          items:
-            $ref: '#/components/schemas/partnerUserId'
-          description: A list of partner user IDs to remove from the Partner Workspace.
-      required:
-      - userIds
-      description: The target on which to perform the action.
-      title: ManagePartnerWorkspaceInvitesTargetObjectUserId0
-    managePartnerWorkspaceInvitesRemovePartnerTeam:
-      type: object
-      properties:
-        targetEntity:
-          $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesRemovePartnerTeamTargetEntity'
-          description: The `team` value.
-        targetEntityId:
-          type: string
-          description: The team ID from which to remove partners.
-        action:
-          $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesRemovePartnerTeamAction'
-          description: The `remove_partner` action.
-        target:
-          $ref: '#/components/schemas/managePartnerWorkspaceInvitesTargetObjectUserId'
-      required:
-      - targetEntity
-      - targetEntityId
-      - action
-      - target
-      description: The request body for removing partners from partnership with a team.
-      title: managePartnerWorkspaceInvitesRemovePartnerTeam
-    partnerEmailAddress:
-      type: string
-      format: email
-      description: A partner's email address.
-      title: partnerEmailAddress
-    getWorkspacesScimObject:
-      type: object
-      properties:
-        createdBy:
-          type: string
-          description: The SCIM user ID of the user who created the workspace.
-      description: An object containing SCIM user IDs. This object only returns if you pass the `include=scim` query parameter.
-      title: getWorkspacesScimObject
+        workspace:
+          $ref: '#/components/schemas/GetWorkspaceWorkspace'
+          description: Information about the workspace.
+      title: getWorkspace
     managePartnerWorkspaceInvitesInvitePartnerResponse:
       type: object
       properties:
@@ -2660,74 +2236,298 @@ components:
             $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesInvitePartnerResponseResultsItems'
           description: A list of the action results for each email address.
       title: managePartnerWorkspaceInvitesInvitePartnerResponse
-    workspaceTypeQuery:
+    transferWorkspaceToTeamResponse:
+      type: object
+      properties:
+        workspace:
+          $ref: '#/components/schemas/TransferWorkspaceToTeamResponseWorkspace'
+      title: transferWorkspaceToTeamResponse
+    managePartnerWorkspaceInvitesTargetObjectUserId:
+      oneOf:
+      - $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesTargetObjectUserId0'
+      - $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesTargetObjectUserId1'
+      title: managePartnerWorkspaceInvitesTargetObjectUserId
+    GetWorkspacesRequestBadRequestError:
+      oneOf:
+      - $ref: '#/components/schemas/workspace400Error'
+      - $ref: '#/components/schemas/commonErrorNameMessageOnly'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetWorkspacesRequestBadRequestError
+    UpdateWorkspaceRolesRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: UpdateWorkspaceRolesRequestUnauthorizedError
+    GetWorkspaceWorkspaceMocksItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The mock server's ID.
+        name:
+          type: string
+          description: The mock server's name.
+        uid:
+          type: string
+          format: uid
+          description: The mock server's unique ID.
+        deactivated:
+          type: boolean
+          description: If true, the mock server is not active. Mock servers deactivate when a linked collection or environment is deleted.
+      description: Information about the mock server.
+      title: GetWorkspaceWorkspaceMocksItems
+    workspaceUpdatePostPatchResponseData:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The workspace update's ID.
+        topic:
+          type: string
+          description: The title of the workspace update.
+        description:
+          type: string
+          description: The content of the workspace update.
+        workspaceId:
+          type: string
+          description: The ID of the workspace in which the workspace update was created.
+        createdBy:
+          type: integer
+          description: The user ID of the user that created the workspace update.
+        updatedBy:
+          type: integer
+          description: The ID of the user who last updated the workspace update.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the workspace update was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the workspace update was last updated.
+        category:
+          $ref: '#/components/schemas/workspaceUpdateCategoryData'
+        isPinned:
+          type: boolean
+          default: false
+          description: If true, the workspace update is pinned to the top of the workspace updates list.
+        relatedResources:
+          $ref: '#/components/schemas/workspaceUpdateRelatedResourcesData'
+      title: workspaceUpdatePostPatchResponseData
+    identifierType:
       type: string
-      enum:
-      - personal
-      - team
-      - private
-      - public
-      - partner
-      title: workspaceTypeQuery
+      title: identifierType
+    workspace404Error:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Workspace404ErrorError'
+      title: workspace404Error
+    GetAllWorkspaceRolesRoles:
+      type: object
+      properties:
+        user:
+          type: array
+          items:
+            $ref: '#/components/schemas/workspaceRoleData'
+          description: The list of user roles in the workspace.
+        usergroup:
+          type: array
+          items:
+            $ref: '#/components/schemas/workspaceRoleData'
+          description: The list of user group roles in the workspace.
+        partner:
+          type: array
+          items:
+            $ref: '#/components/schemas/workspaceRoleData'
+          description: The list of partner in the workspace.
+      description: Information about the workspace's roles.
+      title: GetAllWorkspaceRolesRoles
+    TransferWorkspaceElementResponseWorkspace:
+      type: object
+      properties:
+        element-transfers:
+          $ref: '#/components/schemas/TransferWorkspaceElementResponseWorkspaceElementTransfers'
+          description: Information about the element transfer.
+      title: TransferWorkspaceElementResponseWorkspace
+    workspaceElementIdQuery:
+      type: string
+      title: workspaceElementIdQuery
     GetAllWorkspaceRolesRequestForbiddenError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
       title: GetAllWorkspaceRolesRequestForbiddenError
-    globalVariable:
+    managePartnerWorkspaceInvitesInvitePartner:
       type: object
       properties:
-        key:
+        action:
+          $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesInvitePartnerAction'
+          description: The `invite_partner` action.
+        targetEntity:
+          $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesInvitePartnerTargetEntity'
+          description: The `workspace` value.
+        targetEntityId:
           type: string
-          description: The variable's name.
-        type:
-          $ref: '#/components/schemas/GlobalVariableType'
-          description: The [type](https://learning.postman.com/docs/sending-requests/variables/#variable-types) of variable.
-        value:
+          description: The Partner Workspace's ID.
+        roleId:
+          $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesInvitePartnerRoleId'
+          description: 'The role ID to assign to invited partners:
+
+            - `4` — Viewer
+
+            - `5` — Editor
+
+            - `6` — Viewer and Partner Lead
+
+            - `7` — Editor and Partner Lead
+
+            '
+        target:
+          $ref: '#/components/schemas/managePartnerWorkspaceInvitesTargetObjectEmails'
+      required:
+      - action
+      - targetEntity
+      - targetEntityId
+      - roleId
+      - target
+      description: Invite partners to a Partner Workspace.
+      title: managePartnerWorkspaceInvitesInvitePartner
+    Workspace400ErrorError:
+      type: object
+      properties:
+        name:
           type: string
-          description: The variable's value.
-        enabled:
-          type: boolean
-          description: If true, the variable is enabled.
-        description:
+          description: The error name.
+        message:
           type: string
-          description: The variable's description.
-      description: Information about the global variable.
-      title: globalVariable
-    workspaceUpdateId:
+          description: The error message.
+      title: Workspace400ErrorError
+    userId-2:
       type: integer
-      title: workspaceUpdateId
-    CreateWorkspaceRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateWorkspaceRequestUnauthorizedError
-    ManagePartnerWorkspaceInvitesInvitePartnerResponseRoleDisplayName:
-      type: string
-      enum:
-      - Viewer
-      - Editor
-      - Viewer and Partner Lead
-      - Editor and Partner Lead
-      description: The assigned role's display name.
-      title: ManagePartnerWorkspaceInvitesInvitePartnerResponseRoleDisplayName
-    CreateWorkspaceUpdateRequestInternalServerError:
+      title: userId-2
+    transferWorkspaceElementResponse:
+      type: object
+      properties:
+        workspace:
+          $ref: '#/components/schemas/TransferWorkspaceElementResponseWorkspace'
+      title: transferWorkspaceElementResponse
+    GetWorkspaceWorkspaceEnvironmentsItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The environment's ID.
+        name:
+          type: string
+          description: The environment's name.
+        uid:
+          type: string
+          format: uid
+          description: The environment's unique ID.
+      description: Information about the environment.
+      title: GetWorkspaceWorkspaceEnvironmentsItems
+    PatchWorkspaceUpdateRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: CreateWorkspaceUpdateRequestInternalServerError
+      title: PatchWorkspaceUpdateRequestInternalServerError
+    WorkspaceUpdateRelatedResourcesDataItemsResource:
+      type: string
+      enum:
+      - collection
+      - request
+      - response
+      - folder
+      - extensibleCollection
+      - extensibleCollectionItem
+      description: The type of linked resource.
+      title: WorkspaceUpdateRelatedResourcesDataItemsResource
+    meta:
+      type: object
+      properties:
+        nextCursor:
+          type:
+          - string
+          - 'null'
+          description: The pagination cursor that points to the next record in the results set.
+      title: meta
+    updateWorkspaceGlobalVariables:
+      type: object
+      properties:
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/globalVariable'
+          description: A list of the workspace's global variables.
+      title: updateWorkspaceGlobalVariables
+    GetWorkspaceUpdatesRequestInternalServerError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetWorkspaceUpdatesRequestInternalServerError
     GetWorkspaceRequestUnauthorizedError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
       title: GetWorkspaceRequestUnauthorizedError
-    ManagePartnerWorkspaceInvitesInvitePartnerTargetEntity:
+    updateWorkspaceResponse:
+      type: object
+      properties:
+        workspace:
+          $ref: '#/components/schemas/UpdateWorkspaceResponseWorkspace'
+          description: Information about the updated workspace.
+      title: updateWorkspaceResponse
+    ManagePartnerWorkspaceInvitesInvitePartnerRoleId:
       type: string
       enum:
-      - workspace
-      description: The `workspace` value.
-      title: ManagePartnerWorkspaceInvitesInvitePartnerTargetEntity
+      - '4'
+      - '5'
+      - '6'
+      - '7'
+      description: 'The role ID to assign to invited partners:
+
+        - `4` — Viewer
+
+        - `5` — Editor
+
+        - `6` — Viewer and Partner Lead
+
+        - `7` — Editor and Partner Lead
+
+        '
+      title: ManagePartnerWorkspaceInvitesInvitePartnerRoleId
+    updateWorkspace:
+      type: object
+      properties:
+        workspace:
+          $ref: '#/components/schemas/UpdateWorkspaceWorkspace'
+      title: updateWorkspace
+    CommonErrorNameMessageError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+      description: Information about the error.
+      title: CommonErrorNameMessageError
+    limitMax100:
+      type: integer
+      title: limitMax100
+    workspaceId:
+      type: string
+      title: workspaceId
+    Workspaces_managePartnerWorkspaceInvites_Request:
+      oneOf:
+      - $ref: '#/components/schemas/managePartnerWorkspaceInvitesInvitePartner'
+      - $ref: '#/components/schemas/managePartnerWorkspaceInvitesRemovePartner'
+      - $ref: '#/components/schemas/managePartnerWorkspaceInvitesRemovePartnerTeam'
+      title: Workspaces_managePartnerWorkspaceInvites_Request
     commonErrorNameMessageOnly:
       type: object
       properties:
@@ -2738,6 +2538,19 @@ components:
           type: string
           description: The error message.
       title: commonErrorNameMessageOnly
+    GlobalVariableType:
+      type: string
+      enum:
+      - default
+      - secret
+      description: The [type](https://learning.postman.com/docs/sending-requests/variables/#variable-types) of variable.
+      title: GlobalVariableType
+    ManagePartnerWorkspaceInvitesRemovePartnerTeamTargetEntity:
+      type: string
+      enum:
+      - team
+      description: The `team` value.
+      title: ManagePartnerWorkspaceInvitesRemovePartnerTeamTargetEntity
     commonErrorNameMessage:
       type: object
       properties:
@@ -2745,145 +2558,7 @@ components:
           $ref: '#/components/schemas/CommonErrorNameMessageError'
           description: Information about the error.
       title: commonErrorNameMessage
-    UpdateWorkspaceWorkspace:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The workspace's new name.
-        type:
-          $ref: '#/components/schemas/UpdateWorkspaceWorkspaceType'
-          description: 'The new workspace visibility [type](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/managing-workspaces/#changing-workspace-visibility). This property does not support the following workspace visibility changes:
-
-            - `private` to `public`, `public` to `private`, and `private` to `personal` for Free and Basic [plans](https://www.postman.com/pricing/).
-
-            - `public` to `personal` for team users.
-
-            '
-        description:
-          type: string
-          description: The new workspace description.
-        about:
-          type: string
-          description: A brief summary about the workspace.
-      title: UpdateWorkspaceWorkspace
-    getWorkspaceRoles:
-      type: object
-      properties:
-        roles:
-          type: array
-          items:
-            $ref: '#/components/schemas/workspaceRolesData'
-          description: A list of workspace roles and the users, groups, and partners assigned to them.
-      description: Information about the workspace's roles.
-      title: getWorkspaceRoles
-    GetWorkspacesWorkspaceDataType:
-      type: string
-      enum:
-      - personal
-      - team
-      - private
-      - public
-      - partner
-      description: The type of workspace.
-      title: GetWorkspacesWorkspaceDataType
-    TransferWorkspaceElementResponseWorkspaceElementTransfers:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of element transferred.
-        from:
-          type: string
-          description: The ID of the workspace the element was transferred from.
-        id:
-          type: string
-          description: The element's ID.
-        to:
-          type: string
-          description: The ID of the workspace the element was transferred to.
-      description: Information about the element transfer.
-      title: TransferWorkspaceElementResponseWorkspaceElementTransfers
-    workspaceId:
-      type: string
-      title: workspaceId
-    getAllWorkspaceRoles:
-      type: object
-      properties:
-        roles:
-          $ref: '#/components/schemas/GetAllWorkspaceRolesRoles'
-          description: Information about the workspace's roles.
-      title: getAllWorkspaceRoles
-    GetWorkspaceActivityFeedDataItemsAction:
-      type: string
-      enum:
-      - create
-      - update
-      - destroy
-      description: The action that occurred in the workspace.
-      title: GetWorkspaceActivityFeedDataItemsAction
-    transferWorkspaceToTeamResponseObject:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The ID of the transferred workspace.
-        source:
-          type: string
-          description: The ID of the team the workspace was transferred away from.
-        destination:
-          type: string
-          description: The ID of the team that the workspace was transferred to.
-      description: Information about the workspace transfer.
-      title: transferWorkspaceToTeamResponseObject
-    workspaceUpdateCreatedByData:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The user ID of the user that created the workspace update.
-        name:
-          type: string
-          description: The display name of the user that created the workspace update.
-        username:
-          type: string
-          description: The username of the user that created the workspace update.
-      description: Information about the user that created the workspace update.
-      title: workspaceUpdateCreatedByData
-    updateWorkspaceRolesResponse:
-      type: object
-      properties:
-        roles:
-          type: array
-          items:
-            $ref: '#/components/schemas/UpdateWorkspaceRolesResponseRolesItems'
-      title: updateWorkspaceRolesResponse
-    workspaceIncludeScimQuery:
-      type: string
-      enum:
-      - scim
-      title: workspaceIncludeScimQuery
-    Workspace403ErrorError:
-      type: object
-      properties:
-        status:
-          type: number
-          format: double
-          description: The error's HTTP status code.
-        name:
-          type: string
-          description: The error name.
-        message:
-          type: string
-          description: The error message.
-        detail:
-          type: string
-          description: Information about the error.
-        instance:
-          type: string
-          description: The URI reference that identifies the specific occurrence of the problem.
-      title: Workspace403ErrorError
-    GetWorkspaceWorkspaceVisibility:
+    GetWorkspacesWorkspaceDataVisibility:
       type: string
       enum:
       - personal
@@ -2904,67 +2579,400 @@ components:
         - `partner` — Only invited team members and [partners](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/partner-workspaces/) can access the workspace ([**Team** and **Enterprise** plans only](https://www.postman.com/pricing)).
 
         '
-      title: GetWorkspaceWorkspaceVisibility
-    workspace400Error:
+      title: GetWorkspacesWorkspaceDataVisibility
+    partnerUserId:
+      type: string
+      description: The partner's ID.
+      title: partnerUserId
+    Workspace404ErrorError:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+        statusCode:
+          type: number
+          format: double
+          description: The error's HTTP status code.
+      title: Workspace404ErrorError
+    createWorkspace:
+      type: object
+      properties:
+        workspace:
+          $ref: '#/components/schemas/CreateWorkspaceWorkspace'
+          description: Information about the workspace.
+      title: createWorkspace
+    ManagePartnerWorkspaceInvitesRemovePartnerResponseResultsItems:
       type: object
       properties:
         error:
-          $ref: '#/components/schemas/Workspace400ErrorError'
-        statusCode:
+          type: string
+          description: If the endpoint returns the `FAILED` status, the error message detailing the error.
+        message:
+          type: string
+          description: A response message.
+        status:
+          $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesRemovePartnerResponseResultsItemsStatus'
+          description: 'The removal status:
+
+            - `REMOVED` — The partner was successfully removed.
+
+            - `FAILED` — The partner''s removal failed.
+
+            '
+        userId:
+          type: string
+          description: The user ID.
+      title: ManagePartnerWorkspaceInvitesRemovePartnerResponseResultsItems
+    GetWorkspaceRolesRequestUnauthorizedError:
+      oneOf:
+      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
+      - $ref: '#/components/schemas/commonErrorNameMessage'
+      title: GetWorkspaceRolesRequestUnauthorizedError
+    commonErrorTypeTitleDetailStatusInstance:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri-reference
+          description: The [URI reference](https://www.rfc-editor.org/rfc/rfc3986) that identifies the type of problem.
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: An explanation about the problem.
+        status:
+          type: integer
+          description: The HTTP status code generated by the origin server.
+        instance:
+          type: string
+          description: The URI reference that identifies the specific occurrence of the problem.
+      title: commonErrorTypeTitleDetailStatusInstance
+    TransferWorkspaceElementId:
+      oneOf:
+      - type: string
+        format: uid
+      - type: string
+      description: The workspace element's ID.
+      title: TransferWorkspaceElementId
+    createWorkspaceResponse:
+      type: object
+      properties:
+        workspace:
+          $ref: '#/components/schemas/CreateWorkspaceResponseWorkspace'
+          description: Information about the created workspace.
+      title: createWorkspaceResponse
+    Workspace403ErrorError:
+      type: object
+      properties:
+        status:
+          type: number
+          format: double
+          description: The error's HTTP status code.
+        name:
+          type: string
+          description: The error name.
+        message:
+          type: string
+          description: The error message.
+        detail:
+          type: string
+          description: Information about the error.
+        instance:
+          type: string
+          description: The URI reference that identifies the specific occurrence of the problem.
+      title: Workspace403ErrorError
+    GetWorkspaceActivityFeedDataItemsUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The user's ID.
+        username:
+          type: string
+          description: The user's Postman username.
+        isPartner:
+          type: boolean
+          description: If true, the user is a [Partner](https://learning.postman.com/docs/collaborating-in-postman/roles-and-permissions/#partner-team-and-partner-workspace-roles) in the workspace.
+        name:
+          type: string
+          description: The user's name.
+      description: Information about the user that performed the activity.
+      title: GetWorkspaceActivityFeedDataItemsUser
+    workspaceRolesData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The role's ID.
+        user:
+          type: array
+          items:
+            type: string
+          description: A list of user IDs assigned to the role.
+        usergroup:
+          type: array
+          items:
+            type: string
+          description: A list of user group IDs assigned to the role.
+        partner:
+          type: array
+          items:
+            type: string
+          description: A list of partner IDs assigned to the role.
+        displayName:
+          type: string
+          description: The role's display name.
+      title: workspaceRolesData
+    elementType-3:
+      type: string
+      enum:
+      - collection
+      - workspace
+      - environment
+      - mock
+      - monitor
+      title: elementType-3
+    ManagePartnerWorkspaceInvitesRemovePartnerTargetEntity:
+      type: string
+      enum:
+      - workspace
+      description: The `workspace` value.
+      title: ManagePartnerWorkspaceInvitesRemovePartnerTargetEntity
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
           type: integer
           description: The error's HTTP status code.
-      title: workspace400Error
-    ManagePartnerWorkspaceInvitesTargetObjectUserId1:
-      type: object
-      properties:
-        userIds:
-          type: array
-          items:
-            $ref: '#/components/schemas/partnerUserId'
-          description: A list of partner publishers' team IDs.
-      required:
-      - userIds
-      description: The target on which to perform the action.
-      title: ManagePartnerWorkspaceInvitesTargetObjectUserId1
-    getWorkspaceUpdates:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/workspaceUpdateData'
-          description: A list of workspace updates.
-        meta:
-          $ref: '#/components/schemas/meta'
-      title: getWorkspaceUpdates
-    ManagePartnerWorkspaceInvitesRemovePartnerTeamTargetEntity:
+      title: commonErrorTypeTitleDetailStatus
+    UpdateWorkspaceRolesRolesItemsPath:
       type: string
       enum:
+      - /user
+      - /usergroup
+      - /partner
+      description: The resource to perform the action on.
+      title: UpdateWorkspaceRolesRolesItemsPath
+    GetWorkspacesWorkspaceDataType:
+      type: string
+      enum:
+      - personal
       - team
-      description: The `team` value.
-      title: ManagePartnerWorkspaceInvitesRemovePartnerTeamTargetEntity
-    workspaceUpdateCategory:
-      type: string
-      title: workspaceUpdateCategory
-    ManagePartnerWorkspaceInvitesInvitePartnerRoleId:
+      - private
+      - public
+      - partner
+      description: The type of workspace.
+      title: GetWorkspacesWorkspaceDataType
+    managePartnerWorkspaceInvitesTargetObjectEmails:
+      type: object
+      properties:
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/partnerEmailAddress'
+          description: A list of the partners' email addresses.
+      required:
+      - emails
+      description: The target on which to perform the action.
+      title: managePartnerWorkspaceInvitesTargetObjectEmails
+    workspaceUpdateCategoryData:
       type: string
       enum:
-      - '4'
-      - '5'
-      - '6'
-      - '7'
-      description: 'The role ID to assign to invited partners:
+      - improvement
+      - new_feature
+      - bug_fix
+      - breaking_change
+      - announcement
+      description: The update's assigned category.
+      title: workspaceUpdateCategoryData
+    globalVariable:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The variable's name.
+        type:
+          $ref: '#/components/schemas/GlobalVariableType'
+          description: The [type](https://learning.postman.com/docs/sending-requests/variables/#variable-types) of variable.
+        value:
+          type: string
+          description: The variable's value.
+        enabled:
+          type: boolean
+          description: If true, the variable is enabled.
+        description:
+          type: string
+          description: The variable's description.
+      description: Information about the global variable.
+      title: globalVariable
+    ManagePartnerWorkspaceInvitesInvitePartnerAction:
+      type: string
+      enum:
+      - invite_partner
+      description: The `invite_partner` action.
+      title: ManagePartnerWorkspaceInvitesInvitePartnerAction
+    GetWorkspaceActivityFeedDataItemsAction:
+      type: string
+      enum:
+      - create
+      - update
+      - destroy
+      description: The action that occurred in the workspace.
+      title: GetWorkspaceActivityFeedDataItemsAction
+    WorkspaceUpdateRelatedResourcesDataItems:
+      type: object
+      properties:
+        resource:
+          $ref: '#/components/schemas/WorkspaceUpdateRelatedResourcesDataItemsResource'
+          description: The type of linked resource.
+        resourceId:
+          type: string
+          description: The linked resource's ID.
+      required:
+      - resource
+      - resourceId
+      title: WorkspaceUpdateRelatedResourcesDataItems
+    UpdateWorkspaceResponseWorkspace:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The workspace's ID.
+        name:
+          type: string
+          description: The workspace's name.
+      description: Information about the updated workspace.
+      title: UpdateWorkspaceResponseWorkspace
+    ManagePartnerWorkspaceInvitesInvitePartnerResponseResultsItems:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: The invited user's email address.
+        status:
+          $ref: '#/components/schemas/ManagePartnerWorkspaceInvitesInvitePartnerResponseResultsItemsStatus'
+          description: 'The invitation status:
 
-        - `4` — Viewer
+            - `EMAIL_SENT` — An invitation email was sent.
 
-        - `5` — Editor
+            - `ALREADY_INVITED` — The user already has a pending invitation.
 
-        - `6` — Viewer and Partner Lead
+            - `PARTNER_ADDED` — The existing user was added to the workspace directly.
 
-        - `7` — Editor and Partner Lead
+            - `FAILED` — The invitation failed.
 
-        '
-      title: ManagePartnerWorkspaceInvitesInvitePartnerRoleId
+            '
+        userId:
+          type: string
+          description: The user ID. This only returns for the `PARTNER_ADDED` status.
+        message:
+          type: string
+          description: A response message.
+        invitationLink:
+          type: string
+          format: uri
+          description: An invitation link. This only returns for the `EMAIL_SENT` and `ALREADY_INVITED` statuses.
+      title: ManagePartnerWorkspaceInvitesInvitePartnerResponseResultsItems
+    workspaceUpdateId:
+      type: integer
+      title: workspaceUpdateId
+    updateWorkspaceRoles:
+      type: object
+      properties:
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateWorkspaceRolesRolesItems'
+      title: updateWorkspaceRoles
+    workspaceUpdateCreatedByData:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The user ID of the user that created the workspace update.
+        name:
+          type: string
+          description: The display name of the user that created the workspace update.
+        username:
+          type: string
+          description: The username of the user that created the workspace update.
+      description: Information about the user that created the workspace update.
+      title: workspaceUpdateCreatedByData
+    getWorkspaceRoles:
+      type: object
+      properties:
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/workspaceRolesData'
+          description: A list of workspace roles and the users, groups, and partners assigned to them.
+      description: Information about the workspace's roles.
+      title: getWorkspaceRoles
+    getWorkspacesWorkspaceData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The workspace's ID.
+        name:
+          type: string
+          description: The workspace's name.
+        type:
+          $ref: '#/components/schemas/GetWorkspacesWorkspaceDataType'
+          description: The type of workspace.
+        visibility:
+          $ref: '#/components/schemas/GetWorkspacesWorkspaceDataVisibility'
+          description: 'The workspace''s visibility. [Visibility](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/managing-workspaces/#changing-workspace-visibility) determines who can access the workspace:
+
+            - `personal` — Only you can access the workspace.
+
+            - `team` — All team members can access the workspace.
+
+            - `private` — Only invited team members can access the workspace ([**Team** and **Enterprise** plans only](https://www.postman.com/pricing)).
+
+            - `public` — Everyone can access the workspace.
+
+            - `partner` — Only invited team members and [partners](https://learning.postman.com/docs/collaborating-in-postman/using-workspaces/partner-workspaces/) can access the workspace ([**Team** and **Enterprise** plans only](https://www.postman.com/pricing)).
+
+            '
+        createdBy:
+          type: string
+          description: The user who created the workspace. The response only returns workspaces that you have access to.
+        about:
+          type: string
+          description: A brief summary about the workspace.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time at which the workspace was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time at which the workspace was last updated.
+        scim:
+          $ref: '#/components/schemas/getWorkspacesScimObject'
+      description: Information about the workspace.
+      title: getWorkspacesWorkspaceData
+    ManagePartnerWorkspaceInvitesRemovePartnerAction:
+      type: string
+      enum:
+      - remove_partner
+      description: The `remove_partner` action.
+      title: ManagePartnerWorkspaceInvitesRemovePartnerAction
     ManagePartnerWorkspaceInvitesInvitePartnerResponseResultsItemsStatus:
       type: string
       enum:
@@ -2984,51 +2992,43 @@ components:
 
         '
       title: ManagePartnerWorkspaceInvitesInvitePartnerResponseResultsItemsStatus
-    DeleteWorkspaceRequestUnauthorizedError:
-      oneOf:
-      - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
-      - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: DeleteWorkspaceRequestUnauthorizedError
-    identifierType:
-      type: string
-      title: identifierType
-    GetWorkspaceUpdateRequestInternalServerError:
+    updateWorkspaceRolesResponse:
+      type: object
+      properties:
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateWorkspaceRolesResponseRolesItems'
+      title: updateWorkspaceRolesResponse
+    GetWorkspacesRequestInternalServerError:
       oneOf:
       - $ref: '#/components/schemas/commonErrorTypeTitleDetail'
       - $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
       - $ref: '#/components/schemas/commonErrorNameMessage'
-      title: GetWorkspaceUpdateRequestInternalServerError
-    workspaceUpdateRelatedResourcesData:
-      type: array
-      items:
-        $ref: '#/components/schemas/WorkspaceUpdateRelatedResourcesDataItems'
-      description: A list containing the update's related elements. Related elements include links to collections, requests, folders, and saved examples in the update.
-      title: workspaceUpdateRelatedResourcesData
-    TransferWorkspaceElementResponseWorkspace:
+      title: GetWorkspacesRequestInternalServerError
+    CreateWorkspaceResponseWorkspace:
       type: object
       properties:
-        element-transfers:
-          $ref: '#/components/schemas/TransferWorkspaceElementResponseWorkspaceElementTransfers'
-          description: Information about the element transfer.
-      title: TransferWorkspaceElementResponseWorkspace
-    createWorkspaceUpdate:
+        id:
+          type: string
+          description: The workspace's ID.
+        name:
+          type: string
+          description: The workspace's name.
+      description: Information about the created workspace.
+      title: CreateWorkspaceResponseWorkspace
+    Workspaces_managePartnerWorkspaceInvites_Response_200:
+      oneOf:
+      - $ref: '#/components/schemas/managePartnerWorkspaceInvitesInvitePartnerResponse'
+      - $ref: '#/components/schemas/managePartnerWorkspaceInvitesRemovePartnerResponse'
+      title: Workspaces_managePartnerWorkspaceInvites_Response_200
+    deleteWorkspace:
       type: object
       properties:
-        description:
-          type: string
-          description: The content of the workspace update.
-        topic:
-          type: string
-          description: The title of the workspace update.
-        category:
-          $ref: '#/components/schemas/workspaceUpdateCategoryData'
-        relatedResources:
-          $ref: '#/components/schemas/workspaceUpdateRelatedResourcesData'
-      required:
-      - description
-      - topic
-      - category
-      title: createWorkspaceUpdate
+        workspace:
+          $ref: '#/components/schemas/DeleteWorkspaceWorkspace'
+          description: Information about the deleted workspace.
+      title: deleteWorkspace
   securitySchemes:
     PostmanApiKey:
       type: apiKey

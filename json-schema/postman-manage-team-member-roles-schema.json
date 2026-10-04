@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-manage-team-member-roles-schema.json",
+  "title": "manageTeamMemberRoles",
+  "description": "Information about the bulk add and bulk remove operations.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-teams-api-openapi.yml#/components/schemas/manageTeamMemberRoles",
+  "type": "object",
+  "properties": {
+    "add": {
+      "$ref": "#/$defs/manageTeamMemberRolesAdd"
+    },
+    "remove": {
+      "$ref": "#/$defs/manageTeamMemberRolesRemove"
+    }
+  },
+  "$defs": {
+    "manageTeamMemberRolesAdd": {
+      "type": "object",
+      "properties": {
+        "users": {
+          "$ref": "#/$defs/usersInfo"
+        },
+        "groups": {
+          "$ref": "#/$defs/userGroupsInfo"
+        },
+        "orgs": {
+          "$ref": "#/$defs/orgsInfo"
+        },
+        "teams": {
+          "$ref": "#/$defs/teamsInfo"
+        }
+      },
+      "description": "Information about the bulk `add` operation.",
+      "title": "manageTeamMemberRolesAdd"
+    },
+    "manageTeamMemberRolesRemove": {
+      "type": "object",
+      "properties": {
+        "users": {
+          "$ref": "#/$defs/usersInfo"
+        },
+        "groups": {
+          "$ref": "#/$defs/userGroupsInfo"
+        },
+        "orgs": {
+          "$ref": "#/$defs/orgsInfo"
+        },
+        "teams": {
+          "$ref": "#/$defs/teamsInfo"
+        }
+      },
+      "description": "Information about the bulk `remove` operation.",
+      "title": "manageTeamMemberRolesRemove"
+    },
+    "orgsInfo": {
+      "type": "object",
+      "properties": {
+        "{{orgId}}": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/teamRoles"
+          },
+          "description": "A list of the organization's roles. The array's name is the organization's ID."
+        }
+      },
+      "title": "orgsInfo"
+    },
+    "teamRoles": {
+      "type": "string",
+      "enum": [
+        "TEAM_MANAGER",
+        "TEAM_DEVELOPER",
+        "TEAM_GUEST_DEVELOPER",
+        "TEAM_GUEST_VIEWER",
+        "TEAM_PARTNER_MANAGER",
+        "TEAM_PARTNER_LEAD",
+        "TEAM_GUEST",
+        "TEAM_PARTNER",
+        "TEAM_COMMUNITY_MANAGER"
+      ],
+      "title": "teamRoles"
+    },
+    "teamsInfo": {
+      "type": "object",
+      "properties": {
+        "{{teamId}}": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/teamRoles"
+          },
+          "description": "A list of the team's roles. The array's name is the team's ID."
+        }
+      },
+      "title": "teamsInfo"
+    },
+    "userGroupsInfo": {
+      "type": "object",
+      "properties": {
+        "{{userGroupId}}": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/teamRoles"
+          },
+          "description": "A list of the user group's roles. The array's name is the group's ID."
+        }
+      },
+      "title": "userGroupsInfo"
+    },
+    "usersInfo": {
+      "type": "object",
+      "properties": {
+        "{{userId}}": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/teamRoles"
+          },
+          "description": "A list of the user's roles. The array's name is the user's ID."
+        }
+      },
+      "title": "usersInfo"
+    }
+  }
+}

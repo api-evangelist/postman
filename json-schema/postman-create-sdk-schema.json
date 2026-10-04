@@ -1,0 +1,326 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-create-sdk-schema.json",
+  "title": "createSdk",
+  "description": "**Note:**\n\n- Only the object passed in the request body that matches the value in the `language` property gets read, and all other objects are ignored.\n- The language option object is optional. When the language identifier is omitted, it's derived from the `source` element name and its workspace.\n",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-sdks-api-openapi.yml#/components/schemas/createSdk",
+  "type": "object",
+  "properties": {
+    "source": {
+      "$ref": "#/$defs/sdkSource"
+    },
+    "language": {
+      "$ref": "#/$defs/sdkLanguage"
+    },
+    "sdkVersion": {
+      "type": "string",
+      "description": "An optional override for the SDK version. If this isn't provided, the next version is resolved from the latest auto-pull request."
+    },
+    "authors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sdkAuthorData"
+      },
+      "description": "A list of package authors written into the generated manifest."
+    },
+    "retry": {
+      "$ref": "#/$defs/sdkRetryOptions"
+    },
+    "typescriptOptions": {
+      "$ref": "#/$defs/typescriptOptions"
+    },
+    "pythonOptions": {
+      "$ref": "#/$defs/pythonOptions"
+    },
+    "goOptions": {
+      "$ref": "#/$defs/goOptions"
+    },
+    "javaOptions": {
+      "$ref": "#/$defs/javaOptions"
+    },
+    "csharpOptions": {
+      "$ref": "#/$defs/csharpOptions"
+    },
+    "rubyOptions": {
+      "$ref": "#/$defs/rubyOptions"
+    },
+    "phpOptions": {
+      "$ref": "#/$defs/phpOptions"
+    },
+    "kotlinOptions": {
+      "$ref": "#/$defs/kotlinOptions"
+    },
+    "rustOptions": {
+      "$ref": "#/$defs/rustOptions"
+    },
+    "cliOptions": {
+      "$ref": "#/$defs/cliOptions"
+    }
+  },
+  "required": [
+    "source",
+    "language"
+  ],
+  "$defs": {
+    "SdkRetryOptionsHttpMethodsToRetryItems": {
+      "type": "string",
+      "enum": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "PATCH",
+        "HEAD",
+        "OPTIONS",
+        "CONNECT",
+        "TRACE"
+      ],
+      "title": "SdkRetryOptionsHttpMethodsToRetryItems"
+    },
+    "cliOptions": {
+      "type": "object",
+      "properties": {
+        "goModuleName": {
+          "type": "string",
+          "description": "The Go module's path for the generated CLI."
+        }
+      },
+      "description": "CLI-specific SDK generation options.",
+      "title": "cliOptions"
+    },
+    "csharpOptions": {
+      "type": "object",
+      "properties": {
+        "packageId": {
+          "type": "string",
+          "description": "The NuGet package's ID."
+        }
+      },
+      "description": "C#-specific SDK generation options.",
+      "title": "csharpOptions"
+    },
+    "elementType-2": {
+      "type": "string",
+      "enum": [
+        "collection",
+        "spec"
+      ],
+      "description": "The type of Postman element.",
+      "title": "elementType-2"
+    },
+    "goOptions": {
+      "type": "object",
+      "properties": {
+        "goModuleName": {
+          "type": "string",
+          "description": "The Go module path written into the `go.mod` definition file."
+        }
+      },
+      "description": "Go-specific SDK generation options.",
+      "title": "goOptions"
+    },
+    "httpCodesToRetry": {
+      "type": "integer",
+      "description": "An HTTP status code.",
+      "title": "httpCodesToRetry"
+    },
+    "javaOptions": {
+      "type": "object",
+      "properties": {
+        "groupId": {
+          "type": "string",
+          "description": "The Maven group ID written into the `pom.xml` dependencies file."
+        },
+        "artifactId": {
+          "type": "string",
+          "description": "The Maven artifact ID written into the `pom.xml` dependencies file."
+        }
+      },
+      "description": "Java-specific SDK generation options.",
+      "title": "javaOptions"
+    },
+    "kotlinOptions": {
+      "type": "object",
+      "properties": {
+        "groupId": {
+          "type": "string",
+          "description": "The Maven group ID written into the `pom.xml` dependencies file."
+        },
+        "artifactId": {
+          "type": "string",
+          "description": "The Maven artifact ID written into the `pom.xml` dependencies file."
+        }
+      },
+      "description": "Kotlin-specific SDK generation options.",
+      "title": "kotlinOptions"
+    },
+    "phpOptions": {
+      "type": "object",
+      "properties": {
+        "packageName": {
+          "type": "string",
+          "description": "The composer package name, in `vendor/package` format."
+        }
+      },
+      "description": "PHP-specific SDK generation options.",
+      "title": "phpOptions"
+    },
+    "pythonOptions": {
+      "type": "object",
+      "properties": {
+        "pypiPackageName": {
+          "type": "string",
+          "description": "The PyPI package's name."
+        }
+      },
+      "description": "Python-specific SDK generation options.",
+      "title": "pythonOptions"
+    },
+    "rubyOptions": {
+      "type": "object",
+      "properties": {
+        "gemName": {
+          "type": "string",
+          "description": "The RubyGems gem's name."
+        }
+      },
+      "description": "Ruby-specific generation options.",
+      "title": "rubyOptions"
+    },
+    "rustOptions": {
+      "type": "object",
+      "properties": {
+        "packageName": {
+          "type": "string",
+          "description": "The crates.io package's name."
+        }
+      },
+      "description": "Rust-specific SDK generation options.",
+      "title": "rustOptions"
+    },
+    "sdkAuthorData": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The author's name."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The author's email address."
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "description": "Information about the author of the generated SDK.",
+      "title": "sdkAuthorData"
+    },
+    "sdkLanguage": {
+      "type": "string",
+      "enum": [
+        "typescript",
+        "python",
+        "go",
+        "java",
+        "csharp",
+        "ruby",
+        "php",
+        "kotlin",
+        "rust",
+        "cli"
+      ],
+      "description": "The target output language for the generated SDK.",
+      "title": "sdkLanguage"
+    },
+    "sdkRetryOptions": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "If true, the generated SDK includes retry behavior."
+        },
+        "maxAttempts": {
+          "type": "integer",
+          "default": 3,
+          "description": "The maximum number of attempts to try before giving up."
+        },
+        "retryDelay": {
+          "type": "integer",
+          "default": 150,
+          "description": "The base wait between attempts, in milliseconds."
+        },
+        "maxDelay": {
+          "type": "integer",
+          "description": "The maximum wait between attempts, in milliseconds."
+        },
+        "backOffFactor": {
+          "type": "number",
+          "format": "double",
+          "description": "The exponent base used to compute exponential backoff between attempts."
+        },
+        "retryDelayJitter": {
+          "type": "integer",
+          "description": "The maximum random jitter added to wait times, in milliseconds."
+        },
+        "httpCodesToRetry": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/httpCodesToRetry"
+          },
+          "description": "A list of HTTP status codes that the SDK attempts its retries on."
+        },
+        "httpMethodsToRetry": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SdkRetryOptionsHttpMethodsToRetryItems"
+          },
+          "description": "A list of the HTTP methods that the SDK attempts its retries on."
+        }
+      },
+      "required": [
+        "retryDelay"
+      ],
+      "description": "Retry behavior baked into the generated SDK's HTTP client. A power-user option; sensible defaults apply for any field left unset.",
+      "title": "sdkRetryOptions"
+    },
+    "sdkSource": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/elementType-2"
+        },
+        "id": {
+          "type": "string",
+          "description": "The ID of the Postman Collection or specification in Postman."
+        }
+      },
+      "required": [
+        "type",
+        "id"
+      ],
+      "description": "The collection or specification that the SDK is generated from.",
+      "title": "sdkSource"
+    },
+    "typescriptOptions": {
+      "type": "object",
+      "properties": {
+        "npmOrg": {
+          "type": "string",
+          "description": "An npm organization's scope. Don't include a trailing slash."
+        },
+        "npmName": {
+          "type": "string",
+          "description": "The unscoped npm package's name."
+        }
+      },
+      "description": "TypeScript-specific SDK generation options.",
+      "title": "typescriptOptions"
+    }
+  }
+}

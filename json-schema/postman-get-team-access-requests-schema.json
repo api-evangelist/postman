@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-get-team-access-requests-schema.json",
+  "title": "getTeamAccessRequests",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-teams-api-openapi.yml#/components/schemas/getTeamAccessRequests",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/GetTeamAccessRequestsDataItems"
+      },
+      "description": "A list of access requests."
+    },
+    "metadata": {
+      "$ref": "#/$defs/metaDataNextCursor"
+    }
+  },
+  "$defs": {
+    "GetTeamAccessRequestsDataItems": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time the access request was created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time the access request was last updated."
+        },
+        "id": {
+          "type": "integer",
+          "description": "The access request's ID."
+        },
+        "role": {
+          "$ref": "#/$defs/GetTeamAccessRequestsDataItemsRole",
+          "description": "The requested team role."
+        },
+        "requestType": {
+          "type": "string",
+          "description": "The access request type."
+        },
+        "reason": {
+          "type": "string",
+          "description": "The reason the access request was created."
+        },
+        "status": {
+          "type": "string",
+          "description": "The access request's status."
+        },
+        "entityType": {
+          "type": "string",
+          "description": "The entity type."
+        },
+        "entityId": {
+          "$ref": "#/$defs/GetTeamAccessRequestsDataItemsEntityId",
+          "description": "The entity's ID."
+        },
+        "objectType": {
+          "type": "string",
+          "description": "The entity type."
+        },
+        "objectId": {
+          "type": "integer",
+          "description": "The entity's ID."
+        },
+        "createdBy": {
+          "$ref": "#/$defs/GetTeamAccessRequestsDataItemsCreatedBy",
+          "description": "The user ID of the user who created the access request."
+        }
+      },
+      "description": "Information about the access request.",
+      "title": "GetTeamAccessRequestsDataItems"
+    },
+    "GetTeamAccessRequestsDataItemsCreatedBy": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "description": "The user ID of the user who created the access request.",
+      "title": "GetTeamAccessRequestsDataItemsCreatedBy"
+    },
+    "GetTeamAccessRequestsDataItemsEntityId": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "description": "The entity's ID.",
+      "title": "GetTeamAccessRequestsDataItemsEntityId"
+    },
+    "GetTeamAccessRequestsDataItemsRole": {
+      "type": "string",
+      "enum": [
+        "TEAM_MANAGER",
+        "TEAM_DEVELOPER",
+        "TEAM_GUEST_DEVELOPER",
+        "TEAM_GUEST_VIEWER",
+        "TEAM_PARTNER_MANAGER",
+        "TEAM_PARTNER_LEAD",
+        "TEAM_GUEST",
+        "TEAM_PARTNER",
+        "TEAM_COMMUNITY_MANAGER"
+      ],
+      "description": "The requested team role.",
+      "title": "GetTeamAccessRequestsDataItemsRole"
+    },
+    "metaDataNextCursor": {
+      "type": "object",
+      "properties": {
+        "nextCursor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The pagination cursor that points to the next record in the results set."
+        }
+      },
+      "description": "The response's meta information for paginated results.",
+      "title": "metaDataNextCursor"
+    }
+  }
+}

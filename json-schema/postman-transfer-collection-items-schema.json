@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-transfer-collection-items-schema.json",
+  "title": "transferCollectionItems",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-collections-api-openapi.yml#/components/schemas/transferCollectionItems",
+  "type": "object",
+  "properties": {
+    "ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uid"
+      },
+      "description": "A list of collection request, response, or folder UIDs to transfer."
+    },
+    "mode": {
+      "$ref": "#/$defs/TransferCollectionItemsMode",
+      "description": "The transfer operation to perform."
+    },
+    "target": {
+      "$ref": "#/$defs/TransferCollectionItemsTarget",
+      "description": "Information about the item transfer's destination location."
+    },
+    "location": {
+      "$ref": "#/$defs/TransferCollectionItemsLocation",
+      "description": "The transferred items' placement in the target destination:\n- For `start` or `end` — Do not include the `model` and `id` values.\n- For `before` or `after` — Include the `model` and `id` properties.\n"
+    }
+  },
+  "required": [
+    "ids",
+    "mode",
+    "target",
+    "location"
+  ],
+  "$defs": {
+    "TransferCollectionItemsLocation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uid",
+          "description": "For `before` or `after` positions, the model's UID."
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "For `before` or `after` positions, the type of item (model) that the transferred item will be positioned by. One of: `folder`, `request`, or `response.`\n"
+        },
+        "position": {
+          "$ref": "#/$defs/TransferCollectionItemsLocationPosition",
+          "description": "The transferred item's position within the destination object."
+        }
+      },
+      "required": [
+        "position"
+      ],
+      "description": "The transferred items' placement in the target destination:\n- For `start` or `end` — Do not include the `model` and `id` values.\n- For `before` or `after` — Include the `model` and `id` properties.\n",
+      "title": "TransferCollectionItemsLocation"
+    },
+    "TransferCollectionItemsLocationPosition": {
+      "type": "string",
+      "enum": [
+        "start",
+        "end",
+        "before",
+        "after"
+      ],
+      "default": "end",
+      "description": "The transferred item's position within the destination object.",
+      "title": "TransferCollectionItemsLocationPosition"
+    },
+    "TransferCollectionItemsMode": {
+      "type": "string",
+      "enum": [
+        "copy",
+        "move"
+      ],
+      "description": "The transfer operation to perform.",
+      "title": "TransferCollectionItemsMode"
+    },
+    "TransferCollectionItemsTarget": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uid",
+          "description": "The UID of the destination collection, folder, or request."
+        },
+        "model": {
+          "$ref": "#/$defs/TransferCollectionItemsTargetModel",
+          "description": "The collection, folder, or request that the items will be transferred to. For response transfers, use the `request` value."
+        }
+      },
+      "required": [
+        "id",
+        "model"
+      ],
+      "description": "Information about the item transfer's destination location.",
+      "title": "TransferCollectionItemsTarget"
+    },
+    "TransferCollectionItemsTargetModel": {
+      "type": "string",
+      "enum": [
+        "collection",
+        "folder",
+        "request"
+      ],
+      "description": "The collection, folder, or request that the items will be transferred to. For response transfers, use the `request` value.",
+      "title": "TransferCollectionItemsTargetModel"
+    }
+  }
+}

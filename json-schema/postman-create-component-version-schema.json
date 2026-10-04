@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-create-component-version-schema.json",
+  "title": "createComponentVersion",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-components-api-openapi.yml#/components/schemas/createComponentVersion",
+  "type": "object",
+  "properties": {
+    "label": {
+      "type": "string",
+      "description": "The component version's label. This must begin and end with an alphanumeric character and may only contain letters, digits, dots, underscores, plus signs, and hyphens and cannot exceed 60 characters."
+    },
+    "source": {
+      "$ref": "#/$defs/CreateComponentVersionSource",
+      "description": "The source to publish the version from. Defaults to the component's current draft."
+    }
+  },
+  "required": [
+    "label"
+  ],
+  "$defs": {
+    "CreateComponentVersionSource": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/CreateComponentVersionSourceType",
+          "description": "The `draft` value."
+        }
+      },
+      "description": "The source to publish the version from. Defaults to the component's current draft.",
+      "title": "CreateComponentVersionSource"
+    },
+    "CreateComponentVersionSourceType": {
+      "type": "string",
+      "enum": [
+        "draft"
+      ],
+      "description": "The `draft` value.",
+      "title": "CreateComponentVersionSourceType"
+    }
+  }
+}

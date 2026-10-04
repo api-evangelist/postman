@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-transfer-workspace-element-schema.json",
+  "title": "transferWorkspaceElement",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-workspaces-api-openapi.yml#/components/schemas/transferWorkspaceElement",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/TransferWorkspaceElementId",
+      "description": "The workspace element's ID."
+    },
+    "type": {
+      "$ref": "#/$defs/TransferWorkspaceElementType",
+      "description": "The type of element to transfer."
+    },
+    "to": {
+      "type": "string",
+      "description": "The workspace ID to transfer the element into."
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "to"
+  ],
+  "$defs": {
+    "TransferWorkspaceElementId": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "uid"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "description": "The workspace element's ID.",
+      "title": "TransferWorkspaceElementId"
+    },
+    "TransferWorkspaceElementType": {
+      "type": "string",
+      "enum": [
+        "collection",
+        "environment",
+        "api",
+        "flow",
+        "mock",
+        "monitor"
+      ],
+      "description": "The type of element to transfer.",
+      "title": "TransferWorkspaceElementType"
+    }
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-delete-mock-server-response-schema.json",
+  "title": "deleteMockServerResponse",
+  "description": "Information about the deleted server response.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-mocks-api-openapi.yml#/components/schemas/deleteMockServerResponse",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The server response's ID."
+    },
+    "name": {
+      "type": "string",
+      "description": "The server response's name."
+    },
+    "statusCode": {
+      "type": "number",
+      "format": "double",
+      "description": "The server response's 5xx HTTP response code."
+    },
+    "headers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/DeleteMockServerResponseHeadersItems"
+      },
+      "description": "The server response's request headers, such as Content-Type, Accept, encoding, and other information."
+    },
+    "language": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/DeleteMockServerResponseLanguage"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The server response's body language type."
+    },
+    "body": {
+      "type": "string",
+      "description": "The server response's body that returns when calling the mock server."
+    },
+    "createdBy": {
+      "type": "string",
+      "description": "The user ID of the user who created the server response."
+    },
+    "updatedBy": {
+      "type": "string",
+      "description": "The user ID of the user who last updated the server response."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time at which the server response was created."
+    }
+  },
+  "$defs": {
+    "DeleteMockServerResponseHeadersItems": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "The request header's key value."
+        },
+        "value": {
+          "type": "string",
+          "description": "The request header's value."
+        }
+      },
+      "title": "DeleteMockServerResponseHeadersItems"
+    },
+    "DeleteMockServerResponseLanguage": {
+      "type": "string",
+      "enum": [
+        "text",
+        "javascript",
+        "json",
+        "html",
+        "xml"
+      ],
+      "description": "The server response's body language type.",
+      "title": "DeleteMockServerResponseLanguage"
+    }
+  }
+}

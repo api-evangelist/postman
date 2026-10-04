@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-generate-tool-schema.json",
+  "title": "generateTool",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-postbot-api-openapi.yml#/components/schemas/generateTool",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "The public collection's request ID."
+    },
+    "collectionId": {
+      "type": "string",
+      "format": "uid",
+      "description": "The Public API Network collection's ID."
+    },
+    "config": {
+      "$ref": "#/$defs/GenerateToolConfig",
+      "description": "Information about the request."
+    }
+  },
+  "required": [
+    "requestId",
+    "collectionId",
+    "config"
+  ],
+  "$defs": {
+    "GenerateToolConfig": {
+      "type": "object",
+      "properties": {
+        "language": {
+          "$ref": "#/$defs/GenerateToolConfigLanguage",
+          "description": "The programming language to use."
+        },
+        "agentFramework": {
+          "$ref": "#/$defs/GenerateToolConfigAgentFramework",
+          "description": "The AI agent framework to use. Note that the `autogen` framework only supports the `python` language."
+        }
+      },
+      "required": [
+        "language",
+        "agentFramework"
+      ],
+      "description": "Information about the request.",
+      "title": "GenerateToolConfig"
+    },
+    "GenerateToolConfigAgentFramework": {
+      "type": "string",
+      "enum": [
+        "openai",
+        "mistral",
+        "gemini",
+        "anthropic",
+        "langchain",
+        "autogen"
+      ],
+      "description": "The AI agent framework to use. Note that the `autogen` framework only supports the `python` language.",
+      "title": "GenerateToolConfigAgentFramework"
+    },
+    "GenerateToolConfigLanguage": {
+      "type": "string",
+      "enum": [
+        "javascript",
+        "typescript",
+        "python"
+      ],
+      "description": "The programming language to use.",
+      "title": "GenerateToolConfigLanguage"
+    }
+  }
+}

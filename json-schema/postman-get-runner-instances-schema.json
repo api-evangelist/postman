@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-get-runner-instances-schema.json",
+  "title": "getRunnerInstances",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-monitors-api-openapi.yml#/components/schemas/getRunnerInstances",
+  "type": "object",
+  "properties": {
+    "meta": {
+      "$ref": "#/$defs/runnerMeta"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/runnerInstance"
+      },
+      "description": "A list of all runner instances."
+    }
+  },
+  "$defs": {
+    "runnerInstance": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The runner instance's ID."
+        },
+        "hostname": {
+          "type": "string",
+          "description": "The hostname of the machine where the runner instance is running."
+        },
+        "uniqueId": {
+          "type": "string",
+          "description": "The runner instance's unique ID."
+        },
+        "cliVersion": {
+          "type": "string",
+          "description": "The version of the [Postman CLI](https://learning.postman.com/docs/postman-cli/postman-cli-overview/) used to start the runner instance."
+        },
+        "osType": {
+          "type": "string",
+          "description": "The operating system of the machine where the runner instance is running."
+        },
+        "runnerId": {
+          "type": "string",
+          "description": "The runner's ID."
+        },
+        "lastPingedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The last date and time the runner instance sent results to the Postman cloud."
+        }
+      },
+      "description": "Information about the runner instance.",
+      "title": "runnerInstance"
+    },
+    "runnerMeta": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "type": "string",
+          "description": "The `runnerInstance` value."
+        },
+        "action": {
+          "type": "string",
+          "description": "The `find` value."
+        },
+        "url": {
+          "type": "string",
+          "format": "uri-reference",
+          "description": "The reference URL to the resource."
+        },
+        "nextCursor": {
+          "type": "string",
+          "description": "The pagination cursor that points to the next record in the results set."
+        }
+      },
+      "description": "The response's meta information for paginated results.",
+      "title": "runnerMeta"
+    }
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-approve-deny-access-request-response-schema.json",
+  "title": "approveDenyAccessRequestResponse",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-teams-api-openapi.yml#/components/schemas/approveDenyAccessRequestResponse",
+  "type": "object",
+  "properties": {
+    "result": {
+      "$ref": "#/$defs/ApproveDenyAccessRequestResponseResult",
+      "description": "Information about the approved or denied access request."
+    }
+  },
+  "$defs": {
+    "ApproveDenyAccessRequestResponseResult": {
+      "type": "object",
+      "properties": {
+        "entityType": {
+          "type": "string",
+          "description": "The entity type."
+        },
+        "entityId": {
+          "$ref": "#/$defs/ApproveDenyAccessRequestResponseResultEntityId",
+          "description": "The entity's ID."
+        },
+        "role": {
+          "type": "string",
+          "description": "The requested team role."
+        },
+        "previousRole": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The entity's previous role. This value only returns if the entity's role is modified."
+        },
+        "status": {
+          "type": "string",
+          "description": "The access request's status."
+        },
+        "accessRequest": {
+          "$ref": "#/$defs/ApproveDenyAccessRequestResponseResultAccessRequest",
+          "description": "Information about the access request."
+        }
+      },
+      "description": "Information about the approved or denied access request.",
+      "title": "ApproveDenyAccessRequestResponseResult"
+    },
+    "ApproveDenyAccessRequestResponseResultAccessRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The access request's ID."
+        },
+        "requestType": {
+          "type": "string",
+          "description": "The access request type."
+        },
+        "reason": {
+          "type": "string",
+          "description": "The reason the access request was created."
+        },
+        "status": {
+          "type": "string",
+          "description": "The access request's status."
+        },
+        "objectType": {
+          "type": "string",
+          "description": "The entity type."
+        },
+        "objectId": {
+          "type": "integer",
+          "description": "The entity's ID."
+        },
+        "createdBy": {
+          "type": "integer",
+          "description": "The user ID of the user who created the access request."
+        }
+      },
+      "description": "Information about the access request.",
+      "title": "ApproveDenyAccessRequestResponseResultAccessRequest"
+    },
+    "ApproveDenyAccessRequestResponseResultEntityId": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "description": "The entity's ID.",
+      "title": "ApproveDenyAccessRequestResponseResultEntityId"
+    }
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-invoices-account-info-schema.json",
+  "title": "invoicesAccountInfo",
+  "description": "Information about the account.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-billing-api-openapi.yml#/components/schemas/invoicesAccountInfo",
+  "type": "object",
+  "properties": {
+    "billingEmail": {
+      "type": "string",
+      "format": "email",
+      "description": "The email address to which invoices are sent."
+    },
+    "id": {
+      "type": "integer",
+      "description": "The account's ID."
+    },
+    "state": {
+      "type": "string",
+      "description": "The account's current state:\n- `FREE`\n- `PAID`\n- `EXPIRED_TRIAL`\n- `OVERDUE`\n- `SUSPENDED`\n- `BLOCKED`\n- `PAYMENT_DISPUTED`\n"
+    },
+    "teamId": {
+      "type": "integer",
+      "description": "The team's ID associated with the account."
+    },
+    "salesChannel": {
+      "$ref": "#/$defs/InvoicesAccountInfoSalesChannel",
+      "description": "The sales channel from which the account was created:\n- `SELF_SERVE` — The user purchased the account plan.\n- `SALES_SERVE` — The account was purchased through the Postman sales team process.\n"
+    },
+    "slots": {
+      "$ref": "#/$defs/invoicesSlots"
+    }
+  },
+  "$defs": {
+    "InvoicesAccountInfoSalesChannel": {
+      "type": "string",
+      "enum": [
+        "SELF_SERVE",
+        "SALES_SERVE"
+      ],
+      "description": "The sales channel from which the account was created:\n- `SELF_SERVE` — The user purchased the account plan.\n- `SALES_SERVE` — The account was purchased through the Postman sales team process.\n",
+      "title": "InvoicesAccountInfoSalesChannel"
+    },
+    "invoicesSlots": {
+      "type": "object",
+      "properties": {
+        "available": {
+          "type": "integer",
+          "description": "The number of the team's available slots."
+        },
+        "consumed": {
+          "type": "integer",
+          "description": "The number of currently-billed team members."
+        },
+        "total": {
+          "type": "integer",
+          "description": "The total number of slots available to the team."
+        },
+        "unbilled": {
+          "type": "integer",
+          "description": "The number of unbilled slots if [auto-flex billing](https://learning.postman.com/auto-flex-policy/) is available."
+        }
+      },
+      "description": "Information about the team's slots.",
+      "title": "invoicesSlots"
+    }
+  }
+}

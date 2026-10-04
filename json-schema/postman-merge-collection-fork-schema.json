@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-merge-collection-fork-schema.json",
+  "title": "mergeCollectionFork",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-collections-api-openapi.yml#/components/schemas/mergeCollectionFork",
+  "type": "object",
+  "properties": {
+    "destination": {
+      "type": "string",
+      "format": "uid",
+      "description": "The destination (parent) collection's unique ID."
+    },
+    "source": {
+      "type": "string",
+      "format": "uid",
+      "description": "The source collection's unique ID."
+    },
+    "strategy": {
+      "$ref": "#/$defs/MergeCollectionForkStrategy",
+      "default": "updateSourceWithDestination",
+      "description": "The fork's merge strategy:\n- `deleteSource` — Merge the changes into the parent collection. After the merge process is complete, Postman deletes the fork. You must have Editor access to both the parent and forked collections.\n- `updateSourceWithDestination` — Merge the changes into the parent collection. Any differences in the parent collection are also made to the fork.\n"
+    }
+  },
+  "required": [
+    "destination",
+    "source"
+  ],
+  "$defs": {
+    "MergeCollectionForkStrategy": {
+      "type": "string",
+      "enum": [
+        "deleteSource",
+        "updateSourceWithDestination"
+      ],
+      "default": "updateSourceWithDestination",
+      "description": "The fork's merge strategy:\n- `deleteSource` — Merge the changes into the parent collection. After the merge process is complete, Postman deletes the fork. You must have Editor access to both the parent and forked collections.\n- `updateSourceWithDestination` — Merge the changes into the parent collection. Any differences in the parent collection are also made to the fork.\n",
+      "title": "MergeCollectionForkStrategy"
+    }
+  }
+}

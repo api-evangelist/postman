@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-get-collection-access-keys-schema.json",
+  "title": "getCollectionAccessKeys",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-collection-access-keys-api-openapi.yml#/components/schemas/getCollectionAccessKeys",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/GetCollectionAccessKeysDataItems"
+      },
+      "description": "A list of collection access keys."
+    },
+    "meta": {
+      "$ref": "#/$defs/GetCollectionAccessKeysMeta",
+      "description": "The response's non-standard metadata information."
+    }
+  },
+  "$defs": {
+    "GetCollectionAccessKeysDataItems": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The collection access key's ID."
+        },
+        "token": {
+          "type": "string",
+          "description": "The masked collection access key."
+        },
+        "status": {
+          "$ref": "#/$defs/GetCollectionAccessKeysDataItemsStatus",
+          "description": "The token's active status."
+        },
+        "teamId": {
+          "type": "integer",
+          "description": "The team ID of the collection access key's owner."
+        },
+        "userId": {
+          "type": "integer",
+          "description": "The user ID of the collection access key's owner."
+        },
+        "collectionId": {
+          "type": "string",
+          "format": "uid",
+          "description": "The collection access key's associated collection ID."
+        },
+        "expiresAfter": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the collection access key expires. Collection access keys are valid for 60 days. If unused, the access key expires after 60 days. If someone uses the access key, then its expiration date increases by another 60 days."
+        },
+        "lastUsedAt": {
+          "type": "string",
+          "description": "The date and time at which the collection access key was used. If the collection key is unused, this returns an empty string value."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the collection access key was created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the collection access key was updated."
+        },
+        "deletedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time",
+          "description": "The date and time at which the collection access key was revoked."
+        }
+      },
+      "description": "Information about the collection access key.",
+      "title": "GetCollectionAccessKeysDataItems"
+    },
+    "GetCollectionAccessKeysDataItemsStatus": {
+      "type": "string",
+      "enum": [
+        "ACTIVE",
+        "INACTIVE"
+      ],
+      "description": "The token's active status.",
+      "title": "GetCollectionAccessKeysDataItemsStatus"
+    },
+    "GetCollectionAccessKeysMeta": {
+      "type": "object",
+      "properties": {
+        "nextCursor": {
+          "type": "string",
+          "description": "The pagination cursor that points to the next record in the results set."
+        },
+        "prevCursor": {
+          "type": "string",
+          "description": "The pagination cursor to previous set of response data."
+        }
+      },
+      "description": "The response's non-standard metadata information.",
+      "title": "GetCollectionAccessKeysMeta"
+    }
+  }
+}

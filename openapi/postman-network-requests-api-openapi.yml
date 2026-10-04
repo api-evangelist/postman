@@ -131,57 +131,7 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimitError'
 components:
-  schemas:
-    NetworkRequest:
-      type: object
-      properties:
-        id:
-          type: integer
-        type:
-          type: string
-          enum:
-          - api
-          - collection
-          - workspace
-        elementId:
-          type: string
-        name:
-          type: string
-        summary:
-          type: string
-        status:
-          type: string
-          enum:
-          - pending
-          - approved
-          - denied
-        requestedBy:
-          type: integer
-        requestedAt:
-          type: string
-          format: date-time
-        respondedBy:
-          type: integer
-        respondedAt:
-          type: string
-          format: date-time
-        message:
-          type: string
   responses:
-    UnauthorizedError:
-      description: Authentication credentials are missing or invalid
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
     RateLimitError:
       description: Too many requests - rate limit exceeded
       content:
@@ -221,6 +171,56 @@ components:
                     type: string
                   message:
                     type: string
+    UnauthorizedError:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+  schemas:
+    NetworkRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          enum:
+          - api
+          - collection
+          - workspace
+        elementId:
+          type: string
+        name:
+          type: string
+        summary:
+          type: string
+        status:
+          type: string
+          enum:
+          - pending
+          - approved
+          - denied
+        requestedBy:
+          type: integer
+        requestedAt:
+          type: string
+          format: date-time
+        respondedBy:
+          type: integer
+        respondedAt:
+          type: string
+          format: date-time
+        message:
+          type: string
   securitySchemes:
     apiKeyAuth:
       type: apiKey

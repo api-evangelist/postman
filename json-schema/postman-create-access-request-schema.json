@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-create-access-request-schema.json",
+  "title": "createAccessRequest",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-teams-api-openapi.yml#/components/schemas/createAccessRequest",
+  "type": "object",
+  "properties": {
+    "entityList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/teamEntityInfo"
+      },
+      "description": "A list of the entities for which to create access requests."
+    },
+    "role": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/CreateAccessRequestRole"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The team role to request."
+    },
+    "reason": {
+      "type": "string",
+      "description": "The reason for the access request."
+    },
+    "requestType": {
+      "$ref": "#/$defs/CreateAccessRequestRequestType",
+      "description": "The type of access request."
+    }
+  },
+  "required": [
+    "entityList",
+    "role",
+    "reason",
+    "requestType"
+  ],
+  "$defs": {
+    "CreateAccessRequestRequestType": {
+      "type": "string",
+      "enum": [
+        "REQUEST_TO_ADD_MEMBERS",
+        "REQUEST_TO_JOIN",
+        "UPGRADE_ROLE"
+      ],
+      "description": "The type of access request.",
+      "title": "CreateAccessRequestRequestType"
+    },
+    "CreateAccessRequestRole": {
+      "type": "string",
+      "enum": [
+        "TEAM_MANAGER",
+        "TEAM_DEVELOPER",
+        "TEAM_GUEST_DEVELOPER",
+        "TEAM_GUEST_VIEWER",
+        "TEAM_PARTNER_MANAGER",
+        "TEAM_PARTNER_LEAD",
+        "TEAM_GUEST",
+        "TEAM_PARTNER",
+        "TEAM_COMMUNITY_MANAGER"
+      ],
+      "description": "The team role to request.",
+      "title": "CreateAccessRequestRole"
+    },
+    "TeamEntityInfoEntityId": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "description": "The entity's ID.",
+      "title": "TeamEntityInfoEntityId"
+    },
+    "TeamEntityInfoEntityType": {
+      "type": "string",
+      "enum": [
+        "user",
+        "group",
+        "team",
+        "organization"
+      ],
+      "description": "The entity type.",
+      "title": "TeamEntityInfoEntityType"
+    },
+    "teamEntityInfo": {
+      "type": "object",
+      "properties": {
+        "entityType": {
+          "$ref": "#/$defs/TeamEntityInfoEntityType",
+          "description": "The entity type."
+        },
+        "entityId": {
+          "$ref": "#/$defs/TeamEntityInfoEntityId",
+          "description": "The entity's ID."
+        }
+      },
+      "required": [
+        "entityType",
+        "entityId"
+      ],
+      "title": "teamEntityInfo"
+    }
+  }
+}

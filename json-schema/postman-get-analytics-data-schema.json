@@ -1,0 +1,292 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-get-analytics-data-schema.json",
+  "title": "getAnalyticsData",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-analytics-api-openapi.yml#/components/schemas/getAnalyticsData",
+  "type": "object",
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/GetAnalyticsDataData"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "$defs": {
+    "GetAnalyticsDataColumnsDataItems": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the column."
+        },
+        "type": {
+          "$ref": "#/$defs/GetAnalyticsDataColumnsDataItemsType",
+          "description": "The data type of the column."
+        },
+        "format": {
+          "type": "string",
+          "description": "The data type's format."
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of what the column represents."
+        }
+      },
+      "title": "GetAnalyticsDataColumnsDataItems"
+    },
+    "GetAnalyticsDataColumnsDataItemsType": {
+      "type": "string",
+      "enum": [
+        "DATE",
+        "STRING",
+        "INTEGER",
+        "TIMESTAMP",
+        "BOOLEAN",
+        "NUMBER",
+        "FLOAT"
+      ],
+      "description": "The data type of the column.",
+      "title": "GetAnalyticsDataColumnsDataItemsType"
+    },
+    "GetAnalyticsDataData": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/getAnalyticsDataSummary"
+        },
+        {
+          "$ref": "#/$defs/getAnalyticsDataPartnerEngagmentFunnel"
+        }
+      ],
+      "title": "GetAnalyticsDataData"
+    },
+    "GetAnalyticsDataPartnerRequestSent200OkSchema": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "$ref": "#/$defs/getAnalyticsDataColumnsData"
+        }
+      },
+      "title": "GetAnalyticsDataPartnerRequestSent200OkSchema"
+    },
+    "GetAnalyticsDataPartnerRequestSentSchema": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "$ref": "#/$defs/getAnalyticsDataColumnsData"
+        }
+      },
+      "title": "GetAnalyticsDataPartnerRequestSentSchema"
+    },
+    "GetAnalyticsDataPartnersViewedCollectionSchema": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "$ref": "#/$defs/getAnalyticsDataColumnsData"
+        }
+      },
+      "title": "GetAnalyticsDataPartnersViewedCollectionSchema"
+    },
+    "GetAnalyticsDataRowsDataItemsItems": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer"
+        },
+        {
+          "type": "number",
+          "format": "double"
+        },
+        {
+          "type": "boolean"
+        }
+      ],
+      "title": "GetAnalyticsDataRowsDataItemsItems"
+    },
+    "getAnalyticsDataAllPartners": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "$ref": "#/$defs/getAnalyticsDataSchema"
+        },
+        "rows": {
+          "$ref": "#/$defs/getAnalyticsDataRowsData"
+        },
+        "pagination": {
+          "$ref": "#/$defs/getAnalyticsDataPaginationData"
+        }
+      },
+      "description": "Information about partner users and their activity.",
+      "title": "getAnalyticsDataAllPartners"
+    },
+    "getAnalyticsDataColumnsData": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/GetAnalyticsDataColumnsDataItems"
+      },
+      "description": "A list of column entries.",
+      "title": "getAnalyticsDataColumnsData"
+    },
+    "getAnalyticsDataObject": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "$ref": "#/$defs/getAnalyticsDataSchema"
+        },
+        "rows": {
+          "$ref": "#/$defs/getAnalyticsDataRowsData"
+        },
+        "pagination": {
+          "$ref": "#/$defs/getAnalyticsDataPaginationData"
+        }
+      },
+      "description": "Data analytics information.",
+      "title": "getAnalyticsDataObject"
+    },
+    "getAnalyticsDataPaginationData": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "description": "The total number of records available."
+        },
+        "limit": {
+          "type": "integer",
+          "description": "The maximum number of records returned in the response."
+        },
+        "offset": {
+          "type": "integer",
+          "description": "The number of records skipped."
+        },
+        "has_more": {
+          "type": "boolean",
+          "description": "Indicates whether more are records available."
+        }
+      },
+      "description": "Information about the response pagination.",
+      "title": "getAnalyticsDataPaginationData"
+    },
+    "getAnalyticsDataPartnerEngagmentFunnel": {
+      "type": "object",
+      "properties": {
+        "all_partners": {
+          "$ref": "#/$defs/getAnalyticsDataAllPartners"
+        },
+        "workspace_visited": {
+          "$ref": "#/$defs/getAnalyticsDataPartnerWorkspaceVisited"
+        },
+        "viewed_collection": {
+          "$ref": "#/$defs/getAnalyticsDataPartnersViewedCollection"
+        },
+        "request_sent": {
+          "$ref": "#/$defs/getAnalyticsDataPartnerRequestSent"
+        },
+        "successful_requests_200OK": {
+          "$ref": "#/$defs/getAnalyticsDataPartnerRequestSent200OK"
+        }
+      },
+      "title": "getAnalyticsDataPartnerEngagmentFunnel"
+    },
+    "getAnalyticsDataPartnerRequestSent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "$ref": "#/$defs/GetAnalyticsDataPartnerRequestSentSchema"
+        },
+        "rows": {
+          "$ref": "#/$defs/getAnalyticsDataRowsData"
+        },
+        "pagination": {
+          "$ref": "#/$defs/getAnalyticsDataPaginationData"
+        }
+      },
+      "description": "Information about requests sent by partner users.",
+      "title": "getAnalyticsDataPartnerRequestSent"
+    },
+    "getAnalyticsDataPartnerRequestSent200OK": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "$ref": "#/$defs/GetAnalyticsDataPartnerRequestSent200OkSchema"
+        },
+        "rows": {
+          "$ref": "#/$defs/getAnalyticsDataRowsData"
+        },
+        "pagination": {
+          "$ref": "#/$defs/getAnalyticsDataPaginationData"
+        }
+      },
+      "description": "Information about partner users' successful request calls in a workspace.",
+      "title": "getAnalyticsDataPartnerRequestSent200OK"
+    },
+    "getAnalyticsDataPartnerWorkspaceVisited": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "$ref": "#/$defs/getAnalyticsDataSchema"
+        },
+        "rows": {
+          "$ref": "#/$defs/getAnalyticsDataRowsData"
+        },
+        "pagination": {
+          "$ref": "#/$defs/getAnalyticsDataPaginationData"
+        }
+      },
+      "description": "Information about partner users' workspace visits.",
+      "title": "getAnalyticsDataPartnerWorkspaceVisited"
+    },
+    "getAnalyticsDataPartnersViewedCollection": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "$ref": "#/$defs/GetAnalyticsDataPartnersViewedCollectionSchema"
+        },
+        "rows": {
+          "$ref": "#/$defs/getAnalyticsDataRowsData"
+        },
+        "pagination": {
+          "$ref": "#/$defs/getAnalyticsDataPaginationData"
+        }
+      },
+      "description": "Information about partner users' views of collections in a workspace.",
+      "title": "getAnalyticsDataPartnersViewedCollection"
+    },
+    "getAnalyticsDataRowsData": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/GetAnalyticsDataRowsDataItemsItems"
+        }
+      },
+      "description": "A list of data row entries. Each row is an array of values that correspond to the columns defined in the schema.",
+      "title": "getAnalyticsDataRowsData"
+    },
+    "getAnalyticsDataSchema": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "$ref": "#/$defs/getAnalyticsDataColumnsData"
+        }
+      },
+      "title": "getAnalyticsDataSchema"
+    },
+    "getAnalyticsDataSummary": {
+      "type": "object",
+      "properties": {
+        "summary": {
+          "$ref": "#/$defs/getAnalyticsDataObject"
+        }
+      },
+      "required": [
+        "summary"
+      ],
+      "title": "getAnalyticsDataSummary"
+    }
+  }
+}

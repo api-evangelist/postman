@@ -1,0 +1,284 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-environments-patch-environment-request-schema.json",
+  "title": "Environments_patchEnvironment_Request",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-environments-api-openapi.yml#/components/schemas/Environments_patchEnvironment_Request",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/patchEnvironmentAdd"
+    },
+    {
+      "$ref": "#/$defs/patchEnvironmentName"
+    },
+    {
+      "$ref": "#/$defs/patchEnvironmentReplace"
+    },
+    {
+      "$ref": "#/$defs/patchEnvironmentRemove"
+    }
+  ],
+  "$defs": {
+    "EnvironmentVariableSourcePostman": {
+      "type": "object",
+      "properties": {
+        "secretId": {
+          "type": "string",
+          "description": "The variable's secret ID."
+        },
+        "type": {
+          "$ref": "#/$defs/EnvironmentVariableSourcePostmanType",
+          "description": "The variable's type:\n- `cloud` — The variable value is synced and stored in the Postman Cloud.\n"
+        },
+        "vaultId": {
+          "type": "string",
+          "description": "The variable's ID in the Postman Vault."
+        }
+      },
+      "description": "Information about the Postman-specific source of the variable's value.",
+      "title": "EnvironmentVariableSourcePostman"
+    },
+    "EnvironmentVariableSourcePostmanType": {
+      "type": "string",
+      "enum": [
+        "cloud"
+      ],
+      "description": "The variable's type:\n- `cloud` — The variable value is synced and stored in the Postman Cloud.\n",
+      "title": "EnvironmentVariableSourcePostmanType"
+    },
+    "EnvironmentVariableSourceProvider": {
+      "type": "string",
+      "enum": [
+        "postman"
+      ],
+      "description": "The secret's provider.",
+      "title": "EnvironmentVariableSourceProvider"
+    },
+    "EnvironmentVariablesType": {
+      "type": "string",
+      "enum": [
+        "secret",
+        "default"
+      ],
+      "description": "The variable's type:\n- `secret` — The variable value is masked.\n- `default` — The variable value is visible in plain text.\n",
+      "title": "EnvironmentVariablesType"
+    },
+    "EnvironmentVaultVariablesType": {
+      "type": "string",
+      "enum": [
+        "secret",
+        "default"
+      ],
+      "description": "The variable's type:\n- `secret` — The variable value is masked.\n- `default` — The variable value is visible in plain text.\n",
+      "title": "EnvironmentVaultVariablesType"
+    },
+    "PatchEnvironmentAddItems": {
+      "type": "object",
+      "properties": {
+        "op": {
+          "type": "string",
+          "description": "The `add` operation."
+        },
+        "path": {
+          "type": "string",
+          "description": "The [JSON Pointer syntax](https://datatracker.ietf.org/doc/html/rfc6901) that indicates the entry to update, in `/values/#` format, where `#` is the entry ID. The first record begins at the `0` value."
+        },
+        "value": {
+          "$ref": "#/$defs/PatchEnvironmentAddItemsValue"
+        }
+      },
+      "required": [
+        "op",
+        "path",
+        "value"
+      ],
+      "title": "PatchEnvironmentAddItems"
+    },
+    "PatchEnvironmentAddItemsValue": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/environmentVariables"
+        },
+        {
+          "$ref": "#/$defs/environmentVaultVariables"
+        }
+      ],
+      "title": "PatchEnvironmentAddItemsValue"
+    },
+    "PatchEnvironmentNameItems": {
+      "type": "object",
+      "properties": {
+        "op": {
+          "type": "string",
+          "description": "The `replace` operation."
+        },
+        "path": {
+          "type": "string",
+          "description": "The `/name` value."
+        },
+        "value": {
+          "type": "string",
+          "description": "The environment's updated name."
+        }
+      },
+      "required": [
+        "op",
+        "path",
+        "value"
+      ],
+      "description": "Information about the environment.",
+      "title": "PatchEnvironmentNameItems"
+    },
+    "PatchEnvironmentRemoveItems": {
+      "type": "object",
+      "properties": {
+        "op": {
+          "type": "string",
+          "description": "The `remove` operation."
+        },
+        "path": {
+          "type": "string",
+          "description": "The [JSON Pointer syntax](https://datatracker.ietf.org/doc/html/rfc6901) that indicates the entry to update, in `/values/#` format, where `#` is the entry ID. The first record begins at the `0` value."
+        }
+      },
+      "required": [
+        "op",
+        "path"
+      ],
+      "title": "PatchEnvironmentRemoveItems"
+    },
+    "PatchEnvironmentReplaceItems": {
+      "type": "object",
+      "properties": {
+        "op": {
+          "type": "string",
+          "description": "The `replace` operation."
+        },
+        "path": {
+          "type": "string",
+          "description": "The [JSON Pointer syntax](https://datatracker.ietf.org/doc/html/rfc6901) that indicates the entry to update, in `/values/#/{value}` format, where:\n- `#` — The entry ID. The first record begins at the `0` value.\n- `{value}` — The variable property to update. Accepts `key`, `value`, `type`, and `enable`.\n"
+        },
+        "value": {
+          "type": "string",
+          "description": "The variable's value."
+        }
+      },
+      "required": [
+        "op",
+        "path",
+        "value"
+      ],
+      "title": "PatchEnvironmentReplaceItems"
+    },
+    "environmentSecret": {
+      "type": "boolean",
+      "description": "If true, the variable is marked as secret and its value is retrieved from the mentioned provider in the source field.",
+      "title": "environmentSecret"
+    },
+    "environmentVariableSource": {
+      "type": "object",
+      "properties": {
+        "postman": {
+          "$ref": "#/$defs/EnvironmentVariableSourcePostman",
+          "description": "Information about the Postman-specific source of the variable's value."
+        },
+        "provider": {
+          "$ref": "#/$defs/EnvironmentVariableSourceProvider",
+          "description": "The secret's provider."
+        }
+      },
+      "description": "Information about the source of the variable's value.",
+      "title": "environmentVariableSource"
+    },
+    "environmentVariables": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "If true, the variable is enabled."
+        },
+        "key": {
+          "type": "string",
+          "description": "The variable's name."
+        },
+        "value": {
+          "type": "string",
+          "description": "The variable's value."
+        },
+        "type": {
+          "$ref": "#/$defs/EnvironmentVariablesType",
+          "description": "The variable's type:\n- `secret` — The variable value is masked.\n- `default` — The variable value is visible in plain text.\n"
+        },
+        "description": {
+          "type": "string",
+          "description": "The variable's description."
+        }
+      },
+      "description": "Information about the variable.",
+      "title": "environmentVariables"
+    },
+    "environmentVaultVariables": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "If true, the variable is enabled."
+        },
+        "key": {
+          "type": "string",
+          "description": "The variable's name."
+        },
+        "value": {
+          "type": "string",
+          "description": "The variable's value."
+        },
+        "type": {
+          "$ref": "#/$defs/EnvironmentVaultVariablesType",
+          "description": "The variable's type:\n- `secret` — The variable value is masked.\n- `default` — The variable value is visible in plain text.\n"
+        },
+        "secret": {
+          "$ref": "#/$defs/environmentSecret"
+        },
+        "source": {
+          "$ref": "#/$defs/environmentVariableSource"
+        },
+        "description": {
+          "type": "string",
+          "description": "The variable's description."
+        }
+      },
+      "description": "Information about the variable stored in the Postman Vault. This property only returns when a variable is defined as secret.",
+      "title": "environmentVaultVariables"
+    },
+    "patchEnvironmentAdd": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PatchEnvironmentAddItems"
+      },
+      "title": "patchEnvironmentAdd"
+    },
+    "patchEnvironmentName": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PatchEnvironmentNameItems"
+      },
+      "title": "patchEnvironmentName"
+    },
+    "patchEnvironmentRemove": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PatchEnvironmentRemoveItems"
+      },
+      "title": "patchEnvironmentRemove"
+    },
+    "patchEnvironmentReplace": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PatchEnvironmentReplaceItems"
+      },
+      "title": "patchEnvironmentReplace"
+    }
+  }
+}

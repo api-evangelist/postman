@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-get-spec-file-schema.json",
+  "title": "getSpecFile",
+  "description": "Information about the API specification file.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-specs-api-openapi.yml#/components/schemas/getSpecFile",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The file's ID."
+    },
+    "name": {
+      "type": "string",
+      "description": "The file's name."
+    },
+    "path": {
+      "type": "string",
+      "description": "The file's path."
+    },
+    "createdBy": {
+      "type": "integer",
+      "description": "The user ID of the user that created the file."
+    },
+    "updatedBy": {
+      "type": "integer",
+      "description": "The ID of the user who updated the file."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time at which the file was created."
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time at which the file was updated."
+    },
+    "type": {
+      "$ref": "#/$defs/GetSpecFileType",
+      "description": "The type of file:\n- `ROOT` — A file containing the full OpenAPI structure and references other (DEFAULT) spec files.\n- `DEFAULT` — A file referenced by the `ROOT` file.\n"
+    },
+    "content": {
+      "type": "string",
+      "description": "The file's stringified contents."
+    }
+  },
+  "$defs": {
+    "GetSpecFileType": {
+      "type": "string",
+      "enum": [
+        "ROOT",
+        "DEFAULT"
+      ],
+      "description": "The type of file:\n- `ROOT` — A file containing the full OpenAPI structure and references other (DEFAULT) spec files.\n- `DEFAULT` — A file referenced by the `ROOT` file.\n",
+      "title": "GetSpecFileType"
+    }
+  }
+}

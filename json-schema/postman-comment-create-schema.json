@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-comment-create-schema.json",
+  "title": "commentCreate",
+  "description": "Information about the comment.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-collection-folders-api-openapi.yml#/components/schemas/commentCreate",
+  "type": "object",
+  "properties": {
+    "body": {
+      "type": "string",
+      "description": "The contents of the comment."
+    },
+    "threadId": {
+      "type": "integer",
+      "description": "The comment's thread ID. To create a reply on an existing comment, include this property."
+    },
+    "tags": {
+      "$ref": "#/$defs/commentTaggedUsers"
+    }
+  },
+  "required": [
+    "body"
+  ],
+  "$defs": {
+    "CommentTaggedUsersUserName": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/CommentTaggedUsersUserNameType",
+          "description": "The `user` value."
+        },
+        "id": {
+          "type": "string",
+          "description": "The user's ID."
+        }
+      },
+      "required": [
+        "type",
+        "id"
+      ],
+      "description": "An object that contains information about the tagged user. The object's name is the user's Postman username. For example, `@user-postman`.",
+      "title": "CommentTaggedUsersUserName"
+    },
+    "CommentTaggedUsersUserNameType": {
+      "type": "string",
+      "enum": [
+        "user"
+      ],
+      "description": "The `user` value.",
+      "title": "CommentTaggedUsersUserNameType"
+    },
+    "commentTaggedUsers": {
+      "type": "object",
+      "properties": {
+        "{{userName}}": {
+          "$ref": "#/$defs/CommentTaggedUsersUserName",
+          "description": "An object that contains information about the tagged user. The object's name is the user's Postman username. For example, `@user-postman`."
+        }
+      },
+      "description": "Information about users tagged in the `body` comment.",
+      "title": "commentTaggedUsers"
+    }
+  }
+}

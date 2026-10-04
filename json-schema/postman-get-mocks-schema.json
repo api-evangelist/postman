@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-get-mocks-schema.json",
+  "title": "getMocks",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-mocks-api-openapi.yml#/components/schemas/getMocks",
+  "type": "object",
+  "properties": {
+    "mocks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/GetMocksMocksItems"
+      },
+      "description": "A list of mock servers."
+    }
+  },
+  "$defs": {
+    "GetMocksMocksItems": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The mock server's ID."
+        },
+        "owner": {
+          "type": "string",
+          "description": "The ID of mock server's owner."
+        },
+        "uid": {
+          "type": "string",
+          "format": "uid",
+          "description": "The mock server's unique ID."
+        },
+        "collection": {
+          "type": "string",
+          "description": "The unique ID of the mock's associated collection."
+        },
+        "mockUrl": {
+          "type": "string",
+          "format": "url",
+          "description": "The mock server URL."
+        },
+        "config": {
+          "$ref": "#/$defs/GetMocksMocksItemsConfig",
+          "description": "Information about the mock server's configuration."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the mock server was created."
+        },
+        "environment": {
+          "type": "string",
+          "description": "The mock server's associated environment ID."
+        },
+        "isPublic": {
+          "type": "boolean",
+          "description": "If true, the mock server is public and visible to all users. This field does not indicate the mock server's access control status."
+        },
+        "name": {
+          "type": "string",
+          "description": "The mock server's name."
+        },
+        "deactivated": {
+          "type": "boolean",
+          "description": "If true, the mock server is not active. Mock servers deactivate when a linked collection or environment is deleted."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the mock server was last updated."
+        }
+      },
+      "description": "Information about the mock server.",
+      "title": "GetMocksMocksItems"
+    },
+    "GetMocksMocksItemsConfig": {
+      "type": "object",
+      "properties": {
+        "delay": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/GetMocksMocksItemsConfigDelay"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Information about the mock server's simulated network delay settings. This returns a null value if there are no configured network delay settings."
+        },
+        "headers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "A list of the mock server's headers."
+        },
+        "matchBody": {
+          "type": "boolean",
+          "description": "If true, match the request body."
+        },
+        "matchQueryParams": {
+          "type": "boolean",
+          "description": "If true, match query parameters."
+        },
+        "matchWildcards": {
+          "type": "boolean",
+          "description": "If true, use wildcard variable matching."
+        },
+        "serverResponseId": {
+          "type": "string",
+          "description": "The ID of mock server's default response for requests. All calls to the mock server will return the defined response."
+        }
+      },
+      "description": "Information about the mock server's configuration.",
+      "title": "GetMocksMocksItemsConfig"
+    },
+    "GetMocksMocksItemsConfigDelay": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/GetMocksMocksItemsConfigDelayType",
+          "description": "The type of simulated delay value:\n- `fixed` — The delay value is a fixed value.\n"
+        },
+        "preset": {
+          "$ref": "#/$defs/GetMocksMocksItemsConfigDelayPreset",
+          "description": "The simulated fixed network delay value:\n- `1` — 2G (300 ms).\n- `2` — 3G (100 ms).\nThe object does not return this value for custom delay values.\n"
+        },
+        "duration": {
+          "type": "integer",
+          "description": "The configured delay, in milliseconds."
+        }
+      },
+      "description": "Information about the mock server's simulated network delay settings. This returns a null value if there are no configured network delay settings.",
+      "title": "GetMocksMocksItemsConfigDelay"
+    },
+    "GetMocksMocksItemsConfigDelayPreset": {
+      "type": "string",
+      "enum": [
+        "1",
+        "2"
+      ],
+      "description": "The simulated fixed network delay value:\n- `1` — 2G (300 ms).\n- `2` — 3G (100 ms).\nThe object does not return this value for custom delay values.\n",
+      "title": "GetMocksMocksItemsConfigDelayPreset"
+    },
+    "GetMocksMocksItemsConfigDelayType": {
+      "type": "string",
+      "enum": [
+        "fixed"
+      ],
+      "description": "The type of simulated delay value:\n- `fixed` — The delay value is a fixed value.\n",
+      "title": "GetMocksMocksItemsConfigDelayType"
+    }
+  }
+}

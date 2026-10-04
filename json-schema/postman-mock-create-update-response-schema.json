@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-mock-create-update-response-schema.json",
+  "title": "mockCreateUpdateResponse",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-mocks-api-openapi.yml#/components/schemas/mockCreateUpdateResponse",
+  "type": "object",
+  "properties": {
+    "mock": {
+      "$ref": "#/$defs/MockCreateUpdateResponseMock",
+      "description": "Information about the mock server."
+    }
+  },
+  "$defs": {
+    "MockCreateUpdateResponseMock": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The mock server's ID."
+        },
+        "owner": {
+          "type": "string",
+          "description": "The ID of mock server's owner."
+        },
+        "uid": {
+          "type": "string",
+          "format": "uid",
+          "description": "The mock server's unique ID."
+        },
+        "collection": {
+          "type": "string",
+          "description": "The unique ID of the mock's associated collection."
+        },
+        "mockUrl": {
+          "type": "string",
+          "format": "url",
+          "description": "The mock server URL."
+        },
+        "name": {
+          "type": "string",
+          "description": "The mock server's name."
+        },
+        "config": {
+          "$ref": "#/$defs/MockCreateUpdateResponseMockConfig",
+          "description": "Information about the mock server's configuration."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the mock server was created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the mock server was last updated."
+        },
+        "environment": {
+          "type": "string",
+          "description": "The unique ID of the mock's associated environment."
+        }
+      },
+      "description": "Information about the mock server.",
+      "title": "MockCreateUpdateResponseMock"
+    },
+    "MockCreateUpdateResponseMockConfig": {
+      "type": "object",
+      "properties": {
+        "matchBody": {
+          "type": "boolean",
+          "description": "If true, the mock server matches the request's body to the body of the saved examples."
+        },
+        "matchHeader": {
+          "type": "boolean",
+          "description": "If true, the mock server matches the request's headers in the `header` array to the headers of the saved examples."
+        },
+        "headers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "A list of header key values."
+        },
+        "matchQueryParams": {
+          "type": "boolean",
+          "description": "If true, match query parameters to the saved examples."
+        },
+        "matchWildcards": {
+          "type": "boolean",
+          "description": "If true, use wildcard variable matching."
+        },
+        "delay": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/MockCreateUpdateResponseMockConfigDelay"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Information about the mock server's simulated network delay settings. This returns a null value if there are no configured network delay settings."
+        },
+        "serverResponseId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The ID of mock server's default response for requests. All calls to the mock server will return the defined response."
+        }
+      },
+      "description": "Information about the mock server's configuration.",
+      "title": "MockCreateUpdateResponseMockConfig"
+    },
+    "MockCreateUpdateResponseMockConfigDelay": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/MockCreateUpdateResponseMockConfigDelayType",
+          "description": "The `fixed` value."
+        },
+        "duration": {
+          "type": "integer",
+          "description": "For custom network delays, the custom configured delay, in milliseconds."
+        },
+        "preset": {
+          "$ref": "#/$defs/MockCreateUpdateResponseMockConfigDelayPreset",
+          "description": "The simulated fixed network delay value:\n- `1` — 2G (300 ms).\n- `2` — 3G (100 ms).\nThe object does not return this value for custom delay values.\n"
+        }
+      },
+      "description": "Information about the mock server's simulated network delay settings. This returns a null value if there are no configured network delay settings.",
+      "title": "MockCreateUpdateResponseMockConfigDelay"
+    },
+    "MockCreateUpdateResponseMockConfigDelayPreset": {
+      "type": "string",
+      "enum": [
+        "1",
+        "2"
+      ],
+      "description": "The simulated fixed network delay value:\n- `1` — 2G (300 ms).\n- `2` — 3G (100 ms).\nThe object does not return this value for custom delay values.\n",
+      "title": "MockCreateUpdateResponseMockConfigDelayPreset"
+    },
+    "MockCreateUpdateResponseMockConfigDelayType": {
+      "type": "string",
+      "enum": [
+        "fixed"
+      ],
+      "description": "The `fixed` value.",
+      "title": "MockCreateUpdateResponseMockConfigDelayType"
+    }
+  }
+}

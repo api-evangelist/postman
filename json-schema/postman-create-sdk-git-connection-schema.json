@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-create-sdk-git-connection-schema.json",
+  "title": "createSdkGitConnection",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-sdks-api-openapi.yml#/components/schemas/createSdkGitConnection",
+  "type": "object",
+  "properties": {
+    "source": {
+      "$ref": "#/$defs/sdkSource"
+    },
+    "language": {
+      "$ref": "#/$defs/sdkLanguage"
+    },
+    "repositoryUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "The canonical URL of the target Git repository."
+    },
+    "targetBranch": {
+      "type": "string",
+      "default": "main",
+      "description": "The branch the SDK is published to. Defaults to `main`."
+    },
+    "autoUpdatePullRequestsEnabled": {
+      "$ref": "#/$defs/autoUpdatePullRequestsEnabled"
+    }
+  },
+  "required": [
+    "source",
+    "language",
+    "repositoryUrl"
+  ],
+  "$defs": {
+    "autoUpdatePullRequestsEnabled": {
+      "type": "boolean",
+      "description": "If true, pull requests are opened automatically whenever the source changes or a new version of the SDK generator is released. If false, pull requests are opened automatically, but only for manually-triggered SDK regeneration. If `autoUpdatePullRequestsEnabled` isn't set, the default behavior depends on the user's Postman plan:\n\n- **Enterprise** plan users — Defaults to the `true` value.\n- **Team** plan users and read only — Defaults to the `false` value.\n",
+      "title": "autoUpdatePullRequestsEnabled"
+    },
+    "elementType-2": {
+      "type": "string",
+      "enum": [
+        "collection",
+        "spec"
+      ],
+      "description": "The type of Postman element.",
+      "title": "elementType-2"
+    },
+    "sdkLanguage": {
+      "type": "string",
+      "enum": [
+        "typescript",
+        "python",
+        "go",
+        "java",
+        "csharp",
+        "ruby",
+        "php",
+        "kotlin",
+        "rust",
+        "cli"
+      ],
+      "description": "The target output language for the generated SDK.",
+      "title": "sdkLanguage"
+    },
+    "sdkSource": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/elementType-2"
+        },
+        "id": {
+          "type": "string",
+          "description": "The ID of the Postman Collection or specification in Postman."
+        }
+      },
+      "required": [
+        "type",
+        "id"
+      ],
+      "description": "The collection or specification that the SDK is generated from.",
+      "title": "sdkSource"
+    }
+  }
+}

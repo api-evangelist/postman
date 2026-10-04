@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-collection-run-schema.json",
+  "title": "CollectionRun",
+  "description": "Detailed collection run including individual request results.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-collection-runs-api-openapi.yml#/components/schemas/CollectionRun",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "running",
+        "finished",
+        "failed"
+      ]
+    },
+    "source": {
+      "type": "string"
+    },
+    "startedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "finishedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "duration": {
+      "type": "integer",
+      "description": "Total run duration in milliseconds"
+    },
+    "stats": {
+      "type": "object",
+      "properties": {
+        "requests": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "type": "integer"
+            },
+            "failed": {
+              "type": "integer"
+            }
+          }
+        },
+        "assertions": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "type": "integer"
+            },
+            "failed": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "executions": {
+      "type": "array",
+      "description": "Individual request execution results",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "itemName": {
+            "type": "string"
+          },
+          "request": {
+            "type": "object",
+            "properties": {
+              "method": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            }
+          },
+          "response": {
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "integer"
+              },
+              "responseTime": {
+                "type": "integer",
+                "description": "Response time in milliseconds"
+              },
+              "responseSize": {
+                "type": "integer",
+                "description": "Response size in bytes"
+              }
+            }
+          },
+          "assertions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "passed": {
+                  "type": "boolean"
+                },
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "collectionId": {
+      "type": "string"
+    },
+    "environmentId": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    }
+  }
+}

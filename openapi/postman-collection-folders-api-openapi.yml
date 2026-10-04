@@ -275,22 +275,12 @@ paths:
                 $ref: '#/components/schemas/commonErrorTypeTitleDetailStatus'
 components:
   schemas:
-    CommentDataStatus:
+    CommentTaggedUsersUserNameType:
       type: string
       enum:
-      - Open
-      - Resolved
-      description: The comment's current status.
-      title: CommentDataStatus
-    commentResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/commentData'
-          description: A list of comments.
-      title: commentResponse
+      - user
+      description: The `user` value.
+      title: CommentTaggedUsersUserNameType
     CommentTaggedUsersUserName:
       type: object
       properties:
@@ -305,10 +295,22 @@ components:
       - id
       description: An object that contains information about the tagged user. The object's name is the user's Postman username. For example, `@user-postman`.
       title: CommentTaggedUsersUserName
+    commentCreatedUpdated:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CommentCreatedUpdatedData'
+      title: commentCreatedUpdated
     collectionUid:
       type: string
       format: uid
       title: collectionUid
+    CommonErrorTypeTitleDetailStatusType:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - type: string
+      title: CommonErrorTypeTitleDetailStatusType
     commentTaggedUsers:
       type: object
       properties:
@@ -329,6 +331,56 @@ components:
       - body
       description: Information about the comment.
       title: commentUpdate
+    commentCreate:
+      type: object
+      properties:
+        body:
+          type: string
+          description: The contents of the comment.
+        threadId:
+          type: integer
+          description: The comment's thread ID. To create a reply on an existing comment, include this property.
+        tags:
+          $ref: '#/components/schemas/commentTaggedUsers'
+      required:
+      - body
+      description: Information about the comment.
+      title: commentCreate
+    collectionFolderUid:
+      type: string
+      format: uid
+      title: collectionFolderUid
+    commonErrorTypeTitleDetailStatus:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
+        title:
+          type: string
+          description: A short summary of the problem.
+        detail:
+          type: string
+          description: Information about the error.
+        status:
+          type: integer
+          description: The error's HTTP status code.
+      title: commonErrorTypeTitleDetailStatus
+    commentResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/commentData'
+          description: A list of comments.
+      title: commentResponse
+    CommentDataStatus:
+      type: string
+      enum:
+      - Open
+      - Resolved
+      description: The comment's current status.
+      title: CommentDataStatus
     CommentCreatedUpdatedData:
       type: object
       properties:
@@ -353,40 +405,9 @@ components:
           type: string
           description: The contents of the comment.
       title: CommentCreatedUpdatedData
-    CommentTaggedUsersUserNameType:
-      type: string
-      enum:
-      - user
-      description: The `user` value.
-      title: CommentTaggedUsersUserNameType
     commentId:
       type: integer
       title: commentId
-    collectionFolderUid:
-      type: string
-      format: uid
-      title: collectionFolderUid
-    CommonErrorTypeTitleDetailStatusType:
-      oneOf:
-      - type: string
-        format: uri-reference
-      - type: string
-      title: CommonErrorTypeTitleDetailStatusType
-    commentCreate:
-      type: object
-      properties:
-        body:
-          type: string
-          description: The contents of the comment.
-        threadId:
-          type: integer
-          description: The comment's thread ID. To create a reply on an existing comment, include this property.
-        tags:
-          $ref: '#/components/schemas/commentTaggedUsers'
-      required:
-      - body
-      description: Information about the comment.
-      title: commentCreate
     commentData:
       type: object
       properties:
@@ -415,27 +436,6 @@ components:
           description: The contents of the comment.
       description: Information about the comment.
       title: commentData
-    commentCreatedUpdated:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/CommentCreatedUpdatedData'
-      title: commentCreatedUpdated
-    commonErrorTypeTitleDetailStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CommonErrorTypeTitleDetailStatusType'
-        title:
-          type: string
-          description: A short summary of the problem.
-        detail:
-          type: string
-          description: Information about the error.
-        status:
-          type: integer
-          description: The error's HTTP status code.
-      title: commonErrorTypeTitleDetailStatus
   securitySchemes:
     PostmanApiKey:
       type: apiKey

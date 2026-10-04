@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-get-team-users-schema.json",
+  "title": "getTeamUsers",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-users-api-openapi.yml#/components/schemas/getTeamUsers",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/teamUser"
+      },
+      "description": "A list of users on the team."
+    }
+  },
+  "$defs": {
+    "teamUser": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The user's ID."
+        },
+        "name": {
+          "type": "string",
+          "description": "The user's name."
+        },
+        "username": {
+          "type": "string",
+          "description": "The user's username."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The user's email address."
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The user's roles."
+        },
+        "joinedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The user's join date."
+        }
+      },
+      "description": "Information about the user.",
+      "title": "teamUser"
+    }
+  }
+}

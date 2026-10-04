@@ -1,0 +1,242 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-search-postman-resources-response-schema.json",
+  "title": "searchPostmanResourcesResponse",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-search-api-openapi.yml#/components/schemas/searchPostmanResourcesResponse",
+  "type": "object",
+  "properties": {
+    "meta": {
+      "$ref": "#/$defs/searchMetaData"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/searchPostmanResourcesResponseData"
+      },
+      "description": "A list of Postman elements that match the search query and filters."
+    }
+  },
+  "$defs": {
+    "searchMetaData": {
+      "type": "object",
+      "properties": {
+        "nextCursor": {
+          "type": "string",
+          "description": "The pagination cursor that points to the next record in the results set."
+        },
+        "q": {
+          "type": "string",
+          "description": "The search query text."
+        },
+        "total": {
+          "type": "integer",
+          "description": "The number of records found."
+        }
+      },
+      "description": "Pagination metadata for the search results.",
+      "title": "searchMetaData"
+    },
+    "searchPostmanResourcesResponseData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The resource's ID."
+        },
+        "name": {
+          "type": "string",
+          "description": "The resource's name."
+        },
+        "method": {
+          "type": "string",
+          "description": "The request's HTTP method. Returns only for requests."
+        },
+        "type": {
+          "type": "string",
+          "description": "The resource type variant, such as HTTP or gRPC. Returns only for requests."
+        },
+        "description": {
+          "type": "string",
+          "description": "A brief description of the resource, if available."
+        },
+        "summary": {
+          "type": "string",
+          "description": "A brief summary of the resource, if available. Returns only for workspaces and collections."
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "The request URL of the resource. Returns only for requests."
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tagName"
+          },
+          "description": "A list of tags associated with the resource. Returns only for workspaces and collections."
+        },
+        "specificationId": {
+          "type": "string",
+          "description": "The specification's ID. Returns only for specifications."
+        },
+        "specificationType": {
+          "type": "string",
+          "description": "The specification's type. Returns only for specifications."
+        },
+        "specificationName": {
+          "type": "string",
+          "description": "The specification's name. Returns only for specifications."
+        },
+        "isPrivateNetworkEntity": {
+          "type": "boolean",
+          "description": "Whether the resource is part of a private API network."
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "The ID of the user who created the resource."
+        },
+        "team": {
+          "$ref": "#/$defs/searchResourceTeamData"
+        },
+        "isGitConnected": {
+          "type": "boolean",
+          "description": "If true, the resource is connected to Git. Returns only for workspaces, collections, requests, specifications, and flows."
+        },
+        "collection": {
+          "$ref": "#/$defs/searchRequestsCollectionData"
+        },
+        "workspace": {
+          "$ref": "#/$defs/searchResourceWorkspacesData"
+        },
+        "organization": {
+          "$ref": "#/$defs/searchResourceOrganizationData"
+        },
+        "links": {
+          "$ref": "#/$defs/searchResourceLinksData"
+        }
+      },
+      "description": "Information about the Postman resource.",
+      "title": "searchPostmanResourcesResponseData"
+    },
+    "searchRequestsCollectionData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The collection's ID."
+        },
+        "name": {
+          "type": "string",
+          "description": "The collection's name."
+        }
+      },
+      "description": "Information about the collection containing the resource. Returns only for requests.",
+      "title": "searchRequestsCollectionData"
+    },
+    "searchResourceLinksData": {
+      "type": "object",
+      "properties": {
+        "web": {
+          "$ref": "#/$defs/searchResourceWebData"
+        },
+        "self": {
+          "$ref": "#/$defs/searchResourceLinksSelfData"
+        }
+      },
+      "description": "Information about the resource's hypermedia links.",
+      "title": "searchResourceLinksData"
+    },
+    "searchResourceLinksSelfData": {
+      "type": "object",
+      "properties": {
+        "href": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URL to access the resource through the Postman API."
+        }
+      },
+      "description": "The link to the resource through the Postman API.",
+      "title": "searchResourceLinksSelfData"
+    },
+    "searchResourceOrganizationData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The organization's ID."
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The organization's name."
+        },
+        "isVerified": {
+          "type": "boolean",
+          "description": "If true, the organization is verified by Postman."
+        }
+      },
+      "description": "Information about the organization that published the resource. This returns a null value for the `user` publisher type.",
+      "title": "searchResourceOrganizationData"
+    },
+    "searchResourceTeamData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The team's ID."
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The team's name."
+        }
+      },
+      "description": "Information about the team associated with the resource. This returns a null value for the `user` publisher type.",
+      "title": "searchResourceTeamData"
+    },
+    "searchResourceWebData": {
+      "type": "object",
+      "properties": {
+        "href": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URL to view the resource in the Postman web app."
+        }
+      },
+      "description": "The link to view the resource in the Postman web app.",
+      "title": "searchResourceWebData"
+    },
+    "searchResourceWorkspacesData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The workspace's ID."
+        },
+        "name": {
+          "type": "string",
+          "description": "The workspace's name."
+        }
+      },
+      "description": "Information about the workspace containing the resource.",
+      "title": "searchResourceWorkspacesData"
+    },
+    "tagName": {
+      "type": "string",
+      "title": "tagName"
+    }
+  }
+}

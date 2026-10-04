@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-respond-pan-element-add-request-body-schema.json",
+  "title": "respondPanElementAddRequestBody",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-private-api-network-api-openapi.yml#/components/schemas/respondPanElementAddRequestBody",
+  "type": "object",
+  "properties": {
+    "status": {
+      "$ref": "#/$defs/RespondPanElementAddRequestBodyStatus",
+      "description": "The request's approval status."
+    },
+    "response": {
+      "$ref": "#/$defs/RespondPanElementAddRequestBodyResponse",
+      "description": "If the request is denied, the response to the user's request."
+    }
+  },
+  "required": [
+    "status"
+  ],
+  "$defs": {
+    "RespondPanElementAddRequestBodyResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "A message that details why the user's request was denied."
+        }
+      },
+      "description": "If the request is denied, the response to the user's request.",
+      "title": "RespondPanElementAddRequestBodyResponse"
+    },
+    "RespondPanElementAddRequestBodyStatus": {
+      "type": "string",
+      "enum": [
+        "denied",
+        "approved"
+      ],
+      "description": "The request's approval status.",
+      "title": "RespondPanElementAddRequestBodyStatus"
+    }
+  }
+}

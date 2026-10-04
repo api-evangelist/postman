@@ -1,0 +1,293 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/postman/main/json-schema/postman-run-monitor-schema.json",
+  "title": "runMonitor",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/postman-monitors-api-openapi.yml#/components/schemas/runMonitor",
+  "type": "object",
+  "properties": {
+    "run": {
+      "$ref": "#/$defs/RunMonitorRun",
+      "description": "Information about the monitor run. If you pass the `async=true` query parameter, the response does not return the `stats`, `executions`, and `failures` responses. To get this information for an asynchronous run, call the GET `/monitors/{id}` endpoint."
+    }
+  },
+  "$defs": {
+    "MonitorRunErrorsItems": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The error name."
+        },
+        "message": {
+          "type": "string",
+          "description": "The error message."
+        }
+      },
+      "title": "MonitorRunErrorsItems"
+    },
+    "MonitorRunExecutionsItems": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "format": "double",
+          "description": "The execution ID."
+        },
+        "item": {
+          "$ref": "#/$defs/MonitorRunExecutionsItemsItem",
+          "description": "Information about the executed item."
+        },
+        "request": {
+          "$ref": "#/$defs/monitorRunRequests"
+        },
+        "response": {
+          "$ref": "#/$defs/monitorRunResponses"
+        },
+        "errors": {
+          "$ref": "#/$defs/monitorRunErrors"
+        }
+      },
+      "title": "MonitorRunExecutionsItems"
+    },
+    "MonitorRunExecutionsItemsItem": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The executed item's name."
+        }
+      },
+      "description": "Information about the executed item.",
+      "title": "MonitorRunExecutionsItemsItem"
+    },
+    "MonitorRunStatsAssertions": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "number",
+          "format": "double",
+          "description": "The total number of tests performed."
+        },
+        "failed": {
+          "type": "number",
+          "format": "double",
+          "description": "The total number of test failures."
+        }
+      },
+      "description": "Information about the monitor's tests.",
+      "title": "MonitorRunStatsAssertions"
+    },
+    "MonitorRunStatsRequests": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "number",
+          "format": "double",
+          "description": "The total number of requests."
+        },
+        "failed": {
+          "type": "number",
+          "format": "double",
+          "description": "The number of request failures."
+        }
+      },
+      "description": "Information about the monitor's requests.",
+      "title": "MonitorRunStatsRequests"
+    },
+    "RunMonitorRun": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "$ref": "#/$defs/monitorRunInfo"
+        },
+        "stats": {
+          "$ref": "#/$defs/monitorRunStats"
+        },
+        "executions": {
+          "$ref": "#/$defs/monitorRunExecutions"
+        },
+        "failures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RunMonitorRunFailuresItems"
+          },
+          "description": "If the monitor run failed, information about the run's failures."
+        }
+      },
+      "description": "Information about the monitor run. If you pass the `async=true` query parameter, the response does not return the `stats`, `executions`, and `failures` responses. To get this information for an asynchronous run, call the GET `/monitors/{id}` endpoint.",
+      "title": "RunMonitorRun"
+    },
+    "RunMonitorRunFailuresItems": {
+      "type": "object",
+      "properties": {},
+      "title": "RunMonitorRunFailuresItems"
+    },
+    "monitorRunErrors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/MonitorRunErrorsItems"
+      },
+      "description": "If the execution encounter errors, a list of errors and their information.",
+      "title": "monitorRunErrors"
+    },
+    "monitorRunExecutions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/MonitorRunExecutionsItems"
+      },
+      "description": "Information about the monitor run's executions.",
+      "title": "monitorRunExecutions"
+    },
+    "monitorRunInfo": {
+      "type": "object",
+      "properties": {
+        "jobId": {
+          "type": "string",
+          "description": "The monitor's run job ID."
+        },
+        "collectionUid": {
+          "type": "string",
+          "format": "uid",
+          "description": "The unique ID of the monitor's associated collection."
+        },
+        "environmentUid": {
+          "type": "string",
+          "format": "uid",
+          "description": "The unique ID of the monitor's associated environment."
+        },
+        "monitorId": {
+          "type": "string",
+          "description": "The monitor's ID."
+        },
+        "name": {
+          "type": "string",
+          "description": "The monitor's name."
+        },
+        "status": {
+          "type": "string",
+          "description": "The monitor run's status."
+        },
+        "startedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the monitor run began."
+        },
+        "finishedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the monitor's run completed."
+        }
+      },
+      "description": "Information about the monitor.",
+      "title": "monitorRunInfo"
+    },
+    "monitorRunRequests": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "description": "The HTTP request method."
+        },
+        "url": {
+          "type": "string",
+          "format": "url",
+          "description": "The request's URL."
+        },
+        "body": {
+          "type": "object",
+          "additionalProperties": {
+            "description": "Any type"
+          },
+          "description": "Information about the request body, such as Content-Length."
+        },
+        "headers": {
+          "type": "object",
+          "additionalProperties": {
+            "description": "Any type"
+          },
+          "description": "Information about the request headers, such as Content-Type, Accept, encoding, and other information."
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "The date and time of the request."
+        }
+      },
+      "description": "Information about the monitor run's requests.",
+      "title": "monitorRunRequests"
+    },
+    "monitorRunResponses": {
+      "type": "object",
+      "properties": {
+        "body": {
+          "type": "object",
+          "additionalProperties": {
+            "description": "Any type"
+          },
+          "description": "Information about the request body, such as Content-Length."
+        },
+        "code": {
+          "type": "number",
+          "format": "double",
+          "description": "The response's HTTP status code."
+        },
+        "headers": {
+          "type": "object",
+          "additionalProperties": {
+            "description": "Any type"
+          },
+          "description": "Information about the response headers, such as Content-Type, Accept, encoding, and other information."
+        },
+        "responseSize": {
+          "type": "number",
+          "format": "double",
+          "description": "The response size, in bytes."
+        },
+        "responseTime": {
+          "type": "number",
+          "format": "double",
+          "description": "The response time, in milliseconds."
+        }
+      },
+      "description": "Information about the monitor run's response.",
+      "title": "monitorRunResponses"
+    },
+    "monitorRunStats": {
+      "type": "object",
+      "properties": {
+        "assertions": {
+          "$ref": "#/$defs/MonitorRunStatsAssertions",
+          "description": "Information about the monitor's tests."
+        },
+        "requests": {
+          "$ref": "#/$defs/MonitorRunStatsRequests",
+          "description": "Information about the monitor's requests."
+        },
+        "runCount": {
+          "type": "integer",
+          "description": "The number of monitor runs across the selected monitor regions."
+        },
+        "errorCount": {
+          "type": "integer",
+          "description": "The number of errors encountered during the monitor's run."
+        },
+        "abortedCount": {
+          "type": "integer",
+          "description": "The number of runs terminated."
+        },
+        "responseLatency": {
+          "type": "integer",
+          "description": "The total time it took to run the monitor, in milliseconds."
+        },
+        "responseSize": {
+          "type": "integer",
+          "description": "The total response size. This includes the runs in all the selected regions."
+        }
+      },
+      "description": "Information about the monitor run's stats.",
+      "title": "monitorRunStats"
+    }
+  }
+}
