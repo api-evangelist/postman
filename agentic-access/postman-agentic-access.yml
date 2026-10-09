@@ -1,4 +1,4 @@
-generated: '2026-09-16'
+generated: '2026-09-23'
 method: generated
 source: openapi/postman-analytics-api-openapi.yml, openapi/postman-api-api-openapi.yml, openapi/postman-api-schemas-api-openapi.yml,
   openapi/postman-api-security-api-openapi.yml, openapi/postman-apicatalog-api-openapi.yml,
@@ -22,11 +22,11 @@ description: Recommended x-agentic-access execution contracts, classified heuris
 summary:
   operations: 286
   by_action_class:
-    connected: 129
-    acting: 157
+    connected: 131
+    acting: 155
   by_consequence:
-    read: 129
-    write: 151
+    read: 131
+    write: 149
     physical: 5
     safety-critical: 1
   human_in_the_loop_required: 1
@@ -2775,18 +2775,12 @@ operations:
   method: post
   operationId: postmanResources
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /secret-scanner/detected-secrets
   method: get
   operationId: getDetectedSecrets
@@ -2847,18 +2841,12 @@ operations:
   method: post
   operationId: detectedSecretsQueries
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /detected-secrets/{secretId}
   method: put
   operationId: updateDetectedSecretResolutions
