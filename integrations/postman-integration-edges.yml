@@ -5,7 +5,9 @@ source:
 - https://composio.dev/toolkits/postman
 checked:
 - datadog/integrations/datadog-integration-edges.yml
+- https://cloudsecurityalliance.org/star/registry
 - https://composio.dev/toolkits/postman
+- https://eucoc.cloud/en/public-register/list-of-adherent-services
 - https://github.com/marketplace?type=actions
 - https://marketplace.atlassian.com/
 - https://marketplace.visualstudio.com/vscode
@@ -307,38 +309,6 @@ edges:
   listing_count: 1
   detected: '2026-10-14'
   detected_by: mirror-platform-listings.py
-- partner_name: MCP Registry
-  partner: mcp
-  partner_match: register
-  type: register
-  channel: standard-directory
-  relationship: standard-participant
-  direction: partner-built
-  evidence: https://registry.modelcontextprotocol.io/v0/servers?search=com.postman
-  contract_reference:
-    register: registry.modelcontextprotocol.io
-    spec_file: null
-    role: mcp-server-listing
-    registered_name: com.postman/postman-mcp-server
-    register_id: com.postman/postman-mcp-server
-    detected_by: sweep-agent-tools.py
-    detected: '2026-10-15'
-  mcp_registry:
-    servers:
-    - com.postman/postman-mcp-server
-    hosted_remote: 1
-    local_package: 1
-    transports:
-      stdio: 5
-      streamable-http: 4
-    auth_declared: 1
-    catalog_declared: true
-    namespace_domains:
-    - postman.com
-  matched_by:
-  - namespace-domain
-  detected_by: sweep-agent-tools.py
-  first_seen: '2026-10-14'
 - partner_name: Microsoft Teams (own)
   partner: microsoft-teams
   partner_match: mirror
@@ -375,4 +345,66 @@ edges:
   detected: '2026-10-18'
   detected_by: mirror-platform-listings.py
   category: Slack app
+- partner_name: Cloud Security Alliance STAR Registry
+  partner: null
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://cloudsecurityalliance.org/star/registry/postman-inc/services/postman-inc
+  category: Cloud security assurance
+  contract_reference:
+    register: CSA STAR Registry (cloudsecurityalliance.org/star/registry)
+    spec_file: null
+    standard: CSA STAR
+    role: star-level-1
+    registered_name: Postman, Inc.
+    registry_id: postman-inc
+    service_url: https://wwww.postman.com
+    matched_domain: postman.com
+    matched_by: domain
+    identity_source: the service URL the organisation filed on its STAR listing (no lookup)
+    levels:
+    - STAR Level 1
+    certified_products: []
+    signal_note: STAR Level 1 (CAIQ self-assessment) = participation; certified_products = one entry per STAR Level
+      2 / STAR for AI Level 2 assessment TYPE (third-party certification, attestation, C-STAR, ValidAIted); lapsed
+      = every instance marked (Deprecated) by the registry; service counts never recorded
+    detected_by: sweep-compliance-assurance.py
+    detected: '2026-10-20'
+  detected_by: sweep-compliance-assurance.py
+  first_seen: '2026-10-20'
+- partner_name: MCP Registry
+  partner: mcp
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://registry.modelcontextprotocol.io/v0/servers?search=com.postman
+  contract_reference:
+    register: registry.modelcontextprotocol.io
+    spec_file: null
+    role: mcp-server-listing
+    registered_name: com.postman/postman-mcp-server
+    register_id: com.postman/postman-mcp-server
+    detected_by: sweep-agent-tools.py
+    detected: '2026-10-15'
+  mcp_registry:
+    servers:
+    - com.postman/postman-mcp-server
+    hosted_remote: 1
+    local_package: 1
+    transports:
+      stdio: 5
+      streamable-http: 4
+    auth_declared: 1
+    catalog_declared: true
+    namespace_domains:
+    - postman.com
+  matched_by:
+  - namespace-domain
+  detected_by: sweep-agent-tools.py
+  first_seen: '2026-10-14'
 templates: []
