@@ -1,4 +1,4 @@
-# Postman (postman)
+# Postman
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,630 +66,348 @@
 
 Postman is the world's leading API platform, used by 35+ million developers to design, build, test, document, mock, monitor, and govern APIs across the entire API lifecycle. The platform spans Collections, Workspaces, the API Client, Spec Hub, Mock Servers, Monitors, the Postman CLI, Newman, Flows, AI Agent Builder, the Postman MCP Server and MCP Generator, API Governance, the Private API Network, Live Collections, Insights, and a public Postman API Network with millions of public workspaces.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/postman/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/postman/refs/heads/main/apis.yml)
-
-## Scope
-
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
-
-## Tags
-
-- AI Agent Builder
-- AI Agents
-- API Catalog
-- API Client
-- API Design
-- API Development
-- API Documentation
-- API Governance
-- API Lifecycle
-- API Monitoring
-- API Network
-- API Platform
-- API Testing
-- Audit Logs
-- Automation
-- CI/CD
-- Collaboration
-- Collections
-- Compliance
-- Discovery
-- Environments
-- Flows
-- GraphQL
-- gRPC
-- HTTP
-- Insights
-- MCP
-- MCP Generator
-- Mock Servers
-- Mocking
-- Monitors
-- Newman
-- OpenAPI
-- Platform
-- Private API Network
-- Public API Network
-- Secret Scanning
-- Spec Hub
-- Specifications
-- SSO
-- Testing
-- Vault
-- WebSocket
-- Workflows
-- Workspaces
-
-## Timestamps
-
-- **Created:** 2025-01-08T00:00:00.000Z
-- **Modified:** 2026-05-19
-
-## APIs
-
-### Postman
-
-Postman is the single platform for collaborative API development used by 35+ million developers. It covers the entire API lifecycle - design, build, test, document, mock, monitor, and govern - and now includes first-class AI Agent Builder, MCP Generator, and Flows for orchestrating multi-step API workflows for AI agents.
-
-- **Human URL:** [https://www.postman.com/](https://www.postman.com/)
-- **Base URL:** `https://api.getpostman.com`
-
-#### Tags
-
-- API Platform
-- Collaboration
-- Collections
-- Mocking
-- Monitoring
-- Documentation
-- Governance
-- Testing
-- AI Agent Builder
-- MCP
-
-#### Properties
-
-- [Documentation](https://www.postman.com/)
-- [Getting Started](https://learning.postman.com/docs/developer/postman-api/intro-api/)
-- [Authentication](https://learning.postman.com/docs/developer/postman-api/authentication/)
-- [Rate Limits](https://learning.postman.com/docs/developer/postman-api/postman-api-rate-limits/)
-- [Postman Collection](https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Schema Catalog](https://schema.postman.com/)
-- [AsyncAPI](asyncapi/postman-webhooks-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [JSON Schema](json-schema/postman-collection-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/postman-environment-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/postman-workspace-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON-LD](json-ld/postman-context.yml) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [JSON Structure](json-structure/postman-collection-structure.json)
-- [JSON Structure](json-structure/postman-workspace-structure.json)
-- [JSON Structure](json-structure/postman-monitor-structure.json)
-- [Spectral Rules](rules/postman-rules.yml) — [Spectral](https://docs.stoplight.io/docs/spectral)
-- [Vocabulary](vocabulary/postman-vocabulary.yml)
-- [Example](examples/postman-get-all-collections-example.json)
-- [Example](examples/postman-create-mock-server-example.json)
-- [Example](examples/postman-run-monitor-example.json)
-- [Example](examples/postman-create-api-spec-example.json)
-- [Example](examples/postman-audit-logs-example.json)
-- [Plans](plans/postman-plans-pricing.yml)
-- [Rate Limits Policy](rate-limits/postman-rate-limits.yml)
-- [Fin Ops](finops/postman-finops.yml)
-- [Postman Collection](collections/postman-apis-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-apis-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-audit-logs-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-audit-logs-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-collection-runs-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-collection-runs-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-collections-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-collections-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-environments-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-environments-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-mock-servers-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-mock-servers-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-monitors-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-monitors-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-private-api-network-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-private-api-network-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-secret-scanner-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-secret-scanner-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-tags-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-tags-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-webhooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-webhooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-workspaces-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-workspaces-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+**Areas:** Environment · Flow · Specification · Workspace · Postman · AI Agent Builder · AI Agents · API Catalog · API Client · API Design · API Development · API Documentation
+
+## Postman on APIs.io
+
+Everything profiled for Postman is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/postman/](https://apis.io/providers/postman/)** — or go straight to one of the APIs or properties below.
+
+### APIs (43)
+
+- [Postman](https://apis.io/apis/postman/postman/) — Postman is the single platform for collaborative API development used by 35+ million developers. It covers the entire API lifecycle - design, build, test,…
+- [Postman Collections API](https://apis.io/apis/postman/collections-api/) — The Collections API lets you programmatically create, read, update, and delete Postman Collections including requests, folders, scripts, and environments.…
+- [Postman Workspaces API](https://apis.io/apis/postman/workspaces-api/) — Manage personal, team, partner, public, and private workspaces. Control visibility, membership, roles, and the elements (collections, environments, mocks,…
+- [Postman Environments API](https://apis.io/apis/postman/environments-api/) — The Environments API enables programmatic management of Postman environments and global variables, including secret variables stored in the Postman Vault,…
+- [Postman Monitors API](https://apis.io/apis/postman/monitors-api/) — The Monitors API runs Postman Collections on a recurring schedule to validate API health, performance, and contract conformance. Surfaces metrics, test…
+- [Postman Webhooks API](https://apis.io/apis/postman/webhooks-api/) — The Webhooks API creates webhooks that trigger collection runs with custom payloads, integrating Postman with external systems (GitHub, Slack, custom…
+- [Postman Tags API](https://apis.io/apis/postman/tags-api/) — The Tags API manages tags applied to APIs, collections, and workspaces for organization, governance reporting, and discoverability across the Private and…
+- [Postman MCP Server](https://apis.io/apis/postman/mcp-server/) — The Postman MCP Server exposes Postman Collections, environments, and workspaces over Anthropic's Model Context Protocol so AI agents (Claude, Cursor,…
+- [Postman Flows](https://apis.io/apis/postman/flows-api/) — Postman Flows is a visual workflow builder that chains API calls, transformations, and conditional logic. Flows are executable, debuggable, and cloneable…
+- [Postman Mocks API](https://apis.io/apis/postman/postman-mocks-api/) — Operations for creating and managing mock servers.
+- [Postman Analytics API](https://apis.io/apis/postman/postman-analytics-api/) — The analytics API from Postman — 2 operation(s) for analytics.
+- [Postman API Catalog API](https://apis.io/apis/postman/postman-apicatalog-api/) — The apiCatalog API from Postman — 11 operation(s) for apicatalog.
+- [Postman Billing API](https://apis.io/apis/postman/postman-billing-api/) — The billing API from Postman — 2 operation(s) for billing.
+- [Postman Comments API](https://apis.io/apis/postman/postman-comments-api/) — The comments API from Postman — 1 operation(s) for comments.
+- [Postman Components API](https://apis.io/apis/postman/postman-components-api/) — The components API from Postman — 5 operation(s) for components.
+- [Postman Groups API](https://apis.io/apis/postman/postman-groups-api/) — The groups API from Postman — 2 operation(s) for groups.
+- [Postman Import API](https://apis.io/apis/postman/postman-import-api/) — The import API from Postman — 1 operation(s) for import.
+- [Postman Postbot API](https://apis.io/apis/postman/postman-postbot-api/) — The postbot API from Postman — 1 operation(s) for postbot.
+- [Postman SCIM API](https://apis.io/apis/postman/postman-scim-api/) — The scim API from Postman — 6 operation(s) for scim.
+- [Postman Search API](https://apis.io/apis/postman/postman-search-api/) — The search API from Postman — 1 operation(s) for search.
+- [Postman Specs API](https://apis.io/apis/postman/postman-specs-api/) — The specs API from Postman — 14 operation(s) for specs.
+- [Postman Teams API](https://apis.io/apis/postman/postman-teams-api/) — The teams API from Postman — 6 operation(s) for teams.
+- [Postman Users API](https://apis.io/apis/postman/postman-users-api/) — The users API from Postman — 3 operation(s) for users.
+- [Postman API Schemas API](https://apis.io/apis/postman/postman-api-schemas-api/) — Operations for managing API schemas and specifications.
+- [Postman Collection Runs API](https://apis.io/apis/postman/postman-collection-runs-api/) — Operations for running collections and retrieving results.
+- [Postman Network Elements API](https://apis.io/apis/postman/postman-network-elements-api/) — Operations for managing elements (APIs, collections, workspaces) in the network.
+- [Postman Network Folders API](https://apis.io/apis/postman/postman-network-folders-api/) — Operations for managing folders in the private API network.
+- [Postman Network Requests API](https://apis.io/apis/postman/postman-network-requests-api/) — Operations for managing requests to add elements to the network.
+- [Postman Secret Scanner API](https://apis.io/apis/postman/postman-secret-scanner-api/) — Operations for managing detected secrets and leaked credentials.
+- [Postman Server Responses API](https://apis.io/apis/postman/postman-server-responses-api/) — Operations for managing mock server responses and examples.
+- [Postman SDKs API](https://apis.io/apis/postman/postman-sdks-api/) — The sdKs API from Postman — 6 operation(s) for sdks.
+- [Postman APIs API](https://apis.io/apis/postman/postman-apis-api/) — The Apis API from Postman — 16 operation(s) for apis.
+- [Postman API Security API](https://apis.io/apis/postman/postman-api-security-api/) — The API Security API from Postman — 1 operation(s) for api security.
+- [Postman Audit Logs API](https://apis.io/apis/postman/postman-audit-logs-api/) — The Audit Logs API from Postman — 2 operation(s) for audit logs.
+- [Postman Collection Access Keys API](https://apis.io/apis/postman/postman-collection-access-keys-api/) — The Collection Access Keys API from Postman — 2 operation(s) for collection access keys.
+- [Postman Collection Folders API](https://apis.io/apis/postman/postman-collection-folders-api/) — The Collection Folders API from Postman — 2 operation(s) for collection folders.
+- [Postman Collection Items API](https://apis.io/apis/postman/postman-collection-items-api/) — The Collection Items API from Postman — 6 operation(s) for collection items.
+- [Postman Collection Requests API](https://apis.io/apis/postman/postman-collection-requests-api/) — The Collection Requests API from Postman — 2 operation(s) for collection requests.
+- [Postman Collection Responses API](https://apis.io/apis/postman/postman-collection-responses-api/) — The Collection Responses API from Postman — 2 operation(s) for collection responses.
+- [Postman OAuth 2.0 API](https://apis.io/apis/postman/postman-oauth-2-0-api/) — The OAuth 2.0 API from Postman — 2 operation(s) for oauth 2.0.
+- [Postman Private API Network API](https://apis.io/apis/postman/postman-private-api-network-api/) — The Private API Network API from Postman — 4 operation(s) for private api network.
+- [Postman Pull Requests API](https://apis.io/apis/postman/postman-pull-requests-api/) — The Pull Requests API from Postman — 2 operation(s) for pull requests.
+- [Postman Service Accounts API](https://apis.io/apis/postman/postman-service-accounts-api/) — The Service Accounts API from Postman — 1 operation(s) for service accounts.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Arazzo workflows (21)
+
+Multi-step workflows that chain operations into a business task.
+
+- [Postman Stand Up an API Testing Pipeline](https://apis.io/arazzos/postman/postman-api-testing-pipeline-workflow/)
+- [Postman Bootstrap a Workspace](https://apis.io/arazzos/postman/postman-bootstrap-workspace-workflow/)
+- [Postman Collection Lifecycle](https://apis.io/arazzos/postman/postman-collection-crud-workflow/)
+- [Postman Create and Run a Monitor](https://apis.io/arazzos/postman/postman-create-and-run-monitor-workflow/)
+- [Postman Create an API with a Schema](https://apis.io/arazzos/postman/postman-create-api-with-schema-workflow/)
+- [Postman Create a Mock Server from a Collection](https://apis.io/arazzos/postman/postman-create-mock-from-collection-workflow/)
+- [Postman Environment Lifecycle](https://apis.io/arazzos/postman/postman-environment-crud-workflow/)
+- [Postman Fork and Merge a Collection](https://apis.io/arazzos/postman/postman-fork-and-merge-collection-workflow/)
+- [Postman Inspect an API Schema](https://apis.io/arazzos/postman/postman-inspect-api-schema-workflow/)
+- [Postman Inspect Collection Contents](https://apis.io/arazzos/postman/postman-inspect-collection-contents-workflow/)
+- [Postman Audit Mock Server Call Logs](https://apis.io/arazzos/postman/postman-mock-call-logs-workflow/)
+- [Postman Monitor Lifecycle](https://apis.io/arazzos/postman/postman-monitor-lifecycle-workflow/)
+- [Postman Publish a Collection to the Private API Network](https://apis.io/arazzos/postman/postman-publish-collection-to-network-workflow/)
+- [Postman Publish a Mock and Add a Custom Response](https://apis.io/arazzos/postman/postman-publish-mock-and-add-response-workflow/)
+- [Postman Remediate a Detected Secret](https://apis.io/arazzos/postman/postman-remediate-detected-secret-workflow/)
+- [Postman Review the Latest Collection Run](https://apis.io/arazzos/postman/postman-review-collection-run-workflow/)
+- [Postman Tag a Collection for Governance](https://apis.io/arazzos/postman/postman-tag-collection-workflow/)
+- [Postman Triage a Private API Network Request](https://apis.io/arazzos/postman/postman-triage-network-request-workflow/)
+- [Postman Webhook Triggers a Collection](https://apis.io/arazzos/postman/postman-webhook-triggers-collection-workflow/)
+- [Postman Workspace Lifecycle](https://apis.io/arazzos/postman/postman-workspace-crud-workflow/)
+- [Postman Manage Workspace Global Variables](https://apis.io/arazzos/postman/postman-workspace-global-variables-workflow/)
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Postman Webhooks](https://apis.io/asyncapis/postman/postman-webhooks-asyncapi/)
+
+#### Event channels (3)
+
+Individual events and webhooks the provider emits.
+
+- [/webhook/integration-notification](https://apis.io/channels/postman/webhook-integration-notification/)
+- [/webhook/monitor-notification](https://apis.io/channels/postman/webhook-monitor-notification/)
+- [/webhook/trigger](https://apis.io/channels/postman/webhook-trigger/)
+
+#### GraphQL (1)
+
+GraphQL schemas.
+
+- [Moved to /providers/postman/](https://apis.io/graphqls/postman/postman-graphql/)
+
+#### MCP servers (2)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [postman](https://apis.io/servers/postman/postman/)
+- [Postman MCP Server](https://apis.io/servers/postman/postman-mcp-server/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Postman Agentic Access](https://apis.io/agentic-access/postman/postman-agentic-access/)
+
+#### JSON Schema (135)
+
+The data models the API reads and writes.
+
+- [ApiSchema](https://apis.io/schemas/postman/postman-api-schema/)
+- [approveDenyAccessRequestResponse](https://apis.io/schemas/postman/postman-approve-deny-access-request-response/)
+- [asyncCollectionForkMerge](https://apis.io/schemas/postman/postman-async-collection-fork-merge/)
+- [Postman Collection](https://apis.io/schemas/postman/postman-collection/)
+- [CollectionRun](https://apis.io/schemas/postman/postman-collection-run/)
+- [CollectionRunSummary](https://apis.io/schemas/postman/postman-collection-run-summary/)
+- [commentCreate](https://apis.io/schemas/postman/postman-comment-create/)
+- [commentCreatedUpdated](https://apis.io/schemas/postman/postman-comment-created-updated/)
+- [commentResponse](https://apis.io/schemas/postman/postman-comment-response/)
+- [commentUpdate](https://apis.io/schemas/postman/postman-comment-update/)
+- [componentVersionData](https://apis.io/schemas/postman/postman-component-version-data/)
+- [createAccessRequest](https://apis.io/schemas/postman/postman-create-access-request/)
+- [createApiCatalogSystemEnvironment](https://apis.io/schemas/postman/postman-create-api-catalog-system-environment/)
+- [createApiResponse](https://apis.io/schemas/postman/postman-create-api-response/)
+- [createApiSchemaResponse](https://apis.io/schemas/postman/postman-create-api-schema-response/)
+- [createCollectionRequest](https://apis.io/schemas/postman/postman-create-collection-request/)
+- [createCollectionRequestResponse](https://apis.io/schemas/postman/postman-create-collection-request-response/)
+- [createCollectionResponse](https://apis.io/schemas/postman/postman-create-collection-response/)
+- [createComponent](https://apis.io/schemas/postman/postman-create-component/)
+- [createComponentVersion](https://apis.io/schemas/postman/postman-create-component-version/)
+- [createMonitor](https://apis.io/schemas/postman/postman-create-monitor/)
+- [createScimUser](https://apis.io/schemas/postman/postman-create-scim-user/)
+- [createSdk](https://apis.io/schemas/postman/postman-create-sdk/)
+- [createSdkGitConnection](https://apis.io/schemas/postman/postman-create-sdk-git-connection/)
+- [createSpecResponse](https://apis.io/schemas/postman/postman-create-spec-response/)
+- …and 110 more published on APIs.io
+
+#### JSON Structure (3)
+
+Data models expressed in JSON Structure.
+
+- [Postman Collection Structure](https://apis.io/json-structure/postman/postman-collection-structure/)
+- [Postman Monitor Structure](https://apis.io/json-structure/postman/postman-monitor-structure/)
+- [Postman Workspace Structure](https://apis.io/json-structure/postman/postman-workspace-structure/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Postman Context](https://apis.io/jsonld/postman/postman-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Postman Vocabulary](https://apis.io/vocabularies/postman/postman-vocabulary/)
+
+#### Examples (5)
+
+Example requests and responses.
+
+- [Postman Audit Logs Example](https://apis.io/examples/postman/postman-audit-logs-example/)
+- [Postman Create Api Spec Example](https://apis.io/examples/postman/postman-create-api-spec-example/)
+- [Postman Create Mock Server Example](https://apis.io/examples/postman/postman-create-mock-server-example/)
+- [Postman Get All Collections Example](https://apis.io/examples/postman/postman-get-all-collections-example/)
+- [Postman Run Monitor Example](https://apis.io/examples/postman/postman-run-monitor-example/)
 
-### Postman Collections API
+#### Collections (52)
 
-The Collections API lets you programmatically create, read, update, and delete Postman Collections including requests, folders, scripts, and environments. Powers CI/CD integration, sync, and collection generation pipelines.
+Postman and Open Collection request collections.
 
-- **Human URL:** [https://learning.postman.com/docs/developer/postman-api/intro-api/](https://learning.postman.com/docs/developer/postman-api/intro-api/)
-- **Base URL:** `https://api.getpostman.com`
+- [Postman Analytics API](https://apis.io/collections/postman/open-postman-analytics-api/)
+- [Postman API](https://apis.io/collections/postman/open-postman-api-api/)
+- [Postman API Catalog API](https://apis.io/collections/postman/open-postman-apicatalog-api/)
+- [Postman APIs API](https://apis.io/collections/postman/open-postman-apis-api/)
+- [Postman API Security API](https://apis.io/collections/postman/open-postman-apisecurity-api/)
+- [Postman Audit Logs API](https://apis.io/collections/postman/open-postman-audit-logs-api/)
+- [Postman Audit Logs API](https://apis.io/collections/postman/open-postman-auditlogs-api/)
+- [Postman Billing API](https://apis.io/collections/postman/open-postman-billing-api/)
+- [Postman Collection Runs API](https://apis.io/collections/postman/open-postman-collection-runs-api/)
+- [Postman Collection Access Keys API](https://apis.io/collections/postman/open-postman-collectionaccesskeys-api/)
+- [Postman Collection Folders API](https://apis.io/collections/postman/open-postman-collectionfolders-api/)
+- [Postman Collection Items API](https://apis.io/collections/postman/open-postman-collectionitems-api/)
+- [Postman Collection Requests API](https://apis.io/collections/postman/open-postman-collectionrequests-api/)
+- [Postman Collection Responses API](https://apis.io/collections/postman/open-postman-collectionresponses-api/)
+- [Postman Collections API](https://apis.io/collections/postman/open-postman-collections-api/)
+- [Postman Comments API](https://apis.io/collections/postman/open-postman-comments-api/)
+- [Postman Components API](https://apis.io/collections/postman/open-postman-components-api/)
+- [Postman Environments API](https://apis.io/collections/postman/open-postman-environments-api/)
+- [Postman Groups API](https://apis.io/collections/postman/open-postman-groups-api/)
+- [Postman Import API](https://apis.io/collections/postman/open-postman-import-api/)
+- [Postman Mock Servers API](https://apis.io/collections/postman/open-postman-mock-servers-api/)
+- [Postman Mocks API](https://apis.io/collections/postman/open-postman-mocks-api/)
+- [Postman Monitors API](https://apis.io/collections/postman/open-postman-monitors-api/)
+- [Postman O Auth20 API](https://apis.io/collections/postman/open-postman-oauth20-api/)
+- [Postman Postbot API](https://apis.io/collections/postman/open-postman-postbot-api/)
+- …and 27 more published on APIs.io
 
-#### Tags
+#### Overlays (40)
 
-- API Management
-- Automation
-- Collections
-- CRUD
+OpenAPI overlays, including conversational phrasing for each operation.
 
-#### Properties
+- [Postman Analytics Api Phrasing Overlay](https://apis.io/overlays/postman/postman-analytics-api-phrasing-overlay/)
+- [Postman Api Schemas Api Phrasing Overlay](https://apis.io/overlays/postman/postman-api-schemas-api-phrasing-overlay/)
+- [Postman Api Security Api Phrasing Overlay](https://apis.io/overlays/postman/postman-api-security-api-phrasing-overlay/)
+- [Postman Apicatalog Api Phrasing Overlay](https://apis.io/overlays/postman/postman-apicatalog-api-phrasing-overlay/)
+- [Postman Apis Api Phrasing Overlay](https://apis.io/overlays/postman/postman-apis-api-phrasing-overlay/)
+- [Postman Audit Logs Api Phrasing Overlay](https://apis.io/overlays/postman/postman-audit-logs-api-phrasing-overlay/)
+- [Postman Billing Api Phrasing Overlay](https://apis.io/overlays/postman/postman-billing-api-phrasing-overlay/)
+- [Postman Collection Access Keys Api Phrasing Overlay](https://apis.io/overlays/postman/postman-collection-access-keys-api-phrasing-overlay/)
+- [Postman Collection Folders Api Phrasing Overlay](https://apis.io/overlays/postman/postman-collection-folders-api-phrasing-overlay/)
+- [Postman Collection Items Api Phrasing Overlay](https://apis.io/overlays/postman/postman-collection-items-api-phrasing-overlay/)
+- [Postman Collection Requests Api Phrasing Overlay](https://apis.io/overlays/postman/postman-collection-requests-api-phrasing-overlay/)
+- [Postman Collection Responses Api Phrasing Overlay](https://apis.io/overlays/postman/postman-collection-responses-api-phrasing-overlay/)
+- [Postman Collection Runs Api Phrasing Overlay](https://apis.io/overlays/postman/postman-collection-runs-api-phrasing-overlay/)
+- [Postman Collections Api Phrasing Overlay](https://apis.io/overlays/postman/postman-collections-api-phrasing-overlay/)
+- [Postman Comments Api Phrasing Overlay](https://apis.io/overlays/postman/postman-comments-api-phrasing-overlay/)
+- [Postman Components Api Phrasing Overlay](https://apis.io/overlays/postman/postman-components-api-phrasing-overlay/)
+- [Postman Environments Api Phrasing Overlay](https://apis.io/overlays/postman/postman-environments-api-phrasing-overlay/)
+- [Postman Groups Api Phrasing Overlay](https://apis.io/overlays/postman/postman-groups-api-phrasing-overlay/)
+- [Postman Import Api Phrasing Overlay](https://apis.io/overlays/postman/postman-import-api-phrasing-overlay/)
+- [Postman Mocks Api Phrasing Overlay](https://apis.io/overlays/postman/postman-mocks-api-phrasing-overlay/)
+- [Postman Monitors Api Phrasing Overlay](https://apis.io/overlays/postman/postman-monitors-api-phrasing-overlay/)
+- [Postman Network Elements Api Phrasing Overlay](https://apis.io/overlays/postman/postman-network-elements-api-phrasing-overlay/)
+- [Postman Network Folders Api Phrasing Overlay](https://apis.io/overlays/postman/postman-network-folders-api-phrasing-overlay/)
+- [Postman Network Requests Api Phrasing Overlay](https://apis.io/overlays/postman/postman-network-requests-api-phrasing-overlay/)
+- [Postman Oauth 2 0 Api Phrasing Overlay](https://apis.io/overlays/postman/postman-oauth-2-0-api-phrasing-overlay/)
+- …and 15 more published on APIs.io
 
-- [OpenAPI](openapi/postman-collections-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/postman-collections-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-collections-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Documentation](https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api)
+#### Governance rules (3)
 
-### Postman Workspaces API
+Spectral rulesets for the provider's contracts.
 
-Manage personal, team, partner, public, and private workspaces. Control visibility, membership, roles, and the elements (collections, environments, mocks, monitors, APIs) attached to each workspace.
+- [Postman — asyncapi rules](https://apis.io/rules/postman/postman-asyncapi-spectral-rules/)
+- [Postman — jsonschema rules](https://apis.io/rules/postman/postman-jsonschema-spectral-rules/)
+- [Postman API Rules](https://apis.io/rules/postman/postman-rules/)
 
-- **Human URL:** [https://learning.postman.com/docs/developer/postman-api/intro-api/](https://learning.postman.com/docs/developer/postman-api/intro-api/)
-- **Base URL:** `https://api.getpostman.com`
+#### Security (4)
 
-#### Tags
+Authentication, trust centre, and vulnerability disclosure.
 
-- API Management
-- Collaboration
-- Workspaces
+- [Postman Authentication](https://apis.io/security/postman/postman-authentication/)
+- [Postman Domain Security](https://apis.io/security/postman/postman-domain-security/)
+- [Postman Trust Center](https://apis.io/security/postman/postman-trust-center/)
+- [Postman Vulnerability Disclosure](https://apis.io/security/postman/postman-vulnerability-disclosure/)
 
-#### Properties
+#### Plans and pricing (1)
 
-- [OpenAPI](openapi/postman-workspaces-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/postman-workspaces-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-workspaces-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Documentation](https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api)
+Published plans, tiers and prices.
 
-### Postman Environments API
+- [Postman Plans Pricing](https://apis.io/plans/postman/postman-plans-pricing/)
 
-The Environments API enables programmatic management of Postman environments and global variables, including secret variables stored in the Postman Vault, so you can scope work to dev/staging/prod environments.
+#### Rate limits (1)
 
-- **Human URL:** [https://learning.postman.com/docs/developer/postman-api/intro-api/](https://learning.postman.com/docs/developer/postman-api/intro-api/)
-- **Base URL:** `https://api.getpostman.com`
+Published request limits.
 
-#### Tags
+- [Postman Rate Limits](https://apis.io/rate-limits/postman/postman-rate-limits/)
 
-- Configuration
-- Environments
-- Variables
+#### FinOps (1)
 
-#### Properties
+What the API costs to run, by operation.
 
-- [OpenAPI](openapi/postman-environments-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/postman-environments-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-environments-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Documentation](https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api)
+- [Postman Finops](https://apis.io/finops/postman/postman-finops/)
 
-### Postman Mock Servers API
+## Where to find this API
 
-The Mock Servers API performs CRUD operations on mock servers, manages mock responses, controls visibility, and exposes mock call logs - used to simulate API behavior during API-first development and to share reference implementations with partners.
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-- **Human URL:** [https://learning.postman.com/docs/developer/postman-api/intro-api/](https://learning.postman.com/docs/developer/postman-api/intro-api/)
-- **Base URL:** `https://api.getpostman.com`
-
-#### Tags
-
-- API Development
-- Mocking
-- Simulation
-- Sandbox
-
-#### Properties
-
-- [OpenAPI](openapi/postman-mock-servers-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/postman-mock-servers-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-mock-servers-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Documentation](https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api)
-
-### Postman Monitors API
-
-The Monitors API runs Postman Collections on a recurring schedule to validate API health, performance, and contract conformance. Surfaces metrics, test results, and notification webhooks for incident response.
-
-- **Human URL:** [https://learning.postman.com/docs/developer/postman-api/intro-api/](https://learning.postman.com/docs/developer/postman-api/intro-api/)
-- **Base URL:** `https://api.getpostman.com`
-
-#### Tags
-
-- Automation
-- Monitoring
-- Scheduling
-- Testing
-- Observability
-
-#### Properties
-
-- [OpenAPI](openapi/postman-monitors-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/postman-monitors-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-monitors-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Documentation](https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api)
-
-### Postman APIs / Spec Hub API
-
-The APIs endpoints (Spec Hub) manage API definitions, versions, specifications, and linked elements. Supports OpenAPI 3, AsyncAPI, GraphQL, gRPC/Protobuf, RAML, WSDL, and SOAP definitions and enables design-first API workflows.
-
-- **Human URL:** [https://learning.postman.com/docs/developer/postman-api/intro-api/](https://learning.postman.com/docs/developer/postman-api/intro-api/)
-- **Base URL:** `https://api.getpostman.com`
-
-#### Tags
-
-- API Builder
-- API Design
-- Spec Hub
-- Specifications
-- OpenAPI
-- GraphQL
-
-#### Properties
-
-- [OpenAPI](openapi/postman-apis-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/postman-apis-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-apis-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Documentation](https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api)
-
-### Postman Private API Network API
-
-The Private API Network API manages your internal API catalog - organizing folders, approving submissions, controlling visibility, and integrating CI/CD pipelines that publish APIs into your developer portal.
-
-- **Human URL:** [https://learning.postman.com/docs/developer/postman-api/intro-api/](https://learning.postman.com/docs/developer/postman-api/intro-api/)
-- **Base URL:** `https://api.getpostman.com`
-
-#### Tags
-
-- API Catalog
-- API Network
-- Discovery
-- Governance
-- Private Network
-
-#### Properties
-
-- [OpenAPI](openapi/postman-private-api-network-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/postman-private-api-network-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-private-api-network-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Documentation](https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api)
-
-### Postman Webhooks API
-
-The Webhooks API creates webhooks that trigger collection runs with custom payloads, integrating Postman with external systems (GitHub, Slack, custom triggers) for event-driven automation.
-
-- **Human URL:** [https://learning.postman.com/docs/developer/postman-api/intro-api/](https://learning.postman.com/docs/developer/postman-api/intro-api/)
-- **Base URL:** `https://api.getpostman.com`
-
-#### Tags
-
-- Automation
-- Events
-- Integrations
-- Webhooks
-
-#### Properties
-
-- [OpenAPI](openapi/postman-webhooks-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/postman-webhooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-webhooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [AsyncAPI](asyncapi/postman-webhooks-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [Documentation](https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api)
-
-### Postman Collection Runs API
-
-The Collection Runs API programmatically launches collection runs, retrieves run results, and powers integration with Newman, the Postman CLI, and CI/CD pipelines for automated test execution.
-
-- **Human URL:** [https://learning.postman.com/docs/developer/postman-api/intro-api/](https://learning.postman.com/docs/developer/postman-api/intro-api/)
-- **Base URL:** `https://api.getpostman.com`
-
-#### Tags
-
-- Automation
-- CI/CD
-- Collection Runner
-- Newman
-- Testing
-
-#### Properties
-
-- [OpenAPI](openapi/postman-collection-runs-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/postman-collection-runs-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-collection-runs-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Documentation](https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api)
-
-### Postman Tags API
-
-The Tags API manages tags applied to APIs, collections, and workspaces for organization, governance reporting, and discoverability across the Private and Public API Networks.
-
-- **Human URL:** [https://learning.postman.com/docs/developer/postman-api/intro-api/](https://learning.postman.com/docs/developer/postman-api/intro-api/)
-- **Base URL:** `https://api.getpostman.com`
-
-#### Tags
-
-- Governance
-- Metadata
-- Organization
-- Discovery
-
-#### Properties
-
-- [OpenAPI](openapi/postman-tags-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/postman-tags-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-tags-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Documentation](https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api)
-
-### Postman Audit Logs API
-
-Enterprise-only Audit Logs API exposing team audit events (user actions, configuration changes, security events) for SIEM ingestion and compliance reporting (SOC 2, GDPR, ISO).
-
-- **Human URL:** [https://learning.postman.com/docs/developer/postman-api/intro-api/](https://learning.postman.com/docs/developer/postman-api/intro-api/)
-- **Base URL:** `https://api.getpostman.com`
-
-#### Tags
-
-- Audit Logs
-- Compliance
-- Enterprise
-- Governance
-- Security
-
-#### Properties
-
-- [OpenAPI](openapi/postman-audit-logs-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/postman-audit-logs-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-audit-logs-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Documentation](https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api)
-
-### Postman Secret Scanner API
-
-The Secret Scanner API manages detected secrets and resolves leaked credentials found in collections, environments, and other elements - part of Postman's API governance and security posture suite.
-
-- **Human URL:** [https://learning.postman.com/docs/developer/postman-api/intro-api/](https://learning.postman.com/docs/developer/postman-api/intro-api/)
-- **Base URL:** `https://api.getpostman.com`
-
-#### Tags
-
-- Compliance
-- Governance
-- Secret Scanning
-- Security
-
-#### Properties
-
-- [OpenAPI](openapi/postman-secret-scanner-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/postman-secret-scanner-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-secret-scanner-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Documentation](https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api)
-
-### Postman Billing API
-
-The Billing API exposes account billing information, seat allocation, and resource usage so finance and FinOps teams can integrate Postman consumption into chargeback / showback reporting.
-
-- **Human URL:** [https://learning.postman.com/docs/developer/postman-api/intro-api/](https://learning.postman.com/docs/developer/postman-api/intro-api/)
-- **Base URL:** `https://api.getpostman.com`
-
-#### Tags
-
-- Billing
-- Enterprise
-- FinOps
-- Resource Usage
-
-#### Properties
-
-- [Documentation](https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api)
-- [Postman Collection](collections/postman-apis-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-apis-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-audit-logs-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-audit-logs-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-collection-runs-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-collection-runs-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-collections-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-collections-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-environments-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-environments-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-mock-servers-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-mock-servers-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-monitors-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-monitors-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-private-api-network-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-private-api-network-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-secret-scanner-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-secret-scanner-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-tags-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-tags-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-webhooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-webhooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-workspaces-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-workspaces-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Postman SCIM API
-
-The SCIM 2.0 API enables Enterprise customers to provision and deprovision users and groups from their identity provider (Okta, OneLogin, Azure AD, Ping) into Postman team accounts.
-
-- **Human URL:** [https://learning.postman.com/docs/administration/scim-provisioning/](https://learning.postman.com/docs/administration/scim-provisioning/)
-- **Base URL:** `https://api.getpostman.com/scim/v2`
-
-#### Tags
-
-- Enterprise
-- Identity
-- Provisioning
-- SCIM
-- SSO
-
-#### Properties
-
-- [Documentation](https://www.postman.com/postman/postman-public-workspace/documentation/i2uqzpp/postman-api)
-- [Postman Collection](collections/postman-apis-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-apis-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-audit-logs-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-audit-logs-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-collection-runs-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-collection-runs-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-collections-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-collections-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-environments-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-environments-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-mock-servers-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-mock-servers-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-monitors-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-monitors-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-private-api-network-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-private-api-network-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-secret-scanner-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-secret-scanner-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-tags-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-tags-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-webhooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-webhooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-workspaces-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-workspaces-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Postman MCP Server
-
-The Postman MCP Server exposes Postman Collections, environments, and workspaces over Anthropic's Model Context Protocol so AI agents (Claude, Cursor, custom LLM clients) can reason over and execute APIs directly from your Postman library.
-
-- **Human URL:** [https://github.com/postmanlabs/postman-mcp-server](https://github.com/postmanlabs/postman-mcp-server)
-
-#### Tags
-
-- AI Agents
-- MCP
-- Model Context Protocol
-
-#### Properties
-
-- [Git Hub](https://github.com/postmanlabs/postman-mcp-server)
-- [Postman Collection](collections/postman-apis-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-apis-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-audit-logs-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-audit-logs-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-collection-runs-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-collection-runs-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-collections-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-collections-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-environments-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-environments-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-mock-servers-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-mock-servers-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-monitors-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-monitors-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-private-api-network-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-private-api-network-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-secret-scanner-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-secret-scanner-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-tags-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-tags-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-webhooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-webhooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-workspaces-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-workspaces-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Postman Flows
-
-Postman Flows is a visual workflow builder that chains API calls, transformations, and conditional logic. Flows are executable, debuggable, and cloneable documentation that powers AI agent orchestration and partner integrations.
-
-- **Human URL:** [https://www.postman.com/product/flows/](https://www.postman.com/product/flows/)
-
-#### Tags
-
-- AI
-- Automation
-- Flows
-- Orchestration
-- Workflows
-
-#### Properties
-
-- [Documentation](https://www.postman.com/product/flows/)
-- [Postman Collection](collections/postman-apis-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-apis-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-audit-logs-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-audit-logs-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-collection-runs-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-collection-runs-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-collections-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-collections-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-environments-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-environments-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-mock-servers-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-mock-servers-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-monitors-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-monitors-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-private-api-network-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-private-api-network-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-secret-scanner-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-secret-scanner-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-tags-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-tags-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-webhooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-webhooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/postman-workspaces-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postman-workspaces-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [Arazzo Workflows](arazzo/) — [Arazzo Specification](https://spec.openapis.org/arazzo/latest.html)
 - [Website](https://www.postman.com/)
-- [Pricing](https://www.postman.com/pricing/)
-- [Knowledgebase](https://www.postman.com/learn/)
 - [Documentation](https://learning.postman.com/)
-- [Getting Started](https://learning.postman.com/docs/developer/postman-api/intro-api/)
-- [Authentication](https://learning.postman.com/docs/developer/postman-api/authentication/)
-- [Rate Limits](https://learning.postman.com/docs/developer/postman-api/postman-api-rate-limits/)
-- [Blog](https://blog.postman.com/)
-- [Templates](https://www.postman.com/templates/)
+- [Getting started](https://learning.postman.com/docs/developer/postman-api/intro-api/)
+- [Pricing](https://www.postman.com/pricing/)
 - [Support](https://support.postman.com/hc/en-us)
 - [Changelog](https://www.postman.com/release-notes/)
-- [Status Page](https://status.postman.com/)
-- [Events](https://www.postman.com/events/)
-- [C L I](https://learning.postman.com/docs/postman-cli/postman-cli-installation/)
-- [C L I](https://github.com/postmanlabs/newman)
-- [Partners](https://www.postman.com/partner-program/)
-- [Customers](https://www.postman.com/case-studies/)
-- [Terms of Service](https://www.postman.com/legal/terms/)
-- [Privacy Policy](https://www.postman.com/legal/privacy-policy/)
-- [Trademark](https://www.postman.com/legal/trademark-policy/)
-- [Trust](https://www.postman.com/trust/)
+- [Blog](https://blog.postman.com/)
 - [Security](https://security.postman.com/)
 - [Compliance](https://www.postman.com/trust/compliance/)
-- [V S Code Extension](https://marketplace.visualstudio.com/items?itemName=Postman.postman-for-vscode)
-- [Youtube](https://www.youtube.com/c/Postman)
-- [LinkedIn](https://www.linkedin.com/company/postman-platform)
-- [Twitter](https://twitter.com/getpostman)
-- [Instagram](https://www.instagram.com/getpostman/)
-- [Discord](https://discord.com/invite/bKjz3CXbB6)
-- [Forum](https://community.postman.com/)
-- [Stack Overflow](https://stackoverflow.com/questions/tagged/postman)
-- [Downloads](https://www.postman.com/downloads/)
-- [A P I Network](https://www.postman.com/explore)
-- [M C P Network](https://www.postman.com/explore/mcp)
-- [Academy](https://academy.postman.com/)
-- [Student Program](https://www.postman.com/student-program/)
-- [About](https://www.postman.com/company/about-postman/)
-- [Careers](https://www.postman.com/company/careers/)
-- [Contact Sales](https://www.postman.com/company/contact-sales/)
-- [Press](https://www.postman.com/company/press-media/)
-- [SDK](https://learning.postman.com/docs/developer/collection-sdk/)
-- [Schema Catalog](https://schema.postman.com/)
-- [A I Agent Builder](https://www.postman.com/product/ai-agent-builder/)
-- [M C P Server](https://github.com/postmanlabs/postman-mcp-server)
-- [Flows](https://www.postman.com/product/flows/)
-- [Governance](https://www.postman.com/product/api-governance/)
-- [Workspaces](https://www.postman.com/product/workspaces/)
-- [A P I Catalog](https://www.postman.com/product/api-catalog/)
-- [Sign Up](https://identity.getpostman.com/signup)
-- [Login](https://identity.getpostman.com/login)
-- [Console](https://go.postman.co/)
-- [GitHub Organization](https://github.com/postmanlabs)
-- [Newsletter](https://www.postman.com/newsletter/)
-- [Use Cases](https://www.postman.com/use-cases/)
-- [Features](undefined)
-- [Solutions](undefined)
-- [Compliance](undefined)
-- [Integrations](https://www.postman.com/product/integrations/)
-- [Agent Skill](https://github.com/postmanlabs/postman-skills-2)
+- [Terms of service](https://www.postman.com/legal/terms/)
+- [Privacy policy](https://www.postman.com/legal/privacy-policy/)
+- [GitHub](https://github.com/postmanlabs)
+- [Status](https://status.postman.com/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
-**Email:** help@postman.com
-**URL:** https://www.postman.com
+**Kin Score 78.0** — exemplar · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 83.3 |
+| Contract quality | 73.3 |
+| Contract governance | 45.5 |
+| Operational transparency | 63.2 |
+| Developer ergonomics | 78.0 |
+| Access clarity | 68.4 |
+
+**Agent readiness 55.6** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 35.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/postman/](https://apis.io/providers/postman/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Postman: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/postman/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
